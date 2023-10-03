@@ -68,7 +68,7 @@ const AddEducationFormSchema = z
       .default(new Date()),
     endDate: z
       .date({
-        required_error: "An end date is required.",
+        required_error: "An end date or expected end date is required.",
       })
       .default(new Date()),
   })
@@ -127,13 +127,9 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
           name="schoolName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor={field.name}>School Name</FormLabel>
+              <FormLabel>School Name</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter School Name"
-                  {...field}
-                  id={field.name}
-                />
+                <Input placeholder="Enter School Name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -147,14 +143,9 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
             name="major"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor={field.name}>Major</FormLabel>
+                <FormLabel>Major</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Enter Major"
-                    {...field}
-                    id={field.name}
-                    name={field.name}
-                  />
+                  <Input placeholder="Enter Major" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -166,7 +157,7 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
             name="degreeType"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor={field.name}>Degree Type</FormLabel>
+                <FormLabel>Degree Type</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -200,10 +191,9 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel htmlFor={field.name}>GPA</FormLabel>
+                  <FormLabel>GPA</FormLabel>
                   <FormControl>
                     <Input
-                      id={field.name}
                       type="number"
                       min="0"
                       max="10"
@@ -229,7 +219,7 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
             name="startDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel htmlFor={field.name}>Start Date</FormLabel>
+                <FormLabel>Start Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -258,7 +248,6 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
                         date > new Date() || date < new Date("1900-01-01")
                       }
                       initialFocus
-                      id={field.name}
                     />
                   </PopoverContent>
                 </Popover>
@@ -272,7 +261,7 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
             name="endDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel htmlFor={field.name}>End Date</FormLabel>
+                <FormLabel>End Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -299,7 +288,6 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
                       onSelect={field.onChange}
                       disabled={(date) => date < new Date("1900-01-01")}
                       initialFocus
-                      id={field.name}
                     />
                   </PopoverContent>
                 </Popover>

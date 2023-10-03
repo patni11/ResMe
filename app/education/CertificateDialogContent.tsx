@@ -92,13 +92,9 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
             name="certificateName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor={field.name}>Certificate Name</FormLabel>
+                <FormLabel>Certificate Name</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Enter School Name"
-                    {...field}
-                    id={field.name}
-                  />
+                  <Input placeholder="Enter School Name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -110,13 +106,9 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
             name="organization"
             render={({ field }) => (
               <FormItem>
-                <FormLabel htmlFor={field.name}>Issuing Organization</FormLabel>
+                <FormLabel>Issuing Organization</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="Ex: Stanford"
-                    {...field}
-                    id={field.name}
-                  />
+                  <Input placeholder="Ex: Stanford" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -127,7 +119,7 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
             name="issueDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel htmlFor={field.name}>Issue Date</FormLabel>
+                <FormLabel>Issue Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -156,7 +148,6 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
                         date > new Date() || date < new Date("1900-01-01")
                       }
                       initialFocus
-                      id={field.name}
                     />
                   </PopoverContent>
                 </Popover>

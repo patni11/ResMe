@@ -62,7 +62,7 @@ export function Sidebar({ className }: SidebarProps) {
                   <span className="ml-2">Education</span>
                 </div>
               </Link>
-              <Link href="/workExperience">
+              <Link href="/experience">
                 <div className={`${buttonDesign} w-full border border-input`}>
                   <Briefcase absoluteStrokeWidth></Briefcase>
                   <span className="ml-2">Experience</span>
