@@ -8,9 +8,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FC, ReactNode } from "react";
-import { DialogContainer } from "./DialogContainer";
+import { DialogContainer } from "../DialogBox/DialogContainer";
 
-interface EductionSectionProps {
+interface ContentSectionProps {
   children?: ReactNode[];
   cardDetails: {
     title: string;
@@ -24,12 +24,11 @@ interface EductionSectionProps {
   };
 }
 
-const EductionSection: FC<EductionSectionProps> = ({
+const ContentSection: FC<ContentSectionProps> = ({
   children,
   cardDetails,
   dialogDetails,
 }) => {
-  console.log("Loading Education Section");
   return (
     <section className="w-full justify-start">
       <Card className="w-[full] border-none">
@@ -47,7 +46,7 @@ const EductionSection: FC<EductionSectionProps> = ({
         <CardFooter className="flex justify-end">
           {dialogDetails && (
             <DialogContainer
-              dialogDetails={{ title: "Add Educaiton" }}
+              dialogDetails={{ title: dialogDetails.dialogTitle }}
               dialogTrigger={dialogDetails.dialogTrigger}
             >
               {dialogDetails.dialogContent}
@@ -59,4 +58,4 @@ const EductionSection: FC<EductionSectionProps> = ({
   );
 };
 
-export default EductionSection;
+export default ContentSection;

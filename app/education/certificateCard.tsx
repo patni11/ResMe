@@ -1,13 +1,13 @@
 "use client";
 import { FC, ReactNode } from "react";
 import { CardContent } from "@/components/ui/card";
-import Education from "./page";
+import { Certificate } from "./pageTypes";
 import { getFormattedDate } from "../utils/FormattingFunctions";
 import UpdateDialogCard from "@/components/Cards/UpdateDialogCard";
 
-interface EducationCardProps {
+interface CertificateCardProps {
   className?: string;
-  cardDetails: Education;
+  cardDetails: Certificate;
   dialogDetails?: {
     dialogTitle: string;
     dialogDescription?: string;
@@ -22,7 +22,7 @@ interface EducationCardProps {
   };
 }
 
-const EducationCard: FC<EducationCardProps> = ({
+const CertificateCard: FC<CertificateCardProps> = ({
   className,
   cardDetails,
   dialogDetails,
@@ -30,28 +30,22 @@ const EducationCard: FC<EducationCardProps> = ({
 }) => {
   return (
     <UpdateDialogCard
-      cardDetails={{ cardTitle: cardDetails.schoolName }}
+      cardDetails={{ cardTitle: cardDetails.certificateName }}
       dialogDetails={dialogDetails}
       deleteDialogDetails={deleteDialogDetails}
     >
       <CardContent className="flex flex-col justify-between text-sm">
         <div className="flex justify-between">
-          <span>{cardDetails.major}</span>
+          <span>{cardDetails.organization}</span>
           <span>
-            {cardDetails.startDate
-              ? getFormattedDate(cardDetails.startDate) + "-"
+            {cardDetails.issueDate
+              ? getFormattedDate(cardDetails.issueDate)
               : ""}
-            {cardDetails.endDate ? getFormattedDate(cardDetails.endDate) : ""}
           </span>
-        </div>
-
-        <div className="flex justify-between">
-          <span>{cardDetails.degreeType}</span>
-          <span>GPA: {cardDetails.gpa}</span>
         </div>
       </CardContent>
     </UpdateDialogCard>
   );
 };
 
-export default EducationCard;
+export default CertificateCard;

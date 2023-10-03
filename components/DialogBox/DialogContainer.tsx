@@ -25,7 +25,6 @@ export const DialogContainer: FC<DialogContainerProps> = ({
   dialogDetails,
   dialogTrigger,
 }) => {
-  console.log("Loading Education Dialog");
   return (
     <Dialog>
       <DialogTrigger asChild>{dialogTrigger}</DialogTrigger>

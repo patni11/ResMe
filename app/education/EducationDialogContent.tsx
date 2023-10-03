@@ -31,45 +31,58 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Education } from "./educationTypes";
+import { Education } from "./pageTypes";
 import { v4 as uuidv4 } from "uuid";
 
 const AddEducationFormSchema = z
   .object({
     id: z.string().optional(),
-    schoolName: z.string().min(2, {
-      message: "School Name must be at least 2 characters.",
-    }),
-    major: z.string().min(2, {
-      message: "Major must be at least 2 characters.",
-    }),
-    degreeType: z.string().min(2, {
-      message: "DegreeType must be at least 2 characters.",
-    }),
-    gpa: z.preprocess(
-      (a) => parseInt(z.string().parse(a), 10),
-      z.number().positive().multipleOf(0.01).min(0.1).max(10)
-    ),
-    startDate: z.date({
-      required_error: "A start date is required.",
-    }),
-    endDate: z.date({
-      required_error: "An end date is required.",
-    }),
+    schoolName: z
+      .string()
+      .nonempty({
+        message: "School Name must be at least 2 characters.",
+      })
+      .default(""),
+    major: z
+      .string()
+      .nonempty({
+        message: "Major must be at least 2 characters.",
+      })
+      .default(""),
+    degreeType: z
+      .string()
+      .nonempty({
+        message: "DegreeType must be at least 2 characters.",
+      })
+      .default(""),
+    gpa: z
+      .preprocess(
+        (a) => parseInt(z.string().parse(a), 10),
+        z.number().positive().multipleOf(0.01).min(0.1).max(10)
+      )
+      .default(0),
+    startDate: z
+      .date({
+        required_error: "A start date is required.",
+      })
+      .default(new Date()),
+    endDate: z
+      .date({
+        required_error: "An end date is required.",
+      })
+      .default(new Date()),
   })
   .refine((data) => data.endDate >= data.startDate, {
     message: "End date should not be less than start date.",
     path: ["endDate"], // specifies that this refinement is for the endDate field
   });
 
-//export type AddEducationFormValues = z.infer<typeof AddEducationFormSchema>;
-
-interface AddEducationDialogContentProps {
+interface EducationDialogContentProps {
   addData: (educationData: Education) => void;
   defaultValues?: Education;
 }
 
-export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
+export const EducationDialogContent: FC<EducationDialogContentProps> = ({
   addData,
   defaultValues,
 }) => {
@@ -99,9 +112,8 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
       };
     }
     addData(educationDataWithId);
+    document.getElementById("closeDialog")?.click();
   };
-
-  console.log(form);
 
   return (
     <Form {...form}>
@@ -298,10 +310,13 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
         </div>
 
         <DialogFooter>
-          <DialogTrigger className="flex space-x-4">
-            <Button variant="outline">Cancel</Button>
-            <Button type="submit">Save</Button>
+          <DialogTrigger>
+            <Button variant="outline" id="closeDialog">
+              Cancel
+            </Button>
           </DialogTrigger>
+
+          <Button type="submit">Save</Button>
         </DialogFooter>
       </form>
     </Form>
