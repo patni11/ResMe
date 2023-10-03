@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+"use client";
 import {
   Card,
   CardContent,
@@ -29,6 +29,7 @@ const EductionSection: FC<EductionSectionProps> = ({
   cardDetails,
   dialogDetails,
 }) => {
+  console.log("Loading Education Section");
   return (
     <section className="w-full justify-start">
       <Card className="w-[full] border-none">

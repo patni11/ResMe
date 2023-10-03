@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+"use client";
 import {
   Dialog,
   DialogContent,
@@ -25,13 +25,14 @@ export const DialogContainer: FC<DialogContainerProps> = ({
   dialogDetails,
   dialogTrigger,
 }) => {
+  console.log("Loading Education Dialog");
   return (
     <Dialog>
       <DialogTrigger asChild>{dialogTrigger}</DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
           <DialogTitle>{dialogDetails.title}</DialogTitle>
-          <DialogDescription>{dialogDetails.description}</DialogDescription>
+          <DialogDescription>{dialogDetails?.description}</DialogDescription>
         </DialogHeader>
         {children}
         {/* <DialogFooter>

@@ -8,24 +8,28 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { PlusCircleIcon, Settings2 } from "lucide-react";
+import { PlusCircleIcon, Settings2, Trash2 } from "lucide-react";
 import { FC, useReducer } from "react";
 import EductionSection from "./educationSection";
 
 import { Education } from "./educationTypes";
 import EducationCard from "./eductionCard";
 import { AddEducationDialogContent } from "./addEducationDialogContent";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 
 interface EducationProps {}
 
 interface Action {
-  type: "edit" | "add" | "remove";
+  type: "edit" | "add" | "delete";
   payload?: Education;
 }
 
 function reducer(state: Education[], action: Action): Education[] {
   const { type, payload } = action;
   switch (type) {
+    case "delete":
+      return state.filter((education) => education.id !== payload?.id);
+
     case "edit":
       return state.map((education) =>
         education.id === payload?.id ? { ...education, ...payload } : education
@@ -39,10 +43,20 @@ function reducer(state: Education[], action: Action): Education[] {
 }
 
 const Education: FC<EducationProps> = () => {
+  console.log("Loading Education Page");
+
   const updateEducation = (educationData: Education) => {
     console.log("Update Education", educationData);
     dispatch({
       type: "edit",
+      payload: educationData,
+    });
+  };
+
+  const deleteEducation = (educationData: Education) => {
+    console.log("Delete Education", educationData);
+    dispatch({
+      type: "delete",
       payload: educationData,
     });
   };
@@ -93,6 +107,7 @@ const Education: FC<EducationProps> = () => {
           {state.map((educationVal: Education) => {
             return (
               <EducationCard
+                key={educationVal.id}
                 cardDetails={{
                   schoolName: educationVal.schoolName,
                   major: educationVal.major,
@@ -102,7 +117,32 @@ const Education: FC<EducationProps> = () => {
                   endDate: educationVal.endDate,
                   id: educationVal.id,
                 }}
-                key={educationVal.id}
+                deleteDialogDetails={{
+                  dialogTitle: "Delete Education",
+                  dialogDescription:
+                    "Are you sure you want to delete this education?",
+                  dialogTrigger: (
+                    <Button
+                      variant="ghost"
+                      className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                    >
+                      <Trash2></Trash2>
+                    </Button>
+                  ),
+                  dialogContent: (
+                    <DialogTrigger className="flex justify-between">
+                      <Button variant="outline">Cancel</Button>
+                      <Button
+                        type="submit"
+                        variant="outline"
+                        className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                        onClick={() => deleteEducation(educationVal)}
+                      >
+                        Delete
+                      </Button>
+                    </DialogTrigger>
+                  ), //TODO: Add delete functionality
+                }}
                 dialogDetails={{
                   dialogTitle: "Edit Education",
                   dialogTrigger: (

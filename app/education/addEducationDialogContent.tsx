@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
+import { DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -16,7 +16,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { toast } from "@/components/ui/use-toast";
 import {
   Form,
   FormControl,
@@ -76,7 +75,16 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
 }) => {
   const form = useForm<Education>({
     resolver: zodResolver(AddEducationFormSchema),
-    defaultValues,
+    defaultValues: defaultValues
+      ? defaultValues
+      : {
+          schoolName: "",
+          major: "",
+          degreeType: "",
+          gpa: 0,
+          startDate: new Date(),
+          endDate: new Date(),
+        },
     mode: "onSubmit",
   });
 
@@ -93,12 +101,12 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
     addData(educationDataWithId);
   };
 
+  console.log(form);
+
   return (
     <Form {...form}>
       <form
-        onSubmit={() => {
-          form.handleSubmit(handleFormSubmit);
-        }}
+        onSubmit={form.handleSubmit(handleFormSubmit)}
         className="flex flex-col space-y-8"
       >
         {/* School Name */}
@@ -107,9 +115,13 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
           name="schoolName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>School Name</FormLabel>
+              <FormLabel htmlFor={field.name}>School Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter School Name" {...field} />
+                <Input
+                  placeholder="Enter School Name"
+                  {...field}
+                  id={field.name}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -123,9 +135,14 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
             name="major"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Major</FormLabel>
+                <FormLabel htmlFor={field.name}>Major</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Major" {...field} />
+                  <Input
+                    placeholder="Enter Major"
+                    {...field}
+                    id={field.name}
+                    name={field.name}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -137,10 +154,11 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
             name="degreeType"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Degree Type</FormLabel>
+                <FormLabel htmlFor={field.name}>Degree Type</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
+                  name={field.name}
                 >
                   <FormControl>
                     <SelectTrigger className="w-[180px]">
@@ -170,10 +188,10 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
             render={({ field }) => {
               return (
                 <FormItem>
-                  <FormLabel>GPA</FormLabel>
+                  <FormLabel htmlFor={field.name}>GPA</FormLabel>
                   <FormControl>
                     <Input
-                      id="gpa"
+                      id={field.name}
                       type="number"
                       min="0"
                       max="10"
@@ -199,7 +217,7 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
             name="startDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>Start Date</FormLabel>
+                <FormLabel htmlFor={field.name}>Start Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -228,6 +246,7 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
                         date > new Date() || date < new Date("1900-01-01")
                       }
                       initialFocus
+                      id={field.name}
                     />
                   </PopoverContent>
                 </Popover>
@@ -241,7 +260,7 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
             name="endDate"
             render={({ field }) => (
               <FormItem className="flex flex-col">
-                <FormLabel>End Date</FormLabel>
+                <FormLabel htmlFor={field.name}>End Date</FormLabel>
                 <Popover>
                   <PopoverTrigger asChild>
                     <FormControl>
@@ -268,6 +287,7 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
                       onSelect={field.onChange}
                       disabled={(date) => date < new Date("1900-01-01")}
                       initialFocus
+                      id={field.name}
                     />
                   </PopoverContent>
                 </Popover>
@@ -278,8 +298,10 @@ export const AddEducationDialogContent: FC<AddEducationDialogContentProps> = ({
         </div>
 
         <DialogFooter>
-          <Button variant="outline">Cancel</Button>
-          <Button type="submit">Save changes</Button>
+          <DialogTrigger className="flex space-x-4">
+            <Button variant="outline">Cancel</Button>
+            <Button type="submit">Save</Button>
+          </DialogTrigger>
         </DialogFooter>
       </form>
     </Form>
