@@ -1,11 +1,6 @@
-export interface Education {
-  schoolName: string;
-  major: string;
-  degreeType: string;
-  gpa: number;
-  startDate: Date;
-  endDate: Date;
-  id: string;
+import { AddEducationFormType } from "./EducationDialogContent";
+
+export interface Education extends AddEducationFormType {
   error?: string | null;
 }
 

@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { UserNav } from "./UserNav";
+import { UserBox } from "./UserBox";
 import Link from "next/link";
 import {
   HomeIcon,
@@ -12,7 +12,6 @@ import {
   PocketKnife,
 } from "lucide-react";
 import { useState } from "react";
-import { buttonVariants } from "./ui/button";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -43,7 +42,7 @@ export function Sidebar({ className }: SidebarProps) {
             </div>
 
             <div className="flex flex-col space-y-2 px-3 py-2">
-              <Link href="/">
+              <Link href="/dashboard">
                 <div className={`${buttonDesign} w-full border border-input`}>
                   <HomeIcon absoluteStrokeWidth></HomeIcon>
 
@@ -83,7 +82,7 @@ export function Sidebar({ className }: SidebarProps) {
             </div>
           </div>
           <div className="px-3 py-2">
-            <UserNav></UserNav>
+            <UserBox></UserBox>
           </div>
         </div>
       ) : (

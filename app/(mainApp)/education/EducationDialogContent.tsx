@@ -34,6 +34,8 @@ import { format } from "date-fns";
 import { Education } from "./pageTypes";
 import { v4 as uuidv4 } from "uuid";
 
+//TODO: Fix update for all values except gpa
+
 const AddEducationFormSchema = z
   .object({
     id: z.string().optional(),
@@ -76,6 +78,8 @@ const AddEducationFormSchema = z
     message: "End date should not be less than start date.",
     path: ["endDate"], // specifies that this refinement is for the endDate field
   });
+
+export type AddEducationFormType = z.infer<typeof AddEducationFormSchema>;
 
 interface EducationDialogContentProps {
   addData: (educationData: Education) => void;

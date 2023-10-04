@@ -30,6 +30,7 @@
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
     "lucide-react": "^0.279.0",
+    "mongoose": "^7.5.3",
     "next": "latest",
     "react": "latest",
     "react-day-picker": "^8.8.2",

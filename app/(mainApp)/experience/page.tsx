@@ -1,12 +1,14 @@
 "use client";
 import ContentSection from "@/components/Sections/ContentSection";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { PlusCircleIcon, Trash2, Settings2 } from "lucide-react";
+import { PlusCircleIcon, Settings2, Trash2 } from "lucide-react";
 import { FC, useReducer } from "react";
 import { Button } from "@/components/ui/button";
 import ExperienceDialogContent from "./ExperienceDialogContent";
 import { Experience } from "./pageTypes";
 import ExperienceCard from "./experienceCard";
+import Settings2Button from "@/components/UIButtons/Settings2Button";
+import Trash2Button from "@/components/UIButtons/Trash2Button";
 
 interface ExperienceProps {}
 
@@ -110,9 +112,11 @@ const Experience: FC<ExperienceProps> = () => {
                   dialogTrigger: (
                     <Button
                       variant="ghost"
-                      className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                      className={
+                        "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                      }
                     >
-                      <Trash2></Trash2>
+                      <Trash2 className="w-5 h-5"></Trash2>
                     </Button>
                   ),
                   dialogContent: (
@@ -133,9 +137,9 @@ const Experience: FC<ExperienceProps> = () => {
                   dialogTitle: "Edit Education",
                   dialogTrigger: (
                     <Button variant="ghost">
-                      <Settings2></Settings2>
+                      <Settings2 className="w-5 h-5"></Settings2>
                     </Button>
-                  ), //TODO: Add edit functionality
+                  ),
                   dialogContent: (
                     <ExperienceDialogContent
                       addData={updateExperience}

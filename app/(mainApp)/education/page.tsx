@@ -1,16 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
 import { PlusCircleIcon, Settings2, Trash2 } from "lucide-react";
 import { FC, useReducer } from "react";
-import ContentSection from "../../components/Sections/ContentSection";
+import ContentSection from "@/components/Sections/ContentSection";
 
 import { Certificate, Education } from "./pageTypes";
 import EducationCard from "./eductionCard";
@@ -186,9 +178,11 @@ const Education: FC<EducationProps> = () => {
                   dialogTrigger: (
                     <Button
                       variant="ghost"
-                      className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                      className={
+                        "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                      }
                     >
-                      <Trash2></Trash2>
+                      <Trash2 className="w-5 h-5"></Trash2>
                     </Button>
                   ),
                   dialogContent: (
@@ -209,9 +203,9 @@ const Education: FC<EducationProps> = () => {
                   dialogTitle: "Edit Education",
                   dialogTrigger: (
                     <Button variant="ghost">
-                      <Settings2></Settings2>
+                      <Settings2 className="w-5 h-5"></Settings2>
                     </Button>
-                  ), //TODO: Add edit functionality
+                  ),
                   dialogContent: (
                     <EducationDialogContent
                       addData={updateEducation}
@@ -258,9 +252,11 @@ const Education: FC<EducationProps> = () => {
                   dialogTrigger: (
                     <Button
                       variant="ghost"
-                      className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                      className={
+                        "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                      }
                     >
-                      <Trash2></Trash2>
+                      <Trash2 className="w-5 h-5"></Trash2>
                     </Button>
                   ),
                   dialogContent: (
@@ -281,7 +277,7 @@ const Education: FC<EducationProps> = () => {
                   dialogTitle: "Edit Certificate",
                   dialogTrigger: (
                     <Button variant="ghost">
-                      <Settings2></Settings2>
+                      <Settings2 className="w-5 h-5"></Settings2>
                     </Button>
                   ),
                   dialogContent: (

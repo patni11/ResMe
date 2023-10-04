@@ -1,4 +1,3 @@
-import { Sidebar } from "@/components/Sidebar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -21,7 +20,6 @@ export default function RootLayout({
         <div className="flex">
           {" "}
           {/* Added for demonstration purposes, adjust width and other styles as required */}
-          <Sidebar />
           <div className="flex-1">{children}</div>
         </div>
       </body>

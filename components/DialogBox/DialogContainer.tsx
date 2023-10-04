@@ -34,12 +34,6 @@ export const DialogContainer: FC<DialogContainerProps> = ({
           <DialogDescription>{dialogDetails?.description}</DialogDescription>
         </DialogHeader>
         {children}
-        {/* <DialogFooter>
-          <Button variant="outline">Cancel</Button>
-          <Button type="submit" onClick={onClick}>
-            Save changes
-          </Button>
-        </DialogFooter> */}
       </DialogContent>
     </Dialog>
   );

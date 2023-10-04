@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -35,6 +36,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogFooter, DialogTrigger } from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const ExperienceSchema = z
   .object({
@@ -134,6 +136,11 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
     document.getElementById("closeDialog")?.click();
   };
 
+  const { watch, setValue } = form;
+
+  const endDateValue = watch("endDate");
+  const isWorking = endDateValue === "working";
+  //TODO: Fix update endDate
   return (
     <>
       <Form {...form}>
@@ -258,6 +265,74 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
               )}
             />
 
+            <div className="flex flex-col space-y-4 justify-center">
+              {!isWorking && (
+                <FormField
+                  control={form.control}
+                  name="endDate"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>End Date</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value instanceof Date ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>Pick a date</span>
+                              )}
+                              <CalendarIcon className="ml-4 h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={
+                              field.value instanceof Date
+                                ? field.value
+                                : undefined
+                            }
+                            onSelect={field.onChange}
+                            disabled={(date) => date < new Date("1900-01-01")}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="working"
+                  checked={isWorking}
+                  onCheckedChange={(checked) => {
+                    if (checked) {
+                      setValue("endDate", "working");
+                    } else {
+                      setValue("endDate", new Date());
+                    }
+                  }}
+                />
+                <label
+                  htmlFor="working"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Currently Working
+                </label>
+              </div>
+            </div>
+
             {/** TODO: add end date */}
           </div>
 
@@ -267,6 +342,9 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Description</FormLabel>
+                <FormDescription>
+                  Separate each point with a new line
+                </FormDescription>
                 <FormControl>
                   <Textarea
                     placeholder="Tell us a bit about your contributions in different lines"
@@ -274,6 +352,7 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
                     {...field}
                   />
                 </FormControl>
+
                 <FormMessage />
               </FormItem>
             )}
