@@ -19,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import LightText from "@/components/Text";
 import { PlusCircle, Trash2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 interface UserInfoFormProps {
   addData: (projectData: UserInfo) => void;
@@ -31,9 +33,7 @@ const UserInfoSchema = z.object({
   contactInfo: z
     .array(
       z.object({
-        contact: z
-          .string()
-          .nonempty({ message: "Can't be empty, or remote it" }),
+        contact: z.string().nonempty({ message: "Enter value or remote it" }),
       })
     )
     .optional(),
@@ -41,16 +41,15 @@ const UserInfoSchema = z.object({
   links: z
     .array(
       z.object({
-        linkName: z
-          .string()
-          .nonempty({ message: "Can't be empty, or remote it" }),
-        link: z.string().nonempty({ message: "Can't be empty, or remote it" }),
+        linkName: z.string().nonempty({ message: "Enter value or remote it" }),
+        link: z.string().nonempty({ message: "Enter value or remote it" }),
       })
     )
     .optional(),
 });
 
 const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues, addData }) => {
+  const { toast } = useToast();
   const form = useForm<UserInfo>({
     resolver: zodResolver(UserInfoSchema),
     defaultValues: defaultValues
@@ -76,6 +75,10 @@ const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues, addData }) => {
       };
     }
     addData(projectData);
+    console.log("Form Submitted");
+    toast({
+      title: "User Info Saved ",
+    });
   };
 
   const {
@@ -100,7 +103,7 @@ const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues, addData }) => {
     name: "links",
   });
 
-  console.log(errors);
+  //console.log(errors);
 
   return (
     <>
@@ -136,27 +139,33 @@ const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues, addData }) => {
             <section className="flex flex-col space-y-4">
               {contactFields.map((field, index) => {
                 return (
-                  <div key={field.id} className="flex space-x-4">
-                    <FormItem>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter Your Contact info"
-                          {...register(`contactInfo.${index}.contact`)}
-                        />
-                      </FormControl>
-                      <Button
-                        type="button"
-                        onClick={() => removeContact(index)}
-                        variant="ghost"
-                        className={
-                          "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
-                        }
-                      >
-                        <Trash2 className="w-5 h-5"></Trash2>
-                      </Button>
-                      <FormMessage />
-                    </FormItem>
-                  </div>
+                  <FormField
+                    key={field.id}
+                    name={`contactInfo.${index}.contact`}
+                    render={({}) => (
+                      <FormItem className="flex flex-col space-y-4">
+                        <div className="flex space-x-4">
+                          <FormControl>
+                            <Input
+                              placeholder="Enter Your Contact info"
+                              {...register(`contactInfo.${index}.contact`)}
+                            />
+                          </FormControl>
+                          <Button
+                            type="button"
+                            onClick={() => removeContact(index)}
+                            variant="ghost"
+                            className={
+                              "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                            }
+                          >
+                            <Trash2 className="w-5 h-5"></Trash2>
+                          </Button>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 );
               })}
             </section>
@@ -180,18 +189,39 @@ const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues, addData }) => {
               This includes your twitter, linkedin, or any other resource you
               need in your resume
             </FormDescription>
-            <section className="flex flex-col space-y-4">
+            <section className="flex flex-col w-full">
               {linkFields.map((field, index) => {
                 return (
-                  <div key={field.id} className="flex space-x-4">
-                    <Input
-                      placeholder="Your Link Name"
-                      {...register(`links.${index}.linkName`)}
+                  <FormItem
+                    key={field.id}
+                    className="flex space-x-4 space-y-0 items-center"
+                  >
+                    <FormField
+                      name={`links.${index}.linkName`}
+                      render={({}) => (
+                        <FormItem>
+                          <Input
+                            placeholder="Ex: Github"
+                            {...register(`links.${index}.linkName`)}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                    <Input
-                      placeholder="https://"
-                      {...register(`links.${index}.link`)}
+
+                    <FormField
+                      name={`links.${index}.link`}
+                      render={({}) => (
+                        <FormItem>
+                          <Input
+                            placeholder="https://"
+                            {...register(`links.${index}.link`)}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
+
                     <Button
                       type="button"
                       onClick={() => removeLink(index)}
@@ -202,7 +232,7 @@ const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues, addData }) => {
                     >
                       <Trash2 className="w-5 h-5"></Trash2>
                     </Button>
-                  </div>
+                  </FormItem>
                 );
               })}
             </section>
