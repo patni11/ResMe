@@ -7,9 +7,7 @@ import { Button } from "@/components/ui/button";
 import ExperienceDialogContent from "./ExperienceDialogContent";
 import { Experience } from "./pageTypes";
 import ExperienceCard from "./experienceCard";
-import Settings2Button from "@/components/UIButtons/Settings2Button";
-import Trash2Button from "@/components/UIButtons/Trash2Button";
-
+import Image from "next/image";
 interface ExperienceProps {}
 
 interface ExperienceAction {
@@ -74,7 +72,7 @@ const Experience: FC<ExperienceProps> = () => {
 
   return (
     <main className="flex justify-center w-full h-full">
-      <div className="flex flex-col w-[80%] items-center py-12 space-y-8">
+      <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
         <ContentSection
           cardDetails={{
             title: "Add Work Experience",
@@ -91,66 +89,79 @@ const Experience: FC<ExperienceProps> = () => {
             dialogContent: <ExperienceDialogContent addData={addExperience} />,
           }}
         >
-          {educationState.map((experienceVal: Experience) => {
-            return (
-              <ExperienceCard
-                key={experienceVal.id}
-                cardDetails={{
-                  company: experienceVal.company,
-                  location: experienceVal.location,
-                  positionTitle: experienceVal.positionTitle,
-                  experienceType: experienceVal.experienceType,
-                  startDate: experienceVal.startDate,
-                  endDate: experienceVal.endDate,
-                  description: experienceVal.description,
-                  id: experienceVal.id,
-                }}
-                deleteDialogDetails={{
-                  dialogTitle: "Delete Experience",
-                  dialogDescription:
-                    "Are you sure you want to delete this experience?",
-                  dialogTrigger: (
-                    <Button
-                      variant="ghost"
-                      className={
-                        "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
-                      }
-                    >
-                      <Trash2 className="w-5 h-5"></Trash2>
-                    </Button>
-                  ),
-                  dialogContent: (
-                    <DialogTrigger className="flex justify-between">
-                      <Button variant="outline">Cancel</Button>
+          <div className="flex flex-col space-y-2">
+            {educationState.map((experienceVal: Experience) => {
+              return (
+                <ExperienceCard
+                  key={experienceVal.id}
+                  cardDetails={{
+                    company: experienceVal.company,
+                    location: experienceVal.location,
+                    positionTitle: experienceVal.positionTitle,
+                    experienceType: experienceVal.experienceType,
+                    startDate: experienceVal.startDate,
+                    endDate: experienceVal.endDate,
+                    description: experienceVal.description,
+                    id: experienceVal.id,
+                  }}
+                  deleteDialogDetails={{
+                    dialogTitle: "Delete Experience",
+                    dialogDescription:
+                      "Are you sure you want to delete this experience?",
+                    dialogTrigger: (
                       <Button
-                        type="submit"
-                        variant="outline"
-                        className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                        onClick={() => deleteExperience(experienceVal)}
+                        variant="ghost"
+                        className={
+                          "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                        }
                       >
-                        Delete
+                        <Trash2 className="w-5 h-5"></Trash2>
                       </Button>
-                    </DialogTrigger>
-                  ),
-                }}
-                dialogDetails={{
-                  dialogTitle: "Edit Education",
-                  dialogTrigger: (
-                    <Button variant="ghost">
-                      <Settings2 className="w-5 h-5"></Settings2>
-                    </Button>
-                  ),
-                  dialogContent: (
-                    <ExperienceDialogContent
-                      addData={updateExperience}
-                      defaultValues={experienceVal}
-                    />
-                  ),
-                }}
-              />
-            );
-          })}
+                    ),
+                    dialogContent: (
+                      <DialogTrigger className="flex justify-between">
+                        <Button variant="outline">Cancel</Button>
+                        <Button
+                          type="submit"
+                          variant="outline"
+                          className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                          onClick={() => deleteExperience(experienceVal)}
+                        >
+                          Delete
+                        </Button>
+                      </DialogTrigger>
+                    ),
+                  }}
+                  dialogDetails={{
+                    dialogTitle: "Edit Education",
+                    dialogTrigger: (
+                      <Button variant="ghost">
+                        <Settings2 className="w-5 h-5"></Settings2>
+                      </Button>
+                    ),
+                    dialogContent: (
+                      <ExperienceDialogContent
+                        addData={updateExperience}
+                        defaultValues={experienceVal}
+                      />
+                    ),
+                  }}
+                />
+              );
+            })}
+          </div>
         </ContentSection>
+      </div>
+      <div className="flex-shrink-0 w-1/3 max-w-[30%] h-full relative">
+        {/* Aspect ratio container */}
+        <div className="relative h-full" style={{ paddingTop: "42.86%" }}>
+          <Image
+            src="/pageStyles/experience/pixelArt1.png"
+            alt="graphic"
+            layout="fill" // This makes the image take up the full width and height of its container
+            objectFit="cover" // This ensures the image maintains its aspect ratio while filling its container
+          />
+        </div>
       </div>
     </main>
   );

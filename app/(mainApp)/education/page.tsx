@@ -10,6 +10,7 @@ import { EducationDialogContent } from "./EducationDialogContent";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import CertificateDialogContent from "./CertificateDialogContent";
 import CertificateCard from "./certificateCard";
+import Image from "next/image";
 
 interface EducationProps {}
 
@@ -141,7 +142,7 @@ const Education: FC<EducationProps> = () => {
 
   return (
     <main className="flex justify-center w-full h-full">
-      <div className="flex flex-col w-[80%] items-center py-12 space-y-8">
+      <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
         <ContentSection
           cardDetails={{
             title: "Add Education",
@@ -158,64 +159,66 @@ const Education: FC<EducationProps> = () => {
             dialogContent: <EducationDialogContent addData={addEducation} />,
           }}
         >
-          {educationState.map((educationVal: Education) => {
-            return (
-              <EducationCard
-                key={educationVal.id}
-                cardDetails={{
-                  schoolName: educationVal.schoolName,
-                  major: educationVal.major,
-                  gpa: educationVal.gpa,
-                  degreeType: educationVal.degreeType,
-                  startDate: educationVal.startDate,
-                  endDate: educationVal.endDate,
-                  id: educationVal.id,
-                }}
-                deleteDialogDetails={{
-                  dialogTitle: "Delete Education",
-                  dialogDescription:
-                    "Are you sure you want to delete this education?",
-                  dialogTrigger: (
-                    <Button
-                      variant="ghost"
-                      className={
-                        "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
-                      }
-                    >
-                      <Trash2 className="w-5 h-5"></Trash2>
-                    </Button>
-                  ),
-                  dialogContent: (
-                    <DialogTrigger className="flex justify-between">
-                      <Button variant="outline">Cancel</Button>
+          <div className="flex flex-col space-y-2">
+            {educationState.map((educationVal: Education) => {
+              return (
+                <EducationCard
+                  key={educationVal.id}
+                  cardDetails={{
+                    schoolName: educationVal.schoolName,
+                    major: educationVal.major,
+                    gpa: educationVal.gpa,
+                    degreeType: educationVal.degreeType,
+                    startDate: educationVal.startDate,
+                    endDate: educationVal.endDate,
+                    id: educationVal.id,
+                  }}
+                  deleteDialogDetails={{
+                    dialogTitle: "Delete Education",
+                    dialogDescription:
+                      "Are you sure you want to delete this education?",
+                    dialogTrigger: (
                       <Button
-                        type="submit"
-                        variant="outline"
-                        className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                        onClick={() => deleteEducation(educationVal)}
+                        variant="ghost"
+                        className={
+                          "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                        }
                       >
-                        Delete
+                        <Trash2 className="w-5 h-5"></Trash2>
                       </Button>
-                    </DialogTrigger>
-                  ),
-                }}
-                dialogDetails={{
-                  dialogTitle: "Edit Education",
-                  dialogTrigger: (
-                    <Button variant="ghost">
-                      <Settings2 className="w-5 h-5"></Settings2>
-                    </Button>
-                  ),
-                  dialogContent: (
-                    <EducationDialogContent
-                      addData={updateEducation}
-                      defaultValues={educationVal}
-                    />
-                  ),
-                }}
-              />
-            );
-          })}
+                    ),
+                    dialogContent: (
+                      <DialogTrigger className="flex justify-between">
+                        <Button variant="outline">Cancel</Button>
+                        <Button
+                          type="submit"
+                          variant="outline"
+                          className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                          onClick={() => deleteEducation(educationVal)}
+                        >
+                          Delete
+                        </Button>
+                      </DialogTrigger>
+                    ),
+                  }}
+                  dialogDetails={{
+                    dialogTitle: "Edit Education",
+                    dialogTrigger: (
+                      <Button variant="ghost">
+                        <Settings2 className="w-5 h-5"></Settings2>
+                      </Button>
+                    ),
+                    dialogContent: (
+                      <EducationDialogContent
+                        addData={updateEducation}
+                        defaultValues={educationVal}
+                      />
+                    ),
+                  }}
+                />
+              );
+            })}
+          </div>
         </ContentSection>
 
         <ContentSection
@@ -235,62 +238,75 @@ const Education: FC<EducationProps> = () => {
             ),
           }}
         >
-          {certificateState.map((certificateVal: Certificate) => {
-            return (
-              <CertificateCard
-                key={certificateVal.certificateId}
-                cardDetails={{
-                  certificateName: certificateVal.certificateName,
-                  organization: certificateVal.organization,
-                  issueDate: certificateVal.issueDate,
-                  certificateId: certificateVal.certificateId,
-                }}
-                deleteDialogDetails={{
-                  dialogTitle: "Delete Certificate",
-                  dialogDescription:
-                    "Are you sure you want to delete this certificate?",
-                  dialogTrigger: (
-                    <Button
-                      variant="ghost"
-                      className={
-                        "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
-                      }
-                    >
-                      <Trash2 className="w-5 h-5"></Trash2>
-                    </Button>
-                  ),
-                  dialogContent: (
-                    <DialogTrigger className="flex justify-between">
-                      <Button variant="outline">Cancel</Button>
+          <div className="flex flex-col space-y-2">
+            {certificateState.map((certificateVal: Certificate) => {
+              return (
+                <CertificateCard
+                  key={certificateVal.certificateId}
+                  cardDetails={{
+                    certificateName: certificateVal.certificateName,
+                    organization: certificateVal.organization,
+                    issueDate: certificateVal.issueDate,
+                    certificateId: certificateVal.certificateId,
+                  }}
+                  deleteDialogDetails={{
+                    dialogTitle: "Delete Certificate",
+                    dialogDescription:
+                      "Are you sure you want to delete this certificate?",
+                    dialogTrigger: (
                       <Button
-                        type="submit"
-                        variant="outline"
-                        className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                        onClick={() => deleteCertificate(certificateVal)}
+                        variant="ghost"
+                        className={
+                          "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                        }
                       >
-                        Delete
+                        <Trash2 className="w-5 h-5"></Trash2>
                       </Button>
-                    </DialogTrigger>
-                  ),
-                }}
-                dialogDetails={{
-                  dialogTitle: "Edit Certificate",
-                  dialogTrigger: (
-                    <Button variant="ghost">
-                      <Settings2 className="w-5 h-5"></Settings2>
-                    </Button>
-                  ),
-                  dialogContent: (
-                    <CertificateDialogContent
-                      addData={updateCertificate}
-                      defaultValues={certificateVal}
-                    />
-                  ),
-                }}
-              />
-            );
-          })}
+                    ),
+                    dialogContent: (
+                      <DialogTrigger className="flex justify-between">
+                        <Button variant="outline">Cancel</Button>
+                        <Button
+                          type="submit"
+                          variant="outline"
+                          className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+                          onClick={() => deleteCertificate(certificateVal)}
+                        >
+                          Delete
+                        </Button>
+                      </DialogTrigger>
+                    ),
+                  }}
+                  dialogDetails={{
+                    dialogTitle: "Edit Certificate",
+                    dialogTrigger: (
+                      <Button variant="ghost">
+                        <Settings2 className="w-5 h-5"></Settings2>
+                      </Button>
+                    ),
+                    dialogContent: (
+                      <CertificateDialogContent
+                        addData={updateCertificate}
+                        defaultValues={certificateVal}
+                      />
+                    ),
+                  }}
+                />
+              );
+            })}
+          </div>
         </ContentSection>
+      </div>
+      <div className="flex-shrink-0 w-1/3 max-w-[30%] h-full relative">
+        {/* Aspect ratio container */}
+        <div className="relative h-full" style={{ paddingTop: "42.86%" }}>
+          <Image
+            src="/pageStyles/education/pixelArt1.png"
+            alt="graphic"
+            layout="fill" // This makes the image take up the full width and height of its container
+            objectFit="cover" // This ensures the image maintains its aspect ratio while filling its container
+          />
+        </div>
       </div>
     </main>
   );

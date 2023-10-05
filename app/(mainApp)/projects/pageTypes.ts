@@ -3,7 +3,7 @@ export type Project = {
   location?: string;
   positionTitle?: string;
   startDate?: Date;
-  endDate?: Date | "working";
+  endDate?: Date;
   description: string;
   id: string;
 };

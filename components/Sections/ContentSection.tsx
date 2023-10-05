@@ -11,7 +11,7 @@ import { FC, ReactNode } from "react";
 import { DialogContainer } from "../DialogBox/DialogContainer";
 
 interface ContentSectionProps {
-  children?: ReactNode[];
+  children?: ReactNode;
   cardDetails: {
     title: string;
     description: string;
@@ -36,11 +36,12 @@ const ContentSection: FC<ContentSectionProps> = ({
           <CardTitle>{cardDetails.title}</CardTitle>
           <CardDescription>{cardDetails.description}</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col space-y-2">
+        <CardContent>
           {/** Add loop here for multiple universities */}
-          {children?.map((childrenCard) => {
+          {/* {children?.map((childrenCard) => {
             return childrenCard;
-          })}
+          })} */}
+          {children}
           {/** End loop here */}
         </CardContent>
         <CardFooter className="flex justify-end">

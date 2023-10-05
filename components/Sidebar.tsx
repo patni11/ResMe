@@ -10,6 +10,7 @@ import {
   Briefcase,
   FolderOpenDot,
   PocketKnife,
+  User2,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -25,7 +26,7 @@ export function Sidebar({ className }: SidebarProps) {
     "flex p-2 bg-secondary text-secondary-foreground hover:bg-foreground/20 inline-flex justify-start items-center rounded-md text-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
 
   return (
-    <div className={cn("h-screen", className)}>
+    <div className={cn("h-screen sticky top-0", className)}>
       {isSidebarOpen ? (
         <div className="space-y-4 py-4 flex flex-col justify-between h-screen w-64 bg-secondary">
           <div className="px-3 py-2">
@@ -77,6 +78,12 @@ export function Sidebar({ className }: SidebarProps) {
                 <div className={`${buttonDesign} w-full border border-input`}>
                   <PocketKnife absoluteStrokeWidth></PocketKnife>
                   <span className="ml-2">Skills</span>
+                </div>
+              </Link>
+              <Link href="/userInfo">
+                <div className={`${buttonDesign} w-full border border-input`}>
+                  <User2 absoluteStrokeWidth></User2>
+                  <span className="ml-2">Your Info</span>
                 </div>
               </Link>
             </div>

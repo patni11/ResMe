@@ -348,7 +348,6 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
                 <FormControl>
                   <Textarea
                     placeholder="Tell us a bit about your contributions in different lines"
-                    className="resize-none"
                     {...field}
                   />
                 </FormControl>

@@ -10,8 +10,8 @@ interface DashBoardProps {}
 const DashBoard: FC<DashBoardProps> = () => {
   return (
     <>
-      <div className="relative">
-        <div className="flex space-x-4 pb-4 text-wrap">
+      <div className="relative w-[90%]">
+        <div className="flex flex-wrap space-x-4 pb-4 text-wrap">
           {/* <ResumeCard
             key="default"
             album={defaultResume}
@@ -20,7 +20,7 @@ const DashBoard: FC<DashBoardProps> = () => {
             width={200}
             height={265}
           /> */}
-          <div className={cn("space-y-3 w-[200px]")}>
+          <div className={cn("space-y-3 w-[200px] ml-4")}>
             <div className="overflow-hidden rounded-md border">
               <Link
                 href="/buildResume"
@@ -44,7 +44,7 @@ const DashBoard: FC<DashBoardProps> = () => {
             <ResumeCard
               key={album.name}
               album={album}
-              className="w-[200px]"
+              className="w-[200px] mb-12"
               aspectRatio="portrait"
               width={200}
               height={265}
