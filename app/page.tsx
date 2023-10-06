@@ -12,7 +12,7 @@ export default function Home() {
         <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
           <p className="flex text-sm font-semibold text-gray-700">
             <Hammer className="mr-2 h-5 w-5"></Hammer>
-            <span>Res'Me is in Development</span>
+            <span>Res&apos;Me is in Development</span>
           </p>
         </div>
         <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
@@ -20,8 +20,8 @@ export default function Home() {
           seconds
         </h1>
         <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-          Res'Me allows you to create professional Resumes. Simply enter your
-          information and we'll do the rest.
+          Res&apos;Me allows you to create professional Resumes. Simply enter
+          your information and we&apos;ll do the rest.
         </p>
 
         <Link
@@ -93,7 +93,7 @@ export default function Home() {
             </h2>
             <p className="mt-4 text-lg text-gray-600">
               Building professional Resumes has never been easier than with
-              Res'Me.
+              Res&apos;Me.
             </p>
           </div>
         </div>
@@ -137,7 +137,7 @@ export default function Home() {
                 Download Your Resume
               </span>
               <span className="mt-2 text-zinc-700">
-                It&apos;s that simple. Try out Res'Me today.
+                It&apos;s that simple. Try out Res&apos;Me today.
               </span>
             </div>
           </li>

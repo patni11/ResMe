@@ -174,10 +174,10 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="High School">High School</SelectItem>
-                    <SelectItem value="Bachelor's">Bachelor's</SelectItem>
-                    <SelectItem value="Master's">Master's</SelectItem>
+                    <SelectItem value="Bachelor's">Bachelor&apos;s</SelectItem>
+                    <SelectItem value="Master's">Master&apos;s</SelectItem>
                     <SelectItem value="PhD">PhD</SelectItem>
-                    <SelectItem value="Associate">Associate's</SelectItem>
+                    <SelectItem value="Associate">Associate&apos;s</SelectItem>
                     <SelectItem value="Doctorate">Doctorate</SelectItem>
                     <SelectItem value="PharmD">PharmD</SelectItem>
                     <SelectItem value="JD">JD</SelectItem>

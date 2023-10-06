@@ -32,7 +32,9 @@ export function Sidebar({ className }: SidebarProps) {
           <div className="px-3 py-2">
             <div className="px-3 py-2 flex justify-between items-center">
               <Link href="/">
-                <h2 className={`${buttonDesign} font-bold text-lg`}>Res'Me</h2>
+                <h2 className={`${buttonDesign} font-bold text-lg`}>
+                  Res&apos;Me
+                </h2>
               </Link>
               <div
                 className={`${buttonDesign} cursor-pointer`}
