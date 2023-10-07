@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import ProjectDialogContent from "./ProjectDialogContent";
 import { Project } from "./pageTypes";
 import ProjectCard from "./projectCard";
-import Image from "next/image";
+import ImageWrapper from "@/components/ImageWrapper";
 
 interface ProjectProps {}
 
@@ -67,7 +67,7 @@ const Project: FC<ProjectProps> = () => {
   };
 
   return (
-    <main className="flex justify-center w-full h-full">
+    <ImageWrapper imgSrc="project">
       <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
         <ContentSection
           cardDetails={{
@@ -147,18 +147,7 @@ const Project: FC<ProjectProps> = () => {
           </div>
         </ContentSection>
       </div>
-      <div className="flex-shrink-0 w-1/3 max-w-[30%] h-full relative">
-        {/* Aspect ratio container */}
-        <div className="relative h-full" style={{ paddingTop: "42.86%" }}>
-          <Image
-            src="/pageStyles/projects/pixelArt5.png"
-            alt="graphic"
-            layout="fill" // This makes the image take up the full width and height of its container
-            objectFit="cover" // This ensures the image maintains its aspect ratio while filling its container
-          />
-        </div>
-      </div>
-    </main>
+    </ImageWrapper>
   );
 };
 

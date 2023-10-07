@@ -1,6 +1,6 @@
 // @prefix reactForm
 // @description
-
+"use client";
 import { FC } from "react";
 import { Project } from "./pageTypes";
 import { zodResolver } from "@hookform/resolvers/zod";

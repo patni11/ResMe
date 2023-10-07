@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import ExperienceDialogContent from "./ExperienceDialogContent";
 import { Experience } from "./pageTypes";
 import ExperienceCard from "./experienceCard";
-import Image from "next/image";
+import ImageWrapper from "@/components/ImageWrapper";
 interface ExperienceProps {}
 
 interface ExperienceAction {
@@ -71,7 +71,7 @@ const Experience: FC<ExperienceProps> = () => {
   };
 
   return (
-    <main className="flex justify-center w-full h-full">
+    <ImageWrapper imgSrc="experience">
       <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
         <ContentSection
           cardDetails={{
@@ -152,18 +152,7 @@ const Experience: FC<ExperienceProps> = () => {
           </div>
         </ContentSection>
       </div>
-      <div className="flex-shrink-0 w-1/3 max-w-[30%] h-full relative">
-        {/* Aspect ratio container */}
-        <div className="relative h-full" style={{ paddingTop: "42.86%" }}>
-          <Image
-            src="/pageStyles/experience/pixelArt1.png"
-            alt="graphic"
-            layout="fill" // This makes the image take up the full width and height of its container
-            objectFit="cover" // This ensures the image maintains its aspect ratio while filling its container
-          />
-        </div>
-      </div>
-    </main>
+    </ImageWrapper>
   );
 };
 

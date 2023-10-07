@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, mongo } from "mongoose";
 
 const CertificateSchema = new Schema(
   {
@@ -50,22 +50,6 @@ const ProjectSchema = new Schema(
   { timestamps: true }
 );
 
-const Resume = new Schema(
-  {
-    userId: String,
-    header: {
-      username: String,
-      contactInfo: [String],
-      links: [String],
-    },
-    educations: [EducationSchema],
-    certificates: [CertificateSchema],
-    experiences: [ExperieceSchema],
-    projects: [ProjectSchema],
-  },
-  { timestamps: true }
-);
-
 const UserSchema = new Schema(
   {
     userPlatformDetails: {
@@ -105,17 +89,43 @@ const UserSchema = new Schema(
       },
     ],
 
-    certificates: [CertificateSchema],
-    educations: [EducationSchema],
-    experiences: [ExperieceSchema],
-    projects: [ProjectSchema],
+    educations: [{ type: Schema.Types.ObjectId, ref: "Education" }],
+    certificates: [{ type: Schema.Types.ObjectId, ref: "Certificate" }],
+    experiences: [{ type: Schema.Types.ObjectId, ref: "Experience" }],
+    projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
   },
   {
     timestamps: true,
   }
 );
 
-const Certificate =
-  mongoose.models.Certificate || mongoose.model("Certificate", UserSchema);
+const TempUserSchema = new Schema(
+  {
+    _id: { type: String, required: true },
+    displayName: { type: String, required: true },
+    contactInfo: [
+      {
+        contact: { type: String, required: true },
+      },
+    ],
+    location: { type: String },
+    links: [
+      {
+        linkName: { type: String, required: true },
+        link: { type: String, required: true },
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-export default Certificate;
+// const Certificate =
+//   mongoose.models.Certificate || mongoose.model("Certificate", UserSchema);
+
+const User =
+  mongoose.models.TempUserSchema ||
+  mongoose.model("TempUserSchema", TempUserSchema);
+
+export default User;

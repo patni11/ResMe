@@ -31,7 +31,7 @@ const ContentSection: FC<ContentSectionProps> = ({
 }) => {
   return (
     <section className="w-full justify-start">
-      <Card className="w-[full] border-none">
+      <Card className="w-full border-none">
         <CardHeader>
           <CardTitle>{cardDetails.title}</CardTitle>
           <CardDescription>{cardDetails.description}</CardDescription>

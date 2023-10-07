@@ -10,7 +10,7 @@ import { EducationDialogContent } from "./EducationDialogContent";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import CertificateDialogContent from "./CertificateDialogContent";
 import CertificateCard from "./certificateCard";
-import Image from "next/image";
+import ImageWrapper from "@/components/ImageWrapper";
 
 interface EducationProps {}
 
@@ -141,7 +141,7 @@ const Education: FC<EducationProps> = () => {
   );
 
   return (
-    <main className="flex justify-center w-full h-full">
+    <ImageWrapper imgSrc="education">
       <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
         <ContentSection
           cardDetails={{
@@ -297,18 +297,7 @@ const Education: FC<EducationProps> = () => {
           </div>
         </ContentSection>
       </div>
-      <div className="flex-shrink-0 w-1/3 max-w-[30%] h-full relative">
-        {/* Aspect ratio container */}
-        <div className="relative h-full" style={{ paddingTop: "42.86%" }}>
-          <Image
-            src="/pageStyles/education/pixelArt1.png"
-            alt="graphic"
-            layout="fill" // This makes the image take up the full width and height of its container
-            objectFit="cover" // This ensures the image maintains its aspect ratio while filling its container
-          />
-        </div>
-      </div>
-    </main>
+    </ImageWrapper>
   );
 };
 

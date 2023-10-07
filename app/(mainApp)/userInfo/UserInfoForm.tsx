@@ -4,7 +4,6 @@ import { UserInfo } from "./pageType";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
-import { v4 as uuidv4 } from "uuid";
 import {
   Form,
   FormControl,
@@ -20,10 +19,10 @@ import LightText from "@/components/Text";
 import { PlusCircle, Trash2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
+import { usePathname } from "next/navigation";
+import { updateUser } from "@/lib/actions/userInfo.actions";
 
 interface UserInfoFormProps {
-  addData: (projectData: UserInfo) => void;
   defaultValues?: UserInfo;
 }
 
@@ -48,43 +47,33 @@ const UserInfoSchema = z.object({
     .optional(),
 });
 
-const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues, addData }) => {
+const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues }) => {
   const { toast } = useToast();
+  const pathname = usePathname();
+
   const form = useForm<UserInfo>({
     resolver: zodResolver(UserInfoSchema),
-    defaultValues: defaultValues
-      ? defaultValues
-      : {
-          displayName: "",
-          // contactInfo: [{ contact: "" }],
-          location: "",
-          // links: [{ linkName: "", link: "" }],
-          id: "",
-        },
+    defaultValues: {
+      displayName: defaultValues?.displayName || "",
+      contactInfo: defaultValues?.contactInfo || [{ contact: "" }],
+      location: defaultValues?.location || "",
+      links: defaultValues?.links || [{ linkName: "", link: "" }],
+      id: defaultValues?.id || "",
+    },
     mode: "onSubmit",
   });
 
-  const handleFormSubmit = (data: UserInfo) => {
-    console.log("Handle Form Submit", data);
-    let projectData = data;
-    if (!data.id) {
-      const uniqueId = uuidv4();
-      projectData = {
-        ...data,
-        id: uniqueId,
-      };
-    }
-    addData(projectData);
-    console.log("Form Submitted");
+  const handleFormSubmit = async (data: UserInfo) => {
+    console.log("Handle User Info Form Submit", data);
+
+    await updateUser(data, pathname);
+
     toast({
       title: "User Info Saved ",
     });
   };
 
-  const {
-    register,
-    formState: { errors },
-  } = form;
+  const { register } = form;
   const {
     fields: contactFields,
     append: appendContact,
@@ -117,9 +106,13 @@ const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues, addData }) => {
             name="displayName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Your Name</FormLabel>
+                <FormLabel className="text-lg">Display Name</FormLabel>
+                <FormDescription>
+                  {" "}
+                  This will be on top of your resume
+                </FormDescription>
                 <FormControl>
-                  <Input placeholder="Enter Your Name" {...field} />
+                  <Input placeholder="Enter Display Name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
