@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback } from "./ui/avatar";
-import { Button } from "./ui/button";
+import { Avatar, AvatarFallback } from "../../ui/avatar";
+import { Button } from "../../ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../../ui/dropdown-menu";
 
 export function UserBox() {
   return (

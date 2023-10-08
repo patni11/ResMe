@@ -36,8 +36,8 @@ const DashBoard: FC<DashBoardProps> = () => {
               </Link>
             </div>
 
-            <div className="flex justify-left">
-              <h3 className="">Create Resume</h3>
+            <div className="flex justify-left text-sm">
+              <h3 className="font-medium leading-none">Create Resume</h3>
             </div>
           </div>
           {listenNowAlbums.map((album) => (

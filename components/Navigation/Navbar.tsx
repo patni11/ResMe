@@ -1,13 +1,13 @@
 import Link from "next/link";
-import MaxWidthWrapper from "./MaxWidthWrapper";
-import { buttonVariants } from "./ui/button";
+import MaxWidthWrapper from "../MaxWidthWrapper";
+import { buttonVariants } from "../ui/button";
 import {
   LoginLink,
   RegisterLink,
   getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ArrowRight } from "lucide-react";
-import UserAccountNav from "./UserAccountNav";
+import UserAccountNav from "./UserBox/UserAccountNav";
 import MobileNav from "./MobileNav";
 
 const Navbar = () => {
@@ -71,7 +71,6 @@ const Navbar = () => {
                       : `${user.given_name} ${user.family_name}`
                   }
                   email={user.email ?? ""}
-                  imageUrl={user.picture ?? ""}
                 />
               </>
             )}

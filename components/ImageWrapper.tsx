@@ -21,7 +21,7 @@ export default async function ImageWrapper({
   children,
   imgSrc,
 }: {
-  children: ReactNode;
+  children?: ReactNode;
   imgSrc: ImageKey;
 }) {
   const imageToDisplay = imageMap[imgSrc];

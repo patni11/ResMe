@@ -8,12 +8,17 @@ import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 
 export async function fetchUser(userId: string) {
   try {
-    connectMongoDB();
+    await connectMongoDB();
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+      throw new Error("User not found"); // Handle the case if the user with the id is not found
+    }
 
-    const user = await User.findById(userId);
+    // console.log("DB USER", user);
     return user;
   } catch (error: any) {
-    throw new Error(`Failed to fetch user: ${error.message}`);
+    console.log("Failed to fetch user", error);
+    //throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
 

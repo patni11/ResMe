@@ -1,5 +1,4 @@
 "use client";
-import { FC } from "react";
 import { UserInfo } from "./pageType";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -28,11 +27,11 @@ interface UserInfoFormProps {
 
 const UserInfoSchema = z.object({
   id: z.string().optional(),
-  displayName: z.string().nonempty({ message: "Display name is required" }),
+  displayName: z.string().min(1, { message: "Display name is required" }),
   contactInfo: z
     .array(
       z.object({
-        contact: z.string().nonempty({ message: "Enter value or remote it" }),
+        contact: z.string().min(1, { message: "Enter value or remote it" }),
       })
     )
     .optional(),
@@ -40,16 +39,18 @@ const UserInfoSchema = z.object({
   links: z
     .array(
       z.object({
-        linkName: z.string().nonempty({ message: "Enter value or remote it" }),
-        link: z.string().nonempty({ message: "Enter value or remote it" }),
+        linkName: z.string().min(1, { message: "Enter value or remote it" }),
+        link: z.string().min(1, { message: "Enter value or remote it" }),
       })
     )
     .optional(),
 });
 
-const UserInfoForm: FC<UserInfoFormProps> = ({ defaultValues }) => {
+const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
   const { toast } = useToast();
   const pathname = usePathname();
+
+  console.log("Loading form");
 
   const form = useForm<UserInfo>({
     resolver: zodResolver(UserInfoSchema),

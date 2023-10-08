@@ -1,4 +1,5 @@
-import { Sidebar } from "@/components/Sidebar";
+import { SidebarMain } from "@/components/Navigation/SideBarMain";
+//import { Sidebar } from "@/components/Navigation/Sidebar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,7 +25,7 @@ export default async function RootLayout({
     <div className="flex h-full w-full">
       {" "}
       {/* Added for demonstration purposes, adjust width and other styles as required */}
-      <Sidebar />
+      <SidebarMain />
       {(await isAuthenticated()) ? (
         <div className="flex-1">{children}</div>
       ) : (

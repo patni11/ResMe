@@ -30,6 +30,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
+    "dompurify": "^3.0.6",
     "lucide-react": "^0.284.0",
     "mongoose": "^7.5.4",
     "next": "^13.5.4",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
+    "@types/dompurify": "^3.0.3",
     "@types/node": "^20.8.2",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.10",
