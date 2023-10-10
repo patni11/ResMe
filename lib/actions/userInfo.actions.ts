@@ -11,20 +11,20 @@ export async function fetchUser(userId: string) {
     await connectMongoDB();
     const user = await User.findOne({ _id: userId });
     if (!user) {
-      throw new Error("User not found"); // Handle the case if the user with the id is not found
+      return { error: "User not found" };
     }
 
     // console.log("DB USER", user);
     return user;
   } catch (error: any) {
-    console.log("Failed to fetch user", error);
-    //throw new Error(`Failed to fetch user: ${error.message}`);
+    //console.log("Failed to fetch user", error);
+    throw new Error(`Failed to fetch user: ${error.message}`);
   }
 }
 
 export async function updateUser(
   userInfo: UserInfo,
-  path: string
+  path?: string
 ): Promise<void> {
   try {
     connectMongoDB();

@@ -3,19 +3,22 @@ import ImageWrapper from "@/components/ImageWrapper";
 import { fetchUser } from "@/lib/actions/userInfo.actions";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserInfo } from "./pageType";
-import TestComponent from "./TestComponent";
 
 const UserInfoPage = async () => {
   const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = getUser();
 
   console.log("PAGE RELOADING");
 
-  if (!user.id) {
-    return <div>Please login</div>;
+  if (!user || !user.id) {
+    throw new Error("User not found");
   }
 
   const userInfoData: UserInfo = await fetchUser(user.id);
+
+  if (!userInfoData.id) {
+    throw new Error("User not in DB");
+  }
 
   const defaultValues: UserInfo = {
     displayName: userInfoData ? userInfoData?.displayName : "",

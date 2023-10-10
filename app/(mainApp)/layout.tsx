@@ -13,6 +13,7 @@ import {
   RegisterLink,
   getKindeServerSession,
 } from "@kinde-oss/kinde-auth-nextjs/server";
+//import { redirect } from "next/navigation";
 
 export default async function RootLayout({
   children,
@@ -20,6 +21,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const { isAuthenticated } = getKindeServerSession();
+
+  // if (!isAuthenticated){
+  //   redirect('/auth-callback?origin=dashboard')
+  // }
 
   return (
     <div className="flex h-full w-full">

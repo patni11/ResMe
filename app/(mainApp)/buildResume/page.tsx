@@ -1,18 +1,13 @@
+"use client";
 import { FC } from "react";
-import { Separator } from "@/components/ui/separator";
-import Panel from "@/components/Panel";
-import ResumePreview from "./ResumePreview";
+import MainEditor from "./mainEditor";
+
 interface BuildResumeProps {}
 
-const BuildResume: FC<BuildResumeProps> = () => {
+const BuildResume: FC<BuildResumeProps> = async () => {
   return (
     <main className="flex justify-between w-full h-full">
-      <Panel> Edit Panel </Panel>
-      <Separator className="mx-4" orientation="vertical" />
-      <Panel>
-        {" "}
-        <ResumePreview />{" "}
-      </Panel>
+      <MainEditor></MainEditor>
     </main>
   );
 };
