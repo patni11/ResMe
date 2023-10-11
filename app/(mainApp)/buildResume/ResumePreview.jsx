@@ -24,9 +24,15 @@ export default function ResumePreview() {
 
   return (
     <main className=" w-full h-full flex flex-col justify-center bg-gray-200 p-4 space-y-2">
-      <Button className="w-24" onClick={handleExport}>
-        Export
-      </Button>
+      <div className="flex justify-between w-full">
+        <Button className="w-24" onClick={() => {}}>
+          Save
+        </Button>
+        <Button className="w-24" onClick={handleExport}>
+          Export
+        </Button>
+      </div>
+
       <div
         className="bg-white w-full h-full max-h-[48] overflow-y-auto border py-12 px-12 font-serif leading-tight text-center align-middle"
         id="element-to-print"
