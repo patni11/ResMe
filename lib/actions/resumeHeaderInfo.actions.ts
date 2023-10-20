@@ -9,10 +9,6 @@ export async function fetchResumeHeaderInfo(email: string) {
   try {
     await connectMongoDB();
     const user = await ResumeHeaderInfo.findOne({ _id: email });
-    if (!user) {
-      throw new Error(`User Not Found`);
-    }
-
     // console.log("DB USER", user);
     return user;
   } catch (error: any) {

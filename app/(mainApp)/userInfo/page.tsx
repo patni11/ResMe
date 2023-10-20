@@ -1,9 +1,6 @@
 import UserInfoForm from "./UserInfoForm";
 import ImageWrapper from "@/components/ImageWrapper";
-import {
-  fetchResumeHeaderInfo,
-  updateResumeHeaderInfo,
-} from "@/lib/actions/resumeHeaderInfo.actions";
+import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 //import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserInfo } from "./pageType";
 import { getServerSession } from "next-auth/next";
@@ -16,15 +13,9 @@ const UserInfoPage = async () => {
     throw new Error("User not found");
   }
 
-  const userInfoData: UserInfo = await fetchResumeHeaderInfo(
+  const userInfoData: UserInfo | null = await fetchResumeHeaderInfo(
     session.user.email
   );
-
-  if (!userInfoData) {
-    throw new Error("User not in DB");
-  }
-
-  console.log(userInfoData);
 
   const defaultValues: UserInfo = {
     displayName: userInfoData ? userInfoData?.displayName : "",

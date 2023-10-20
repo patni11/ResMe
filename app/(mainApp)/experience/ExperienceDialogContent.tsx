@@ -1,6 +1,6 @@
 // @prefix reactForm
 // @description
-
+"use client";
 import { FC } from "react";
 import { Experience } from "./pageTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,10 +37,15 @@ import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  deleteExperience,
+  updateExperience,
+} from "@/lib/actions/experience.actions";
 
 const ExperienceSchema = z
   .object({
-    id: z.string().optional(),
+    _id: z.string().optional(),
     company: z
       .string()
       .nonempty({
@@ -97,14 +102,15 @@ const ExperienceSchema = z
   });
 
 interface ExperienceDialogContentProps {
-  addData: (experienceData: Experience) => void;
+  email: string;
   defaultValues?: Experience;
 }
 
 const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
-  addData,
+  email,
   defaultValues,
 }) => {
+  const { toast } = useToast();
   const form = useForm<Experience>({
     resolver: zodResolver(ExperienceSchema),
     defaultValues: defaultValues
@@ -117,22 +123,39 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
           startDate: new Date(),
           endDate: "working",
           description: "",
-          id: "",
+          _id: "",
         },
     mode: "onSubmit",
   });
 
+  const handleDelete = async () => {
+    if (defaultValues?._id) {
+      await deleteExperience(defaultValues?._id, "/experience");
+      toast({
+        title: `Deleted Experience 🎈: ${defaultValues.company} `,
+      });
+    } else {
+      toast({
+        title: "No Value to delete, please try again",
+      });
+    }
+  };
+
   const handleFormSubmit = (data: Experience) => {
     console.log("Handle Form Submit", data);
     let experienceData = data;
-    if (!data.id) {
+    if (!data._id) {
       const uniqueId = uuidv4();
       experienceData = {
         ...data,
-        id: uniqueId,
+        _id: uniqueId,
       };
     }
-    addData(experienceData);
+    //addData(experienceData);
+    toast({
+      title: `Experience Updated 🥳: ${experienceData.company} `,
+    });
+    updateExperience(experienceData, email, "/experience");
     document.getElementById("closeDialog")?.click();
   };
 
@@ -358,13 +381,25 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
           />
 
           <DialogFooter>
+            <Button
+              variant="outline"
+              type="button"
+              id="none"
+              className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+              disabled={!defaultValues?._id}
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
             <DialogTrigger>
               <Button variant="outline" id="closeDialog">
                 Cancel
               </Button>
             </DialogTrigger>
 
-            <Button type="submit">Save</Button>
+            <Button type="submit" id="none">
+              Save
+            </Button>
           </DialogFooter>
         </form>
       </Form>

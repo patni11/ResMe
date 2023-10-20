@@ -5,10 +5,12 @@ import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
 import { Project as ProjectType } from "@/app/(mainApp)/projects/pageTypes";
 
-export async function fetchUserProjects(email: string) {
+export async function fetchUserProjects(
+  email: string
+): Promise<ProjectType[] | null> {
   try {
     await connectMongoDB();
-    const projects = await Project.find({ email: email });
+    const projects: ProjectType[] = await Project.find({ email: email });
     if (!projects) {
       throw new Error(`No Projects Found`);
     }
@@ -28,7 +30,7 @@ export async function updateProject(
   try {
     connectMongoDB();
     await Project.findOneAndUpdate(
-      { _id: project.id },
+      { _id: project._id },
       {
         projectName: project.projectName,
         location: project.location,
@@ -47,6 +49,18 @@ export async function updateProject(
       revalidatePath(path);
     }
   } catch (e) {
-    throw new Error(`Failed to create/update userData: ${e}`);
+    throw new Error(`Failed to create/update project: ${e}`);
+  }
+}
+
+export async function deleteProject(id: string, path?: string) {
+  const project = await Project.findById(id);
+  if (!project) {
+    throw new Error("Project not found");
+  }
+
+  await Project.deleteOne({ _id: project._id });
+  if (path) {
+    revalidatePath(path);
   }
 }

@@ -1,74 +1,29 @@
-"use client";
 import ContentSection from "@/components/Sections/ContentSection";
-import { DialogTrigger } from "@radix-ui/react-dialog";
-import { PlusCircleIcon, Settings2, Trash2 } from "lucide-react";
-import { FC, useReducer } from "react";
+import { PlusCircleIcon, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProjectDialogContent from "./ProjectDialogContent";
+import { getServerSession } from "next-auth/next";
+import authOptions, { Session } from "@/lib/authOptions";
 import { Project } from "./pageTypes";
+import { fetchUserProjects } from "@/lib/actions/userProject.actions";
 import ProjectCard from "./projectCard";
 import ImageWrapper from "@/components/ImageWrapper";
 
-interface ProjectProps {}
+export const Projects = async () => {
+  const session: Session | null = await getServerSession(authOptions);
 
-interface ProjectAction {
-  type: "edit" | "add" | "delete";
-  payload?: Project;
-}
-
-function workProjectReducer(
-  state: Project[],
-  action: ProjectAction
-): Project[] {
-  const { type, payload } = action;
-
-  switch (type) {
-    case "delete":
-      return state.filter((project) => project.id !== payload?.id);
-
-    case "edit":
-      return state.map((project) =>
-        project.id === payload?.id ? { ...project, ...payload } : project
-      );
-
-    case "add":
-      return payload ? [...state, payload] : state;
-    default:
-      return state;
+  if (!session || !session.user) {
+    throw new Error("User not found");
   }
-}
 
-const Project: FC<ProjectProps> = () => {
-  const [educationState, projectDispatch] = useReducer(workProjectReducer, []);
-
-  const addProject = (projectData: Project) => {
-    console.log("Add Project", projectData);
-
-    projectDispatch({
-      type: "add",
-      payload: projectData,
-    });
-  };
-
-  const deleteProject = (projectData: Project) => {
-    console.log("Delete Project", projectData);
-    projectDispatch({
-      type: "delete",
-      payload: projectData,
-    });
-  };
-
-  const updateProject = (projectData: Project) => {
-    console.log("Update Project", projectData);
-    projectDispatch({
-      type: "edit",
-      payload: projectData,
-    });
-  };
+  const projects: Project[] | null = JSON.parse(
+    JSON.stringify(await fetchUserProjects(session.user.email))
+  );
 
   return (
     <ImageWrapper imgSrc="project">
       <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
+        {" "}
         <ContentSection
           cardDetails={{
             title: "Add Projects",
@@ -82,53 +37,35 @@ const Project: FC<ProjectProps> = () => {
                 Add <PlusCircleIcon className="ml-1.5 h-5 w-5" />
               </Button>
             ),
-            dialogContent: <ProjectDialogContent addData={addProject} />,
+            dialogContent: <ProjectDialogContent email={session.user.email} />,
           }}
         >
-          <div className="flex flex-col space-y-2">
-            {educationState.map((projectVal: Project) => {
+          {!projects || projects.length <= 0 ? (
+            <div className="flex text-sm text-accent-foreground justify-center w-full font-semibold italic">
+              {" "}
+              <p>You do not have any projects. Add some</p>{" "}
+            </div>
+          ) : (
+            projects.map((projectVal: Project) => {
+              projectVal = {
+                projectName: projectVal.projectName,
+                location: projectVal.location,
+                positionTitle: projectVal.positionTitle,
+                startDate: projectVal.startDate
+                  ? new Date(projectVal.startDate)
+                  : projectVal.startDate,
+                endDate: projectVal.endDate
+                  ? new Date(projectVal.endDate)
+                  : projectVal.endDate,
+                description: projectVal.description,
+                _id: projectVal._id,
+              };
               return (
                 <ProjectCard
-                  key={projectVal.id}
-                  cardDetails={{
-                    projectName: projectVal.projectName,
-                    location: projectVal.location,
-                    positionTitle: projectVal.positionTitle,
-                    startDate: projectVal.startDate,
-                    endDate: projectVal.endDate,
-                    description: projectVal.description,
-                    id: projectVal.id,
-                  }}
-                  deleteDialogDetails={{
-                    dialogTitle: "Delete Project",
-                    dialogDescription:
-                      "Are you sure you want to delete this project?",
-                    dialogTrigger: (
-                      <Button
-                        variant="ghost"
-                        className={
-                          "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
-                        }
-                      >
-                        <Trash2 className="w-5 h-5"></Trash2>
-                      </Button>
-                    ),
-                    dialogContent: (
-                      <DialogTrigger className="flex justify-between">
-                        <Button variant="outline">Cancel</Button>
-                        <Button
-                          type="submit"
-                          variant="outline"
-                          className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                          onClick={() => deleteProject(projectVal)}
-                        >
-                          Delete
-                        </Button>
-                      </DialogTrigger>
-                    ),
-                  }}
+                  key={projectVal._id}
+                  cardDetails={projectVal}
                   dialogDetails={{
-                    dialogTitle: "Edit Education",
+                    dialogTitle: "Edit Project",
                     dialogTrigger: (
                       <Button variant="ghost">
                         <Settings2 className="w-5 h-5"></Settings2>
@@ -136,19 +73,19 @@ const Project: FC<ProjectProps> = () => {
                     ),
                     dialogContent: (
                       <ProjectDialogContent
-                        addData={updateProject}
+                        email={session.user.email}
                         defaultValues={projectVal}
                       />
                     ),
                   }}
                 />
               );
-            })}
-          </div>
+            })
+          )}
         </ContentSection>
       </div>
     </ImageWrapper>
   );
 };
 
-export default Project;
+export default Projects;

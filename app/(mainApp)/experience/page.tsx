@@ -1,75 +1,24 @@
-"use client";
 import ContentSection from "@/components/Sections/ContentSection";
-import { DialogTrigger } from "@radix-ui/react-dialog";
-import { PlusCircleIcon, Settings2, Trash2 } from "lucide-react";
-import { FC, useReducer } from "react";
+import { PlusCircleIcon, Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ExperienceDialogContent from "./ExperienceDialogContent";
+import { getServerSession } from "next-auth/next";
+import authOptions, { Session } from "@/lib/authOptions";
 import { Experience } from "./pageTypes";
+import { fetchExperiences } from "@/lib/actions/experience.actions";
 import ExperienceCard from "./experienceCard";
 import ImageWrapper from "@/components/ImageWrapper";
-interface ExperienceProps {}
 
-interface ExperienceAction {
-  type: "edit" | "add" | "delete";
-  payload?: Experience;
-}
+const ExperiencePage = async () => {
+  const session: Session | null = await getServerSession(authOptions);
 
-function workExperienceReducer(
-  state: Experience[],
-  action: ExperienceAction
-): Experience[] {
-  const { type, payload } = action;
-
-  switch (type) {
-    case "delete":
-      return state.filter((experience) => experience.id !== payload?.id);
-
-    case "edit":
-      return state.map((experience) =>
-        experience.id === payload?.id
-          ? { ...experience, ...payload }
-          : experience
-      );
-
-    case "add":
-      return payload ? [...state, payload] : state;
-    default:
-      return state;
+  if (!session || !session.user) {
+    throw new Error("User not found");
   }
-}
 
-const Experience: FC<ExperienceProps> = () => {
-  const [educationState, experienceDispatch] = useReducer(
-    workExperienceReducer,
-    []
+  const experiences: Experience[] | null = JSON.parse(
+    JSON.stringify(await fetchExperiences(session.user.email))
   );
-
-  const addExperience = (experienceData: Experience) => {
-    console.log("Add Experience", experienceData);
-
-    experienceDispatch({
-      type: "add",
-      payload: experienceData,
-    });
-  };
-
-  const deleteExperience = (experienceData: Experience) => {
-    console.log("Delete Experience", experienceData);
-    experienceDispatch({
-      type: "delete",
-      payload: experienceData,
-    });
-  };
-
-  const updateExperience = (experienceData: Experience) => {
-    console.log("Update Experience", experienceData);
-    experienceDispatch({
-      type: "edit",
-      payload: experienceData,
-    });
-  };
-
   return (
     <ImageWrapper imgSrc="experience">
       <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
@@ -86,74 +35,61 @@ const Experience: FC<ExperienceProps> = () => {
                 Add <PlusCircleIcon className="ml-1.5 h-5 w-5" />
               </Button>
             ),
-            dialogContent: <ExperienceDialogContent addData={addExperience} />,
+            dialogContent: (
+              <ExperienceDialogContent email={session.user.email} />
+            ),
           }}
         >
-          <div className="flex flex-col space-y-2">
-            {educationState.map((experienceVal: Experience) => {
-              return (
-                <ExperienceCard
-                  key={experienceVal.id}
-                  cardDetails={{
-                    company: experienceVal.company,
-                    location: experienceVal.location,
-                    positionTitle: experienceVal.positionTitle,
-                    experienceType: experienceVal.experienceType,
-                    startDate: experienceVal.startDate,
-                    endDate: experienceVal.endDate,
-                    description: experienceVal.description,
-                    id: experienceVal.id,
-                  }}
-                  deleteDialogDetails={{
-                    dialogTitle: "Delete Experience",
-                    dialogDescription:
-                      "Are you sure you want to delete this experience?",
-                    dialogTrigger: (
-                      <Button
-                        variant="ghost"
-                        className={
-                          "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
-                        }
-                      >
-                        <Trash2 className="w-5 h-5"></Trash2>
-                      </Button>
-                    ),
-                    dialogContent: (
-                      <DialogTrigger className="flex justify-between">
-                        <Button variant="outline">Cancel</Button>
-                        <Button
-                          type="submit"
-                          variant="outline"
-                          className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
-                          onClick={() => deleteExperience(experienceVal)}
-                        >
-                          Delete
+          {!experiences || experiences.length <= 0 ? (
+            <div className="flex text-sm text-accent-foreground justify-center w-full font-semibold italic">
+              {" "}
+              <p>You do not have any experiences. Add some</p>{" "}
+            </div>
+          ) : (
+            <div className="flex flex-col space-y-2">
+              {experiences.map((experienceVal: Experience) => {
+                experienceVal = {
+                  company: experienceVal.company,
+                  location: experienceVal.location,
+                  positionTitle: experienceVal.positionTitle,
+                  experienceType: experienceVal.experienceType,
+                  startDate: experienceVal.startDate
+                    ? new Date(experienceVal.startDate)
+                    : experienceVal.startDate,
+                  endDate:
+                    experienceVal.endDate == "working"
+                      ? "working"
+                      : new Date(experienceVal.endDate),
+                  description: experienceVal.description,
+                  _id: experienceVal._id,
+                };
+                return (
+                  <ExperienceCard
+                    key={experienceVal._id}
+                    cardDetails={experienceVal}
+                    dialogDetails={{
+                      dialogTitle: "Edit Education",
+                      dialogTrigger: (
+                        <Button variant="ghost">
+                          <Settings2 className="w-5 h-5"></Settings2>
                         </Button>
-                      </DialogTrigger>
-                    ),
-                  }}
-                  dialogDetails={{
-                    dialogTitle: "Edit Education",
-                    dialogTrigger: (
-                      <Button variant="ghost">
-                        <Settings2 className="w-5 h-5"></Settings2>
-                      </Button>
-                    ),
-                    dialogContent: (
-                      <ExperienceDialogContent
-                        addData={updateExperience}
-                        defaultValues={experienceVal}
-                      />
-                    ),
-                  }}
-                />
-              );
-            })}
-          </div>
+                      ),
+                      dialogContent: (
+                        <ExperienceDialogContent
+                          defaultValues={experienceVal}
+                          email={session.user.email}
+                        />
+                      ),
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
         </ContentSection>
       </div>
     </ImageWrapper>
   );
 };
 
-export default Experience;
+export default ExperiencePage;

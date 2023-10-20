@@ -6,5 +6,5 @@ export type Experience = {
   startDate: Date;
   endDate: Date | "working";
   description: string;
-  id: string;
+  _id: string;
 };

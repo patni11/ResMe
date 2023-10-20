@@ -1,7 +1,7 @@
 "use client";
 import { FC, ReactNode } from "react";
 import { CardContent } from "@/components/ui/card";
-import Project from "./page";
+import { Project } from "./pageTypes";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 import UpdateDialogCard from "@/components/Cards/UpdateDialogCard";
 
@@ -28,6 +28,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
   dialogDetails,
   deleteDialogDetails,
 }) => {
+  console.log(cardDetails);
   return (
     <UpdateDialogCard
       cardDetails={{ cardTitle: cardDetails.projectName }}
@@ -58,8 +59,8 @@ const ProjectCard: FC<ProjectCardProps> = ({
         <ul className="w-full p-4 rounded-md shadow-md">
           {cardDetails.description
             .split("\n")
-            .filter((item) => item.trim() !== "")
-            .map((item, index) => (
+            .filter((item: string) => item.trim() !== "")
+            .map((item: string, index: number) => (
               <li key={index} className="mb-2 wrap-text">
                 <span className="text-blue-500 mr-2">•</span>
                 {item}

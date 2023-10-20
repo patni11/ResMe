@@ -30,10 +30,14 @@ import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import LightText from "@/components/Text";
-
+import {
+  updateProject,
+  deleteProject,
+} from "@/lib/actions/userProject.actions";
+import { useToast } from "@/components/ui/use-toast";
 const ProjectSchema = z
   .object({
-    id: z.string().optional(),
+    _id: z.string().optional(),
     projectName: z
       .string()
       .nonempty({
@@ -65,14 +69,15 @@ const ProjectSchema = z
   );
 
 interface ProjectDialogContentProps {
-  addData: (projectData: Project) => void;
   defaultValues?: Project;
+  email: string;
 }
 
 const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
-  addData,
   defaultValues,
+  email,
 }) => {
+  const { toast } = useToast();
   const form = useForm<Project>({
     resolver: zodResolver(ProjectSchema),
     defaultValues: defaultValues
@@ -82,25 +87,40 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
           location: "",
           positionTitle: "",
           description: "",
-          id: "",
+          _id: "",
         },
     mode: "onSubmit",
   });
 
+  const handleDelete = async () => {
+    if (defaultValues?._id) {
+      await deleteProject(defaultValues?._id, "/projects");
+      toast({
+        title: `Deleted Project 🎈: ${defaultValues.projectName} `,
+      });
+    } else {
+      toast({
+        title: "No Value to delete, please try again",
+      });
+    }
+  };
+
   const handleFormSubmit = (data: Project) => {
-    console.log("Handle Form Submit", data);
     let projectData = data;
-    if (!data.id) {
+    if (!data._id) {
       const uniqueId = uuidv4();
       projectData = {
         ...data,
-        id: uniqueId,
+        _id: uniqueId,
       };
     }
-    addData(projectData);
+    console.log(projectData);
+    toast({
+      title: `Project Updated 🥳: ${projectData.projectName} `,
+    });
+    updateProject(projectData, email, "/projects");
     document.getElementById("closeDialog")?.click();
   };
-  //TODO: Fix update endDate
 
   const {
     formState: { errors },
@@ -280,13 +300,25 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
           />
 
           <DialogFooter>
+            <Button
+              variant="outline"
+              type="button"
+              id="none"
+              className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+              disabled={!defaultValues?._id}
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
             <DialogTrigger>
               <Button variant="outline" id="closeDialog">
                 Cancel
               </Button>
             </DialogTrigger>
 
-            <Button type="submit">Save</Button>
+            <Button type="submit" id="none">
+              Save
+            </Button>
           </DialogFooter>
         </form>
       </Form>

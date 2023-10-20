@@ -119,6 +119,7 @@ const ResumeHeaderInfoSchema = new Schema(
 
 const ProjectSchema = new Schema(
   {
+    _id: { type: String, required: true, unique: true },
     email: { type: String, required: true }, // email is being used to find projects of this user
     projectName: { type: String, required: true },
     location: { type: String },
@@ -126,6 +127,21 @@ const ProjectSchema = new Schema(
     startDate: { type: Date },
     endDate: { type: Date },
     description: { type: String },
+  },
+  { timestamps: true }
+);
+
+const ExperieceSchema = new Schema(
+  {
+    _id: { type: String, required: true, unique: true },
+    email: { type: String, required: true }, // email is being used to find projects of this user
+    company: { type: String, required: true },
+    location: { type: String, required: true },
+    positionTitle: { type: String, required: true },
+    experienceType: { type: String, required: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date || "working", required: true },
+    description: { type: String, required: true },
   },
   { timestamps: true }
 );
@@ -174,6 +190,8 @@ const UserSchema = new mongoose.Schema(
 console.log("mongoose.models:", mongoose.models);
 
 export const User = mongoose.models.User || mongoose.model("User", UserSchema);
+export const Experience =
+  mongoose.models.Experience || mongoose.model("Experience", ExperieceSchema);
 
 export const Project =
   mongoose.models.userProject || mongoose.model("userProject", ProjectSchema);

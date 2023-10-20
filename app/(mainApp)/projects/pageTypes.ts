@@ -5,5 +5,5 @@ export type Project = {
   startDate?: Date;
   endDate?: Date;
   description: string;
-  id: string;
+  _id: string;
 };
