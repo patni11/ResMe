@@ -3,5 +3,5 @@ export type UserInfo = {
   contactInfo?: { contact: string }[];
   location?: string;
   links?: { linkName: string; link: string }[];
-  id: string;
+  email: string; //used to identify user
 };

@@ -1,4 +1,5 @@
 //import { getUserSubscriptionPlan } from "@/lib/stripe";
+"use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,21 +9,43 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import { Button } from "../../ui/button";
+import { Button, buttonVariants } from "../../ui/button";
 import { Avatar, AvatarFallback } from "../../ui/avatar";
 import Link from "next/link";
 import { Gem } from "lucide-react";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server";
+// import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Icons } from "../../Icons";
+import { useSession, signOut } from "next-auth/react";
 
-interface UserAccountNavProps {
-  email: string | undefined;
-  name: string;
-}
-
-const UserAccountNav = async ({ email, name }: UserAccountNavProps) => {
-  //const subscriptionPlan = await getUserSubscriptionPlan();
+const UserAccountNav = () => {
+  const { data: session } = useSession();
+  const name = session?.user?.name || "Your Account";
+  const email = session?.user?.email || "";
   const isSubscribed = false;
+
+  if (!session) {
+    return (
+      <div className="flex space-x-4">
+        <Link
+          href="/login"
+          className={buttonVariants({
+            variant: "ghost",
+          })}
+        >
+          Sign In
+        </Link>
+
+        <Link
+          href="/signup"
+          className={buttonVariants({
+            variant: "default",
+          })}
+        >
+          Register
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <DropdownMenu>
@@ -108,9 +131,14 @@ const UserAccountNav = async ({ email, name }: UserAccountNavProps) => {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem className="cursor-pointer">
-          <LogoutLink className="hover:text-destructive hover:text-semibold">
+          <button
+            onClick={() => {
+              signOut();
+            }}
+            className="hover:text-destructive hover:text-semibold"
+          >
             Log out
-          </LogoutLink>
+          </button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

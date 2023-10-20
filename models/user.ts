@@ -99,25 +99,9 @@ import mongoose, { Schema } from "mongoose";
 //   }
 // );
 
-var subSchema = new Schema(
+const ResumeHeaderInfoSchema = new Schema(
   {
-    contactInfo: {
-      type: [
-        {
-          contact: { type: String, required: true },
-          _id: false,
-        },
-      ],
-      _id: false,
-    },
-  },
-  // prevent any subdocuments from having an id
-  { _id: false }
-);
-
-const TempUserSchema = new Schema(
-  {
-    _id: { type: String, required: true },
+    _id: { type: String, required: true, unique: true }, // email is being used as ID
     displayName: { type: String, required: true },
     contactInfo: {
       type: [
@@ -146,11 +130,33 @@ const TempUserSchema = new Schema(
   }
 );
 
-// const Certificate =
-//   mongoose.models.Certificate || mongoose.model("Certificate", UserSchema);
+const UserSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    stripeCustomerId: String,
+    stripeSubscriptionId: String,
+    stripePriceId: String,
+    stripeCurrentPeriodEnd: Date,
+    resumeHeaderInfo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "ResumeHeaderInfo",
+    },
+  },
+  { timestamps: true }
+);
 
-const User =
-  mongoose.models.TempUserSchema ||
-  mongoose.model("TempUserSchema", TempUserSchema);
+console.log("mongoose.models:", mongoose.models);
 
-export default User;
+export const User = mongoose.models.User || mongoose.model("User", UserSchema);
+
+export const ResumeHeaderInfo =
+  mongoose.models.ResumeHeaderInfo ||
+  mongoose.model("ResumeHeaderInfo", ResumeHeaderInfoSchema);

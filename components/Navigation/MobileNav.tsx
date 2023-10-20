@@ -4,8 +4,8 @@ import { ArrowRight, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-
-const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
+import { useSession, signOut } from "next-auth/react";
+const MobileNav = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   const toggleOpen = () => setOpen((prev) => !prev);
@@ -22,6 +22,8 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
     }
   };
 
+  const { data: session } = useSession();
+
   return (
     <div className="sm:hidden">
       <Menu
@@ -32,11 +34,11 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
       {isOpen ? (
         <div className="fixed animate-in slide-in-from-top-5 fade-in-20 inset-0 z-0 w-full">
           <ul className="absolute bg-white border-b border-zinc-200 shadow-xl grid w-full gap-3 px-10 pt-20 pb-8">
-            {!isAuth ? (
+            {!session || !session.user ? (
               <>
                 <li>
                   <Link
-                    onClick={() => closeOnCurrent("/sign-up")}
+                    onClick={() => closeOnCurrent("/signup")}
                     className="flex items-center w-full font-semibold text-green-600"
                     href="/sign-up"
                   >
@@ -47,7 +49,7 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                 <li className="my-3 h-px w-full bg-gray-300" />
                 <li>
                   <Link
-                    onClick={() => closeOnCurrent("/sign-in")}
+                    onClick={() => closeOnCurrent("/login")}
                     className="flex items-center w-full font-semibold"
                     href="/sign-in"
                   >
@@ -78,12 +80,14 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
                 </li>
                 <li className="my-3 h-px w-full bg-gray-300" />
                 <li>
-                  <Link
-                    className="flex items-center w-full font-semibold"
-                    href="/sign-out"
+                  <button
+                    onClick={() => {
+                      signOut();
+                    }}
+                    className="flex items-center w-full font-semibold hover:text-destructive"
                   >
                     Sign out
-                  </Link>
+                  </button>
                 </li>
               </>
             )}

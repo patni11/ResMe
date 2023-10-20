@@ -1,36 +1,47 @@
 import UserInfoForm from "./UserInfoForm";
 import ImageWrapper from "@/components/ImageWrapper";
-import { fetchUser } from "@/lib/actions/userInfo.actions";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import {
+  fetchResumeHeaderInfo,
+  updateResumeHeaderInfo,
+} from "@/lib/actions/resumeHeaderInfo.actions";
+//import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserInfo } from "./pageType";
+import { getServerSession } from "next-auth/next";
+import authOptions, { Session } from "@/lib/authOptions";
 
 const UserInfoPage = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = getUser();
+  const session: Session | null = await getServerSession(authOptions);
 
-  console.log("PAGE RELOADING");
-
-  if (!user || !user.id) {
+  if (!session || !session.user) {
     throw new Error("User not found");
   }
 
-  const userInfoData: UserInfo = await fetchUser(user.id);
+  const userInfoData: UserInfo = await fetchResumeHeaderInfo(
+    session.user.email
+  );
 
-  if (!userInfoData.id) {
+  if (!userInfoData) {
     throw new Error("User not in DB");
   }
 
+  console.log(userInfoData);
+
   const defaultValues: UserInfo = {
     displayName: userInfoData ? userInfoData?.displayName : "",
-    contactInfo: userInfoData
-      ? JSON.parse(JSON.stringify(userInfoData?.contactInfo))
-      : [{ contact: "" }],
+    contactInfo:
+      userInfoData && userInfoData.contactInfo
+        ? JSON.parse(JSON.stringify(userInfoData?.contactInfo))
+        : [{ contact: "" }],
     location:
       userInfoData && userInfoData?.location ? userInfoData.location : "",
-    links: userInfoData
-      ? JSON.parse(JSON.stringify(userInfoData?.links))
-      : [{ linkName: "", link: "" }],
-    id: user.id || "",
+    links:
+      userInfoData && userInfoData.links
+        ? JSON.parse(JSON.stringify(userInfoData?.links))
+        : [{ linkName: "", link: "" }],
+    email:
+      userInfoData && userInfoData?.email
+        ? userInfoData.email
+        : session.user.email || "",
   };
 
   // const contactInfo = JSON.parse(JSON.stringify(userInfoData?.contactInfo));

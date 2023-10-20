@@ -19,14 +19,14 @@ import { PlusCircle, Trash2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { usePathname } from "next/navigation";
-import { updateUser } from "@/lib/actions/userInfo.actions";
+import { updateResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 interface UserInfoFormProps {
   defaultValues?: UserInfo;
 }
 
 const UserInfoSchema = z.object({
-  id: z.string().optional(),
+  email: z.string().optional(),
   displayName: z.string().min(1, { message: "Display name is required" }),
   contactInfo: z
     .array(
@@ -59,7 +59,7 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
       contactInfo: defaultValues?.contactInfo || [{ contact: "" }],
       location: defaultValues?.location || "",
       links: defaultValues?.links || [{ linkName: "", link: "" }],
-      id: defaultValues?.id || "",
+      email: defaultValues?.email || "",
     },
     mode: "onSubmit",
   });
@@ -67,7 +67,7 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
   const handleFormSubmit = async (data: UserInfo) => {
     console.log("Handle User Info Form Submit", data);
 
-    await updateUser(data, pathname);
+    await updateResumeHeaderInfo(data, pathname);
 
     toast({
       title: "User Info Saved ",
