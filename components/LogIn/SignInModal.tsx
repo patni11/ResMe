@@ -56,7 +56,6 @@ export function SignInModal() {
   });
 
   const handleFormSubmit = async (data: UserFormData) => {
-    console.log("Signing User", data);
     const { email, password } = data;
     const res = await signIn("credentials", {
       email,

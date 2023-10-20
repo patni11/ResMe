@@ -37,19 +37,6 @@ import mongoose, { Schema } from "mongoose";
 //   { timestamps: true }
 // );
 
-// const ProjectSchema = new Schema(
-//   {
-//     projectName: String,
-//     location: String,
-//     positionTitle: String,
-//     startDate: Date,
-//     endDate: Date,
-//     description: String,
-//     id: String,
-//   },
-//   { timestamps: true }
-// );
-
 // const UserSchema = new Schema(
 //   {
 //     userPlatformDetails: {
@@ -130,6 +117,19 @@ const ResumeHeaderInfoSchema = new Schema(
   }
 );
 
+const ProjectSchema = new Schema(
+  {
+    email: { type: String, required: true }, // email is being used to find projects of this user
+    projectName: { type: String, required: true },
+    location: { type: String },
+    positionTitle: { type: String },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    description: { type: String },
+  },
+  { timestamps: true }
+);
+
 const UserSchema = new mongoose.Schema(
   {
     email: {
@@ -141,13 +141,31 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    stripeCustomerId: String,
-    stripeSubscriptionId: String,
-    stripePriceId: String,
-    stripeCurrentPeriodEnd: Date,
+    stripeCustomerId: {
+      type: String,
+    },
+    stripeSubscriptionId: {
+      type: String,
+    },
+    stripePriceId: {
+      type: String,
+    },
+    stripeCurrentPeriodEnd: {
+      type: Date,
+    },
     resumeHeaderInfo: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "ResumeHeaderInfo",
+    },
+    projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
+    skills: {
+      type: [String],
+    },
+    languages: {
+      type: [String],
+    },
+    interests: {
+      type: [String],
     },
   },
   { timestamps: true }
@@ -156,6 +174,9 @@ const UserSchema = new mongoose.Schema(
 console.log("mongoose.models:", mongoose.models);
 
 export const User = mongoose.models.User || mongoose.model("User", UserSchema);
+
+export const Project =
+  mongoose.models.userProject || mongoose.model("userProject", ProjectSchema);
 
 export const ResumeHeaderInfo =
   mongoose.models.ResumeHeaderInfo ||

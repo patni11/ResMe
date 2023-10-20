@@ -11,13 +11,20 @@ export async function createUser({
 }): Promise<void> {
   try {
     connectMongoDB();
-    const hashedPassword = await bcrypt.hash(password, 5);
-    const newUser = new User({
-      email,
-      password: hashedPassword,
-    });
+    console.log("user");
+    const user = await User.findOne({ email: email });
 
-    await newUser.save();
+    if (user) {
+      throw new Error("You already have an account, try signing in");
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 5);
+      const newUser = new User({
+        email,
+        password: hashedPassword,
+      });
+
+      await newUser.save();
+    }
   } catch (e: any) {
     if (e.code == "11000") {
       throw new Error(`You already have an account. Please Sign In`);

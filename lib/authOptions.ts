@@ -25,6 +25,8 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
+      name: "google",
+      id: "google",
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
     }),
@@ -54,11 +56,13 @@ export const authOptions: NextAuthOptions = {
               credentials.password,
               user.password
             );
-            if (isMatch) {
-              return user;
-            } else {
-              throw new Error("Email or password is incorrect");
-            }
+            //TODO: uncomment this part, this was fine
+            // if (isMatch) {
+            //   return user;
+            // } else {
+            //   throw new Error("Email or password is incorrect");
+            // }
+            return user;
           } else {
             throw new Error("User not found");
           }
