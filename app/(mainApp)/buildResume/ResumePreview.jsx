@@ -1,7 +1,7 @@
 "use client";
 
 import ResumeHeader from "@/components/ResumeComponents/ResumeEditor/ResumeHeader";
-import EducationSection from "@/components/ResumeComponents/ResumeEditor/EducaitonSection";
+//import EducationSection from "@/components/ResumeComponents/ResumeEditor/EducaitonSection";
 
 import { Button } from "@/components/ui/button";
 import html2pdf from "html2pdf.js";
@@ -11,7 +11,6 @@ export default function ResumePreview() {
   const elementRef = useRef(null);
   const handleExport = () => {
     var element = document.getElementById("element-to-print");
-
     html2pdf().from(element).save();
   };
 
@@ -31,24 +30,6 @@ export default function ResumePreview() {
         id="element-to-print"
         ref={elementRef}
       >
-        <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
-        <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
-        <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
-        <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
-        <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
-        <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
-        <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
-        <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
-        <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
         <ResumeHeader></ResumeHeader>
       </div>
     </main>

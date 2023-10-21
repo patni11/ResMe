@@ -1,9 +1,6 @@
-import { FC } from "react";
 import MainEditor from "./mainEditor";
 
-interface BuildResumeProps {}
-
-const BuildResume: FC<BuildResumeProps> = () => {
+const BuildResume = async () => {
   return (
     <main className="flex justify-between w-full h-full">
       <MainEditor></MainEditor>

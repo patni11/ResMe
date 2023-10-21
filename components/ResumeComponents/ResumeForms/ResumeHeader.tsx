@@ -1,73 +1,70 @@
 "use client";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
-interface ResumeHeader {
-  userDetails: UserInfo;
-}
+import { useResumeHeaderInfo } from "@/store/resumeHeaderInfo";
 
-export const ResumeHeader: FC<ResumeHeaderProps> = ({ userDetails }) => {
-  const [hideLocation, setHideLocation] = useState(false);
-  const [hiddenLinks, setHiddenLinks] = useState<{ [key: string]: boolean }>(
-    {}
-  );
-  const [hiddenContacts, setHiddenContacts] = useState<{
-    [key: string]: boolean;
-  }>({});
+export const ResumeHeader: FC<ResumeHeaderProps> = () => {
+  const {
+    headerInfo,
+    hideLocation,
+    hiddenContacts,
+    hiddenLinks,
+    setHideLocation,
+    updateDisplayName,
+    setHiddenLinks,
+    setHiddenContacts,
+  } = useResumeHeaderInfo();
 
-  const toggleLinkVisibility = (linkName: string) => {
-    setHiddenLinks((prev) => ({ ...prev, [linkName]: !prev[linkName] }));
-  };
-
-  const toggleContactVisibility = (contact: string) => {
-    setHiddenContacts((prev) => ({ ...prev, [contact]: !prev[contact] }));
-  };
+  const { displayName } = headerInfo;
+  const contactInfo = headerInfo.contactInfo
+    ? headerInfo.contactInfo
+    : [{ contact: "" }];
+  const location = headerInfo?.location ? headerInfo.location : "";
+  const links = headerInfo.links
+    ? headerInfo.links
+    : [{ linkName: "", link: "" }];
 
   return (
     <FormCardWrapper cardTitle="Header">
       <Label>Your Name</Label>
       <Input
         placeholder="Enter your name"
-        value={userDetails?.displayName || ""}
+        value={displayName}
+        onChange={(e) => {
+          updateDisplayName(e.currentTarget.value);
+        }}
       ></Input>
 
       <div className="flex justify-between mt-2 whitespace-normal flex-wrap">
-        {userDetails.location ? (
-          <HideButtons
-            hide={hideLocation}
-            setHide={() => setHideLocation(!hideLocation)}
-          >
-            <span>{hideLocation ? "Unhide" : "Hide"} Location</span>
+        {location ? (
+          <HideButtons hide={hideLocation} setHide={() => setHideLocation()}>
+            <span>Location</span>
           </HideButtons>
         ) : (
           <div></div>
         )}
 
-        {userDetails.links?.map((link, index) => (
+        {links?.map((link, index) => (
           <HideButtons
             key={index}
-            hide={!!hiddenLinks[link.linkName]}
-            setHide={() => toggleLinkVisibility(link.linkName)}
+            hide={hiddenLinks[index][link.linkName]}
+            setHide={() => setHiddenLinks(link.linkName)}
           >
-            <span>
-              {hiddenLinks[link.linkName] ? "Unhide" : "Hide"} {link.linkName}
-            </span>
+            <span>{link.linkName}</span>
           </HideButtons>
         ))}
 
-        {userDetails.contactInfo?.map((contact, index) => (
+        {contactInfo?.map((contact, index) => (
           <HideButtons
             key={index}
-            hide={!!hiddenContacts[contact.contact]}
-            setHide={() => toggleContactVisibility(contact.contact)}
+            hide={hiddenContacts[index][contact.contact]}
+            setHide={() => setHiddenContacts(contact.contact)}
           >
-            <span>
-              {hiddenContacts[contact.contact] ? "Unhide" : "Hide"}{" "}
-              {contact.contact}
-            </span>
+            <span>{contact.contact}</span>
           </HideButtons>
         ))}
       </div>

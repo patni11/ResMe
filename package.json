@@ -50,7 +50,8 @@
     "shadcn-ui": "^0.4.1",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.3"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
