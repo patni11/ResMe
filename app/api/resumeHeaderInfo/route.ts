@@ -5,14 +5,18 @@ import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { email: string } }
+  request: NextRequest
+  // { params }: { params: { email: string } }
 ) {
-  const { email } = params;
+  //const { email } = params;
+  //console.log("received params:", params);
   try {
     await connectMongoDB();
-    const user = await ResumeHeaderInfo.findOne({ _id: email });
-    return NextResponse.json({ data: user, status: 200 });
+    const headerInfo = await ResumeHeaderInfo.findOne({
+      _id: "shubhpatni2002@gmail.com",
+    });
+    console.log("Making API Call");
+    return NextResponse.json({ headerInfo }, { status: 200 });
   } catch (error: any) {
     //console.log("Failed to fetch user", error);
     return NextResponse.json({

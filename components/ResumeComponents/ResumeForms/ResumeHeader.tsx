@@ -1,11 +1,12 @@
 "use client";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { useResumeHeaderInfo } from "@/store/resumeHeaderInfo";
+import { useSession } from "next-auth/react";
 
 export const ResumeHeader: FC<ResumeHeaderProps> = () => {
   const {
@@ -17,7 +18,21 @@ export const ResumeHeader: FC<ResumeHeaderProps> = () => {
     updateDisplayName,
     setHiddenLinks,
     setHiddenContacts,
+    error,
+    isLoading,
+    fetchHeaderInfo,
   } = useResumeHeaderInfo();
+  const session = useSession();
+  const email = session.data?.user?.email;
+
+  useEffect(() => {
+    let resumeHeaderLocalStorage = localStorage.getItem(
+      "resumeHeaderLocalStorage"
+    );
+    if (!resumeHeaderLocalStorage) {
+      fetchHeaderInfo(email ? email : "");
+    }
+  }, [fetchHeaderInfo]);
 
   const { displayName } = headerInfo;
   const contactInfo = headerInfo.contactInfo
@@ -29,7 +44,10 @@ export const ResumeHeader: FC<ResumeHeaderProps> = () => {
     : [{ linkName: "", link: "" }];
 
   return (
-    <FormCardWrapper cardTitle="Header">
+    <FormCardWrapper
+      cardTitle="Header"
+      refreshFunction={() => fetchHeaderInfo(email ? email : "")}
+    >
       <Label>Your Name</Label>
       <Input
         placeholder="Enter your name"

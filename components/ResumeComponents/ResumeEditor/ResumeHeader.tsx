@@ -30,7 +30,7 @@ export default function ResumeHeader() {
         {links.map((link, index) => {
           const linkKey = link.linkName;
           if (hiddenLinks[index][linkKey]) return null;
-          return <p>{link.link}</p>;
+          return <p key={index}> {link.link}</p>;
         })}
       </div>
     </div>

@@ -1,12 +1,14 @@
 import { create } from "zustand";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
-import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
+import { persist } from "zustand/middleware";
 
 type State = {
   headerInfo: UserInfo;
   hideLocation: boolean;
   hiddenContacts: any;
   hiddenLinks: any;
+  isLoading: boolean;
+  error: any;
 };
 
 type Actions = {
@@ -14,77 +16,112 @@ type Actions = {
   setHideLocation: () => void;
   setHiddenLinks: (key: string) => void;
   setHiddenContacts: (key: string) => void;
+  fetchHeaderInfo: (email: string) => Promise<void>;
 };
 
-export const useResumeHeaderInfo = create<State & Actions>((set) => ({
+const INITIAL_STATE: State = {
   headerInfo: {
-    displayName: "Shubh Patni",
-    contactInfo: [
-      { contact: "shubhpatni2002@gmail.com" },
-      { contact: "+91 7742361132" },
-    ],
-    location: "Boston, MA",
-    links: [{ linkName: "website", link: "shubhpatni.com" }],
-    email: "", //used to identify user
-  },
-  fetchHeaderInfo: async (email: string) => {
-    const response: UserInfo = await fetchResumeHeaderInfo(
-      "shubhpatni2002@gmail.com"
-    );
-    const hidContacts =
-      response.contactInfo?.map((contact) => ({ [contact.contact]: false })) ||
-      [];
-    const hidLinks =
-      response.links?.map((link) => ({ [link.linkName]: false })) || [];
-
-    set({
-      headerInfo: response,
-      hiddenContacts: hidContacts,
-      hiddenLinks: hidLinks,
-      hideLocation: false,
-    });
+    displayName: "",
+    contactInfo: [{ contact: "" }],
+    location: "",
+    links: [{ linkName: "", link: "" }],
+    email: "",
   },
   hideLocation: false,
-  hiddenContacts: [
-    { "shubhpatni2002@gmail.com": false },
-    { "+91 7742361132": false },
-  ] as Array<{ [key: string]: boolean }>,
+  hiddenContacts: [{ key: false }],
+  hiddenLinks: [{ key: false }],
+  isLoading: false,
+  error: null,
+};
 
-  hiddenLinks: [{ website: false }] as Array<{ [key: string]: boolean }>,
-  updateDisplayName: (newDisplayName: string) => {
-    set((state) => {
-      return {
-        headerInfo: { ...state.headerInfo, displayName: newDisplayName },
-      };
-    });
-  },
-  setHideLocation: () => {
-    set((state) => ({ hideLocation: !state.hideLocation }));
-  },
-  setHiddenContacts: (key: string) => {
-    set((state) => ({
-      hiddenContacts: state.hiddenContacts.map((contact: any) => {
-        // Check if the contact has the key you're looking for
-        if (contact[key] !== undefined) {
-          // Return a new object with the key's value toggled
-          return { [key]: !contact[key] };
+async function getData(email: string) {
+  try {
+    const res = await fetch(`/api/resumeHeaderInfo?email=${email}`);
+    console.log("Fetched Data", res);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return res.json();
+  } catch (e) {
+    console.log("error loading topic in zustand:", e);
+  }
+}
+
+export const useResumeHeaderInfo = create(
+  persist<State & Actions>(
+    (set, get) => ({
+      headerInfo: INITIAL_STATE.headerInfo,
+      error: INITIAL_STATE.error,
+      isLoading: INITIAL_STATE.isLoading,
+      fetchHeaderInfo: async (email: string) => {
+        try {
+          const headerInfo: UserInfo = (await getData(email)).headerInfo;
+          console.log("Header Info", headerInfo);
+          const hidContacts =
+            headerInfo.contactInfo?.map((contact) => ({
+              [contact.contact]: false,
+            })) || [];
+          const hidLinks =
+            headerInfo.links?.map((link) => ({ [link.linkName]: false })) || [];
+
+          set({
+            headerInfo: headerInfo,
+            hiddenContacts: hidContacts,
+            hiddenLinks: hidLinks,
+            hideLocation: false,
+            isLoading: false,
+          });
+        } catch (error) {
+          set({ error, isLoading: false });
         }
-        // Otherwise, return the contact unchanged
-        return contact;
-      }),
-    }));
-  },
-  setHiddenLinks: (key: string) => {
-    set((state) => ({
-      hiddenLinks: state.hiddenLinks.map((link: any) => {
-        // Check if the contact has the key you're looking for
-        if (link[key] !== undefined) {
-          // Return a new object with the key's value toggled
-          return { [key]: !link[key] };
-        }
-        // Otherwise, return the contact unchanged
-        return link;
-      }),
-    }));
-  },
-}));
+      },
+      hideLocation: INITIAL_STATE.hideLocation,
+      hiddenContacts: INITIAL_STATE.hiddenContacts as Array<{
+        [key: string]: boolean;
+      }>,
+
+      hiddenLinks: INITIAL_STATE.hiddenLinks as Array<{
+        [key: string]: boolean;
+      }>,
+      updateDisplayName: (newDisplayName: string) => {
+        set((state) => {
+          return {
+            headerInfo: { ...state.headerInfo, displayName: newDisplayName },
+          };
+        });
+      },
+      setHideLocation: () => {
+        set((state) => ({ hideLocation: !state.hideLocation }));
+      },
+      setHiddenContacts: (key: string) => {
+        set((state) => ({
+          hiddenContacts: state.hiddenContacts.map((contact: any) => {
+            // Check if the contact has the key you're looking for
+            if (contact[key] !== undefined) {
+              // Return a new object with the key's value toggled
+              return { [key]: !contact[key] };
+            }
+            // Otherwise, return the contact unchanged
+            return contact;
+          }),
+        }));
+      },
+      setHiddenLinks: (key: string) => {
+        set((state) => ({
+          hiddenLinks: state.hiddenLinks.map((link: any) => {
+            // Check if the contact has the key you're looking for
+            if (link[key] !== undefined) {
+              // Return a new object with the key's value toggled
+              return { [key]: !link[key] };
+            }
+            // Otherwise, return the contact unchanged
+            return link;
+          }),
+        }));
+      },
+    }),
+    {
+      name: "resumeHeaderLocalStorage",
+    }
+  )
+);

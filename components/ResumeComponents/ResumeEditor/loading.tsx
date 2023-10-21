@@ -11,10 +11,10 @@ import {
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
-    <section className="w-[80%] items-center py-12 mx-auto">
+    <section className="w-full justify-start">
       <Card className="w-full border-none">
         <CardHeader>
-          <CardTitle>
+          <CardTitle className="flex items-center ">
             <Skeleton className="w-[40%] h-8"></Skeleton>
           </CardTitle>
           <CardDescription>
