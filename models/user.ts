@@ -1,28 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-// const CertificateSchema = new Schema(
-//   {
-//     certificateName: String,
-//     organization: String,
-//     issueDate: Date,
-//     certificateId: String,
-//   },
-//   { timestamps: true }
-// );
-
-// const EducationSchema = new Schema(
-//   {
-//     schoolName: String,
-//     manor: String,
-//     degreeType: String,
-//     gpa: Number,
-//     startDate: Date,
-//     endDate: Date,
-//     id: String,
-//   },
-//   { timestamps: true }
-// );
-
 // const ExperieceSchema = new Schema(
 //   {
 //     company: String,
@@ -131,6 +108,30 @@ const ProjectSchema = new Schema(
   { timestamps: true }
 );
 
+const EducationSchema = new Schema(
+  {
+    _id: { type: String, required: true },
+    email: { type: String, required: true }, // email is being used to find projects of this user
+    schoolName: { type: String, required: true },
+    major: { type: String, required: true },
+    degreeType: { type: String, required: true },
+    gpa: { type: Schema.Types.Decimal128, required: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+  },
+  { timestamps: true }
+);
+
+const CertificateSchema = new Schema(
+  {
+    _id: { type: String, required: true },
+    email: { type: String, required: true }, // email is being used to find projects of this user
+    certificateName: { type: String, required: true },
+    organization: { type: String, required: true },
+    issueDate: { type: Date },
+  },
+  { timestamps: true }
+);
 const ExperieceSchema = new Schema(
   {
     _id: { type: String, required: true, unique: true },
@@ -140,7 +141,17 @@ const ExperieceSchema = new Schema(
     positionTitle: { type: String, required: true },
     experienceType: { type: String, required: true },
     startDate: { type: Date, required: true },
-    endDate: { type: Date || "working", required: true },
+    endDate: {
+      type: Schema.Types.Mixed,
+      required: true,
+      validate: {
+        validator: function (props: any) {
+          return props.value === "working" || props.value instanceof Date;
+        },
+        message: (props: any) =>
+          `${props.value} is not a valid endDate! It should be a Date or 'working'.`,
+      },
+    },
     description: { type: String, required: true },
   },
   { timestamps: true }
@@ -148,50 +159,31 @@ const ExperieceSchema = new Schema(
 
 const UserSchema = new mongoose.Schema(
   {
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    stripeCustomerId: {
-      type: String,
-    },
-    stripeSubscriptionId: {
-      type: String,
-    },
-    stripePriceId: {
-      type: String,
-    },
-    stripeCurrentPeriodEnd: {
-      type: Date,
-    },
-    resumeHeaderInfo: {
-      type: Schema.Types.ObjectId,
-      ref: "ResumeHeaderInfo",
-    },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    stripeCustomerId: { type: String },
+    stripeSubscriptionId: { type: String },
+    stripePriceId: { type: String },
+    stripeCurrentPeriodEnd: { type: Date },
+    resumeHeaderInfo: { type: Schema.Types.ObjectId, ref: "ResumeHeaderInfo" },
     projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
-    skills: {
-      type: [String],
-    },
-    languages: {
-      type: [String],
-    },
-    interests: {
-      type: [String],
-    },
+    skills: { type: [String] },
+    languages: { type: [String] },
+    interests: { type: [String] },
   },
   { timestamps: true }
 );
 
-console.log("mongoose.models:", mongoose.models);
-
 export const User = mongoose.models.User || mongoose.model("User", UserSchema);
 export const Experience =
   mongoose.models.Experience || mongoose.model("Experience", ExperieceSchema);
+
+export const Education =
+  mongoose.models.Education || mongoose.model("Education", EducationSchema);
+
+export const Certificate =
+  mongoose.models.Certificate ||
+  mongoose.model("Certificate", CertificateSchema);
 
 export const Project =
   mongoose.models.userProject || mongoose.model("userProject", ProjectSchema);

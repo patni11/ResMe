@@ -29,7 +29,7 @@ const UserAccountNav = () => {
         <Link
           href="/login"
           className={buttonVariants({
-            variant: "ghost",
+            variant: "outline",
           })}
         >
           Sign In
@@ -109,20 +109,17 @@ const UserAccountNav = () => {
               Dashboard
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            {" "}
+          <DropdownMenuItem asChild>
             <Link href="/profile" className="cursor-pointer">
               Profile
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            {" "}
+          <DropdownMenuItem asChild>
             <Link href="/billing" className="cursor-pointer">
               Billing
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            {" "}
+          <DropdownMenuItem asChild>
             <Link href="/settings" className="cursor-pointer">
               Settings
             </Link>
@@ -130,12 +127,12 @@ const UserAccountNav = () => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="cursor-pointer">
+        <DropdownMenuItem className="cursor-pointer" asChild>
           <button
             onClick={() => {
               signOut();
             }}
-            className="hover:text-destructive hover:text-semibold"
+            className="hover:text-destructive hover:text-semibold w-full"
           >
             Log out
           </button>

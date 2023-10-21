@@ -41,7 +41,7 @@ const EducationCard = () => {
         <p>September 2021 - May 2025</p>
       </div>
       <div className="flex justify-between font-light italic w-full">
-        <p>Bachelor's Computer Science</p>
+        <p>Bachelor&apos;s Computer Science</p>
         <p>GPA: 3.3</p>
       </div>
     </div>

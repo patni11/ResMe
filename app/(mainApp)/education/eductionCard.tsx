@@ -1,13 +1,13 @@
 "use client";
 import { FC, ReactNode } from "react";
 import { CardContent } from "@/components/ui/card";
-import Education from "./page";
+import { EducationType } from "./pageTypes";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 import UpdateDialogCard from "@/components/Cards/UpdateDialogCard";
 
 interface EducationCardProps {
   className?: string;
-  cardDetails: Education;
+  cardDetails: EducationType;
   dialogDetails?: {
     dialogTitle: string;
     dialogDescription?: string;
@@ -28,6 +28,7 @@ const EducationCard: FC<EducationCardProps> = ({
   dialogDetails,
   deleteDialogDetails,
 }) => {
+  //console.log("cardDetails GPA:", cardDetails.gpa?.$numberDecimal, cardDetails.gpa?.toString());
   return (
     <UpdateDialogCard
       cardDetails={{ cardTitle: cardDetails.schoolName }}
@@ -47,7 +48,7 @@ const EducationCard: FC<EducationCardProps> = ({
 
         <div className="flex justify-between">
           <span>{cardDetails.degreeType}</span>
-          <span>GPA: {cardDetails.gpa}</span>
+          <span>GPA: {cardDetails.gpa ? cardDetails.gpa.toString() : ""}</span>
         </div>
       </CardContent>
     </UpdateDialogCard>

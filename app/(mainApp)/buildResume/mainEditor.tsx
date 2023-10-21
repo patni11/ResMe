@@ -26,7 +26,7 @@ const MainEditor: FC<MainEditorProps> = () => {
 
   return (
     <main className="flex justify-between w-full h-full">
-      {screenSize >= 658 && screenSize < 1024 ? (
+      {Number(screenSize) >= 658 && Number(screenSize) < 1024 ? (
         <Tabs defaultValue="editPanel" className="w-full h-full mt-2">
           <TabsList className="w-full flex justify-between items-center">
             <TabsTrigger value="editPanel" className="w-full">
@@ -46,7 +46,7 @@ const MainEditor: FC<MainEditorProps> = () => {
             <ResumePreview />
           </TabsContent>
         </Tabs>
-      ) : screenSize >= 1024 ? (
+      ) : Number(screenSize) >= 1024 ? (
         <>
           <div className="w-1/2">
             <EditPanel />

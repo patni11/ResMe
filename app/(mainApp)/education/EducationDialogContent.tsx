@@ -31,38 +31,36 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { Education } from "./pageTypes";
+import { EducationType } from "./pageTypes";
 import { v4 as uuidv4 } from "uuid";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  deleteEducation,
+  updateEducation,
+} from "@/lib/actions/education.actions";
 
-//TODO: Fix update for all values except gpa
-
-const AddEducationFormSchema = z
+const EducationFormSchema = z
   .object({
-    id: z.string().optional(),
+    _id: z.string().optional(),
     schoolName: z
       .string()
-      .nonempty({
-        message: "School Name must be at least 2 characters.",
+      .min(1, {
+        message: "School Name cannot be empty",
       })
       .default(""),
     major: z
       .string()
-      .nonempty({
-        message: "Major must be at least 2 characters.",
+      .min(1, {
+        message: "Major cannot be empty",
       })
       .default(""),
     degreeType: z
       .string()
-      .nonempty({
-        message: "DegreeType must be at least 2 characters.",
+      .min(1, {
+        message: "DegreeType cannot be empty",
       })
       .default(""),
-    gpa: z
-      .preprocess(
-        (a) => parseInt(z.string().parse(a), 10),
-        z.number().positive().multipleOf(0.01).min(0.1).max(10)
-      )
-      .default(0),
+    gpa: z.number().positive().multipleOf(0.01).min(0).max(10).default(0),
     startDate: z
       .date({
         required_error: "A start date is required.",
@@ -79,19 +77,20 @@ const AddEducationFormSchema = z
     path: ["endDate"], // specifies that this refinement is for the endDate field
   });
 
-export type AddEducationFormType = z.infer<typeof AddEducationFormSchema>;
+//export type AddEducationFormType = z.infer<typeof EducationFormSchema>;
 
 interface EducationDialogContentProps {
-  addData: (educationData: Education) => void;
-  defaultValues?: Education;
+  email: string;
+  defaultValues?: EducationType;
 }
 
 export const EducationDialogContent: FC<EducationDialogContentProps> = ({
-  addData,
+  email,
   defaultValues,
 }) => {
-  const form = useForm<Education>({
-    resolver: zodResolver(AddEducationFormSchema),
+  const { toast } = useToast();
+  const form = useForm<EducationType>({
+    resolver: zodResolver(EducationFormSchema),
     defaultValues: defaultValues
       ? defaultValues
       : {
@@ -104,18 +103,45 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
         },
     mode: "onSubmit",
   });
+  const {
+    formState: { errors },
+    register,
+  } = form;
+  console.log("Form Error", errors);
 
-  const handleFormSubmit = (data: Education) => {
-    console.log("Handle Form Submit", data);
+  const handleDelete = async () => {
+    if (defaultValues?._id) {
+      await deleteEducation(defaultValues?._id, "/education");
+      toast({
+        title: `Deleted Education 🎈: ${defaultValues.schoolName} `,
+      });
+    } else {
+      toast({
+        title: "No Value to delete, please try again",
+      });
+    }
+  };
+
+  const handleFormSubmit = (data: EducationType) => {
     let educationDataWithId = data;
-    if (!data.id) {
+    if (!defaultValues || !defaultValues._id) {
       const uniqueId = uuidv4();
       educationDataWithId = {
         ...data,
-        id: uniqueId,
+        _id: uniqueId,
+      };
+    } else {
+      educationDataWithId = {
+        ...data,
+        _id: defaultValues._id,
       };
     }
-    addData(educationDataWithId);
+    console.log("Education", educationDataWithId);
+    toast({
+      title: `Education Updated 🥳: ${educationDataWithId.schoolName} `,
+    });
+    updateEducation(educationDataWithId, email, "/education");
+
     document.getElementById("closeDialog")?.click();
   };
 
@@ -203,10 +229,9 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
                       max="10"
                       step="0.01"
                       placeholder="GPA"
-                      value={Number(field.value)} // Convert the value to a number
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      ref={field.ref}
+                      {...register("gpa", {
+                        setValueAs: (value) => Number(value),
+                      })}
                     />
                   </FormControl>
                   <FormMessage />
@@ -302,13 +327,25 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
         </div>
 
         <DialogFooter>
+          <Button
+            variant="outline"
+            type="button"
+            id="none"
+            className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+            disabled={!defaultValues?._id}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
           <DialogTrigger>
             <Button variant="outline" id="closeDialog">
               Cancel
             </Button>
           </DialogTrigger>
 
-          <Button type="submit">Save</Button>
+          <Button type="submit" id="none">
+            Save
+          </Button>
         </DialogFooter>
       </form>
     </Form>

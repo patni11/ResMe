@@ -11,7 +11,7 @@ interface EditPanelProps {}
 const EditPanel: FC<EditPanelProps> = () => {
   const userDetails: UserInfo = {
     displayName: "Shubh Patni",
-    id: "1234",
+    email: "1234",
     location: "Boston, MA",
     links: [
       { linkName: "Website", link: "https://www.shubhpatni.com/" },
@@ -30,6 +30,8 @@ const EditPanel: FC<EditPanelProps> = () => {
       </h1>
       <ResumeHeader userDetails={userDetails}></ResumeHeader>
       <EducationSectionCard></EducationSectionCard>
+      <ExperienceSectionCard></ExperienceSectionCard>
+      <ExperienceSectionCard></ExperienceSectionCard>
       <ExperienceSectionCard></ExperienceSectionCard>
     </main>
   );

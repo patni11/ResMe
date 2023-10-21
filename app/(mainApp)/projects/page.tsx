@@ -9,7 +9,7 @@ import { fetchUserProjects } from "@/lib/actions/userProject.actions";
 import ProjectCard from "./projectCard";
 import ImageWrapper from "@/components/ImageWrapper";
 
-export const Projects = async () => {
+const Projects = async () => {
   const session: Session | null = await getServerSession(authOptions);
 
   if (!session || !session.user) {

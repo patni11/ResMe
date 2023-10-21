@@ -11,13 +11,6 @@ export default function ResumePreview() {
   const elementRef = useRef(null);
   const handleExport = () => {
     var element = document.getElementById("element-to-print");
-    // var opt = {
-    //   margin: 1,
-    //   filename: "myfile.pdf",
-    //   image: { type: "jpeg", quality: 0.98 },
-    //   html2canvas: { scale: 2 },
-    //   jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    // };
 
     html2pdf().from(element).save();
   };
@@ -40,6 +33,23 @@ export default function ResumePreview() {
       >
         <ResumeHeader></ResumeHeader>
         <EducationSection></EducationSection>
+        <ResumeHeader></ResumeHeader>
+        <EducationSection></EducationSection>
+        <ResumeHeader></ResumeHeader>
+        <EducationSection></EducationSection>
+        <ResumeHeader></ResumeHeader>
+        <EducationSection></EducationSection>
+        <ResumeHeader></ResumeHeader>
+        <EducationSection></EducationSection>
+        <ResumeHeader></ResumeHeader>
+        <EducationSection></EducationSection>
+        <ResumeHeader></ResumeHeader>
+        <EducationSection></EducationSection>
+        <ResumeHeader></ResumeHeader>
+        <EducationSection></EducationSection>
+        <ResumeHeader></ResumeHeader>
+        <EducationSection></EducationSection>
+        <ResumeHeader></ResumeHeader>
       </div>
     </main>
   );

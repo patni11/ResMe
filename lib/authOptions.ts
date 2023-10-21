@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
               credentials.password,
               user.password
             );
-            //TODO: uncomment this part, this was fine
+            // TODO: uncomment this part, this was fine
             // if (isMatch) {
             //   return user;
             // } else {
@@ -74,7 +74,7 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/login",
-    newUser: "/dashboard",
+    //newUser: "/dashboard",
   },
 
   callbacks: {

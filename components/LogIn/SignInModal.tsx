@@ -138,7 +138,7 @@ export function SignInModal() {
               Sign In
             </Button>
             <div className="flex items-center text-sm space-x-4">
-              <span>Don't Have an Account?</span>
+              <span>Don&apos;t Have an Account?</span>
               <Link
                 href="/signup"
                 className="font-semibold hover:text-[#3b82f6]"

@@ -14,7 +14,7 @@ export async function fetchExperiences(email: string) {
     if (!experience) {
       throw new Error(`No Experience Found`);
     }
-
+    console.log("Experience", experience);
     return experience;
   } catch (error: any) {
     //console.log("Failed to fetch user", error);
@@ -40,6 +40,7 @@ export async function updateExperience(
         endDate: experience.endDate,
         description: experience.description,
         _id: experience._id,
+        email: email,
       },
       {
         upsert: true,

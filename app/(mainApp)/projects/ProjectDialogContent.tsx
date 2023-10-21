@@ -274,8 +274,6 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
                 </FormItem>
               )}
             />
-
-            {/** TODO: add end date */}
           </div>
 
           <FormField

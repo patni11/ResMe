@@ -12,6 +12,7 @@ const ErrorToast = () => {
   useEffect(() => {
     if (errorURI != "" || errorURI != undefined) {
       const errorMessage = decodeURIComponent(errorURI as string);
+
       toast({
         title: `${errorMessage}`,
       });

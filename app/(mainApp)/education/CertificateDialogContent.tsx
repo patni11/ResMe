@@ -1,4 +1,5 @@
-import { FC, useState } from "react";
+"use client";
+import { FC } from "react";
 import { Certificate } from "./pageTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -25,9 +26,14 @@ import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { DialogFooter } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  deleteCertificate,
+  updateCertificate,
+} from "@/lib/actions/certificates.action.";
 
 const CertificateSchema = z.object({
-  certificateId: z.string().optional(),
+  _id: z.string().optional(),
   certificateName: z
     .string()
     .nonempty({
@@ -44,14 +50,15 @@ const CertificateSchema = z.object({
 });
 
 interface CertificateDialogContentProps {
-  addData: (certificateData: Certificate) => void;
+  email: string;
   defaultValues?: Certificate;
 }
 
 const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
-  addData,
+  email,
   defaultValues,
 }) => {
+  const { toast } = useToast();
   const form = useForm<Certificate>({
     resolver: zodResolver(CertificateSchema),
     defaultValues: defaultValues
@@ -64,17 +71,33 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
     mode: "onSubmit",
   });
 
+  const handleDelete = async () => {
+    if (defaultValues?._id) {
+      await deleteCertificate(defaultValues?._id, "/education");
+      toast({
+        title: `Deleted Certificate 🎈: ${defaultValues.certificateName} `,
+      });
+    } else {
+      toast({
+        title: "No Value to delete, please try again",
+      });
+    }
+  };
+
   const handleFormSubmit = (data: Certificate) => {
     console.log("Handle Certificate Form Submit", data);
     let educationDataWithId = data;
-    if (!data.certificateId) {
+    if (!data._id) {
       const uniqueId = uuidv4();
       educationDataWithId = {
         ...data,
-        certificateId: uniqueId,
+        _id: uniqueId,
       };
     }
-    addData(educationDataWithId);
+    toast({
+      title: `Certificate Updated 🥳: ${educationDataWithId.certificateName} `,
+    });
+    updateCertificate(educationDataWithId, email, "/education");
 
     document.getElementById("closeDialog")?.click();
   };
@@ -155,14 +178,26 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
               </FormItem>
             )}
           />
-          <DialogFooter className="flex flex-row">
+          <DialogFooter>
+            <Button
+              variant="outline"
+              type="button"
+              id="none"
+              className="text-destructive hover:bg-destructive hover:text-destructive-foreground"
+              disabled={!defaultValues?._id}
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
             <DialogTrigger>
               <Button variant="outline" id="closeDialog">
                 Cancel
               </Button>
             </DialogTrigger>
 
-            <Button type="submit">Save</Button>
+            <Button type="submit" id="none">
+              Save
+            </Button>
           </DialogFooter>
         </form>
       </Form>

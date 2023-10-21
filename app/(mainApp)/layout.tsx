@@ -2,7 +2,7 @@ import { SidebarMain } from "@/components/Navigation/SideBarMain";
 //import { Sidebar } from "@/components/Navigation/Sidebar";
 
 import { authOptions } from "@/lib/authOptions";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
 export default async function RootLayout({
   children,
@@ -11,8 +11,9 @@ export default async function RootLayout({
 }) {
   // const { isAuthenticated } = getKindeServerSession();
   const session = await getServerSession(authOptions);
+  console.log("Session", session);
   if (!session) {
-    redirect("/login/?callbackUrl=/dashboard");
+    redirect("/login");
   }
   // if (!isAuthenticated){
   //   redirect('/auth-callback?origin=dashboard')

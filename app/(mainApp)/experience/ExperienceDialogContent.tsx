@@ -163,7 +163,7 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
 
   const endDateValue = watch("endDate");
   const isWorking = endDateValue === "working";
-  //TODO: Fix update endDate
+
   return (
     <>
       <Form {...form}>
@@ -355,8 +355,6 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
                 </label>
               </div>
             </div>
-
-            {/** TODO: add end date */}
           </div>
 
           <FormField
