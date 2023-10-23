@@ -12,11 +12,17 @@ interface SkillsPageSectionProps {
     title: string;
     description: string;
   };
+  fetchedSkills: string[];
+  updateFunction: (updatedSkills: string[]) => void;
 }
 
-const SkillsPageSection: FC<SkillsPageSectionProps> = ({ cardDetails }) => {
-  const [skills, setSkills] = useState<string[]>([]);
-  const [pressedSkills, setPressedSkills] = useState<string[]>([]);
+const SkillsPageSection: FC<SkillsPageSectionProps> = ({
+  cardDetails,
+  fetchedSkills,
+  updateFunction,
+}) => {
+  const [skills, setSkills] = useState<string[]>(fetchedSkills);
+  const [pressedSkills, setPressedSkills] = useState<string[]>(fetchedSkills);
   const [inputValue, setInputValue] = useState<string>("");
   const [unsavedChanges, setUnsavedChanges] = useState(false);
 
@@ -26,6 +32,7 @@ const SkillsPageSection: FC<SkillsPageSectionProps> = ({ cardDetails }) => {
     setPressedSkills((prevSkills) => [...prevSkills, ...newSkills]);
     //setUnsavedChanges(true); // Mark changes as unsaved
     setInputValue(""); // Clear the input
+    handleSave();
   };
 
   const handleTogglePress = (skill: string, pressed: boolean) => {
@@ -45,6 +52,7 @@ const SkillsPageSection: FC<SkillsPageSectionProps> = ({ cardDetails }) => {
       currentSkills.filter((skill) => pressedSkills.includes(skill))
     );
     setUnsavedChanges(false); // Reset unsaved changes flag
+    updateFunction(skills);
   };
 
   return (

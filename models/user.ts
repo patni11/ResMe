@@ -1,19 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-// const ExperieceSchema = new Schema(
-//   {
-//     company: String,
-//     location: String,
-//     positionTitle: String,
-//     experienceType: String,
-//     startDate: Date,
-//     endDate: Date || "working",
-//     description: String,
-//     id: String,
-//   },
-//   { timestamps: true }
-// );
-
 // const UserSchema = new Schema(
 //   {
 //     userPlatformDetails: {
