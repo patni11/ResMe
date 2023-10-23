@@ -1,8 +1,9 @@
 import { ResumeHeaderInfo } from "@/models/user";
 import connectMongoDB from "@/lib/mongodb";
-import { revalidatePath } from "next/cache";
-import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { NextRequest, NextResponse } from "next/server";
+import authOptions from "@/lib/authOptions";
+import { getServerSession } from "next-auth/next";
+import { Session } from "next-auth";
 
 export async function GET(
   request: NextRequest
@@ -10,12 +11,20 @@ export async function GET(
 ) {
   //const { email } = params;
   //console.log("received params:", params);
+  const session: Session | null = await getServerSession(authOptions);
+  if (!session) {
+    return NextResponse.json({
+      status: 404,
+      message: `Failed to fetch user, user not found`,
+    });
+  }
+
   try {
     await connectMongoDB();
     const headerInfo = await ResumeHeaderInfo.findOne({
-      _id: "shubhpatni2002@gmail.com",
+      _id: session?.user?.email,
     });
-    console.log("Making API Call");
+
     return NextResponse.json({ headerInfo }, { status: 200 });
   } catch (error: any) {
     //console.log("Failed to fetch user", error);

@@ -68,7 +68,6 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
     console.log("Handle User Info Form Submit", data);
 
     await updateResumeHeaderInfo(data, pathname);
-
     toast({
       title: "User Info Saved ",
     });

@@ -30,7 +30,7 @@ export const ResumeHeader: FC<ResumeHeaderProps> = () => {
       "resumeHeaderLocalStorage"
     );
     if (!resumeHeaderLocalStorage) {
-      fetchHeaderInfo(email ? email : "");
+      fetchHeaderInfo();
     }
   }, [fetchHeaderInfo]);
 
@@ -46,7 +46,8 @@ export const ResumeHeader: FC<ResumeHeaderProps> = () => {
   return (
     <FormCardWrapper
       cardTitle="Header"
-      refreshFunction={() => fetchHeaderInfo(email ? email : "")}
+      refreshFunction={() => fetchHeaderInfo()}
+      deleteButton={false}
     >
       <Label>Your Name</Label>
       <Input

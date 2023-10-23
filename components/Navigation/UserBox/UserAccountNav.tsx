@@ -23,7 +23,7 @@ const UserAccountNav = () => {
   const email = session?.user?.email || "";
   const isSubscribed = false;
 
-  if (!session) {
+  if (email == "") {
     return (
       <div className="flex space-x-4">
         <Link

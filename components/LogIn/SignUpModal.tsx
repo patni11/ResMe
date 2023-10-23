@@ -52,7 +52,7 @@ export function SignUpModal() {
     const { email, password } = data;
 
     try {
-      //await createUser({ email, password });
+      await createUser({ email, password });
       console.log("creating resumeHeaderInfo");
       await updateResumeHeaderInfo({
         displayName: "",

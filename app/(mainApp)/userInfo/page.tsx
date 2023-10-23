@@ -1,6 +1,9 @@
 import UserInfoForm from "./UserInfoForm";
 import ImageWrapper from "@/components/ImageWrapper";
-import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
+import {
+  fetchResumeHeaderInfo,
+  updateResumeHeaderInfo,
+} from "@/lib/actions/resumeHeaderInfo.actions";
 //import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserInfo } from "./pageType";
 import { getServerSession } from "next-auth/next";
@@ -16,6 +19,18 @@ const UserInfoPage = async () => {
   const userInfoData: UserInfo | null = await fetchResumeHeaderInfo(
     session.user.email
   );
+
+  if (!userInfoData && session.user.email) {
+    await updateResumeHeaderInfo({
+      displayName: "",
+      location: "",
+      contactInfo: [{ contact: "" }],
+      links: [{ linkName: "", link: "" }],
+      email: session.user.email,
+    });
+  }
+
+  console.log("userInfoData", userInfoData);
 
   const defaultValues: UserInfo = {
     displayName: userInfoData ? userInfoData?.displayName : "",

@@ -1,3 +1,4 @@
+"use client";
 import MainEditor from "./mainEditor";
 
 const BuildResume = async () => {

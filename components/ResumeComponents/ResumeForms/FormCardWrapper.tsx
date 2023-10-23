@@ -11,38 +11,59 @@ interface FormCardWrapperProps {
   cardTitle: string;
   children?: ReactNode;
   refreshFunction?: () => void;
+  hideAll?: boolean;
+  deleteFunction?: () => void;
 }
+
+interface TrashButtonProps {
+  hideAll: boolean;
+  deleteFunction?: () => void;
+}
+
+const TrashButton: FC<TrashButtonProps> = ({
+  hideAll = false,
+  deleteFunction,
+}) => {
+  if (!deleteFunction) return null;
+  return (
+    <>
+      {!hideAll ? (
+        <Trash2Button
+          className="mr-2"
+          onClick={() => deleteFunction()}
+          size="small"
+        />
+      ) : (
+        <Button
+          onClick={() => deleteFunction()}
+          className="mr-2"
+          variant="ghost"
+        >
+          <PlusCircleIcon className="h-4 w-4" />
+        </Button>
+      )}
+    </>
+  );
+};
 
 export const FormCardWrapper: FC<FormCardWrapperProps> = ({
   className,
   cardTitle,
   children,
   refreshFunction,
+  hideAll = false,
+  deleteFunction,
 }) => {
-  const [showChild, setShowChild] = useState(true);
-
   return (
     <section className="w-full justify-start">
       <Card className="w-full border-none">
         <CardHeader>
-          <CardTitle className="flex items-center ">
-            {showChild ? (
-              <Trash2Button
-                className="mr-2"
-                onClick={() => setShowChild(false)}
-                size="small"
-              />
-            ) : (
-              <Button
-                onClick={() => setShowChild(true)}
-                className="mr-2"
-                variant="ghost"
-              >
-                <PlusCircleIcon className="h-4 w-4" />
-              </Button>
-            )}
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center">
+              <TrashButton hideAll={hideAll} deleteFunction={deleteFunction} />
 
-            {cardTitle}
+              {cardTitle}
+            </div>
             {refreshFunction ? (
               <Button
                 onClick={() => refreshFunction()}
@@ -51,12 +72,12 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
               >
                 <RefreshCw className="h-4 w-4" />
               </Button>
-            ) : null}
+            ) : (
+              <div></div>
+            )}
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          {showChild ? <div>{children}</div> : <div></div>}
-        </CardContent>
+        <CardContent>{!hideAll ? <div>{children}</div> : null}</CardContent>
       </Card>
     </section>
   );

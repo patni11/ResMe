@@ -1,0 +1,79 @@
+"use client";
+
+import { useExperiencesInfo } from "@/store/experienceInfo";
+import ResumeComponentContainer from "./ResumeComponentContainer";
+import { Experience } from "@/app/(mainApp)/experience/pageTypes";
+import { FC } from "react";
+import { getFormattedDate } from "@/app/utils/FormattingFunctions";
+
+export default function ExperienceSection() {
+  const { experiences, hiddenExperiences, hideAll } = useExperiencesInfo();
+
+  if (hideAll) {
+    return null;
+  }
+
+  return (
+    <ResumeComponentContainer>
+      <div className="flex flex-col justify-start items-start w-full">
+        <h1 className="text-sm font-semibold m-0"> EXPERIENCES </h1>
+        <hr className="h-[3px] bg-black w-full mb-[0.5px]" />
+
+        {experiences.map((experience) => {
+          const isExperienceHidden =
+            hiddenExperiences && hiddenExperiences[experience._id];
+          if (isExperienceHidden) {
+            return <div key={experience._id}></div>; // Remember to add a key here
+          }
+          return (
+            <ExperienceCard
+              key={experience._id}
+              experience={experience}
+              // hideExperience={hiddenExperiences && hiddenExperiences[experience._id]}
+            />
+          );
+        })}
+      </div>
+    </ResumeComponentContainer>
+  );
+}
+
+interface ExperienceCardProps {
+  experience: Experience;
+}
+
+const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
+  const endDate =
+    experience.endDate == "working"
+      ? "Current"
+      : getFormattedDate(new Date(experience.endDate));
+
+  const descriptions = experience.description.split("\n");
+
+  return (
+    <div className="flex flex-col space-between text-xs w-full leading-tight mb-1">
+      <div className="flex space-between">
+        <div className="flex flex-col w-full text-left">
+          {/* <p>Northeastern University</p> */}
+          <p className="font-bold">{experience.company}</p>
+          {/* <p>September 2021 - May 2025</p> */}
+          <p className="italic text-gray-500 font-normal">
+            {experience.positionTitle}
+          </p>
+        </div>
+        <div className="flex flex-col font-light italic w-full text-right">
+          {/* <p>Bachelor&apos;s Computer Science</p> */}
+          {experience.experienceType} {experience.location}
+          <p className="font-bold">
+            {getFormattedDate(new Date(experience.startDate))} - {endDate}
+          </p>
+        </div>
+      </div>
+      <ul className="text-left ml-4" style={{ listStyleType: "disc" }}>
+        {descriptions.map((desc, index) => {
+          return <li key={index}>{desc}</li>;
+        })}
+      </ul>
+    </div>
+  );
+};

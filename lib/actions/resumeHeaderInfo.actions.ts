@@ -10,6 +10,7 @@ export async function fetchResumeHeaderInfo(email: string) {
     await connectMongoDB();
     const user = await ResumeHeaderInfo.findOne({ _id: email });
     // console.log("DB USER", user);
+    console.log("user", user);
     return user;
   } catch (error: any) {
     //console.log("Failed to fetch user", error);

@@ -1,4 +1,5 @@
 export type Experience = {
+  _id: string;
   company: string;
   location: string;
   positionTitle: string;
@@ -6,5 +7,4 @@ export type Experience = {
   startDate: Date;
   endDate: Date | "working";
   description: string;
-  _id: string;
 };

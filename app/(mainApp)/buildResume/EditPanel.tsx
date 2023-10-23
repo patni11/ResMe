@@ -2,10 +2,11 @@ import { FC } from "react";
 
 import { EducationSectionCard } from "@/components/ResumeComponents/ResumeForms/EducationSectionCard";
 import { buttonVariants } from "@/components/ui/button";
-import { ArrowBigRight } from "lucide-react";
+import { SaveIcon } from "lucide-react";
 import { ExperienceSectionCard } from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
 import { ResumeHeader } from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
+import { Input } from "@/components/ui/input";
 interface EditPanelProps {}
 
 const EditPanel: FC<EditPanelProps> = () => {
@@ -22,16 +23,19 @@ const EditPanel: FC<EditPanelProps> = () => {
 
   return (
     <main className="w-full h-full flex flex-col items-start bg-gray-200 p-4 space-y-2">
-      <h1 className={buttonVariants({ variant: "secondary" })}>
-        Enter details here & preview on the right{" "}
-        <ArrowBigRight className="w-5 h-5" />
-        <ArrowBigRight className="w-5 h-5" />
-        <ArrowBigRight className="w-5 h-5" />
-      </h1>
+      <div className="flex space-x-2 w-full">
+        <Input value={`Untitled Resume`} className=""></Input>
+        <h1
+          className={`${buttonVariants({
+            variant: "secondary",
+          })} w-full flex space-x-2`}
+        >
+          <span>Edit Resume & Save</span>
+          <SaveIcon className="w-5 h-5" />
+        </h1>
+      </div>
       <ResumeHeader userDetails={userDetails}></ResumeHeader>
       <EducationSectionCard></EducationSectionCard>
-      <ExperienceSectionCard></ExperienceSectionCard>
-      <ExperienceSectionCard></ExperienceSectionCard>
       <ExperienceSectionCard></ExperienceSectionCard>
     </main>
   );

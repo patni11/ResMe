@@ -10,6 +10,7 @@ import EducationCard from "./eductionCard";
 import { FC } from "react";
 import { EducationDialogContent } from "./EducationDialogContent";
 import { fetchEducation } from "@/lib/actions/education.actions";
+import { parseDecimal } from "@/app/utils/FormattingFunctions";
 
 interface EducationSectionProps {}
 
@@ -25,20 +26,6 @@ const EducationSection: FC<EducationSectionProps> = async () => {
   const education: EducationType[] | null = JSON.parse(
     JSON.stringify(await fetchEducation(session.user.email))
   );
-
-  type DecimalValue = {
-    $numberDecimal: string;
-  };
-
-  type PossibleNumber = Number | DecimalValue;
-
-  function parseDecimal(value: PossibleNumber): number {
-    if ("$numberDecimal" in value) {
-      return parseFloat(value.$numberDecimal);
-    } else {
-      return value as number;
-    }
-  }
 
   return (
     <ContentSection

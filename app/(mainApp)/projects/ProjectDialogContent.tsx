@@ -63,7 +63,7 @@ const ProjectSchema = z
       return true; // If there's no endDate, the refinement passes by default.
     },
     {
-      message: "End date should not be less than start date.",
+      message: "End date must be later than start date",
       path: ["endDate"], // specifies that this refinement is for the endDate field
     }
   );
@@ -236,7 +236,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>
-                    Start Date
+                    End Date
                     <LightText>optional</LightText>
                   </FormLabel>
                   <Popover>

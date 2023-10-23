@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { persist } from "zustand/middleware";
+//import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 type State = {
   headerInfo: UserInfo;
@@ -16,7 +17,7 @@ type Actions = {
   setHideLocation: () => void;
   setHiddenLinks: (key: string) => void;
   setHiddenContacts: (key: string) => void;
-  fetchHeaderInfo: (email: string) => Promise<void>;
+  fetchHeaderInfo: () => Promise<void>;
 };
 
 const INITIAL_STATE: State = {
@@ -34,9 +35,9 @@ const INITIAL_STATE: State = {
   error: null,
 };
 
-async function getData(email: string) {
+async function getData() {
   try {
-    const res = await fetch(`/api/resumeHeaderInfo?email=${email}`);
+    const res = await fetch(`/api/resumeHeaderInfo`);
     console.log("Fetched Data", res);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -53,9 +54,10 @@ export const useResumeHeaderInfo = create(
       headerInfo: INITIAL_STATE.headerInfo,
       error: INITIAL_STATE.error,
       isLoading: INITIAL_STATE.isLoading,
-      fetchHeaderInfo: async (email: string) => {
+      fetchHeaderInfo: async () => {
         try {
-          const headerInfo: UserInfo = (await getData(email)).headerInfo;
+          const headerInfo: UserInfo = (await getData()).headerInfo;
+
           console.log("Header Info", headerInfo);
           const hidContacts =
             headerInfo.contactInfo?.map((contact) => ({

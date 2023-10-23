@@ -1,29 +1,121 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, useEffect } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
+import { useEducationsInfo } from "@/store/educationInfo";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
-interface EducationSectionCard {}
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { EducationType } from "@/app/(mainApp)/education/pageTypes";
 
+interface EducationCardProps {
+  education: EducationType;
+  hideGPA: boolean;
+  hideDate: boolean;
+  hideEducation: boolean;
+  setHideEducation: () => void;
+  setHideDate: () => void;
+  setHideGpa: () => void;
+}
+
+const EducationCard: FC<EducationCardProps> = ({
+  education,
+  hideEducation,
+  hideGPA,
+  hideDate,
+  setHideEducation,
+  setHideDate,
+  setHideGpa,
+}) => {
+  return (
+    <>
+      <Card className="mb-2">
+        <CardHeader className="flex flex-row justify-between">
+          <div className="flex flex-col space-y-2">
+            <CardTitle>{education.schoolName}</CardTitle>
+            <CardDescription>
+              {education.degreeType} {education.major}
+            </CardDescription>
+          </div>
+          <div className="flex space-x-4">
+            <HideButtons hide={hideEducation} setHide={setHideEducation}>
+              <span>Education</span>
+            </HideButtons>
+
+            <HideButtons hide={hideGPA} setHide={setHideGpa}>
+              <span>GPA</span>
+            </HideButtons>
+
+            <HideButtons hide={hideDate} setHide={setHideDate}>
+              <span>Date</span>
+            </HideButtons>
+          </div>
+        </CardHeader>
+      </Card>
+    </>
+  );
+};
+interface EducationSectionCard {}
 export const EducationSectionCard: FC<EducationSectionCard> = ({}) => {
-  const [hideGPA, setHideGpa] = useState(true);
-  const [hideYears, setHideYears] = useState(false);
+  const {
+    educations,
+    hiddenEducations,
+    hiddenGPAs,
+    hiddenDates,
+    relevantCourseWork,
+    hideAll,
+    updateRelevantCourseWork,
+    setHiddenEducation,
+    setHiddenDates,
+    setHiddenGPAs,
+    fetchEducations,
+    setHideAll,
+  } = useEducationsInfo();
+
+  useEffect(() => {
+    let educationsLocalStorage = localStorage.getItem("educationsLocalStorage");
+    if (!educationsLocalStorage) {
+      fetchEducations();
+    }
+  }, [fetchEducations]);
 
   return (
-    <FormCardWrapper cardTitle="Education">
-      <div className="flex space-x-4 w-full justify-end">
-        <HideButtons hide={hideGPA} setHide={() => setHideGpa(!hideGPA)}>
-          <span>Hide GPA</span>
-        </HideButtons>
+    <FormCardWrapper
+      cardTitle="Education"
+      refreshFunction={() => fetchEducations()}
+      hideAll={hideAll}
+      deleteFunction={setHideAll}
+    >
+      {educations.map((education) => {
+        return (
+          <EducationCard
+            key={education._id}
+            education={education}
+            hideGPA={hiddenGPAs![education._id]}
+            hideDate={hiddenDates![education._id]}
+            hideEducation={hiddenEducations![education._id]}
+            setHideEducation={() => setHiddenEducation(education._id)}
+            setHideDate={() => setHiddenDates(education._id)}
+            setHideGpa={() => setHiddenGPAs(education._id)}
+          />
+        );
+      })}
 
-        <HideButtons hide={hideYears} setHide={() => setHideYears(!hideYears)}>
-          <span>Hide Years</span>
-        </HideButtons>
+      <div className="flex flex-col space-y-2 mt-4">
+        <Label>Relavant Coursework</Label>
+        <Input
+          placeholder="Relavant Coursework"
+          value={relevantCourseWork}
+          onChange={(e) => {
+            updateRelevantCourseWork(e.currentTarget.value);
+          }}
+        ></Input>
       </div>
-      <Label>Relavant Coursework</Label>
-      <Input placeholder="Relavant Coursework"></Input>
     </FormCardWrapper>
   );
 };
