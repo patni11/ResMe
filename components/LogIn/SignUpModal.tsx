@@ -10,29 +10,21 @@ import {
 } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import Link from "next/link";
+import { Form } from "@/components/ui/form";
+
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { useToast } from "@/components/ui/use-toast";
+//import { useToast } from "@/components/ui/use-toast";
 import { UserFormData, UserSchema } from "./ZodSchema";
 import GoogleButton from "./GoogleAuthButton";
-import { createUser } from "@/lib/actions/user.actions";
-import { updateResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
+import FaceBook from "./FaceBookAuthButton";
+import GithubAuthButton from "./GithubAuthButton";
 
 export function SignUpModal() {
   const router = useRouter();
   const session = useSession();
 
-  const { toast } = useToast();
+  //const { toast } = useToast();
 
   if (session.status === "authenticated") {
     router?.push("/dashboard");
@@ -48,28 +40,26 @@ export function SignUpModal() {
   });
 
   const handleFormSubmit = async (data: UserFormData) => {
-    console.log("Creating User", data);
-    const { email, password } = data;
-
-    try {
-      await createUser({ email, password });
-      console.log("creating resumeHeaderInfo");
-      await updateResumeHeaderInfo({
-        displayName: "",
-        contactInfo: [{ contact: "" }],
-        location: "",
-        links: [{ linkName: "", link: "" }],
-        email: email,
-      });
-
-      toast({
-        title: `Welcome ${email} 😄`,
-      });
-    } catch (err: any) {
-      toast({
-        title: `${err}`,
-      });
-    }
+    // console.log("Creating User", data);
+    // const { email, password } = data;
+    // try {
+    //   await createUser({ email, password });
+    //   console.log("creating resumeHeaderInfo");
+    //   await updateResumeHeaderInfo({
+    //     displayName: "",
+    //     contactInfo: [{ contact: "" }],
+    //     location: "",
+    //     links: [{ linkName: "", link: "" }],
+    //     email: email,
+    //   });
+    //   toast({
+    //     title: `Welcome ${email} 😄`,
+    //   });
+    // } catch (err: any) {
+    //   toast({
+    //     title: `${err}`,
+    //   });
+    // }
   };
 
   return (
@@ -87,7 +77,9 @@ export function SignUpModal() {
           </CardHeader>
           <CardContent className="grid gap-4">
             <GoogleButton />
-
+            <FaceBook />
+            <GithubAuthButton />
+            {/* 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
@@ -131,9 +123,9 @@ export function SignUpModal() {
                   </FormItem>
                 )}
               />
-            </div>
+            </div> */}
           </CardContent>
-          <CardFooter className="flex flex-col space-y-2 justify-center">
+          {/* <CardFooter className="flex flex-col space-y-2 justify-center">
             <Button className="w-full" type="submit">
               Sign Up
             </Button>
@@ -146,7 +138,7 @@ export function SignUpModal() {
                 Sign In!
               </Link>
             </div>
-          </CardFooter>
+          </CardFooter> */}
         </Card>
       </form>
     </Form>

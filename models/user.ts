@@ -143,7 +143,7 @@ const ExperieceSchema = new Schema(
   { timestamps: true }
 );
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new Schema(
   {
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -160,7 +160,6 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export const User = mongoose.models.User || mongoose.model("User", UserSchema);
 export const Experience =
   mongoose.models.Experience || mongoose.model("Experience", ExperieceSchema);
 
@@ -177,3 +176,5 @@ export const Project =
 export const ResumeHeaderInfo =
   mongoose.models.ResumeHeaderInfo ||
   mongoose.model("ResumeHeaderInfo", ResumeHeaderInfoSchema);
+
+export const User = mongoose.models.User || mongoose.model("User", UserSchema);

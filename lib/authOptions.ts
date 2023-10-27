@@ -7,7 +7,8 @@ import connectMongoDB from "./mongodb";
 import clientPromise from "./clientPromise";
 import bcrypt from "bcryptjs";
 import { User } from "../models/user";
-
+import FacebookProvider from "next-auth/providers/facebook";
+import GitHubProvider from "next-auth/providers/github";
 export type Session = {
   user: {
     email: string;
@@ -29,6 +30,18 @@ export const authOptions: NextAuthOptions = {
       id: "google",
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
+    }),
+    FacebookProvider({
+      name: "facebook",
+      id: "facebook",
+      clientId: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
+      name: "github",
+      id: "github",
     }),
     // ...add more providers here
     CredentialsProvider({
@@ -56,13 +69,11 @@ export const authOptions: NextAuthOptions = {
               credentials.password,
               user.password
             );
-            // TODO: uncomment this part, this was fine
-            // if (isMatch) {
-            //   return user;
-            // } else {
-            //   throw new Error("Email or password is incorrect");
-            // }
-            return user;
+            if (isMatch) {
+              return user;
+            } else {
+              throw new Error("Email or password is incorrect");
+            }
           } else {
             throw new Error("User not found");
           }

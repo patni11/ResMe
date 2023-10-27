@@ -29,6 +29,8 @@ import { UserFormData, UserSchema } from "./ZodSchema";
 
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
+import FaceBook from "./FaceBookAuthButton";
+import GithubAuthButton from "./GithubAuthButton";
 
 export function SignInModal() {
   const params = useSearchParams()!;
@@ -56,22 +58,22 @@ export function SignInModal() {
   });
 
   const handleFormSubmit = async (data: UserFormData) => {
-    const { email, password } = data;
-    const res = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
-    console.log(res);
-    if (res?.error) {
-      toast({
-        title: `${res.error}, please try again or register!`,
-      });
-    } else {
-      toast({
-        title: `Welcome Back ${email} 😄`,
-      });
-    }
+    // const { email, password } = data;
+    // const res = await signIn("credentials", {
+    //   email,
+    //   password,
+    //   redirect: false,
+    // });
+    // console.log(res);
+    // if (res?.error) {
+    //   toast({
+    //     title: `${res.error}, please try again or register!`,
+    //   });
+    // } else {
+    //   toast({
+    //     title: `Welcome Back ${email} 😄`,
+    //   });
+    // }
   };
 
   return (
@@ -87,7 +89,9 @@ export function SignInModal() {
           </CardHeader>
           <CardContent className="grid gap-4">
             <GoogleButton />
-
+            <FaceBook />
+            <GithubAuthButton />
+            {/* 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
@@ -131,9 +135,9 @@ export function SignInModal() {
                   </FormItem>
                 )}
               />
-            </div>
+            </div> */}
           </CardContent>
-          <CardFooter className="flex flex-col space-y-2 justify-center">
+          {/* <CardFooter className="flex flex-col space-y-2 justify-center">
             <Button className="w-full" type="submit">
               Sign In
             </Button>
@@ -146,7 +150,7 @@ export function SignInModal() {
                 Sign Up!
               </Link>
             </div>
-          </CardFooter>
+          </CardFooter> */}
         </Card>
       </form>
     </Form>

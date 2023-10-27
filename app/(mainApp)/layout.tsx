@@ -11,7 +11,6 @@ export default async function RootLayout({
 }) {
   // const { isAuthenticated } = getKindeServerSession();
   const session = await getServerSession(authOptions);
-  console.log("Session", session);
   if (!session) {
     redirect("/login");
   }

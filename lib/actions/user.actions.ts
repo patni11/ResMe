@@ -13,19 +13,20 @@ export async function createUser({
   try {
     connectMongoDB();
     console.log("user");
-    const user = await User.findOne({ email: email });
+    // const user = await User.findOne({ email: email });
 
-    if (user) {
-      throw new Error("You already have an account, try signing in");
-    } else {
-      const hashedPassword = await bcrypt.hash(password, 5);
-      const newUser = new User({
-        email,
-        password: hashedPassword,
-      });
+    // if (user) {
+    //   throw new Error("You already have an account, try signing in");
+    // } else {
+    //   console.log("You are signed in");
+    //   // const hashedPassword = await bcrypt.hash(password, 5);
+    //   // const newUser = new User({
+    //   //   email,
+    //   //   password: hashedPassword,
+    //   // });
 
-      await newUser.save();
-    }
+    //   // await newUser.save();
+    // }
   } catch (e: any) {
     if (e.code == "11000") {
       throw new Error(`You already have an account. Please Sign In`);
@@ -44,8 +45,8 @@ export async function fetchTalent(email: string): Promise<string[][] | null> {
     }
 
     const skills = user.skills;
-    const languages = user.skills;
-    const interests = user.skills;
+    const languages = user.languages;
+    const interests = user.interests;
     return [skills, languages, interests];
   } catch (error: any) {
     //console.log("Failed to fetch projects", error);

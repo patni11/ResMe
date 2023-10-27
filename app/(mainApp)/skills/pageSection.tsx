@@ -28,11 +28,22 @@ const SkillsPageSection: FC<SkillsPageSectionProps> = ({
 
   const handleAddSkills = () => {
     const newSkills = inputValue.split(",").map((skill) => skill.trim());
-    setSkills((prevSkills) => [...prevSkills, ...newSkills]);
-    setPressedSkills((prevSkills) => [...prevSkills, ...newSkills]);
-    //setUnsavedChanges(true); // Mark changes as unsaved
-    setInputValue(""); // Clear the input
-    handleSave();
+
+    // Merge new skills with existing skills
+    const mergedSkills = [...skills, ...newSkills];
+
+    // Update state
+    setSkills(mergedSkills);
+    setPressedSkills((prevPressedSkills) => [
+      ...prevPressedSkills,
+      ...newSkills,
+    ]);
+
+    // Clear the input
+    setInputValue("");
+
+    // Update other parts of your app or backend with the merged skills
+    updateFunction(mergedSkills);
   };
 
   const handleTogglePress = (skill: string, pressed: boolean) => {
@@ -46,13 +57,17 @@ const SkillsPageSection: FC<SkillsPageSectionProps> = ({
   };
 
   const handleSave = () => {
-    // Logic to save the state (e.g., to a backend or local storage)
+    // Compute the new skills first
+    const newSkills = skills.filter((skill) => pressedSkills.includes(skill));
 
-    setSkills((currentSkills) =>
-      currentSkills.filter((skill) => pressedSkills.includes(skill))
-    );
-    setUnsavedChanges(false); // Reset unsaved changes flag
-    updateFunction(skills);
+    // Update the state with the new skills
+    setSkills(newSkills);
+
+    // Reset unsaved changes flag
+    setUnsavedChanges(false);
+
+    // Use the newSkills for the update function
+    updateFunction(newSkills);
   };
 
   return (

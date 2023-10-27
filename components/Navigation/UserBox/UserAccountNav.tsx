@@ -29,20 +29,20 @@ const UserAccountNav = () => {
         <Link
           href="/login"
           className={buttonVariants({
-            variant: "outline",
+            variant: "default",
           })}
         >
           Sign In
         </Link>
 
-        <Link
+        {/* <Link
           href="/signup"
           className={buttonVariants({
             variant: "default",
           })}
         >
           Register
-        </Link>
+        </Link> */}
       </div>
     );
   }
@@ -112,16 +112,6 @@ const UserAccountNav = () => {
           <DropdownMenuItem asChild>
             <Link href="/profile" className="cursor-pointer">
               Profile
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/billing" className="cursor-pointer">
-              Billing
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href="/settings" className="cursor-pointer">
-              Settings
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

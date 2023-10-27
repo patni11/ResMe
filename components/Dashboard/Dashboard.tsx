@@ -6,6 +6,16 @@ import { cn } from "@/lib/utils";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 
+async function deleteFunc() {
+  "use server";
+}
+
+async function renameFunc() {
+  "use server";
+  // rename in server
+  //revalidate path or tag to update
+}
+
 interface DashBoardProps {}
 const DashBoard: FC<DashBoardProps> = () => {
   return (
@@ -42,12 +52,13 @@ const DashBoard: FC<DashBoardProps> = () => {
           </div>
           {listenNowAlbums.map((album) => (
             <ResumeCard
-              key={album.name}
               album={album}
               className="w-[200px] mb-12"
               aspectRatio="portrait"
               width={200}
               height={265}
+              deleteFunc={deleteFunc}
+              renameFunc={renameFunc}
             />
           ))}
         </div>
