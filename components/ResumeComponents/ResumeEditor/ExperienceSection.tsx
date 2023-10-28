@@ -51,7 +51,7 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
   const descriptions = experience.description.split("\n");
 
   return (
-    <div className="flex flex-col space-between text-xs w-full leading-tight mb-1">
+    <div className="flex flex-col space-between text-xs w-full leading-tight mb-3">
       <div className="flex space-between">
         <div className="flex flex-col w-full text-left">
           {/* <p>Northeastern University</p> */}

@@ -26,8 +26,8 @@ export default function EducationSection() {
   return (
     <ResumeComponentContainer>
       <div className="flex flex-col justify-start items-start w-full">
-        <h1 className="text-sm font-semibold m-0"> EDUCATION </h1>
-        <hr className="h-[3px] bg-black w-full mb-[0.5px]" />
+        <h1 className="text-sm font-semibold"> EDUCATION </h1>
+        <hr className="h-[3px] bg-black w-full mb-[0.5px] mt-[0.5px]" />
 
         {educations.map((education) => {
           const isEducationHidden =

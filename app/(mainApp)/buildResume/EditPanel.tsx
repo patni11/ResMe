@@ -7,6 +7,8 @@ import { ExperienceSectionCard } from "@/components/ResumeComponents/ResumeForms
 import { ResumeHeader } from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { Input } from "@/components/ui/input";
+import { ProjectSectionCard } from "@/components/ResumeComponents/ResumeForms/ProjectsSection";
+import { SkillsSectionCard } from "@/components/ResumeComponents/ResumeForms/Miscellaneous/index";
 interface EditPanelProps {}
 
 const EditPanel: FC<EditPanelProps> = () => {
@@ -22,7 +24,7 @@ const EditPanel: FC<EditPanelProps> = () => {
   };
 
   return (
-    <main className="w-full h-full flex flex-col items-start bg-gray-200 p-4 space-y-2">
+    <main className="w-full h-screen overflow-y-auto flex flex-col items-start bg-gray-200 p-4 space-y-2">
       <div className="flex space-x-2 w-full">
         <Input value={`Untitled Resume`} className=""></Input>
         <h1
@@ -35,8 +37,10 @@ const EditPanel: FC<EditPanelProps> = () => {
         </h1>
       </div>
       <ResumeHeader userDetails={userDetails}></ResumeHeader>
-      <EducationSectionCard></EducationSectionCard>
-      <ExperienceSectionCard></ExperienceSectionCard>
+      <EducationSectionCard />
+      <ExperienceSectionCard />
+      <ProjectSectionCard />
+      <SkillsSectionCard />
     </main>
   );
 };

@@ -66,7 +66,10 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
             </div>
             {refreshFunction ? (
               <Button
-                onClick={() => refreshFunction()}
+                onClick={() => {
+                  hideAll = false;
+                  refreshFunction();
+                }}
                 className="mr-2"
                 variant="ghost"
               >

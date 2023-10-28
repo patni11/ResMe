@@ -34,7 +34,7 @@ const UpdateDialogCard: FC<UpdateDialogCardProps> = ({
   deleteDialogDetails,
 }) => {
   return (
-    <Card>
+    <Card className="mb-2">
       <CardHeader className="flex-row items-center justify-between pt-4">
         <CardTitle className="flex justify-between">
           <span>{cardDetails.cardTitle}</span>

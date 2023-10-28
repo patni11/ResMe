@@ -3,6 +3,7 @@
 import ResumeHeader from "@/components/ResumeComponents/ResumeEditor/ResumeHeader";
 import EducationSection from "@/components/ResumeComponents/ResumeEditor/EducationSection";
 import ExperienceSection from "@/components/ResumeComponents/ResumeEditor/ExperienceSection";
+import ProjectSection from "@/components/ResumeComponents/ResumeEditor/ProjectSection";
 import { Button, buttonVariants } from "@/components/ui/button";
 import html2pdf from "html2pdf.js";
 import { useRef } from "react";
@@ -25,7 +26,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+// import { PDFViewer } from "@react-pdf/renderer";
+// import Document from "@/components/ResumeComponents/ReactPDF/index";
+
+import "./style/resumePreview.css";
 export default function ResumePreview() {
   const elementRef = useRef(null);
 
@@ -45,8 +49,8 @@ export default function ResumePreview() {
   };
 
   return (
-    <main className=" w-full h-full flex flex-col justify-center bg-gray-200 p-4 space-y-2">
-      <div className="flex justify-between w-full">
+    <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4 space-y-2">
+      <div className="flex justify-left space-x-4">
         <Button className="w-24 flex space-x-2" onClick={() => {}}>
           <span className="hidden md:block">Save</span>
           <SaveIcon className="w-5 h-5" />
@@ -97,14 +101,21 @@ export default function ResumePreview() {
         </DropdownMenu>
       </div>
 
+      {/* <PDFViewer style={{ flex: 1 }}>
+        <Document />
+      </PDFViewer> */}
+
       <div
         className="bg-white w-full h-full max-h-[48] overflow-y-auto border py-12 px-12 font-serif leading-tight text-center align-middle"
         id="element-to-print"
         ref={elementRef}
       >
         <ResumeHeader></ResumeHeader>
-        <EducationSection></EducationSection>
+        <EducationSection />
+
         <ExperienceSection></ExperienceSection>
+
+        <ProjectSection />
       </div>
     </main>
   );

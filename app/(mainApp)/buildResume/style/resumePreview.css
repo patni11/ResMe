@@ -1,0 +1,5 @@
+.resume-container {
+  width: calc(40vw); /* width minus 1-inch margin on each side */
+  height: calc((40vw) * 1.4142); /* maintain A4 aspect ratio */
+  overflow: auto; /* for longer content, it will scroll */
+}

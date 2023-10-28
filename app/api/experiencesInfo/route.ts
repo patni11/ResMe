@@ -22,7 +22,6 @@ export async function GET(request: NextRequest) {
     if (!experiences) {
       throw new Error(`No Experience Found`);
     }
-    console.log("Experience", experiences);
 
     return NextResponse.json({ experiences }, { status: 200 });
   } catch (error: any) {

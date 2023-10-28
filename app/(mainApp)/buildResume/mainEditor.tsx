@@ -1,3 +1,4 @@
+"use client";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import ResumePreview from "./ResumePreview";
@@ -32,12 +33,12 @@ const MainEditor = () => {
       </div>
 
       {/* Display for large screens (1024px and above) */}
-      <div className="hidden lg:flex w-full">
+      <div className="hidden lg:flex h-screen w-full overflow-hidden">
         <div className="w-1/2">
           <EditPanel />
         </div>
         <Separator className="m-0 sm:hidden" orientation="vertical" />
-        <div className="w-1/2">
+        <div className="w-1/2 h-screen overflow-y-auto">
           <ResumePreview />
         </div>
       </div>
