@@ -4,7 +4,7 @@ import { EducationSectionCard } from "@/components/ResumeComponents/ResumeForms/
 import { buttonVariants } from "@/components/ui/button";
 import { SaveIcon } from "lucide-react";
 import { ExperienceSectionCard } from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
-import { ResumeHeader } from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
+import ResumeHeader from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { Input } from "@/components/ui/input";
 import { ProjectSectionCard } from "@/components/ResumeComponents/ResumeForms/ProjectsSection";
@@ -32,7 +32,7 @@ const EditPanel: FC<EditPanelProps> = ({ resumeId }) => {
   return (
     <main className="w-full h-screen overflow-y-auto flex flex-col items-start bg-gray-200 p-4 space-y-2">
       <div className="flex space-x-2 w-full">
-        <Input value={`Untitled Resume`} className=""></Input>
+        <Input defaultValue={`Untitled Resume`} className=""></Input>
         <h1
           className={`${buttonVariants({
             variant: "secondary",
@@ -42,7 +42,7 @@ const EditPanel: FC<EditPanelProps> = ({ resumeId }) => {
           <SaveIcon className="w-5 h-5" />
         </h1>
       </div>
-      <ResumeHeader userDetails={userDetails}></ResumeHeader>
+      <ResumeHeader resumeHeaderID={`resumeHeader-${resumeId}`} />
       <EducationSectionCard />
       <ExperienceSectionCard />
       <ProjectSectionCard />

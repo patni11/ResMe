@@ -1,14 +1,20 @@
 "use client";
-import { FC, useEffect } from "react";
+import { useEffect } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
-import { useResumeHeaderInfo } from "@/store/resumeHeaderInfo";
+import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
 import { useSession } from "next-auth/react";
 
-export const ResumeHeader: FC<ResumeHeaderProps> = () => {
+interface ResumeHeaderProps {
+  resumeHeaderID?: string;
+}
+
+const ResumeHeader: React.FC<ResumeHeaderProps> = ({
+  resumeHeaderID = "resumeHeaderLocalStorage",
+}) => {
+  const useResumeHeaderInfo = createResumeHeaderInfo(resumeHeaderID);
   const {
     headerInfo,
     hideLocation,
@@ -22,13 +28,12 @@ export const ResumeHeader: FC<ResumeHeaderProps> = () => {
     isLoading,
     fetchHeaderInfo,
   } = useResumeHeaderInfo();
+
   const session = useSession();
   const email = session.data?.user?.email;
 
   useEffect(() => {
-    let resumeHeaderLocalStorage = localStorage.getItem(
-      "resumeHeaderLocalStorage"
-    );
+    let resumeHeaderLocalStorage = localStorage.getItem(resumeHeaderID);
     if (!resumeHeaderLocalStorage) {
       fetchHeaderInfo();
     }
@@ -47,7 +52,6 @@ export const ResumeHeader: FC<ResumeHeaderProps> = () => {
     <FormCardWrapper
       cardTitle="Header"
       refreshFunction={() => fetchHeaderInfo()}
-      deleteButton={false}
     >
       <Label>Your Name</Label>
       <Input
@@ -91,6 +95,4 @@ export const ResumeHeader: FC<ResumeHeaderProps> = () => {
   );
 };
 
-type ResumeHeaderProps = {
-  userDetails: UserInfo;
-};
+export default ResumeHeader;

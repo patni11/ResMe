@@ -15,9 +15,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { saveAs } from "file-saver";
-import { Packer } from "docx";
-import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
+//import { saveAs } from "file-saver";
+//import { Packer } from "docx";
+//import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
 import {
   Dialog,
   DialogContent,
@@ -33,21 +33,20 @@ import Link from "next/link";
 import "./style/resumePreview.css";
 export default function ResumePreview({ resumeId }) {
   const elementRef = useRef(null);
-
   const downloadPDF = () => {
     var element = document.getElementById("element-to-print");
     html2pdf().from(element).save();
   };
 
-  const downloadDocx = () => {
-    const doc = DocumentCreator();
+  // const downloadDocx = () => {
+  //   const doc = DocumentCreator();
 
-    Packer.toBlob(doc).then((blob) => {
-      console.log(blob);
-      saveAs(blob, "resume.docx");
-      console.log("Document created successfully");
-    });
-  };
+  //   Packer.toBlob(doc).then((blob) => {
+  //     console.log(blob);
+  //     saveAs(blob, "resume.docx");
+  //     console.log("Document created successfully");
+  //   });
+  // };
 
   return (
     <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4 space-y-2">
@@ -111,7 +110,7 @@ export default function ResumePreview({ resumeId }) {
         id="element-to-print"
         ref={elementRef}
       >
-        <ResumeHeader />
+        <ResumeHeader resumeHeaderID={`resumeHeader-${resumeId}`} />
         <EducationSection />
         <ExperienceSection />
         <ProjectSection />

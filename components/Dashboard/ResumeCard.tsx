@@ -19,6 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
+import ResumeCardImage from "@/public/resumeCard.png";
 interface ResumeCardProps extends React.HTMLAttributes<HTMLDivElement> {
   album: Album;
   aspectRatio?: "portrait" | "square";
@@ -41,7 +42,7 @@ export function ResumeCard({
     <div className={cn("space-y-3", className)}>
       <div className="overflow-hidden rounded-md">
         <Image
-          src={album.cover}
+          src={ResumeCardImage}
           alt={album.name}
           width={width}
           height={height}

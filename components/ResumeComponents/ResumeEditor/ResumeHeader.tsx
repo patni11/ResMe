@@ -1,11 +1,19 @@
 "use client";
-import { useResumeHeaderInfo } from "@/store/resumeHeaderInfo";
+import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
 
 //import ResumeComponentContainer from "./ResumeComponentContainer";
 
-export default function ResumeHeader() {
+interface ResumeHeaderProps {
+  resumeHeaderID?: string;
+}
+
+const ResumeHeader: React.FC<ResumeHeaderProps> = ({
+  resumeHeaderID = "resumeHeaderLocalStorage",
+}) => {
+  const useResumeHeaderInfo = createResumeHeaderInfo(resumeHeaderID);
   const { headerInfo, hideLocation, hiddenContacts, hiddenLinks } =
     useResumeHeaderInfo();
+
   const { displayName } = headerInfo;
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo
@@ -49,4 +57,6 @@ export default function ResumeHeader() {
       </div>
     </div>
   );
-}
+};
+
+export default ResumeHeader;

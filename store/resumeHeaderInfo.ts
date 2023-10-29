@@ -48,82 +48,96 @@ async function getData() {
   }
 }
 
-export const useResumeHeaderInfo = create(
-  persist<State & Actions>(
-    (set, get) => ({
-      headerInfo: INITIAL_STATE.headerInfo,
-      error: INITIAL_STATE.error,
-      isLoading: INITIAL_STATE.isLoading,
-      fetchHeaderInfo: async () => {
-        try {
-          const headerInfo: UserInfo = (await getData()).headerInfo;
+const storeCache: Record<string, any> = {};
 
-          console.log("Header Info", headerInfo);
-          const hidContacts =
-            headerInfo.contactInfo?.map((contact) => ({
-              [contact.contact]: false,
-            })) || [];
-          const hidLinks =
-            headerInfo.links?.map((link) => ({ [link.linkName]: false })) || [];
+export const createResumeHeaderInfo = (
+  resumeHeaderID: string = "resumeHeaderLocalStorage"
+) => {
+  if (storeCache[resumeHeaderID]) {
+    return storeCache[resumeHeaderID];
+  }
 
-          set({
-            headerInfo: headerInfo,
-            hiddenContacts: hidContacts,
-            hiddenLinks: hidLinks,
-            hideLocation: false,
-            isLoading: false,
+  const useResumeHeaderInfo = create(
+    persist<State & Actions>(
+      (set, get) => ({
+        headerInfo: INITIAL_STATE.headerInfo,
+        error: INITIAL_STATE.error,
+        isLoading: INITIAL_STATE.isLoading,
+        fetchHeaderInfo: async () => {
+          try {
+            const headerInfo: UserInfo = (await getData()).headerInfo;
+
+            console.log("Header Info", headerInfo);
+            const hidContacts =
+              headerInfo.contactInfo?.map((contact) => ({
+                [contact.contact]: false,
+              })) || [];
+            const hidLinks =
+              headerInfo.links?.map((link) => ({ [link.linkName]: false })) ||
+              [];
+
+            set({
+              headerInfo: headerInfo,
+              hiddenContacts: hidContacts,
+              hiddenLinks: hidLinks,
+              hideLocation: false,
+              isLoading: false,
+            });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        hideLocation: INITIAL_STATE.hideLocation,
+        hiddenContacts: INITIAL_STATE.hiddenContacts as Array<{
+          [key: string]: boolean;
+        }>,
+
+        hiddenLinks: INITIAL_STATE.hiddenLinks as Array<{
+          [key: string]: boolean;
+        }>,
+        updateDisplayName: (newDisplayName: string) => {
+          set((state) => {
+            return {
+              headerInfo: { ...state.headerInfo, displayName: newDisplayName },
+            };
           });
-        } catch (error) {
-          set({ error, isLoading: false });
-        }
-      },
-      hideLocation: INITIAL_STATE.hideLocation,
-      hiddenContacts: INITIAL_STATE.hiddenContacts as Array<{
-        [key: string]: boolean;
-      }>,
+        },
+        setHideLocation: () => {
+          set((state) => ({ hideLocation: !state.hideLocation }));
+        },
+        setHiddenContacts: (key: string) => {
+          set((state) => ({
+            hiddenContacts: state.hiddenContacts.map((contact: any) => {
+              // Check if the contact has the key you're looking for
+              if (contact[key] !== undefined) {
+                // Return a new object with the key's value toggled
+                return { [key]: !contact[key] };
+              }
+              // Otherwise, return the contact unchanged
+              return contact;
+            }),
+          }));
+        },
+        setHiddenLinks: (key: string) => {
+          set((state) => ({
+            hiddenLinks: state.hiddenLinks.map((link: any) => {
+              // Check if the contact has the key you're looking for
+              if (link[key] !== undefined) {
+                // Return a new object with the key's value toggled
+                return { [key]: !link[key] };
+              }
+              // Otherwise, return the contact unchanged
+              return link;
+            }),
+          }));
+        },
+      }),
+      {
+        name: resumeHeaderID,
+      }
+    )
+  );
 
-      hiddenLinks: INITIAL_STATE.hiddenLinks as Array<{
-        [key: string]: boolean;
-      }>,
-      updateDisplayName: (newDisplayName: string) => {
-        set((state) => {
-          return {
-            headerInfo: { ...state.headerInfo, displayName: newDisplayName },
-          };
-        });
-      },
-      setHideLocation: () => {
-        set((state) => ({ hideLocation: !state.hideLocation }));
-      },
-      setHiddenContacts: (key: string) => {
-        set((state) => ({
-          hiddenContacts: state.hiddenContacts.map((contact: any) => {
-            // Check if the contact has the key you're looking for
-            if (contact[key] !== undefined) {
-              // Return a new object with the key's value toggled
-              return { [key]: !contact[key] };
-            }
-            // Otherwise, return the contact unchanged
-            return contact;
-          }),
-        }));
-      },
-      setHiddenLinks: (key: string) => {
-        set((state) => ({
-          hiddenLinks: state.hiddenLinks.map((link: any) => {
-            // Check if the contact has the key you're looking for
-            if (link[key] !== undefined) {
-              // Return a new object with the key's value toggled
-              return { [key]: !link[key] };
-            }
-            // Otherwise, return the contact unchanged
-            return link;
-          }),
-        }));
-      },
-    }),
-    {
-      name: "resumeHeaderLocalStorage",
-    }
-  )
-);
+  storeCache[resumeHeaderID] = useResumeHeaderInfo;
+  return () => useResumeHeaderInfo();
+};

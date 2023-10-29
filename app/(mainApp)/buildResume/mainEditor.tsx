@@ -22,12 +22,12 @@ const MainEditor = ({ resumeId }: { resumeId?: string }) => {
           </TabsList>
           <TabsContent value="editPanel">
             <div className="w-full">
-              <EditPanel resumeId />
+              <EditPanel resumeId={resumeId} />
             </div>
           </TabsContent>
           <Separator className="m-0 sm:hidden" orientation="vertical" />
           <TabsContent value="preview">
-            <ResumePreview resumeId />
+            <ResumePreview resumeId={resumeId} />
           </TabsContent>
         </Tabs>
       </div>
@@ -35,11 +35,11 @@ const MainEditor = ({ resumeId }: { resumeId?: string }) => {
       {/* Display for large screens (1024px and above) */}
       <div className="hidden lg:flex h-screen w-full overflow-hidden">
         <div className="w-1/2">
-          <EditPanel resumeId />
+          <EditPanel resumeId={resumeId} />
         </div>
         <Separator className="m-0 sm:hidden" orientation="vertical" />
         <div className="w-1/2 h-screen overflow-y-auto">
-          <ResumePreview resumeId />
+          <ResumePreview resumeId={resumeId} />
         </div>
       </div>
 
