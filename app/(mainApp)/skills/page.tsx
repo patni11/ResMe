@@ -31,12 +31,12 @@ const Skills: FC<SkillsProps> = async () => {
 
   async function updateLanguagesFunction(updatedSkills: string[]) {
     "use server";
-    await updateInterests(email, updatedSkills, "/skills");
+    await updateLanguages(email, updatedSkills, "/skills");
   }
 
   async function updateInterestsFunction(updatedSkills: string[]) {
     "use server";
-    await updateLanguages(email, updatedSkills, "/skills");
+    await updateInterests(email, updatedSkills, "/skills");
   }
 
   return (

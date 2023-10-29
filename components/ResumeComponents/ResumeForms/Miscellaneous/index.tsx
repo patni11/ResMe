@@ -19,7 +19,7 @@ const MiscellaneousSectionCard: FC<MiscellaneousSectionCardProp> = ({
   setSkills,
 }) => {
   useEffect(() => {
-    let skillssLocalStorage = localStorage.getItem("skillssLocalStorage");
+    let skillssLocalStorage = localStorage.getItem("talentLocalStorage");
     if (!skillssLocalStorage) {
       fetchSkills();
     }
@@ -34,7 +34,7 @@ const MiscellaneousSectionCard: FC<MiscellaneousSectionCardProp> = ({
     >
       <div className="flex flex-col space-y-2 mt-4">
         <Input
-          placeholder="Your skills"
+          placeholder={`Your ${name}`}
           value={skills}
           onChange={(e) => {
             setSkills(e.currentTarget.value);
@@ -45,19 +45,61 @@ const MiscellaneousSectionCard: FC<MiscellaneousSectionCardProp> = ({
   );
 };
 
-import { useSkillsInfo } from "@/store/skillsInfo";
+import { useTalentsInfo } from "@/store/talentsInfo";
 export const SkillsSectionCard = ({}) => {
-  const { skills, hideAll, setHideAll, fetchSkills, setSkills } =
-    useSkillsInfo();
+  const { skills, hideSkills, setHideSkills, fetchSkills, setSkills } =
+    useTalentsInfo();
 
   return (
     <MiscellaneousSectionCard
       name="Skills"
       skills={skills}
-      hideAll={hideAll}
-      setHideAll={setHideAll}
+      hideAll={hideSkills}
+      setHideAll={setHideSkills}
       fetchSkills={fetchSkills}
       setSkills={setSkills}
+    />
+  );
+};
+
+export const InterestsSectionCard = ({}) => {
+  const {
+    interests,
+    hideInterests,
+    setHideInterests,
+    fetchInterests,
+    setInterests,
+  } = useTalentsInfo();
+
+  return (
+    <MiscellaneousSectionCard
+      name="Interests"
+      skills={interests}
+      hideAll={hideInterests}
+      setHideAll={setHideInterests}
+      fetchSkills={fetchInterests}
+      setSkills={setInterests}
+    />
+  );
+};
+
+export const LanguagesSectionCard = ({}) => {
+  const {
+    languages,
+    hideLanguages,
+    setHideLanguages,
+    fetchLanguages,
+    setLanguages,
+  } = useTalentsInfo();
+
+  return (
+    <MiscellaneousSectionCard
+      name="Languages"
+      skills={languages}
+      hideAll={hideLanguages}
+      setHideAll={setHideLanguages}
+      fetchSkills={fetchLanguages}
+      setSkills={setLanguages}
     />
   );
 };

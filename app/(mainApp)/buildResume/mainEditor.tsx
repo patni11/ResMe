@@ -6,7 +6,7 @@ import EditPanel from "./EditPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
 
-const MainEditor = () => {
+const MainEditor = ({ resumeId }: { resumeId?: string }) => {
   return (
     <main className="flex justify-between w-full h-full">
       {/* Display for medium screens (between 658px and 1023px) */}
@@ -22,12 +22,12 @@ const MainEditor = () => {
           </TabsList>
           <TabsContent value="editPanel">
             <div className="w-full">
-              <EditPanel />
+              <EditPanel resumeId />
             </div>
           </TabsContent>
           <Separator className="m-0 sm:hidden" orientation="vertical" />
           <TabsContent value="preview">
-            <ResumePreview />
+            <ResumePreview resumeId />
           </TabsContent>
         </Tabs>
       </div>
@@ -35,11 +35,11 @@ const MainEditor = () => {
       {/* Display for large screens (1024px and above) */}
       <div className="hidden lg:flex h-screen w-full overflow-hidden">
         <div className="w-1/2">
-          <EditPanel />
+          <EditPanel resumeId />
         </div>
         <Separator className="m-0 sm:hidden" orientation="vertical" />
         <div className="w-1/2 h-screen overflow-y-auto">
-          <ResumePreview />
+          <ResumePreview resumeId />
         </div>
       </div>
 

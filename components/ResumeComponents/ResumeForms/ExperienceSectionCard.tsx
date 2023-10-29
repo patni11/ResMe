@@ -64,8 +64,6 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
 }) => {
   const { updateDescriptions } = useExperiencesInfo();
   const descriptions = experience.description.split("\n");
-
-  console.log("descriptions", descriptions);
   const handleOnChange = (e: string, idx: number) => {
     const updatedDescriptions = [...descriptions];
     updatedDescriptions[idx] = e;

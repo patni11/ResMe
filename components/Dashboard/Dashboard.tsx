@@ -50,16 +50,18 @@ const DashBoard: FC<DashBoardProps> = () => {
               <h3 className="font-medium leading-none">Create Resume</h3>
             </div>
           </div>
-          {listenNowAlbums.map((album) => (
-            <ResumeCard
-              album={album}
-              className="w-[200px] mb-12"
-              aspectRatio="portrait"
-              width={200}
-              height={265}
-              deleteFunc={deleteFunc}
-              renameFunc={renameFunc}
-            />
+          {listenNowAlbums.map((album, index) => (
+            <Link key={index} href={`/buildResume/Shubh`}>
+              <ResumeCard
+                album={album}
+                className="w-[200px] mb-12"
+                aspectRatio="portrait"
+                width={200}
+                height={265}
+                deleteFunc={deleteFunc}
+                renameFunc={renameFunc}
+              />
+            </Link>
           ))}
         </div>
       </div>

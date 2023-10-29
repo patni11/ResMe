@@ -3,6 +3,7 @@
 import ResumeHeader from "@/components/ResumeComponents/ResumeEditor/ResumeHeader";
 import EducationSection from "@/components/ResumeComponents/ResumeEditor/EducationSection";
 import ExperienceSection from "@/components/ResumeComponents/ResumeEditor/ExperienceSection";
+import TalentSection from "@/components/ResumeComponents/ResumeEditor/TalentSection";
 import ProjectSection from "@/components/ResumeComponents/ResumeEditor/ProjectSection";
 import { Button, buttonVariants } from "@/components/ui/button";
 import html2pdf from "html2pdf.js";
@@ -30,7 +31,7 @@ import Link from "next/link";
 // import Document from "@/components/ResumeComponents/ReactPDF/index";
 
 import "./style/resumePreview.css";
-export default function ResumePreview() {
+export default function ResumePreview({ resumeId }) {
   const elementRef = useRef(null);
 
   const downloadPDF = () => {
@@ -106,16 +107,15 @@ export default function ResumePreview() {
       </PDFViewer> */}
 
       <div
-        className="bg-white w-full h-full max-h-[48] overflow-y-auto border py-12 px-12 font-serif leading-tight text-center align-middle"
+        className="bg-white w-full h-full max-h-[48] overflow-y-auto py-12 px-12 font-serif leading-tight text-center align-middle"
         id="element-to-print"
         ref={elementRef}
       >
-        <ResumeHeader></ResumeHeader>
+        <ResumeHeader />
         <EducationSection />
-
-        <ExperienceSection></ExperienceSection>
-
+        <ExperienceSection />
         <ProjectSection />
+        <TalentSection />
       </div>
     </main>
   );

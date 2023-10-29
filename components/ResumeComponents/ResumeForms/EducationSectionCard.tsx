@@ -60,8 +60,12 @@ const EducationCard: FC<EducationCardProps> = ({
     </>
   );
 };
-interface EducationSectionCard {}
-export const EducationSectionCard: FC<EducationSectionCard> = ({}) => {
+interface EducationSectionCard {
+  resumeId?: string;
+}
+export const EducationSectionCard: FC<EducationSectionCard> = ({
+  resumeId,
+}) => {
   const {
     educations,
     hiddenEducations,

@@ -28,7 +28,7 @@ export default async function ImageWrapper({
   return (
     <main className="flex justify-center w-full h-full">
       {children ? children : <div></div>}
-      <div className="flex-shrink-0 w-1/3 max-w-[30%] h-screen sticky top-0 right-0">
+      <div className="hidden lg:block flex-shrink-0 w-1/3 max-w-[30%] h-screen sticky top-0 right-0">
         {/* Aspect ratio container */}
         <div
           className="relative h-full sticky top-0"

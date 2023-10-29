@@ -8,10 +8,16 @@ import { ResumeHeader } from "@/components/ResumeComponents/ResumeForms/ResumeHe
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { Input } from "@/components/ui/input";
 import { ProjectSectionCard } from "@/components/ResumeComponents/ResumeForms/ProjectsSection";
-import { SkillsSectionCard } from "@/components/ResumeComponents/ResumeForms/Miscellaneous/index";
-interface EditPanelProps {}
+import {
+  InterestsSectionCard,
+  LanguagesSectionCard,
+  SkillsSectionCard,
+} from "@/components/ResumeComponents/ResumeForms/Miscellaneous/index";
+interface EditPanelProps {
+  resumeId?: string;
+}
 
-const EditPanel: FC<EditPanelProps> = () => {
+const EditPanel: FC<EditPanelProps> = ({ resumeId }) => {
   const userDetails: UserInfo = {
     displayName: "Shubh Patni",
     email: "1234",
@@ -41,6 +47,8 @@ const EditPanel: FC<EditPanelProps> = () => {
       <ExperienceSectionCard />
       <ProjectSectionCard />
       <SkillsSectionCard />
+      <LanguagesSectionCard />
+      <InterestsSectionCard />
     </main>
   );
 };

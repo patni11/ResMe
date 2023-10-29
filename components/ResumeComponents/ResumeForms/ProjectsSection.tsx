@@ -61,8 +61,6 @@ const ProjectCard: FC<ProjectCardProps> = ({
 }) => {
   const { updateDescriptions } = useProjectsInfo();
   const descriptions = project.description.split("\n");
-
-  console.log("descriptions", descriptions);
   const handleOnChange = (e: string, idx: number) => {
     const updatedDescriptions = [...descriptions];
     updatedDescriptions[idx] = e;

@@ -16,8 +16,14 @@ export default function ExperienceSection() {
   return (
     <ResumeComponentContainer>
       <div className="flex flex-col justify-start items-start w-full">
-        <h1 className="text-sm font-semibold m-0"> EXPERIENCES </h1>
-        <hr className="h-[3px] bg-black w-full mb-[0.5px]" />
+        <h1 className="text-sm font-semibold" style={{ marginBottom: "2px" }}>
+          {" "}
+          EXPERIENCES{" "}
+        </h1>
+        <hr
+          className="h-[3px] bg-black w-full"
+          style={{ marginBottom: "1px" }}
+        />
 
         {experiences.map((experience) => {
           const isExperienceHidden =

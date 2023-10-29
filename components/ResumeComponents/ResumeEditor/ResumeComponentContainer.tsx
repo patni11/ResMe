@@ -19,6 +19,7 @@ export default function ResumeComponentContainer({
       contentEditable="true"
       suppressContentEditableWarning={true}
       onInput={handleInput}
+      className="mb-1"
     >
       {children}
     </div>
