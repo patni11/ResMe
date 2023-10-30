@@ -111,8 +111,8 @@ export default function ResumePreview({ resumeId }) {
         ref={elementRef}
       >
         <ResumeHeader resumeHeaderID={`resumeHeader-${resumeId}`} />
-        <EducationSection />
-        <ExperienceSection />
+        <EducationSection educationID={`educations-${resumeId}`} />
+        <ExperienceSection experienceID={`experiences-${resumeId}`} />
         <ProjectSection />
         <TalentSection />
       </div>

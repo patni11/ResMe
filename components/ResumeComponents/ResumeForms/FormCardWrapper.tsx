@@ -64,7 +64,7 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
 
               {cardTitle}
             </div>
-            {refreshFunction ? (
+            {refreshFunction && !hideAll ? (
               <Button
                 onClick={() => {
                   hideAll = false;

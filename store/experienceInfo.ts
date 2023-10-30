@@ -19,45 +19,16 @@ type Actions = {
   setHideAll: () => void;
 };
 
-const ExampleExperiences = [
-  {
-    _id: "fd7aabe8-c0f7-41da-b78e-c0866b42d4b2",
-    company: "DAO Maker",
-    location: "Remote",
-    positionTitle: "Researcher",
-    experienceType: "Intern",
-    startDate: new Date(),
-    endDate: new Date(),
-    description: `Spearheaded the creation of Norswap, the proprietary exchange platform for Nordek Chain
-    Proficiently designed and implemented the Frontend, Backend, API endpoints, and seamlessly integrated Smart Contracts within Norswap`,
-  },
-  {
-    _id: "c0f7-41da-b78e-c0866b42d4b2",
-    company: "DAO Maker",
-    location: "Remote",
-    positionTitle: "Researcher",
-    experienceType: "Intern",
-    startDate: new Date(),
-    endDate: new Date(),
-    description: `Spearheaded the creation of Norswap, the proprietary exchange platform for Nordek Chain
-    Proficiently designed and implemented the Frontend, Backend, API endpoints, and seamlessly integrated Smart Contracts within Norswap`,
-  },
-];
-
 const INITIAL_STATE: State = {
-  experiences: ExampleExperiences, // should be []
-  hiddenExperiences: {
-    "fd7aabe8-c0f7-41da-b78e-c0866b42d4b2": false,
-    "c0f7-41da-b78e-c0866b42d4b2": true,
-  }, //should be null
+  experiences: [], // should be []
+  hiddenExperiences: {}, //should be null
   hideAll: false,
-  descriptions: {
-    "fd7aabe8-c0f7-41da-b78e-c0866b42d4b2": ExampleExperiences[0].description,
-    "c0f7-41da-b78e-c0866b42d4b2": ExampleExperiences[1].description,
-  },
+  descriptions: {},
   isLoading: false,
   error: null,
 };
+
+const storeCache: Record<string, any> = {};
 
 async function getData() {
   try {
@@ -72,69 +43,80 @@ async function getData() {
   }
 }
 
-export const useExperiencesInfo = create(
-  persist<State & Actions>(
-    (set, get) => ({
-      ...INITIAL_STATE, // Spread the initial state
-      fetchExperiences: async () => {
-        try {
-          const experiences: Experience[] | null =
-            (await getData()).experiences || INITIAL_STATE.experiences;
+export const createExperienceInfo = (
+  experienceID: string = "experiencesLocalStorage"
+) => {
+  if (storeCache[experienceID]) {
+    return storeCache[experienceID];
+  }
 
-          console.log("Experiences Info", experiences);
+  const useExperiencesInfo = create(
+    persist<State & Actions>(
+      (set, get) => ({
+        ...INITIAL_STATE, // Spread the initial state
+        fetchExperiences: async () => {
+          try {
+            const experiences: Experience[] | null =
+              (await getData()).experiences || INITIAL_STATE.experiences;
 
-          const hiddenExperiences = experiences
-            ? experiences.reduce((acc, experience) => {
-                acc[experience._id] = false;
-                return acc;
-              }, {} as { [key: string]: boolean })
-            : null;
+            console.log("Experiences Info", experiences);
 
-          set({
-            experiences: experiences ? experiences : [],
+            const hiddenExperiences = experiences
+              ? experiences.reduce((acc, experience) => {
+                  acc[experience._id] = false;
+                  return acc;
+                }, {} as { [key: string]: boolean })
+              : null;
 
-            hiddenExperiences: hiddenExperiences,
+            set({
+              experiences: experiences ? experiences : [],
 
-            isLoading: false,
+              hiddenExperiences: hiddenExperiences,
+
+              isLoading: false,
+            });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        updateDescriptions: (key: string, newDescription: string) => {
+          set((state) => {
+            return {
+              experiences: state.experiences.map((experience) =>
+                experience._id === key
+                  ? { ...experience, description: newDescription }
+                  : experience
+              ),
+            };
           });
-        } catch (error) {
-          set({ error, isLoading: false });
-        }
-      },
-      updateDescriptions: (key: string, newDescription: string) => {
-        set((state) => {
-          return {
-            experiences: state.experiences.map((experience) =>
-              experience._id === key
-                ? { ...experience, description: newDescription }
-                : experience
-            ),
-          };
-        });
-      },
+        },
 
-      setHiddenExperience: (key: string) => {
-        set((state) => {
-          if (!state.hiddenExperiences) return { hiddenExperiences: null };
+        setHiddenExperience: (key: string) => {
+          set((state) => {
+            if (!state.hiddenExperiences) return { hiddenExperiences: null };
 
-          return {
-            hiddenExperiences: {
-              ...state.hiddenExperiences,
-              [key]: !state.hiddenExperiences[key],
-            },
-          };
-        });
-      },
-      setHideAll: () => {
-        set((state) => {
-          return {
-            hideAll: !state.hideAll,
-          };
-        });
-      },
-    }),
-    {
-      name: "experiencesLocalStorage",
-    }
-  )
-);
+            return {
+              hiddenExperiences: {
+                ...state.hiddenExperiences,
+                [key]: !state.hiddenExperiences[key],
+              },
+            };
+          });
+        },
+        setHideAll: () => {
+          set((state) => {
+            return {
+              hideAll: !state.hideAll,
+            };
+          });
+        },
+      }),
+      {
+        name: experienceID,
+      }
+    )
+  );
+
+  storeCache[experienceID] = useExperiencesInfo;
+  return () => useExperiencesInfo();
+};

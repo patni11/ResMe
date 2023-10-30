@@ -6,12 +6,17 @@ import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusCircleIcon, Trash2 } from "lucide-react";
-import { useExperiencesInfo } from "@/store/experienceInfo";
+import { createExperienceInfo } from "@/store/experienceInfo";
 
 import { Experience } from "@/app/(mainApp)/experience/pageTypes";
-interface ExperienceSectionCard {}
+interface ExperienceSectionCard {
+  experienceID?: string;
+}
 
-export const ExperienceSectionCard: FC<ExperienceSectionCard> = ({}) => {
+const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
+  experienceID = "experiencesLocalStorage",
+}) => {
+  const useExperiencesInfo = createExperienceInfo(experienceID);
   const {
     experiences,
     hiddenExperiences,
@@ -22,9 +27,7 @@ export const ExperienceSectionCard: FC<ExperienceSectionCard> = ({}) => {
   } = useExperiencesInfo();
 
   useEffect(() => {
-    let experiencesLocalStorage = localStorage.getItem(
-      "experiencesLocalStorage"
-    );
+    let experiencesLocalStorage = localStorage.getItem(experienceID);
     if (!experiencesLocalStorage) {
       fetchExperiences();
     }
@@ -55,20 +58,26 @@ interface ExperienceCardProps {
   experience: Experience;
   hideExperience: boolean;
   setHideEducation: () => void;
+  experienceID?: string;
 }
 
 const ExperienceCard: FC<ExperienceCardProps> = ({
   experience,
   hideExperience,
   setHideEducation,
+  experienceID = "experiencesLocalStorage",
 }) => {
+  const useExperiencesInfo = createExperienceInfo(experienceID);
   const { updateDescriptions } = useExperiencesInfo();
   const descriptions = experience.description.split("\n");
+
   const handleOnChange = (e: string, idx: number) => {
     const updatedDescriptions = [...descriptions];
     updatedDescriptions[idx] = e;
     const newDescription = updatedDescriptions.join("\n");
-
+    console.log("Updated Descriptions", updatedDescriptions);
+    console.log("Descriptions", experience.description);
+    console.log("New Descriptions", newDescription);
     // 4. Call updateDescriptions.
     updateDescriptions(experience._id, newDescription);
   };
@@ -114,3 +123,5 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
     </div>
   );
 };
+
+export default ExperienceSectionCard;

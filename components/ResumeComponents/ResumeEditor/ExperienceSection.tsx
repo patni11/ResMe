@@ -1,12 +1,19 @@
 "use client";
 
-import { useExperiencesInfo } from "@/store/experienceInfo";
+import { createExperienceInfo } from "@/store/experienceInfo";
 import ResumeComponentContainer from "./ResumeComponentContainer";
 import { Experience } from "@/app/(mainApp)/experience/pageTypes";
 import { FC } from "react";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 
-export default function ExperienceSection() {
+interface ExperienceSection {
+  experienceID?: string;
+}
+
+const ExperienceSection: FC<ExperienceSection> = ({
+  experienceID = "experiencesLocalStorage",
+}) => {
+  const useExperiencesInfo = createExperienceInfo(experienceID);
   const { experiences, hiddenExperiences, hideAll } = useExperiencesInfo();
 
   if (hideAll) {
@@ -42,7 +49,7 @@ export default function ExperienceSection() {
       </div>
     </ResumeComponentContainer>
   );
-}
+};
 
 interface ExperienceCardProps {
   experience: Experience;
@@ -83,3 +90,5 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
     </div>
   );
 };
+
+export default ExperienceSection;

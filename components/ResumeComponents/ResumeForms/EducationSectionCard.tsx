@@ -3,7 +3,7 @@ import { FC, useEffect } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEducationsInfo } from "@/store/educationInfo";
+import { createEducationInfo } from "@/store/educationInfo";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import {
   Card,
@@ -61,11 +61,13 @@ const EducationCard: FC<EducationCardProps> = ({
   );
 };
 interface EducationSectionCard {
-  resumeId?: string;
+  educationID?: string;
 }
+
 export const EducationSectionCard: FC<EducationSectionCard> = ({
-  resumeId,
+  educationID = "educationsLocalStorage",
 }) => {
+  const useEducationsInfo = createEducationInfo(educationID);
   const {
     educations,
     hiddenEducations,
@@ -82,7 +84,7 @@ export const EducationSectionCard: FC<EducationSectionCard> = ({
   } = useEducationsInfo();
 
   useEffect(() => {
-    let educationsLocalStorage = localStorage.getItem("educationsLocalStorage");
+    let educationsLocalStorage = localStorage.getItem(educationID);
     if (!educationsLocalStorage) {
       fetchEducations();
     }

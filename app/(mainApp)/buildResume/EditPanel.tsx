@@ -1,9 +1,10 @@
+"use client";
 import { FC } from "react";
 
 import { EducationSectionCard } from "@/components/ResumeComponents/ResumeForms/EducationSectionCard";
 import { buttonVariants } from "@/components/ui/button";
 import { SaveIcon } from "lucide-react";
-import { ExperienceSectionCard } from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
+import ExperienceSectionCard from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
 import ResumeHeader from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { Input } from "@/components/ui/input";
@@ -43,8 +44,8 @@ const EditPanel: FC<EditPanelProps> = ({ resumeId }) => {
         </h1>
       </div>
       <ResumeHeader resumeHeaderID={`resumeHeader-${resumeId}`} />
-      <EducationSectionCard />
-      <ExperienceSectionCard />
+      <EducationSectionCard educationID={`educations-${resumeId}`} />
+      <ExperienceSectionCard experienceID={`experiences-${resumeId}`} />
       <ProjectSectionCard />
       <SkillsSectionCard />
       <LanguagesSectionCard />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEducationsInfo } from "@/store/educationInfo";
+import { createEducationInfo } from "@/store/educationInfo";
 import ResumeComponentContainer from "./ResumeComponentContainer";
 import { EducationType } from "@/app/(mainApp)/education/pageTypes";
 import { FC } from "react";
@@ -9,7 +9,14 @@ import {
   parseDecimal,
 } from "@/app/utils/FormattingFunctions";
 
-export default function EducationSection() {
+interface EducationSectionProps {
+  educationID?: string;
+}
+
+const EducationSection: React.FC<EducationSectionProps> = ({
+  educationID = "educationsLocalStorage",
+}) => {
+  const useEducationsInfo = createEducationInfo(educationID);
   const {
     educations,
     hiddenDates,
@@ -63,7 +70,7 @@ export default function EducationSection() {
       </div>
     </ResumeComponentContainer>
   );
-}
+};
 
 interface EducationCardProps {
   education: EducationType;
@@ -101,3 +108,5 @@ const EducationCard: FC<EducationCardProps> = ({
     </div>
   );
 };
+
+export default EducationSection;

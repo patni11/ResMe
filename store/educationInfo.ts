@@ -47,33 +47,6 @@ type Actions = {
 //   };
 // };
 
-const ExampleEducaitons = [
-  {
-    _id: "fd7aabe8-c0f7-41da-b78e-c0866b42d4b2",
-    createdAt: new Date(),
-    degreeType: "PHD",
-    email: "shubhpatni2002@gmail.com",
-    endDate: new Date(),
-    gpa: 10,
-    major: "Computer Science and Economics",
-    schoolName: "Northeastern",
-    startDate: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    _id: "c0f7-41da-b78e-c0866b42d4b2",
-    createdAt: new Date(),
-    degreeType: "PharmD",
-    email: "shubhpatni2002@gmail.com",
-    endDate: new Date(),
-    gpa: 10,
-    major: "Another Vm",
-    schoolName: "asdf",
-    startDate: new Date(),
-    updatedAt: new Date(),
-  },
-];
-
 const INITIAL_STATE: State = {
   educations: [], // should be []
   hiddenGPAs: null,
@@ -98,103 +71,116 @@ async function getData() {
   }
 }
 
-export const useEducationsInfo = create(
-  persist<State & Actions>(
-    (set, get) => ({
-      ...INITIAL_STATE, // Spread the initial state
-      fetchEducations: async () => {
-        try {
-          const educations: EducationType[] | null =
-            (await getData()).educations || INITIAL_STATE.educations;
+const storeCache: Record<string, any> = {};
 
-          console.log("Educations Info", educations);
+export const createEducationInfo = (
+  educationHeaderID: string = "educationsLocalStorage"
+) => {
+  if (storeCache[educationHeaderID]) {
+    return storeCache[educationHeaderID];
+  }
 
-          const hiddenGPAs = educations
-            ? educations.reduce((acc, education) => {
-                acc[education._id] = false;
-                return acc;
-              }, {} as { [key: string]: boolean })
-            : null;
+  const useEducationsInfo = create(
+    persist<State & Actions>(
+      (set, get) => ({
+        ...INITIAL_STATE, // Spread the initial state
+        fetchEducations: async () => {
+          try {
+            const educations: EducationType[] | null =
+              (await getData()).educations || INITIAL_STATE.educations;
 
-          const hiddenEducations = educations
-            ? educations.reduce((acc, education) => {
-                acc[education._id] = false;
-                return acc;
-              }, {} as { [key: string]: boolean })
-            : null;
+            console.log("Educations Info", educations);
 
-          const hiddenDates = educations
-            ? educations.reduce((acc, education) => {
-                acc[education._id] = false;
-                return acc;
-              }, {} as { [key: string]: boolean })
-            : null;
+            const hiddenGPAs = educations
+              ? educations.reduce((acc, education) => {
+                  acc[education._id] = false;
+                  return acc;
+                }, {} as { [key: string]: boolean })
+              : null;
 
-          set({
-            educations: educations ? educations : [],
-            hiddenDates: hiddenDates,
-            hiddenEducations: hiddenEducations,
-            hiddenGPAs: hiddenGPAs,
-            isLoading: false,
+            const hiddenEducations = educations
+              ? educations.reduce((acc, education) => {
+                  acc[education._id] = false;
+                  return acc;
+                }, {} as { [key: string]: boolean })
+              : null;
+
+            const hiddenDates = educations
+              ? educations.reduce((acc, education) => {
+                  acc[education._id] = false;
+                  return acc;
+                }, {} as { [key: string]: boolean })
+              : null;
+
+            set({
+              educations: educations ? educations : [],
+              hiddenDates: hiddenDates,
+              hiddenEducations: hiddenEducations,
+              hiddenGPAs: hiddenGPAs,
+              isLoading: false,
+            });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        updateRelevantCourseWork: (coursework: string) => {
+          set(() => {
+            return {
+              relevantCourseWork: coursework,
+            };
           });
-        } catch (error) {
-          set({ error, isLoading: false });
-        }
-      },
-      updateRelevantCourseWork: (coursework: string) => {
-        set(() => {
-          return {
-            relevantCourseWork: coursework,
-          };
-        });
-      },
+        },
 
-      setHiddenEducation: (key: string) => {
-        set((state) => {
-          if (!state.hiddenEducations) return { hiddenEducations: null };
+        setHiddenEducation: (key: string) => {
+          set((state) => {
+            if (!state.hiddenEducations) return { hiddenEducations: null };
 
-          return {
-            hiddenEducations: {
-              ...state.hiddenEducations,
-              [key]: !state.hiddenEducations[key],
-            },
-          };
-        });
-      },
-      setHiddenGPAs: (key: string) => {
-        set((state) => {
-          if (!state.hiddenGPAs) return { hiddenGPAs: null };
+            return {
+              hiddenEducations: {
+                ...state.hiddenEducations,
+                [key]: !state.hiddenEducations[key],
+              },
+            };
+          });
+        },
+        setHiddenGPAs: (key: string) => {
+          set((state) => {
+            if (!state.hiddenGPAs) return { hiddenGPAs: null };
 
-          return {
-            hiddenGPAs: {
-              ...state.hiddenGPAs,
-              [key]: !state.hiddenGPAs[key],
-            },
-          };
-        });
-      },
-      setHiddenDates: (key: string) => {
-        set((state) => {
-          if (!state.hiddenDates) return { hiddenDates: null };
+            return {
+              hiddenGPAs: {
+                ...state.hiddenGPAs,
+                [key]: !state.hiddenGPAs[key],
+              },
+            };
+          });
+        },
+        setHiddenDates: (key: string) => {
+          set((state) => {
+            if (!state.hiddenDates) return { hiddenDates: null };
 
-          return {
-            hiddenDates: {
-              ...state.hiddenDates,
-              [key]: !state.hiddenDates[key],
-            },
-          };
-        });
-      },
-      setHideAll: () => {
-        set((state) => {
-          return {
-            hideAll: !state.hideAll,
-          };
-        });
-      },
-    }),
-    {
-      name: "educationsLocalStorage",
-    }
-  )
-);
+            return {
+              hiddenDates: {
+                ...state.hiddenDates,
+                [key]: !state.hiddenDates[key],
+              },
+            };
+          });
+        },
+        setHideAll: () => {
+          set((state) => {
+            return {
+              hideAll: !state.hideAll,
+            };
+          });
+        },
+      }),
+      {
+        name: educationHeaderID,
+      }
+    )
+  );
+
+  storeCache[educationHeaderID] = useEducationsInfo;
+  return () => useEducationsInfo();
+};
