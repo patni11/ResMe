@@ -10,12 +10,10 @@ import {
 } from "@/app/utils/FormattingFunctions";
 
 interface EducationSectionProps {
-  educationID?: string;
+  educationID: string;
 }
 
-const EducationSection: React.FC<EducationSectionProps> = ({
-  educationID = "educationsLocalStorage",
-}) => {
+const EducationSection: React.FC<EducationSectionProps> = ({ educationID }) => {
   const useEducationsInfo = createEducationInfo(educationID);
   const {
     educations,

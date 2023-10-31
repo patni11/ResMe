@@ -4,56 +4,55 @@ import { persist } from "zustand/middleware";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 type State = {
-  projects: Project[] | [];
+  projects:
+    | {
+        projectName: string;
+        location?: string;
+        positionTitle?: string;
+        startDate?: Date;
+        endDate?: Date;
+        description: string[];
+        _id: string;
+      }[]
+    | [];
   hiddenProjects: { [key: string]: boolean } | null;
+  hiddenLocation: { [key: string]: boolean } | null;
+  hiddenDates: { [key: string]: boolean } | null;
+  hiddenPosition: { [key: string]: boolean } | null;
   hideAll: boolean;
-  descriptions: { [key: string]: string } | null;
+  // descriptions: { [key: string]: string } | null;
   isLoading: boolean;
   error: any;
 };
 
 type Actions = {
   setHiddenProject: (key: string) => void;
+  setHiddenDates: (key: string) => void;
+  setHiddenLocation: (key: string) => void;
+  setHiddenPosition: (key: string) => void;
   fetchProjects: () => void;
-  updateDescriptions: (key: string, newDescription: string) => void;
+  updateDescriptions: (
+    key: string,
+    idx: number,
+    newDescription: string
+  ) => void;
+  deleteDescription: (key: string, idx: number) => void;
   setHideAll: () => void;
+  addDescription: (key: string) => void;
 };
 
-const ExampleProjects = [
-  {
-    _id: "b958ea1e-7c08-4008-910f-f3a07a97b51b",
-    description:
-      "Designed and deployed a personal website using Next.js, TypeScript, and hosted on Vercel, showcasing an extensive collection of over 100 articles and a myriad of personal projects.\nCrafted an intuitive user experience, ensuring seamless navigation and optimal engagement for visitors exploring my professional journey and insights.\n",
-    location: "",
-    positionTitle: "",
-    projectName: "Portfolio Website",
-  },
-  {
-    _id: "7c08-4008-910f-f3a07a97b51b",
-    description:
-      "Designed and deployed a personal website using Next.js, TypeScript, and hosted on Vercel, showcasing an extensive collection of over 100 articles and a myriad of personal projects.\nCrafted an intuitive user experience, ensuring seamless navigation and optimal engagement for visitors exploring my professional journey and insights.\n",
-    location: "",
-    positionTitle: "",
-    projectName: "Portfolio Website",
-    startDate: new Date(),
-    endDate: new Date(),
-  },
-];
-
 const INITIAL_STATE: State = {
-  projects: ExampleProjects, // should be []
-  hiddenProjects: {
-    "b958ea1e-7c08-4008-910f-f3a07a97b51b": false,
-    "7c08-4008-910f-f3a07a97b51b": true,
-  }, //should be null
+  projects: [], // should be []
+  hiddenProjects: {}, //should be null
+  hiddenLocation: {},
+  hiddenDates: {},
+  hiddenPosition: {},
   hideAll: false,
-  descriptions: {
-    "b958ea1e-7c08-4008-910f-f3a07a97b51b": ExampleProjects[0].description,
-    "7c08-4008-910f-f3a07a97b51b": ExampleProjects[1].description,
-  },
   isLoading: false,
   error: null,
 };
+
+const storeCache: Record<string, any> = {};
 
 async function getData() {
   try {
@@ -68,69 +67,179 @@ async function getData() {
   }
 }
 
-export const useProjectsInfo = create(
-  persist<State & Actions>(
-    (set, get) => ({
-      ...INITIAL_STATE, // Spread the initial state
-      fetchProjects: async () => {
-        try {
-          const projects: Project[] | null =
-            (await getData()).projects || INITIAL_STATE.projects;
+export const createProjectsSection = (projectId: string) => {
+  if (storeCache[projectId]) {
+    return storeCache[projectId];
+  }
 
-          console.log("Projects Info", projects);
+  const useProjectsInfo = create(
+    persist<State & Actions>(
+      (set, get) => ({
+        ...INITIAL_STATE, // Spread the initial state
+        fetchProjects: async () => {
+          try {
+            const projects: Project[] | [] =
+              (await getData()).projects || INITIAL_STATE.projects;
 
-          const hiddenProjects = projects
-            ? projects.reduce((acc, project) => {
-                acc[project._id] = false;
-                return acc;
-              }, {} as { [key: string]: boolean })
-            : null;
+            console.log("Projects Info", projects);
 
-          set({
-            projects: projects ? projects : [],
+            const hiddenProjects = projects
+              ? projects.reduce((acc, project) => {
+                  acc[project._id] = false;
+                  return acc;
+                }, {} as { [key: string]: boolean })
+              : null;
 
-            hiddenProjects: hiddenProjects,
+            const hiddenDates = projects
+              ? projects.reduce((acc, project) => {
+                  acc[project._id] = false;
+                  return acc;
+                }, {} as { [key: string]: boolean })
+              : null;
 
-            isLoading: false,
+            const hiddenLocation = projects
+              ? projects.reduce((acc, project) => {
+                  acc[project._id] = false;
+                  return acc;
+                }, {} as { [key: string]: boolean })
+              : null;
+
+            const hiddenPosition = projects
+              ? projects.reduce((acc, project) => {
+                  acc[project._id] = false;
+                  return acc;
+                }, {} as { [key: string]: boolean })
+              : null;
+
+            const updateProjects = projects.map((project) => {
+              return {
+                ...project,
+                description: project.description.split("\n"),
+              };
+            });
+
+            set({
+              projects: projects ? updateProjects : [],
+
+              hiddenProjects: hiddenProjects,
+              hiddenDates: hiddenDates,
+              hiddenLocation: hiddenLocation,
+              hiddenPosition: hiddenPosition,
+
+              isLoading: false,
+            });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        updateDescriptions: (
+          key: string,
+          idx: number,
+          newDescription: string
+        ) => {
+          set((state) => {
+            return {
+              projects: state.projects.map((project) => {
+                if (project._id === key) {
+                  const updatedDescriptionArray = [...project.description];
+                  updatedDescriptionArray[idx] = newDescription;
+                  return { ...project, description: updatedDescriptionArray };
+                }
+                return project;
+              }),
+            };
           });
-        } catch (error) {
-          set({ error, isLoading: false });
-        }
-      },
-      updateDescriptions: (key: string, newDescription: string) => {
-        set((state) => {
-          return {
-            projects: state.projects.map((project) =>
-              project._id === key
-                ? { ...project, description: newDescription }
-                : project
-            ),
-          };
-        });
-      },
+        },
+        deleteDescription: (key: string, idx: number) => {
+          set((state) => {
+            return {
+              projects: state.projects.map((project) => {
+                if (project._id === key) {
+                  const updatedDescriptionArray = [...project.description];
+                  updatedDescriptionArray.splice(idx, 1);
+                  return { ...project, description: updatedDescriptionArray };
+                }
+                return project;
+              }),
+            };
+          });
+        },
+        addDescription: (key: string) => {
+          set((state) => {
+            const updatedProjects = state.projects.map((project) => {
+              if (project._id === key) {
+                return {
+                  ...project,
+                  description: [...project.description, ""],
+                };
+              }
+              return project;
+            });
+            return { projects: updatedProjects };
+          });
+        },
+        setHiddenProject: (key: string) => {
+          set((state) => {
+            if (!state.hiddenProjects) return { hiddenProjects: null };
 
-      setHiddenProject: (key: string) => {
-        set((state) => {
-          if (!state.hiddenProjects) return { hiddenProjects: null };
+            return {
+              hiddenProjects: {
+                ...state.hiddenProjects,
+                [key]: !state.hiddenProjects[key],
+              },
+            };
+          });
+        },
+        setHiddenDates: (key: string) => {
+          set((state) => {
+            if (!state.hiddenDates) return { hiddenDates: null };
 
-          return {
-            hiddenProjects: {
-              ...state.hiddenProjects,
-              [key]: !state.hiddenProjects[key],
-            },
-          };
-        });
-      },
-      setHideAll: () => {
-        set((state) => {
-          return {
-            hideAll: !state.hideAll,
-          };
-        });
-      },
-    }),
-    {
-      name: "projectsLocalStorage",
-    }
-  )
-);
+            return {
+              hiddenDates: {
+                ...state.hiddenDates,
+                [key]: !state.hiddenDates[key],
+              },
+            };
+          });
+        },
+        setHiddenLocation: (key: string) => {
+          set((state) => {
+            if (!state.hiddenLocation) return { hiddenLocation: null };
+
+            return {
+              hiddenLocation: {
+                ...state.hiddenLocation,
+                [key]: !state.hiddenLocation[key],
+              },
+            };
+          });
+        },
+        setHiddenPosition: (key: string) => {
+          set((state) => {
+            if (!state.hiddenPosition) return { hiddenPosition: null };
+
+            return {
+              hiddenPosition: {
+                ...state.hiddenPosition,
+                [key]: !state.hiddenPosition[key],
+              },
+            };
+          });
+        },
+        setHideAll: () => {
+          set((state) => {
+            return {
+              hideAll: !state.hideAll,
+            };
+          });
+        },
+      }),
+      {
+        name: projectId,
+      }
+    )
+  );
+
+  storeCache[projectId] = useProjectsInfo;
+  return () => useProjectsInfo();
+};

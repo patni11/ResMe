@@ -25,9 +25,9 @@ type Actions = {
 };
 
 const INITIAL_STATE: State = {
-  skills: "NextJs, NodeJs, JS, TS", // should be []
-  languages: "Hindi, English",
-  interests: "Surfing, Biking",
+  skills: "",
+  languages: "",
+  interests: "",
   hideSkills: false,
   hideLanguages: false,
   hideInterests: false,
@@ -48,112 +48,123 @@ async function getData() {
   }
 }
 
-export const useTalentsInfo = create(
-  persist<State & Actions>(
-    (set, get) => ({
-      ...INITIAL_STATE, // Spread the initial state
-      fetchSkills: async () => {
-        try {
-          // const skills: string[] =
-          //   (await getData()).skills || INITIAL_STATE.skills;
+const storeCache: Record<string, any> = {};
 
-          const talent: {
-            skills: string[];
-            languages: string[];
-            interests: string[];
-          } = (await getData()) || [];
+export const createTalentsInfo = (talentsID: string) => {
+  if (storeCache[talentsID]) {
+    return storeCache[talentsID];
+  }
 
-          const skills = talent.skills;
-          set({
-            skills: skills.join(", "),
-            isLoading: false,
+  const useTalentsInfo = create(
+    persist<State & Actions>(
+      (set, get) => ({
+        ...INITIAL_STATE, // Spread the initial state
+        fetchSkills: async () => {
+          try {
+            // const skills: string[] =
+            //   (await getData()).skills || INITIAL_STATE.skills;
+
+            const talent: {
+              skills: string[];
+              languages: string[];
+              interests: string[];
+            } = (await getData()) || [];
+
+            const skills = talent.skills;
+            set({
+              skills: skills.join(", "),
+              isLoading: false,
+            });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchLanguages: async () => {
+          try {
+            const talent: {
+              skills: string[];
+              languages: string[];
+              interests: string[];
+            } = (await getData()) || [];
+
+            const languages = talent.languages;
+            console.log("Languages", languages);
+            set({
+              languages: languages.join(", "),
+              isLoading: false,
+            });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchInterests: async () => {
+          try {
+            const talent: {
+              skills: string[];
+              languages: string[];
+              interests: string[];
+            } = (await getData()) || [];
+
+            const interests = talent.interests;
+            console.log("Interests", interests);
+            set({
+              interests: interests.join(", "),
+              isLoading: false,
+            });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+
+        setHideSkills: () => {
+          set((state) => {
+            return {
+              hideSkills: !state.hideSkills,
+            };
           });
-        } catch (error) {
-          set({ error, isLoading: false });
-        }
-      },
-      fetchLanguages: async () => {
-        try {
-          const talent: {
-            skills: string[];
-            languages: string[];
-            interests: string[];
-          } = (await getData()) || [];
-
-          const languages = talent.languages;
-          console.log("Languages", languages);
-          set({
-            languages: languages.join(", "),
-            isLoading: false,
+        },
+        setSkills: (newSkills: string) => {
+          set((state) => {
+            return {
+              skills: newSkills,
+            };
           });
-        } catch (error) {
-          set({ error, isLoading: false });
-        }
-      },
-      fetchInterests: async () => {
-        try {
-          const talent: {
-            skills: string[];
-            languages: string[];
-            interests: string[];
-          } = (await getData()) || [];
-
-          const interests = talent.interests;
-          console.log("Interests", interests);
-          set({
-            interests: interests.join(", "),
-            isLoading: false,
+        },
+        setHideLanguages: () => {
+          set((state) => {
+            return {
+              hideLanguages: !state.hideLanguages,
+            };
           });
-        } catch (error) {
-          set({ error, isLoading: false });
-        }
-      },
+        },
+        setLanguages: (newLanguages: string) => {
+          set((state) => {
+            return {
+              languages: newLanguages,
+            };
+          });
+        },
+        setHideInterests: () => {
+          set((state) => {
+            return {
+              hideInterests: !state.hideInterests,
+            };
+          });
+        },
+        setInterests: (newInterests: string) => {
+          set((state) => {
+            return {
+              interests: newInterests,
+            };
+          });
+        },
+      }),
+      {
+        name: talentsID,
+      }
+    )
+  );
 
-      setHideSkills: () => {
-        set((state) => {
-          return {
-            hideSkills: !state.hideSkills,
-          };
-        });
-      },
-      setSkills: (newSkills: string) => {
-        set((state) => {
-          return {
-            skills: newSkills,
-          };
-        });
-      },
-      setHideLanguages: () => {
-        set((state) => {
-          return {
-            hideLanguages: !state.hideLanguages,
-          };
-        });
-      },
-      setLanguages: (newLanguages: string) => {
-        set((state) => {
-          return {
-            languages: newLanguages,
-          };
-        });
-      },
-      setHideInterests: () => {
-        set((state) => {
-          return {
-            hideInterests: !state.hideInterests,
-          };
-        });
-      },
-      setInterests: (newInterests: string) => {
-        set((state) => {
-          return {
-            skills: newInterests,
-          };
-        });
-      },
-    }),
-    {
-      name: "talentLocalStorage",
-    }
-  )
-);
+  storeCache[talentsID] = useTalentsInfo;
+  return () => useTalentsInfo();
+};

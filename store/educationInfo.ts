@@ -73,9 +73,7 @@ async function getData() {
 
 const storeCache: Record<string, any> = {};
 
-export const createEducationInfo = (
-  educationHeaderID: string = "educationsLocalStorage"
-) => {
+export const createEducationInfo = (educationHeaderID: string) => {
   if (storeCache[educationHeaderID]) {
     return storeCache[educationHeaderID];
   }

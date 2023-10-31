@@ -8,12 +8,10 @@ import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
 import { useSession } from "next-auth/react";
 
 interface ResumeHeaderProps {
-  resumeHeaderID?: string;
+  resumeHeaderID: string;
 }
 
-const ResumeHeader: React.FC<ResumeHeaderProps> = ({
-  resumeHeaderID = "resumeHeaderLocalStorage",
-}) => {
+const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
   const useResumeHeaderInfo = createResumeHeaderInfo(resumeHeaderID);
   const {
     headerInfo,
@@ -63,7 +61,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
       ></Input>
 
       <div className="flex justify-between mt-2 whitespace-normal flex-wrap">
-        {location ? (
+        {location !== "" ? (
           <HideButtons hide={hideLocation} setHide={() => setHideLocation()}>
             <span>Location</span>
           </HideButtons>
@@ -71,25 +69,29 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
           <div></div>
         )}
 
-        {links?.map((link, index) => (
-          <HideButtons
-            key={index}
-            hide={hiddenLinks[index][link.linkName]}
-            setHide={() => setHiddenLinks(link.linkName)}
-          >
-            <span>{link.linkName}</span>
-          </HideButtons>
-        ))}
+        {links && links.length > 0
+          ? links.map((link, index) => (
+              <HideButtons
+                key={index}
+                hide={hiddenLinks[index] && hiddenLinks[index][link.linkName]}
+                setHide={() => setHiddenLinks(link.linkName)}
+              >
+                <span>{link.linkName}</span>
+              </HideButtons>
+            ))
+          : null}
 
-        {contactInfo?.map((contact, index) => (
-          <HideButtons
-            key={index}
-            hide={hiddenContacts[index][contact.contact]}
-            setHide={() => setHiddenContacts(contact.contact)}
-          >
-            <span>{contact.contact}</span>
-          </HideButtons>
-        ))}
+        {contactInfo && contactInfo.length > 0
+          ? contactInfo.map((contact, index) => (
+              <HideButtons
+                key={index}
+                hide={hiddenContacts[index][contact.contact]}
+                setHide={() => setHiddenContacts(contact.contact)}
+              >
+                <span>{contact.contact}</span>
+              </HideButtons>
+            ))
+          : null}
       </div>
     </FormCardWrapper>
   );

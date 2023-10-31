@@ -23,9 +23,9 @@ type Actions = {
 const INITIAL_STATE: State = {
   headerInfo: {
     displayName: "",
-    contactInfo: [{ contact: "" }],
+    contactInfo: [],
     location: "",
-    links: [{ linkName: "", link: "" }],
+    links: [],
     email: "",
   },
   hideLocation: false,
@@ -50,9 +50,7 @@ async function getData() {
 
 const storeCache: Record<string, any> = {};
 
-export const createResumeHeaderInfo = (
-  resumeHeaderID: string = "resumeHeaderLocalStorage"
-) => {
+export const createResumeHeaderInfo = (resumeHeaderID: string) => {
   if (storeCache[resumeHeaderID]) {
     return storeCache[resumeHeaderID];
   }

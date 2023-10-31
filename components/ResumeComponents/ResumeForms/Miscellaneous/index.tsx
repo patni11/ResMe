@@ -6,6 +6,7 @@ type MiscellaneousSectionCardProp = {
   name: string;
   skills: string;
   hideAll: boolean;
+  talentsID: string;
   fetchSkills: () => void;
   setHideAll: () => void;
   setSkills: (newSkills: string) => void;
@@ -14,12 +15,13 @@ const MiscellaneousSectionCard: FC<MiscellaneousSectionCardProp> = ({
   name,
   skills,
   hideAll,
+  talentsID,
   setHideAll,
   fetchSkills,
   setSkills,
 }) => {
   useEffect(() => {
-    let skillssLocalStorage = localStorage.getItem("talentLocalStorage");
+    let skillssLocalStorage = localStorage.getItem(talentsID);
     if (!skillssLocalStorage) {
       fetchSkills();
     }
@@ -45,8 +47,9 @@ const MiscellaneousSectionCard: FC<MiscellaneousSectionCardProp> = ({
   );
 };
 
-import { useTalentsInfo } from "@/store/talentsInfo";
-export const SkillsSectionCard = ({}) => {
+import { createTalentsInfo } from "@/store/talentsInfo";
+export const SkillsSectionCard = ({ talentsID }: { talentsID: string }) => {
+  const useTalentsInfo = createTalentsInfo(talentsID);
   const { skills, hideSkills, setHideSkills, fetchSkills, setSkills } =
     useTalentsInfo();
 
@@ -55,14 +58,16 @@ export const SkillsSectionCard = ({}) => {
       name="Skills"
       skills={skills}
       hideAll={hideSkills}
-      setHideAll={setHideSkills}
-      fetchSkills={fetchSkills}
-      setSkills={setSkills}
+      talentsID={talentsID}
+      setHideAll={() => setHideSkills()}
+      fetchSkills={() => fetchSkills()}
+      setSkills={(newSkills: string) => setSkills(newSkills)}
     />
   );
 };
 
-export const InterestsSectionCard = ({}) => {
+export const InterestsSectionCard = ({ talentsID }: { talentsID: string }) => {
+  const useTalentsInfo = createTalentsInfo(talentsID);
   const {
     interests,
     hideInterests,
@@ -76,14 +81,16 @@ export const InterestsSectionCard = ({}) => {
       name="Interests"
       skills={interests}
       hideAll={hideInterests}
-      setHideAll={setHideInterests}
-      fetchSkills={fetchInterests}
-      setSkills={setInterests}
+      talentsID={talentsID}
+      setHideAll={() => setHideInterests()}
+      fetchSkills={() => fetchInterests()}
+      setSkills={(newSkills: string) => setInterests(newSkills)}
     />
   );
 };
 
-export const LanguagesSectionCard = ({}) => {
+export const LanguagesSectionCard = ({ talentsID }: { talentsID: string }) => {
+  const useTalentsInfo = createTalentsInfo(talentsID);
   const {
     languages,
     hideLanguages,
@@ -97,9 +104,10 @@ export const LanguagesSectionCard = ({}) => {
       name="Languages"
       skills={languages}
       hideAll={hideLanguages}
-      setHideAll={setHideLanguages}
-      fetchSkills={fetchLanguages}
-      setSkills={setLanguages}
+      talentsID={talentsID}
+      setHideAll={() => setHideLanguages()}
+      fetchSkills={() => fetchLanguages()}
+      setSkills={(newSkills: string) => setLanguages(newSkills)}
     />
   );
 };

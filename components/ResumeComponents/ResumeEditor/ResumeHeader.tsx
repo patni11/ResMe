@@ -4,12 +4,10 @@ import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
 //import ResumeComponentContainer from "./ResumeComponentContainer";
 
 interface ResumeHeaderProps {
-  resumeHeaderID?: string;
+  resumeHeaderID: string;
 }
 
-const ResumeHeader: React.FC<ResumeHeaderProps> = ({
-  resumeHeaderID = "resumeHeaderLocalStorage",
-}) => {
+const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
   const useResumeHeaderInfo = createResumeHeaderInfo(resumeHeaderID);
   const { headerInfo, hideLocation, hiddenContacts, hiddenLinks } =
     useResumeHeaderInfo();

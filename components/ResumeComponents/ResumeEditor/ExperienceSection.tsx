@@ -2,17 +2,14 @@
 
 import { createExperienceInfo } from "@/store/experienceInfo";
 import ResumeComponentContainer from "./ResumeComponentContainer";
-import { Experience } from "@/app/(mainApp)/experience/pageTypes";
 import { FC } from "react";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 
 interface ExperienceSection {
-  experienceID?: string;
+  experienceID: string;
 }
 
-const ExperienceSection: FC<ExperienceSection> = ({
-  experienceID = "experiencesLocalStorage",
-}) => {
+const ExperienceSection: FC<ExperienceSection> = ({ experienceID }) => {
   const useExperiencesInfo = createExperienceInfo(experienceID);
   const { experiences, hiddenExperiences, hideAll } = useExperiencesInfo();
 
@@ -52,7 +49,16 @@ const ExperienceSection: FC<ExperienceSection> = ({
 };
 
 interface ExperienceCardProps {
-  experience: Experience;
+  experience: {
+    _id: string;
+    company: string;
+    location: string;
+    positionTitle: string;
+    experienceType: string;
+    startDate: Date;
+    endDate: Date | "working";
+    description: string[];
+  };
 }
 
 const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
@@ -61,7 +67,7 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
       ? "Current"
       : getFormattedDate(new Date(experience.endDate));
 
-  const descriptions = experience.description.split("\n");
+  const descriptions = experience.description;
 
   return (
     <div className="flex flex-col space-between text-xs w-full leading-tight mb-3">
@@ -83,9 +89,11 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
         </div>
       </div>
       <ul className="text-left ml-4" style={{ listStyleType: "disc" }}>
-        {descriptions.map((desc, index) => {
-          return <li key={index}>{desc}</li>;
-        })}
+        {Array.isArray(descriptions)
+          ? descriptions.map((desc, index) => {
+              return <li key={index}>{desc}</li>;
+            })
+          : null}
       </ul>
     </div>
   );

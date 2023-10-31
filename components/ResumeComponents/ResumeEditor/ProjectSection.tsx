@@ -1,13 +1,24 @@
 "use client";
 
-import { useProjectsInfo } from "@/store/projectsInfo";
+import { createProjectsSection } from "@/store/projectsInfo";
 import ResumeComponentContainer from "./ResumeComponentContainer";
-import { Project } from "@/app/(mainApp)/projects/pageTypes";
 import { FC } from "react";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 
-export default function ProjectSection() {
-  const { projects, hiddenProjects, hideAll } = useProjectsInfo();
+interface ProjectSectionProps {
+  projectId: string;
+}
+
+const ProjectSection: FC<ProjectSectionProps> = ({ projectId }) => {
+  const useProjectsInfo = createProjectsSection(projectId);
+  const {
+    projects,
+    hiddenProjects,
+    hideAll,
+    hiddenDates,
+    hiddenLocation,
+    hiddenPosition,
+  } = useProjectsInfo();
 
   if (hideAll) {
     return null;
@@ -27,13 +38,30 @@ export default function ProjectSection() {
 
         {projects.map((project) => {
           const isProjectHidden = hiddenProjects && hiddenProjects[project._id];
+          const isDatesHidden = hiddenDates && hiddenDates[project._id];
+          const isLocationHidden =
+            hiddenLocation && hiddenLocation[project._id];
+          const isPositionHidden =
+            hiddenPosition && hiddenPosition[project._id];
           if (isProjectHidden) {
             return <div key={project._id}></div>; // Remember to add a key here
           }
           return (
             <ProjectCard
               key={project._id}
-              project={project}
+              projectName={project.projectName}
+              projectId={project._id}
+              {...(project.location &&
+                !isLocationHidden && { location: project.location })}
+              {...(project.positionTitle &&
+                !isPositionHidden && { positionTitle: project.positionTitle })}
+              {...(project.startDate &&
+                project.endDate &&
+                !isDatesHidden && {
+                  startDate: project.startDate,
+                  endDate: project.endDate,
+                })}
+              descriptions={project.description}
               // hideProject={hiddenProjects && hiddenProjects[project._id]}
             />
           );
@@ -41,44 +69,59 @@ export default function ProjectSection() {
       </div>
     </ResumeComponentContainer>
   );
-}
+};
 
 interface ProjectCardProps {
-  project: Project;
+  projectName: string;
+  projectId: string;
+  location?: string;
+  positionTitle?: string;
+  startDate?: Date;
+  endDate?: Date;
+  descriptions: string[];
 }
 
-const ProjectCard: FC<ProjectCardProps> = ({ project }) => {
-  const descriptions = project.description.split("\n");
-  const startDate = project.startDate
-    ? getFormattedDate(new Date(project.startDate))
-    : "";
-  const endDate = project.endDate
-    ? getFormattedDate(new Date(project.endDate))
-    : "";
+const ProjectCard: FC<ProjectCardProps> = ({
+  projectName,
+  projectId,
+  location,
+  positionTitle,
+  startDate,
+  endDate,
+  descriptions,
+}) => {
+  const newStartDate = startDate
+    ? getFormattedDate(new Date(startDate))
+    : undefined;
+  const newEndDate = endDate ? getFormattedDate(new Date(endDate)) : undefined;
   return (
     <div className="flex flex-col space-between text-xs w-full leading-tight mb-3">
       <div className="flex space-between">
         <div className="flex flex-col w-full text-left">
           {/* <p>Northeastern University</p> */}
-          <p className="font-bold">{project.projectName}</p>
+          <p className="font-bold">{projectName}</p>
           {/* <p>September 2021 - May 2025</p> */}
-          <p className="italic text-gray-500 font-normal">
-            {project.positionTitle}
-          </p>
+          <p className="italic text-gray-500 font-normal">{positionTitle}</p>
         </div>
         <div className="flex flex-col font-light italic w-full text-right">
           {/* <p>Bachelor&apos;s Computer Science</p> */}
-          {project.location}
-          <p className="font-bold">
-            {startDate} - {endDate}
-          </p>
+          {location}
+          {newStartDate != undefined ? (
+            <p className="font-bold">
+              {newStartDate} - {newEndDate}
+            </p>
+          ) : null}
         </div>
       </div>
       <ul className="text-left ml-4" style={{ listStyleType: "disc" }}>
-        {descriptions.map((desc, index) => {
-          return <li key={index}>{desc}</li>;
-        })}
+        {Array.isArray(descriptions)
+          ? descriptions.map((desc, index) => {
+              return <li key={index}>{desc}</li>;
+            })
+          : null}
       </ul>
     </div>
   );
 };
+
+export default ProjectSection;

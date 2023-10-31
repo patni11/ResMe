@@ -14,11 +14,16 @@ import {
   LanguagesSectionCard,
   SkillsSectionCard,
 } from "@/components/ResumeComponents/ResumeForms/Miscellaneous/index";
+import { CertificateSectionCard } from "@/components/ResumeComponents/ResumeForms/CertificateSectionCard";
 interface EditPanelProps {
   resumeId?: string;
+  email?: string;
 }
 
-const EditPanel: FC<EditPanelProps> = ({ resumeId }) => {
+const EditPanel: FC<EditPanelProps> = ({
+  resumeId = "default",
+  email = "",
+}) => {
   const userDetails: UserInfo = {
     displayName: "Shubh Patni",
     email: "1234",
@@ -43,13 +48,18 @@ const EditPanel: FC<EditPanelProps> = ({ resumeId }) => {
           <SaveIcon className="w-5 h-5" />
         </h1>
       </div>
-      <ResumeHeader resumeHeaderID={`resumeHeader-${resumeId}`} />
-      <EducationSectionCard educationID={`educations-${resumeId}`} />
-      <ExperienceSectionCard experienceID={`experiences-${resumeId}`} />
-      <ProjectSectionCard />
-      <SkillsSectionCard />
-      <LanguagesSectionCard />
-      <InterestsSectionCard />
+      <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />
+      <EducationSectionCard educationID={`educations-${email}-${resumeId}`} />
+      <CertificateSectionCard
+        certificateID={`certificates-${email}-${resumeId}`}
+      />
+      <ExperienceSectionCard
+        experienceID={`experiences-${email}-${resumeId}`}
+      />
+      <ProjectSectionCard projectId={`projects-${email}-${resumeId}`} />
+      <SkillsSectionCard talentsID={`talents-${email}-${resumeId}`} />
+      <LanguagesSectionCard talentsID={`talents-${email}-${resumeId}`} />
+      <InterestsSectionCard talentsID={`talents-${email}-${resumeId}`} />
     </main>
   );
 };

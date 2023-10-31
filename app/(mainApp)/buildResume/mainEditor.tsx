@@ -5,12 +5,16 @@ import ResumePreview from "./ResumePreview";
 import EditPanel from "./EditPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
+import { useSession } from "next-auth/react";
 
 const MainEditor = ({ resumeId }: { resumeId?: string }) => {
+  const { data: session } = useSession();
+  const email = session?.user?.email || "";
+
   return (
     <main className="flex justify-between w-full h-full">
       {/* Display for medium screens (between 658px and 1023px) */}
-      <div className="hidden md:block lg:hidden w-full h-full mt-2">
+      <div className="hidden md:block xl:hidden w-full h-full mt-2">
         <Tabs defaultValue="editPanel" className="w-full h-full mt-2">
           <TabsList className="w-full flex justify-between items-center">
             <TabsTrigger value="editPanel" className="w-full">
@@ -22,24 +26,32 @@ const MainEditor = ({ resumeId }: { resumeId?: string }) => {
           </TabsList>
           <TabsContent value="editPanel">
             <div className="w-full">
-              <EditPanel resumeId={resumeId} />
+              {email !== "" ? (
+                <EditPanel resumeId={resumeId} email={email} />
+              ) : null}
             </div>
           </TabsContent>
           <Separator className="m-0 sm:hidden" orientation="vertical" />
           <TabsContent value="preview">
-            <ResumePreview resumeId={resumeId} />
+            {email !== "" ? (
+              <ResumePreview resumeId={resumeId} email={email} />
+            ) : null}
           </TabsContent>
         </Tabs>
       </div>
 
       {/* Display for large screens (1024px and above) */}
-      <div className="hidden lg:flex h-screen w-full overflow-hidden">
+      <div className="hidden xl:flex h-screen w-full overflow-hidden">
         <div className="w-1/2">
-          <EditPanel resumeId={resumeId} />
+          {email !== "" ? (
+            <EditPanel resumeId={resumeId} email={email} />
+          ) : null}
         </div>
         <Separator className="m-0 sm:hidden" orientation="vertical" />
-        <div className="w-1/2 h-screen overflow-y-auto">
-          <ResumePreview resumeId={resumeId} />
+        <div className="w-1/2 py-6 bg-gray-200">
+          {email !== "" ? (
+            <ResumePreview resumeId={resumeId} email={email} />
+          ) : null}
         </div>
       </div>
 

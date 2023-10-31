@@ -1,9 +1,10 @@
 "use client";
-import { useTalentsInfo } from "@/store/talentsInfo";
+import { createTalentsInfo } from "@/store/talentsInfo";
 import ResumeComponentContainer from "./ResumeComponentContainer";
 //import ResumeComponentContainer from "./ResumeComponentContainer";
 
-export default function TalentSection() {
+export default function TalentSection({ talentsID }: { talentsID: string }) {
+  const useTalentsInfo = createTalentsInfo(talentsID);
   const {
     skills,
     languages,
@@ -19,19 +20,19 @@ export default function TalentSection() {
         <h1 className="text-sm font-semibold"> SKILLS & INTERESTS </h1>
         <hr className="h-[3px] bg-black w-full mb-[0.5px] mt-[0.5px]" />
         {skills != "" && !hideSkills ? (
-          <p className="text-xs">
+          <p className="text-xs text-left">
             <span className="font-semibold">Skills:</span>
             {skills}
           </p>
         ) : null}
         {languages != "" && !hideLanguages ? (
-          <p className="text-xs">
+          <p className="text-xs text-left">
             <span className="font-semibold">Languages:</span>
             {languages}
           </p>
         ) : null}
         {interests != "" && !hideInterests ? (
-          <p className="text-xs">
+          <p className="text-xs text-left">
             <span className="font-semibold">Interests:</span>
             {interests}
           </p>

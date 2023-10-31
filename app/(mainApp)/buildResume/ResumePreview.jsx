@@ -3,6 +3,7 @@
 import ResumeHeader from "@/components/ResumeComponents/ResumeEditor/ResumeHeader";
 import EducationSection from "@/components/ResumeComponents/ResumeEditor/EducationSection";
 import ExperienceSection from "@/components/ResumeComponents/ResumeEditor/ExperienceSection";
+import CertificateSection from "@/components/ResumeComponents/ResumeEditor/CertificateSections";
 import TalentSection from "@/components/ResumeComponents/ResumeEditor/TalentSection";
 import ProjectSection from "@/components/ResumeComponents/ResumeEditor/ProjectSection";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -31,11 +32,19 @@ import Link from "next/link";
 // import Document from "@/components/ResumeComponents/ReactPDF/index";
 
 import "./style/resumePreview.css";
-export default function ResumePreview({ resumeId }) {
+export default function ResumePreview({ resumeId = "default", email = "" }) {
   const elementRef = useRef(null);
+
   const downloadPDF = () => {
     var element = document.getElementById("element-to-print");
-    html2pdf().from(element).save();
+    var opt = {
+      margin: 0.5,
+      filename: "resume.pdf",
+      // html2canvas: { scale: 4 },
+      pagebreak: { mode: ["avoid-all"] },
+      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+    };
+    html2pdf().set(opt).from(element).save();
   };
 
   // const downloadDocx = () => {
@@ -48,9 +57,13 @@ export default function ResumePreview({ resumeId }) {
   //   });
   // };
 
+  const handleSave = () => {
+    // get the data from all of
+  };
+
   return (
-    <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4 space-y-2">
-      <div className="flex justify-left space-x-4">
+    <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4">
+      <div className="flex justify-left space-x-4 mb-2">
         <Button className="w-24 flex space-x-2" onClick={() => {}}>
           <span className="hidden md:block">Save</span>
           <SaveIcon className="w-5 h-5" />
@@ -105,16 +118,23 @@ export default function ResumePreview({ resumeId }) {
         <Document />
       </PDFViewer> */}
 
-      <div
-        className="bg-white w-full h-full max-h-[48] overflow-y-auto py-12 px-12 font-serif leading-tight text-center align-middle"
-        id="element-to-print"
-        ref={elementRef}
-      >
-        <ResumeHeader resumeHeaderID={`resumeHeader-${resumeId}`} />
-        <EducationSection educationID={`educations-${resumeId}`} />
-        <ExperienceSection experienceID={`experiences-${resumeId}`} />
-        <ProjectSection />
-        <TalentSection />
+      <div className="bg-white w-full h-full px-12 py-12">
+        <div
+          className="bg-white w-full h-full max-h-[48] overflow-y-auto font-serif leading-tight text-center align-middle"
+          id="element-to-print"
+          ref={elementRef}
+        >
+          <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />
+          <EducationSection educationID={`educations-${email}-${resumeId}`} />
+          <CertificateSection
+            certificateID={`certificates-${email}-${resumeId}`}
+          />
+          <ExperienceSection
+            experienceID={`experiences-${email}-${resumeId}`}
+          />
+          <ProjectSection projectId={`projects-${email}-${resumeId}`} />
+          <TalentSection talentsID={`talents-${email}-${resumeId}`} />
+        </div>
       </div>
     </main>
   );

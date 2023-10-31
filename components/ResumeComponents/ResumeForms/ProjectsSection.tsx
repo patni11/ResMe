@@ -5,23 +5,34 @@ import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PlusCircleIcon, Trash2 } from "lucide-react";
-import { useProjectsInfo } from "@/store/projectsInfo";
+import { createProjectsSection } from "@/store/projectsInfo";
 
-import { Project } from "@/app/(mainApp)/projects/pageTypes";
-interface ProjectSectionCard {}
+interface ProjectSectionCard {
+  projectId: string;
+}
 
-export const ProjectSectionCard: FC<ProjectSectionCard> = ({}) => {
+export const ProjectSectionCard: FC<ProjectSectionCard> = ({ projectId }) => {
+  const useProjectsInfo = createProjectsSection(projectId);
   const {
     projects,
     hiddenProjects,
+    hiddenDates,
+    hiddenLocation,
+    hiddenPosition,
     hideAll,
     setHiddenProject,
+    setHiddenDates,
+    setHiddenLocation,
+    setHiddenPosition,
+    updateDescriptions,
     fetchProjects,
     setHideAll,
+    deleteDescription,
+    addDescription,
   } = useProjectsInfo();
 
   useEffect(() => {
-    let projectsLocalStorage = localStorage.getItem("projectsLocalStorage");
+    let projectsLocalStorage = localStorage.getItem(projectId);
     if (!projectsLocalStorage) {
       fetchProjects();
     }
@@ -38,9 +49,30 @@ export const ProjectSectionCard: FC<ProjectSectionCard> = ({}) => {
         return (
           <ProjectCard
             key={project._id}
-            project={project}
+            projectName={project.projectName}
+            projectId={project._id}
+            // location={project.location}
+            // positionTitle={project.positionTitle}
+            // startDate={project.startDate}
+            // endDate={project.endDate}
+            descriptions={project.description}
+            deleteDescription={deleteDescription}
+            updateDescriptions={updateDescriptions}
             hideProject={hiddenProjects![project._id]}
-            setHideEducation={() => setHiddenProject(project._id)}
+            setHiddenProject={() => setHiddenProject(project._id)}
+            {...(project.location && {
+              hideLocation: hiddenLocation![project._id],
+              setHiddenLocation: () => setHiddenLocation(project._id),
+            })}
+            {...(project.positionTitle && {
+              hidePosition: hiddenPosition![project._id],
+              setHiddenPosition: () => setHiddenPosition(project._id),
+            })}
+            {...(project.startDate && {
+              hideDates: hiddenDates![project._id],
+              setHiddenDates: () => setHiddenDates(project._id),
+            })}
+            addDescription={addDescription}
           />
         );
       })}
@@ -49,65 +81,111 @@ export const ProjectSectionCard: FC<ProjectSectionCard> = ({}) => {
 };
 
 interface ProjectCardProps {
-  project: Project;
+  projectName: string;
+  projectId: string;
+  descriptions: string[];
+  deleteDescription: (key: string, idx: number) => void;
+  updateDescriptions: (
+    key: string,
+    idx: number,
+    newDescription: string
+  ) => void;
   hideProject: boolean;
-  setHideEducation: () => void;
+  hideLocation?: boolean;
+  hidePosition?: boolean;
+  hideDates?: boolean;
+  setHiddenProject: () => void;
+  setHiddenDates?: () => void;
+  setHiddenLocation?: () => void;
+  setHiddenPosition?: () => void;
+  addDescription: (key: string) => void;
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({
-  project,
+  projectName,
+  projectId,
+  descriptions,
+  deleteDescription,
+  updateDescriptions,
   hideProject,
-  setHideEducation,
+  hideLocation,
+  hidePosition,
+  hideDates,
+  setHiddenProject,
+  setHiddenDates,
+  setHiddenLocation,
+  setHiddenPosition,
+  addDescription,
 }) => {
-  const { updateDescriptions } = useProjectsInfo();
-  const descriptions = project.description.split("\n");
-
   const handleOnChange = (e: string, idx: number) => {
-    const updatedDescriptions = [...descriptions];
-    updatedDescriptions[idx] = e;
-    const newDescription = updatedDescriptions.join("\n");
-    console.log("Updated Descriptions", updatedDescriptions);
-    console.log("Descriptions", project.description);
-    console.log("New Descriptions", newDescription);
-    // 4. Call updateDescriptions.
-    updateDescriptions(project._id, newDescription);
+    updateDescriptions(projectId, idx, e);
   };
 
   return (
     <div className="flex flex-col w-full bg-secondary p-4 rounded-lg mb-2">
       <div className="flex flex-col w-full text-md">
-        <h1 className="font-semibold"> {project.projectName} </h1>
-        <div className="flex justify-between w-full items-center">
-          <h1 className="text-sm">{project.positionTitle}</h1>
-          <HideButtons hide={hideProject} setHide={() => setHideEducation()}>
-            <span>Hide Position</span>
+        <h1 className="font-semibold"> {projectName} </h1>
+        <div className="flex justify-end w-full items-center space-x-4">
+          <HideButtons hide={hideProject} setHide={() => setHiddenProject()}>
+            <span>Project</span>
           </HideButtons>
+
+          {setHiddenDates ? (
+            <HideButtons
+              hide={hideDates || false}
+              setHide={() => setHiddenDates()}
+            >
+              <span>Dates</span>
+            </HideButtons>
+          ) : null}
+          {setHiddenPosition ? (
+            <HideButtons
+              hide={hidePosition || false}
+              setHide={() => setHiddenPosition()}
+            >
+              <span>Position</span>
+            </HideButtons>
+          ) : null}
+
+          {setHiddenLocation ? (
+            <HideButtons
+              hide={hideLocation || false}
+              setHide={() => setHiddenLocation()}
+            >
+              <span>Location</span>
+            </HideButtons>
+          ) : null}
         </div>
       </div>
 
       <ul className="flex flex-col w-full my-2">
-        {descriptions.map((desc, index) => {
-          return (
-            <li key={index} className="flex space-x-2 w-full">
-              <Input
-                className="w-full focus-visible:ring-0"
-                defaultValue={desc}
-                onChange={(e) => handleOnChange(e.currentTarget.value, index)}
-              ></Input>
-              <Button
-                variant="ghost"
-                className="hover:text-destructive"
-                onClick={() => handleOnChange("", index)}
-              >
-                <Trash2 className="w-4 h-4"></Trash2>
-              </Button>
-            </li>
-          );
-        })}
+        {Array.isArray(descriptions)
+          ? descriptions.map((desc, index) => {
+              return (
+                <li key={index} className="flex space-x-2 w-full">
+                  <Input
+                    className="w-full focus-visible:ring-0"
+                    defaultValue={desc}
+                    onChange={(e) =>
+                      handleOnChange(e.currentTarget.value, index)
+                    }
+                  ></Input>
+                  <Button
+                    variant="ghost"
+                    className="hover:text-destructive"
+                    onClick={() => deleteDescription(projectId, index)}
+                  >
+                    <Trash2 className="w-4 h-4"></Trash2>
+                  </Button>
+                </li>
+              );
+            })
+          : null}
       </ul>
       <Button
         className="mr-2 text-xs w-12 hover:bg-primary hover:text-primary-foreground"
         variant="ghost"
+        onClick={() => addDescription(projectId)}
       >
         <PlusCircleIcon className="h-4 w-4" />
       </Button>

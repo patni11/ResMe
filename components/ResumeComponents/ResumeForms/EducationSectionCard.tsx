@@ -61,11 +61,11 @@ const EducationCard: FC<EducationCardProps> = ({
   );
 };
 interface EducationSectionCard {
-  educationID?: string;
+  educationID: string;
 }
 
 export const EducationSectionCard: FC<EducationSectionCard> = ({
-  educationID = "educationsLocalStorage",
+  educationID,
 }) => {
   const useEducationsInfo = createEducationInfo(educationID);
   const {
