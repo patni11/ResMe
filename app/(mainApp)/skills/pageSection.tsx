@@ -72,11 +72,11 @@ const SkillsPageSection: FC<SkillsPageSectionProps> = ({
 
   return (
     <>
-      <div className="flex flex-col w-[80%] items-center py-12 space-y-8">
+      <div className="flex flex-col w-[100%] md:w-[80%] items-center py-12 space-y-8">
         <ContentSection cardDetails={cardDetails}>
           <div className="flex flex-col items-center">
             <div className="relative flex flex-col space-y-4 items-center w-full min-w-[80%]">
-              <div className=" flex flex-wrap space-x-4 w-full my-12 border rounded-lg px-12 py-8 justify-center">
+              <div className="flex flex-wrap space-x-4 w-full my-12 border rounded-lg px-2 py-4 md:py-8 md:px-12 justify-center">
                 {skills.map((skill, idx) => (
                   <Toggle
                     key={idx}
@@ -112,7 +112,7 @@ const SkillsPageSection: FC<SkillsPageSectionProps> = ({
               </div>
             </div>
 
-            <div className="flex flex-col space-y-4 w-[40%]">
+            <div className="flex flex-col space-y-4 w-[100%] md:w-[60%] mt-4">
               <Textarea
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}

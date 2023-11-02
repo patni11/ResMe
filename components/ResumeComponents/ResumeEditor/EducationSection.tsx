@@ -60,8 +60,8 @@ const EducationSection: React.FC<EducationSectionProps> = ({ educationID }) => {
         })}
 
         {relevantCourseWork != "" ? (
-          <p className="text-xs">
-            <span className="font-semibold">Relevant Courses:</span>{" "}
+          <p className="text-xs text-left">
+            <span className="font-semibold text-left">Relevant Courses:</span>{" "}
             {relevantCourseWork}
           </p>
         ) : null}
@@ -88,7 +88,7 @@ const EducationCard: FC<EducationCardProps> = ({
         {/* <p>Northeastern University</p> */}
         <p className="font-bold">{education.schoolName}</p>
         {/* <p>September 2021 - May 2025</p> */}
-        <p className="italic text-gray-500 font-normal">
+        <p className="italic text-gray-900 font-normal">
           {education.degreeType} {education.major}
         </p>
       </div>

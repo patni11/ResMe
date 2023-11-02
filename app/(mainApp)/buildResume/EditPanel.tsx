@@ -3,7 +3,7 @@ import { FC } from "react";
 
 import { EducationSectionCard } from "@/components/ResumeComponents/ResumeForms/EducationSectionCard";
 import { buttonVariants } from "@/components/ui/button";
-import { SaveIcon } from "lucide-react";
+import { RefreshCw, SaveIcon } from "lucide-react";
 import ExperienceSectionCard from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
 import ResumeHeader from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
@@ -44,8 +44,8 @@ const EditPanel: FC<EditPanelProps> = ({
             variant: "secondary",
           })} w-full flex space-x-2`}
         >
-          <span>Edit Resume & Save</span>
-          <SaveIcon className="w-5 h-5" />
+          <span>Click</span> <RefreshCw className="h-4 w-4" />{" "}
+          <span>to Load Data</span>
         </h1>
       </div>
       <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />

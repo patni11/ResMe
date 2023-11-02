@@ -89,11 +89,7 @@ const UserAccountNav = () => {
         </DropdownMenuItem> */}
 
         <DropdownMenuItem asChild>
-          {isSubscribed ? (
-            <Link href="/dashboard/billing" className="cursor-pointer">
-              Manage Subscription
-            </Link>
-          ) : (
+          {isSubscribed ? null : (
             <Link
               href="/pricing"
               className="text-blue-600 hover:text-blue-600 hover:font-semibold cursor-pointer"

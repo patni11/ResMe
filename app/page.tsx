@@ -4,6 +4,12 @@ import { ArrowRight, Hammer } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Navbar from "@/components/Navigation/Navbar";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function Home() {
   return (
@@ -18,7 +24,7 @@ export default function Home() {
         </div>
         <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
           Create Perfect <span className="text-blue-600">Resumes</span> in
-          seconds
+          Seconds
         </h1>
         <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
           Res&apos;Me allows you to create professional Resumes. Simply enter
@@ -51,6 +57,20 @@ export default function Home() {
               }}
               className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
             />
+            <div
+              style={{
+                clipPath:
+                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+              }}
+              className="relative right-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            />
+            <div
+              style={{
+                clipPath:
+                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+              }}
+              className="relative hidden md:block right-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
+            />
           </div>
 
           <div>
@@ -63,7 +83,7 @@ export default function Home() {
                     width={1364}
                     height={866}
                     quality={100}
-                    className="rounded-md bg-white p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10"
+                    className="rounded-md bg-white p-2 sm:p-8 md:p-10 shadow-2xl ring-1 ring-gray-900/10"
                   />
                 </div>
               </div>
@@ -100,7 +120,7 @@ export default function Home() {
         </div>
 
         {/* steps */}
-        <ol className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0">
+        <ol className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0 md:px-6">
           <li className="md:flex-1">
             <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium text-blue-600">Step 1</span>
@@ -143,20 +163,129 @@ export default function Home() {
             </div>
           </li>
         </ol>
+      </div>
 
-        <div className="mx-auto max-w-6xl px-6 lg:px-8">
-          <div className="mt-16 flow-root sm:mt-24">
-            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-              <Image
-                src="/pageStyles/errorPage/pixelArt1.png"
-                alt="uploading preview"
-                width={1419}
-                height={732}
-                quality={100}
-                className="rounded-md bg-white p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10"
-              />
-            </div>
-          </div>
+      <div className="px-6 lg:px-8 flex flex-col md:flex-row mx-auto mb-32 max-w-5xl sm:mt-56 mt-8 w-full justify-between md:space-x-16">
+        <div className="w-full md:w-[40%]">
+          <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
+            FAQ
+          </h2>
+          <p className="mt-4 text-lg text-gray-600">
+            Have another question? Contact me on{" "}
+            <a href="https://twitter.com/resmexyz" className="underline">
+              Twitter
+            </a>
+          </p>
+        </div>
+        <div className="mt-8 ml-0 md:mt-0 w-full md:w-[60%]">
+          <Accordion type="single" collapsible>
+            <AccordionItem value="item-1">
+              <AccordionTrigger>What is ResMe</AccordionTrigger>
+              <AccordionContent>
+                <p>
+                  ResMe is designed to streamline and elevate your professional
+                  journey. It organizes your experiences, skills, and projects,
+                  while its intuitive Resume Builder takes care of optimal
+                  formatting, keywords, and more.{" "}
+                </p>
+                <br />
+                <p>
+                  Whether you're crafting 5 or 100 resumes, ResMe manages and
+                  optimizes them for you, ensuring you always put your best foot
+                  forward. 🌟📄✨
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-2">
+              <AccordionTrigger>What is ATS</AccordionTrigger>
+              <AccordionContent>
+                <p>
+                  Think of an ATS, or Applicant Tracking System, like a resume
+                  scanner that companies use to find the best matches for a job.
+                  Want to make your resume ATS-friendly? Stick to
+                  straightforward formatting, sprinkle in some keywords from the
+                  job post, and ditch any fancy graphics.
+                </p>
+                <br />
+                <p>But you Don't need to worry, we got you covered!😉</p>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-3">
+              <AccordionTrigger>What do I get from this?</AccordionTrigger>
+              <AccordionContent>
+                <p>
+                  ResMe, you get a one-stop-shop to sort out your professional
+                  journey. 🌟 Pop in your experiences, skills, and projects, and
+                  our Resume Builder does the heavy lifting — perfect
+                  formatting, the right keywords, and just the ideal length.
+                </p>
+                <br />
+                <p>
+                  Whether it's 5 or 100 resumes, we've got your back. Think of
+                  it as your professional life, simplified! 😊📄✨
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-4">
+              <AccordionTrigger>
+                Why ResMe? Over Google Docx and Others
+              </AccordionTrigger>
+              <AccordionContent>
+                <p>
+                  Alright, friend! 🚀 So, think of standard tools like Google
+                  Docs or those other basic resume builders. They're like blank
+                  canvases; you have to figure out the whole painting yourself.{" "}
+                </p>
+                <br />
+                <p>
+                  But ResMe? It's like having an artist by your side, guiding
+                  every brushstroke. Instead of wrestling with formatting,
+                  fonts, and keywords, ResMe's got your back.{" "}
+                </p>
+                <br />
+                <p>
+                  We don't just offer a platform, we offer an experience. It's
+                  all about making your professional journey shine, without the
+                  usual hassle. And hey, whether you're juggling 5 or 100
+                  resumes, we handle it like pros. So why settle for basic when
+                  you can go premium with ResMe? 🎨🖌️✨
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-5">
+              <AccordionTrigger>Newbie vs Expert Plan</AccordionTrigger>
+              <AccordionContent>
+                <p>
+                  As the name says: Newbie is for Noobs and Expert plan is for
+                  the rest of us 🤫
+                </p>
+                <br />
+                <p>
+                  JK! 😂 With free plan: Newbie, you get everything you need to
+                  craft a perfect Resume and to Organize it. However,you are
+                  limited to 2 Resumes, don't get AI, link sharing, docx export
+                </p>
+                <br />
+                <p>
+                  With Expert plan, Sire, you would get an AI butler to help you
+                  craft a masterpiece, shareable link to PDF, Docx support and
+                  many supply of beautiful resumes
+                </p>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="item-6">
+              <AccordionTrigger>Can I get a Refund?</AccordionTrigger>
+              <AccordionContent>
+                Yes. You can get refund upto 7 days. But other than your most
+                recent 2 resumes, rest would get deleted.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       </div>
     </>

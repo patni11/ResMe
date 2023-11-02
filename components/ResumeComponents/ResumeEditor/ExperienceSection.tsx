@@ -4,7 +4,7 @@ import { createExperienceInfo } from "@/store/experienceInfo";
 import ResumeComponentContainer from "./ResumeComponentContainer";
 import { FC } from "react";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
-
+import "./listStyle.css";
 interface ExperienceSection {
   experienceID: string;
 }
@@ -19,7 +19,7 @@ const ExperienceSection: FC<ExperienceSection> = ({ experienceID }) => {
 
   return (
     <ResumeComponentContainer>
-      <div className="flex flex-col justify-start items-start w-full">
+      <div className="flex flex-col justify-start items-start w-full mt-4">
         <h1 className="text-sm font-semibold" style={{ marginBottom: "2px" }}>
           {" "}
           EXPERIENCES{" "}
@@ -76,22 +76,26 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
           {/* <p>Northeastern University</p> */}
           <p className="font-bold">{experience.company}</p>
           {/* <p>September 2021 - May 2025</p> */}
-          <p className="italic text-gray-500 font-normal">
+          <p className="italic text-gray-900 font-normal">
             {experience.positionTitle}
           </p>
         </div>
-        <div className="flex flex-col font-light italic w-full text-right">
+        <div className="flex flex-col font-bold w-full text-right">
           {/* <p>Bachelor&apos;s Computer Science</p> */}
           {experience.experienceType} {experience.location}
-          <p className="font-bold">
+          <p className="font-light italic">
             {getFormattedDate(new Date(experience.startDate))} - {endDate}
           </p>
         </div>
       </div>
-      <ul className="text-left ml-4" style={{ listStyleType: "disc" }}>
+      <ul className="text-left m-0 pl-2" style={{ listStyleType: "none" }}>
         {Array.isArray(descriptions)
           ? descriptions.map((desc, index) => {
-              return <li key={index}>{desc}</li>;
+              return (
+                <li key={index} className="bulletList">
+                  {desc}
+                </li>
+              );
             })
           : null}
       </ul>

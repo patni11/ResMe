@@ -94,25 +94,34 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
 
   //console.log(errors);
 
+  const headingClass = "text-md md:text-lg";
+  const descriptionClass = "text-sm md:text-base";
+  const inputFields = "text-sm md:text-base";
+
   return (
     <>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleFormSubmit)}
-          className="flex flex-col space-y-12"
+          className="flex flex-col space-y-12 mt-8 md:mt-0"
         >
           <FormField
             control={form.control}
             name="displayName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Display Name</FormLabel>
-                <FormDescription>
-                  {" "}
+                <FormLabel className={`${headingClass}`}>
+                  Display Name
+                </FormLabel>
+                <FormDescription className={`${descriptionClass}`}>
                   This will be on top of your resume
                 </FormDescription>
                 <FormControl>
-                  <Input placeholder="Enter Display Name" {...field} />
+                  <Input
+                    placeholder="Enter Display Name"
+                    {...field}
+                    className={`${inputFields}`}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -122,10 +131,10 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
           <Separator />
 
           <div className="flex flex-col space-y-4">
-            <FormLabel className="text-lg">
+            <FormLabel className={`${headingClass}`}>
               Your Contact Info <LightText>optional</LightText>
             </FormLabel>
-            <FormDescription>
+            <FormDescription className={`${descriptionClass}`}>
               This includes your email, phone, or any other resource you need in
               your resume.
             </FormDescription>
@@ -142,6 +151,7 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
                             <Input
                               placeholder="Enter Your Contact info"
                               {...register(`contactInfo.${index}.contact`)}
+                              className={`${inputFields}`}
                             />
                           </FormControl>
                           <Button
@@ -175,10 +185,10 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
           <Separator />
 
           <div className="flex flex-col space-y-4">
-            <FormLabel className="text-lg">
+            <FormLabel className={`${headingClass}`}>
               Your Links <LightText>optional</LightText>
             </FormLabel>
-            <FormDescription>
+            <FormDescription className={`${descriptionClass}`}>
               This includes your twitter, linkedin, or any other resource you
               need in your resume
             </FormDescription>
@@ -196,6 +206,7 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
                           <Input
                             placeholder="Ex: Github"
                             {...register(`links.${index}.linkName`)}
+                            className={`${inputFields}`}
                           />
                           <FormMessage />
                         </FormItem>
@@ -209,6 +220,7 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
                           <Input
                             placeholder="https://"
                             {...register(`links.${index}.link`)}
+                            className={`${inputFields}`}
                           />
                           <FormMessage />
                         </FormItem>
@@ -250,12 +262,16 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
                   Location
                   <LightText>optional</LightText>
                 </FormLabel>
-                <FormDescription>
+                <FormDescription className={`${descriptionClass}`}>
                   If you want to add location to your Resume ex: San Francisco,
                   CA
                 </FormDescription>
                 <FormControl>
-                  <Input placeholder="Enter Location" {...field} />
+                  <Input
+                    placeholder="Enter Location"
+                    {...field}
+                    className={`${inputFields}`}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

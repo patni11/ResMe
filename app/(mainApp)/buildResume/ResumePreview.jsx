@@ -40,7 +40,7 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
     var opt = {
       margin: 0.5,
       filename: "resume.pdf",
-      // html2canvas: { scale: 4 },
+      html2canvas: { scale: 2 },
       pagebreak: { mode: ["avoid-all"] },
       jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
     };
@@ -93,7 +93,9 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
                       </span>
                       <Link
                         href="https://twitter.com/resmexyz"
-                        className={buttonVariants}
+                        className={`${buttonVariants({
+                          variant: "outline",
+                        })}`}
                       >
                         Follow
                       </Link>
@@ -117,10 +119,10 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
       {/* <PDFViewer style={{ flex: 1 }}>
         <Document />
       </PDFViewer> */}
-
-      <div className="bg-white w-full h-full px-12 py-12">
+      {/* style={{ width: "595px" }} */}
+      <div className="bg-white h-full px-12 py-12">
         <div
-          className="bg-white w-full h-full max-h-[48] overflow-y-auto font-serif leading-tight text-center align-middle"
+          className="bg-white h-full overflow-y-auto font-serif leading-tight text-center align-middle "
           id="element-to-print"
           ref={elementRef}
         >

@@ -4,7 +4,7 @@ import { createProjectsSection } from "@/store/projectsInfo";
 import ResumeComponentContainer from "./ResumeComponentContainer";
 import { FC } from "react";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
-
+import "./listStyle.css";
 interface ProjectSectionProps {
   projectId: string;
 }
@@ -101,22 +101,26 @@ const ProjectCard: FC<ProjectCardProps> = ({
           {/* <p>Northeastern University</p> */}
           <p className="font-bold">{projectName}</p>
           {/* <p>September 2021 - May 2025</p> */}
-          <p className="italic text-gray-500 font-normal">{positionTitle}</p>
+          <p className="italic text-gray-900 font-normal">{positionTitle}</p>
         </div>
-        <div className="flex flex-col font-light italic w-full text-right">
+        <div className="flex flex-col font-bold w-full text-right">
           {/* <p>Bachelor&apos;s Computer Science</p> */}
           {location}
           {newStartDate != undefined ? (
-            <p className="font-bold">
+            <p className="font-light italic">
               {newStartDate} - {newEndDate}
             </p>
           ) : null}
         </div>
       </div>
-      <ul className="text-left ml-4" style={{ listStyleType: "disc" }}>
+      <ul className="text-left m-0 pl-2" style={{ listStyleType: "none" }}>
         {Array.isArray(descriptions)
           ? descriptions.map((desc, index) => {
-              return <li key={index}>{desc}</li>;
+              return (
+                <li key={index} className="bulletList">
+                  {desc}
+                </li>
+              );
             })
           : null}
       </ul>

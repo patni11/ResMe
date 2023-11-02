@@ -26,12 +26,12 @@ const Navbar = () => {
           <div className="hidden items-center space-x-4 sm:flex">
             <Link
               href="/pricing"
-              className={buttonVariants({
+              className={`${buttonVariants({
                 variant: "ghost",
                 size: "sm",
-              })}
+              })} hover:border hover:border-blue-600 hover:bg-transparent`}
             >
-              Pricing
+              <span className="text-blue-600 font-semibold">Premium</span>
             </Link>
 
             <Link
