@@ -56,7 +56,7 @@ const MainEditor = ({ resumeId }: { resumeId?: string }) => {
       </div>
 
       {/* Display for small screens (less than 658px) */}
-      <div className="block md:hidden text-center relative flex flex-col items-center justify-center align-center w-full h-full m-auto z-0">
+      <div className="absolute top-24 block md:hidden text-center relative flex flex-col items-center justify-center align-center w-full my-auto z-0">
         <Image
           src={smallScreenImage}
           alt="Background Image"

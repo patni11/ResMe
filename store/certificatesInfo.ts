@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create, StateCreator } from "zustand";
 import { Certificate } from "@/app/(mainApp)/education/pageTypes";
 import { persist } from "zustand/middleware";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";

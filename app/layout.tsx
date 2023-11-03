@@ -21,11 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} `}>
-        <div className="flex">
+        <div className="">
           <NextAuthProvider>
             {" "}
             {/* Added for demonstration purposes, adjust width and other styles as required */}
-            <div className="flex-1">{children}</div>
+            <div>{children}</div>
           </NextAuthProvider>
         </div>
         <Toaster />

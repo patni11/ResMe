@@ -36,7 +36,7 @@ const UpdateDialogCard: FC<UpdateDialogCardProps> = ({
   return (
     <Card className="mb-2">
       <CardHeader className="flex-row items-center justify-between pt-4">
-        <CardTitle className="flex justify-between">
+        <CardTitle className="flex justify-between text-md md:text-2xl">
           <span>{cardDetails.cardTitle}</span>
         </CardTitle>
         <div className="flex space-x-2">

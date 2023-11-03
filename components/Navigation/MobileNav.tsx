@@ -12,9 +12,10 @@ const MobileNav = () => {
 
   const pathname = usePathname();
 
-  useEffect(() => {
-    if (isOpen) toggleOpen();
-  }, [pathname, isOpen]);
+  // useEffect(() => {
+  //   if (isOpen) toggleOpen();
+  //   console.log("OPENED NAVBAR", isOpen);
+  // }, [pathname, isOpen]);
 
   const closeOnCurrent = (href: string) => {
     if (pathname === href) {
@@ -38,24 +39,15 @@ const MobileNav = () => {
               <>
                 <li>
                   <Link
-                    onClick={() => closeOnCurrent("/signup")}
+                    onClick={() => closeOnCurrent("/login")}
                     className="flex items-center w-full font-semibold text-green-600"
                     href="/sign-up"
                   >
-                    Get started
+                    Sign In
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </li>
                 <li className="my-3 h-px w-full bg-gray-300" />
-                <li>
-                  <Link
-                    onClick={() => closeOnCurrent("/login")}
-                    className="flex items-center w-full font-semibold"
-                    href="/sign-in"
-                  >
-                    Sign in
-                  </Link>
-                </li>
                 <li className="my-3 h-px w-full bg-gray-300" />
                 <li>
                   <Link
@@ -63,7 +55,7 @@ const MobileNav = () => {
                     className="flex items-center w-full font-semibold"
                     href="/pricing"
                   >
-                    Pricing
+                    Premium
                   </Link>
                 </li>
               </>
@@ -80,13 +72,23 @@ const MobileNav = () => {
                 </li>
                 <li className="my-3 h-px w-full bg-gray-300" />
                 <li>
+                  <Link
+                    href="/profile"
+                    onClick={() => closeOnCurrent("/dashboard")}
+                    className="flex items-center w-full font-semibold cursor-pointer"
+                  >
+                    Profile
+                  </Link>
+                </li>
+                <li className="my-3 h-px w-full bg-gray-300" />
+                <li>
                   <button
                     onClick={() => {
                       signOut();
                     }}
                     className="flex items-center w-full font-semibold hover:text-destructive"
                   >
-                    Sign out
+                    Log out
                   </button>
                 </li>
               </>

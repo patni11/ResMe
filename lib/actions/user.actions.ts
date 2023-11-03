@@ -32,38 +32,38 @@ export async function deleteUser(email: string) {
   }
 }
 
-export async function createUser({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}): Promise<void> {
-  try {
-    connectMongoDB();
-    console.log("user");
-    // const user = await User.findOne({ email: email });
+// export async function createUser({
+//   email,
+//   password,
+// }: {
+//   email: string;
+//   password: string;
+// }): Promise<void> {
+//   try {
+//     connectMongoDB();
+//     console.log("user");
+//     // const user = await User.findOne({ email: email });
 
-    // if (user) {
-    //   throw new Error("You already have an account, try signing in");
-    // } else {
-    //   console.log("You are signed in");
-    //   // const hashedPassword = await bcrypt.hash(password, 5);
-    //   // const newUser = new User({
-    //   //   email,
-    //   //   password: hashedPassword,
-    //   // });
+//     // if (user) {
+//     //   throw new Error("You already have an account, try signing in");
+//     // } else {
+//     //   console.log("You are signed in");
+//     //   // const hashedPassword = await bcrypt.hash(password, 5);
+//     //   // const newUser = new User({
+//     //   //   email,
+//     //   //   password: hashedPassword,
+//     //   // });
 
-    //   // await newUser.save();
-    // }
-  } catch (e: any) {
-    if (e.code == "11000") {
-      throw new Error(`You already have an account. Please Sign In`);
-    } else {
-      throw new Error(`🐞 creeped in 😢 ${e}`);
-    }
-  }
-}
+//     //   // await newUser.save();
+//     // }
+//   } catch (e: any) {
+//     if (e.code == "11000") {
+//       throw new Error(`You already have an account. Please Sign In`);
+//     } else {
+//       throw new Error(`🐞 creeped in 😢 ${e}`);
+//     }
+//   }
+// }
 
 export async function fetchUser(email: string) {
   try {

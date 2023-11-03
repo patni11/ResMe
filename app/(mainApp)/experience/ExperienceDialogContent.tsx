@@ -90,16 +90,22 @@ const ExperienceSchema = z
       ])
       .default("working"),
   })
-  .refine((data) => {
-    if (data.endDate === "working") {
-      return true;
+  .refine(
+    (data) => {
+      if (data.endDate === "working") {
+        return true;
+      }
+      if (data.endDate instanceof Date && data.startDate instanceof Date) {
+        return data.endDate >= data.startDate;
+      }
+      // If endDate is not a date and not "working", this will fall through to the else block.
+      return false; // this line can be omitted as it's the default behavior
+    },
+    {
+      message: "End date should not be less than start date.",
+      path: ["endDate"], // specifies that this refinement is for the endDate field
     }
-    data.endDate >= data.startDate,
-      {
-        message: "End date should not be less than start date.",
-        path: ["endDate"], // specifies that this refinement is for the endDate field
-      };
-  });
+  );
 
 interface ExperienceDialogContentProps {
   email: string;

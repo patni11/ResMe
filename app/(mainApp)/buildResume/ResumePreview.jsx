@@ -30,11 +30,18 @@ import {
 import Link from "next/link";
 // import { PDFViewer } from "@react-pdf/renderer";
 // import Document from "@/components/ResumeComponents/ReactPDF/index";
+const { v4: uuidv4 } = require("uuid");
 
 import "./style/resumePreview.css";
+//import { saveLocally } from "./storeLocally";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { createResume } from "@/lib/actions/resumes.action";
+
 export default function ResumePreview({ resumeId = "default", email = "" }) {
   const elementRef = useRef(null);
-
+  const { toast } = useToast();
+  const router = useRouter();
   const downloadPDF = () => {
     var element = document.getElementById("element-to-print");
     var opt = {
@@ -57,14 +64,100 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
   //   });
   // };
 
-  const handleSave = () => {
-    // get the data from all of
+  const handleSave = async () => {
+    if (resumeId === "default") {
+      const newResumeId = uuidv4();
+      //saveLocally(newResumeId);
+      // add code to save to DB
+      // show a toast
+      const certificates = localStorage.getItem(
+        `certificates-${email}-${resumeId}`
+      );
+      const resumeHeader = localStorage.getItem(
+        `resumeHeader-${email}-${resumeId}`
+      );
+
+      const educations = localStorage.getItem(
+        `educations-${email}-${resumeId}`
+      );
+
+      const experiences = localStorage.getItem(
+        `experiences-${email}-${resumeId}`
+      );
+
+      const projects = localStorage.getItem(`projects-${email}-${resumeId}`);
+
+      const talents = localStorage.getItem(`talents-${email}-${resumeId}`);
+
+      // const processedProjects = JSON.parse(projects)["state"]["projects"]
+      // const processedExperiences = JSON.parse(experiences)["state"]["experiences"]
+      console.log(JSON.parse(experiences)["state"]["experiences"]);
+
+      const res = await createResume({
+        email: email,
+        resumeId: newResumeId,
+        resumeName: "New Resume",
+        skills: JSON.parse(talents)["state"]["skills"],
+        languages: JSON.parse(talents)["state"]["languages"],
+        interests: JSON.parse(talents)["state"]["interests"],
+        educations: JSON.parse(educations)["state"]["educations"],
+        certificates: JSON.parse(certificates)["state"]["certificates"],
+        experiences: JSON.parse(experiences)["state"]["experiences"],
+        //projects: JSON.parse(projects)["state"]["projects"],
+        headerInfo: JSON.parse(resumeHeader)["state"]["headerInfo"],
+      });
+
+      if (res.isSuccess) {
+        // localStorage.setItem(
+        //   `certificates-${email}-${newResumeId}`,
+        //   certificates
+        // );
+
+        // localStorage.setItem(
+        //   `resumeHeader-${email}-${newResumeId}`,
+        //   resumeHeader
+        // );
+
+        // localStorage.setItem(`educations-${email}-${newResumeId}`, educations);
+
+        // localStorage.setItem(
+        //   `experiences-${email}-${newResumeId}`,
+        //   experiences
+        // );
+
+        // localStorage.setItem(`projects-${email}-${newResumeId}`, projects);
+
+        // localStorage.setItem(`talents-${email}-${newResumeId}`, talents);
+
+        toast({
+          title: `Saved a new Resume 🥳: ${newResumeId} `,
+        });
+
+        setTimeout(() => {
+          router.push(`/buildResume/${newResumeId}`);
+        }, 1000);
+      } else {
+        console.log(res);
+        const error = res.error;
+        toast({
+          title: `Failed: ${error} `,
+        });
+      }
+
+      // save to DB
+
+      // if successful, save to new local Storage, // redirect to /resumeId
+    } else {
+      toast({
+        title: `Not New Resume 🥳: ${newResumeId} `,
+      });
+    }
   };
 
   return (
     <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4">
       <div className="flex justify-left space-x-4 mb-2">
-        <Button className="w-24 flex space-x-2" onClick={() => {}}>
+        <Button className="w-24 flex space-x-2" onClick={() => handleSave()}>
           <span className="hidden md:block">Save</span>
           <SaveIcon className="w-5 h-5" />
         </Button>
@@ -120,9 +213,9 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
         <Document />
       </PDFViewer> */}
       {/* style={{ width: "595px" }} */}
-      <div className="bg-white h-full px-12 py-12">
+      <div className="px-12 py-12 relative bg-white w-full h-full">
         <div
-          className="bg-white h-full overflow-y-auto font-serif leading-tight text-center align-middle "
+          className="relative bg-white mx-auto h-full overflow-y-auto font-serif leading-tight text-center align-middle"
           id="element-to-print"
           ref={elementRef}
         >

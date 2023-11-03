@@ -89,8 +89,8 @@ export function SignInModal() {
           </CardHeader>
           <CardContent className="grid gap-4">
             <GoogleButton />
-            <FaceBook />
-            <GithubAuthButton />
+            {/* <FaceBook />
+            <GithubAuthButton /> */}
             {/* 
             <div className="relative">
               <div className="absolute inset-0 flex items-center">

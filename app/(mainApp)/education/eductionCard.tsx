@@ -38,7 +38,7 @@ const EducationCard: FC<EducationCardProps> = ({
       <CardContent className="flex flex-col justify-between text-sm">
         <div className="flex justify-between">
           <span>{cardDetails.major}</span>
-          <span>
+          <span className="text-right">
             {cardDetails.startDate
               ? getFormattedDate(cardDetails.startDate) + "-"
               : ""}

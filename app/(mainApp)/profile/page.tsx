@@ -35,8 +35,8 @@ const Profile = async () => {
   };
 
   return (
-    <main className="flex w-full h-full items-center justify-center">
-      <Card className="w-[30%]">
+    <main className="flex w-full h-full items-center justify-center px-8">
+      <Card className="w-[100%] mt-24 md:w-[50%] max-w-[450px] my-auto">
         <CardHeader>
           <CardTitle>{session.user.name || "Your Account"} </CardTitle>
           <CardDescription>{user.email || ""}</CardDescription>

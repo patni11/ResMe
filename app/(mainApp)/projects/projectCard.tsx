@@ -36,14 +36,14 @@ const ProjectCard: FC<ProjectCardProps> = ({
       deleteDialogDetails={deleteDialogDetails}
     >
       <CardContent className="flex flex-col justify-between text-sm space-y-4">
-        <div className="flex justify-between px-2">
+        <div className="flex flex-col space-y-1 md:space-y-0 items-center md:flex-row md:justify-between">
           <div className="flex space-x-4 items-center">
-            <span className="font-bold text-lg">
+            <span className="font-bold text-sm md:text-lg">
               {cardDetails.positionTitle}
             </span>
           </div>
           <div className="flex space-x-4">
-            <span className="font">{cardDetails.location}</span>
+            <span className="font-bold">{cardDetails.location}</span>
 
             <span>
               {cardDetails.startDate

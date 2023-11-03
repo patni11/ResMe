@@ -35,15 +35,18 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
       deleteDialogDetails={deleteDialogDetails}
     >
       <CardContent className="flex flex-col justify-between text-sm space-y-4">
-        <div className="flex justify-between px-2">
+        <div className="space-y-1 md:space-y-0 flex flex-col md:flex-row justify-between px-2">
           <div className="flex space-x-4 items-center">
             <span className="font-bold text-lg">{cardDetails.company}</span>
           </div>
-          <div className="flex space-x-4">
-            <span className="font-semibold">{cardDetails.experienceType}</span>
-            <span className="font">{cardDetails.location}</span>
-
-            <span>
+          <div className="flex flex-col space-y-1 md:space-y-0 md:flex-row md:space-x-4">
+            <div className="flex w-full justify-between md:justify-content">
+              <span className="font-semibold">
+                {cardDetails.experienceType}
+              </span>
+              <span className="font">{cardDetails.location}</span>
+            </div>
+            <span className="text-right">
               {cardDetails.startDate
                 ? getFormattedDate(cardDetails.startDate) + " - "
                 : ""}
