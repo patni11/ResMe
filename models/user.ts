@@ -220,6 +220,7 @@ const ResumeSchema = new Schema(
         _id: false,
       },
     },
+    pdfLink: { type: String },
   },
   { timestamps: true }
 );

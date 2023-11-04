@@ -20,7 +20,7 @@ const ExperiencePage = async () => {
     JSON.stringify(await fetchExperiences(session.user.email))
   );
 
-  const experiences: Experience[] = rawExperiences.map((exp) => ({
+  const experiences: Experience[] = rawExperiences.map((exp: any) => ({
     ...exp,
     description: Array.isArray(exp.description)
       ? exp.description.join("\n")

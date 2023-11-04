@@ -66,7 +66,7 @@ export const CertificateSectionCard: FC<CertificateSectionCard> = ({
       hideAll={hideAll}
       deleteFunction={setHideAll}
     >
-      {certificates.map((certificate) => {
+      {certificates.map((certificate: any) => {
         return (
           <CertificateCard
             key={certificate._id}

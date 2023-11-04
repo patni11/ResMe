@@ -45,7 +45,7 @@ export const ProjectSectionCard: FC<ProjectSectionCard> = ({ projectId }) => {
       hideAll={hideAll}
       deleteFunction={setHideAll}
     >
-      {projects.map((project) => {
+      {projects.map((project: any) => {
         return (
           <ProjectCard
             key={project._id}

@@ -29,7 +29,7 @@ const ExperienceSection: FC<ExperienceSection> = ({ experienceID }) => {
           style={{ marginBottom: "1px" }}
         />
 
-        {experiences.map((experience) => {
+        {experiences.map((experience: any) => {
           const isExperienceHidden =
             hiddenExperiences && hiddenExperiences[experience._id];
           if (isExperienceHidden) {

@@ -39,7 +39,7 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({ experienceID }) => {
       hideAll={hideAll}
       deleteFunction={setHideAll}
     >
-      {experiences.map((experience) => {
+      {experiences.map((experience: any) => {
         return (
           <ExperienceCard
             key={experience._id}

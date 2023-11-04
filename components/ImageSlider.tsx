@@ -28,10 +28,6 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
     setCurrentIndex(newIndex);
   };
 
-  const goToSlide = (slideIndex) => {
-    setCurrentIndex(slideIndex);
-  };
-
   return (
     <div className="max-w-[1364px] h-[866px] w-full m-auto py-16 px-4 relative group justify-center items-center mb-32">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">

@@ -36,7 +36,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
             </p>
           ) : null}
 
-          {contactInfo.map((info, index) => {
+          {contactInfo.map((info: any, index: any) => {
             const contactKey = info.contact;
             // Check if the contact is hidden
             if (hiddenContacts[index][contactKey]) return null; // Skip rendering if hidden
@@ -47,7 +47,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
             );
           })}
 
-          {links.map((link, index) => {
+          {links.map((link: any, index: any) => {
             const linkKey = link.linkName;
             if (hiddenLinks[index][linkKey]) return null;
             return (

@@ -5,6 +5,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { deleteFunc, renameResume } from "./ResumeFunctions";
 import { useToast } from "../ui/use-toast";
+import { revalidatePath } from "next/cache";
+import { DialogClose } from "../ui/dialog";
 
 export const DeleteButton = ({
   resumeId,
@@ -28,6 +30,8 @@ export const DeleteButton = ({
       toast({
         title: `Resume Deleted Successfully`,
       });
+
+      location.reload();
     } else {
       toast({
         title: `Could not delete the resume`,
@@ -58,9 +62,16 @@ export const RenameDialog = ({ resumeId }: { resumeId: string }) => {
         }}
         placeholder="Enter New Name"
       />
-      <Button onClick={() => renameResume(resumeId, newName)} variant="default">
-        Rename
-      </Button>
+      <DialogClose asChild>
+        <Button
+          onClick={() => {
+            renameResume(resumeId, newName);
+          }}
+          variant="default"
+        >
+          Rename
+        </Button>
+      </DialogClose>
     </div>
   );
 };

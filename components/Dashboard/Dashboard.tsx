@@ -55,6 +55,7 @@ const DashBoard: FC<DashBoardProps> = async () => {
           </div>
           {resumes.map((resume) => (
             <ResumeCard
+              key={resume._id}
               resumeName={resume.resumeName}
               resumeId={resume._id}
               email={resume.email}

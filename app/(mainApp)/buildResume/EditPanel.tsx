@@ -24,7 +24,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
 
 interface EditPanelProps {
   resumeId?: string;
@@ -35,17 +34,6 @@ const EditPanel: FC<EditPanelProps> = ({
   resumeId = "default",
   email = "",
 }) => {
-  const userDetails: UserInfo = {
-    displayName: "Shubh Patni",
-    email: "1234",
-    location: "Boston, MA",
-    links: [
-      { linkName: "Website", link: "https://www.shubhpatni.com/" },
-      { linkName: "Linkedin", link: "https://www.linkedin.com/in/patnishubh/" },
-    ],
-    contactInfo: [{ contact: "shubhpatni2002@gmail.com" }],
-  };
-
   return (
     <main className="w-full h-screen overflow-y-auto flex flex-col items-start bg-gray-200 p-4 space-y-2">
       <div className="flex space-x-2 w-full  justify-right">

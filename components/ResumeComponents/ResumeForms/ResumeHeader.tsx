@@ -70,7 +70,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
         )}
 
         {links && links.length > 0
-          ? links.map((link, index) => (
+          ? links.map((link: any, index: any) => (
               <HideButtons
                 key={index}
                 hide={hiddenLinks[index] && hiddenLinks[index][link.linkName]}
@@ -82,7 +82,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
           : null}
 
         {contactInfo && contactInfo.length > 0
-          ? contactInfo.map((contact, index) => (
+          ? contactInfo.map((contact: any, index: any) => (
               <HideButtons
                 key={index}
                 hide={hiddenContacts[index][contact.contact]}

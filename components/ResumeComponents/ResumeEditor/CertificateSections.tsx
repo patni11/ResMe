@@ -18,9 +18,9 @@ const CertificateSection: React.FC<CertificateSectionProps> = ({
   }
 
   const certificatesString = certificates
-    .filter((certificate) => !hiddenCertificates?.[certificate._id]) // Filter out hidden certificates
+    .filter((certificate: any) => !hiddenCertificates?.[certificate._id]) // Filter out hidden certificates
     .map(
-      (certificate) =>
+      (certificate: any) =>
         `${certificate.organization}: ${certificate.certificateName}`
     )
     .join(", ");

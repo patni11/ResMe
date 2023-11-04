@@ -42,7 +42,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ educationID }) => {
           style={{ marginBottom: "1px" }}
         />
 
-        {educations.map((education) => {
+        {educations.map((education: any) => {
           const isEducationHidden =
             hiddenEducations && hiddenEducations[education._id];
           if (isEducationHidden) {

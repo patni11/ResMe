@@ -20,7 +20,7 @@ const Projects = async () => {
     JSON.stringify(await fetchUserProjects(session.user.email))
   );
 
-  const projects: Project[] = rawProjects.map((proj) => ({
+  const projects: Project[] = rawProjects.map((proj: any) => ({
     ...proj,
     description: Array.isArray(proj.description)
       ? proj.description.join("\n")

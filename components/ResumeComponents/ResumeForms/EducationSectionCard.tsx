@@ -97,7 +97,7 @@ export const EducationSectionCard: FC<EducationSectionCard> = ({
       hideAll={hideAll}
       deleteFunction={setHideAll}
     >
-      {educations.map((education) => {
+      {educations.map((education: any) => {
         return (
           <EducationCard
             key={education._id}

@@ -99,7 +99,7 @@ interface PriceCardsProps {
   subscribe?: string;
 }
 
-export const PriceCards: FC<PriceCardsProps> = ({
+const PriceCards: FC<PriceCardsProps> = ({
   title,
   cost,
   checkedPoints,

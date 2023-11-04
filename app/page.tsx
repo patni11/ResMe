@@ -199,9 +199,9 @@ export default function Home() {
                 </p>
                 <br />
                 <p>
-                  Whether you're crafting 5 or 100 resumes, ResMe manages and
-                  optimizes them for you, ensuring you always put your best foot
-                  forward. 🌟📄✨
+                  Whether you&apos;re crafting 5 or 100 resumes, ResMe manages
+                  and optimizes them for you, ensuring you always put your best
+                  foot forward. 🌟📄✨
                 </p>
               </AccordionContent>
             </AccordionItem>
@@ -217,7 +217,7 @@ export default function Home() {
                   job post, and ditch any fancy graphics.
                 </p>
                 <br />
-                <p>But you Don't need to worry, we got you covered!😉</p>
+                <p>But you Don&apos;t need to worry, we got you covered!😉</p>
               </AccordionContent>
             </AccordionItem>
 
@@ -232,8 +232,8 @@ export default function Home() {
                 </p>
                 <br />
                 <p>
-                  Whether it's 5 or 100 resumes, we've got your back. Think of
-                  it as your professional life, simplified! 😊📄✨
+                  Whether it&apos;s 5 or 100 resumes, we&apos;ve got your back.
+                  Think of it as your professional life, simplified! 😊📄✨
                 </p>
               </AccordionContent>
             </AccordionItem>
@@ -243,22 +243,23 @@ export default function Home() {
               <AccordionContent>
                 <p>
                   Alright, friend! 🚀 So, think of standard tools like Google
-                  Docs or those other basic resume builders. They're like blank
-                  canvases; you have to figure out the whole painting yourself.{" "}
+                  Docs or those other basic resume builders. They&apos;re like
+                  blank canvases; you have to figure out the whole painting
+                  yourself.{" "}
                 </p>
                 <br />
                 <p>
-                  But ResMe? It's like having an artist by your side, guiding
-                  every brushstroke. Instead of wrestling with formatting,
-                  fonts, and keywords, ResMe's got your back.{" "}
+                  But ResMe? It&apos;s like having an artist by your side,
+                  guiding every brushstroke. Instead of wrestling with
+                  formatting, fonts, and keywords, ResMe&apos;s got your back.{" "}
                 </p>
                 <br />
                 <p>
-                  We don't just offer a platform, we offer an experience. It's
-                  all about making your professional journey shine, without the
-                  usual hassle. And hey, whether you're juggling 5 or 100
-                  resumes, we handle it like pros. So why settle for basic when
-                  you can go premium with ResMe? 🎨🖌️✨
+                  We don&apos;t just offer a platform, we offer an experience.
+                  It&apos;s all about making your professional journey shine,
+                  without the usual hassle. And hey, whether you&apos;re
+                  juggling 5 or 100 resumes, we handle it like pros. So why
+                  settle for basic when you can go premium with ResMe? 🎨🖌️✨
                 </p>
               </AccordionContent>
             </AccordionItem>
@@ -274,7 +275,8 @@ export default function Home() {
                 <p>
                   JK! 😂 With free plan: Newbie, you get everything you need to
                   craft a perfect Resume and to Organize it. However,you are
-                  limited to 2 Resumes, don't get AI, link sharing, docx export
+                  limited to 2 Resumes, don&apos;t get AI, link sharing, docx
+                  export
                 </p>
                 <br />
                 <p>

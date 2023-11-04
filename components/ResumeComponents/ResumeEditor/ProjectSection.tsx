@@ -36,7 +36,7 @@ const ProjectSection: FC<ProjectSectionProps> = ({ projectId }) => {
           style={{ marginBottom: "1px" }}
         />
 
-        {projects.map((project) => {
+        {projects.map((project: any) => {
           const isProjectHidden = hiddenProjects && hiddenProjects[project._id];
           const isDatesHidden = hiddenDates && hiddenDates[project._id];
           const isLocationHidden =
