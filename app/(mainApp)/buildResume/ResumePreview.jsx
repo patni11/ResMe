@@ -9,6 +9,7 @@ import ProjectSection from "@/components/ResumeComponents/ResumeEditor/ProjectSe
 import { Button, buttonVariants } from "@/components/ui/button";
 import html2pdf from "html2pdf.js";
 import { useRef } from "react";
+import { Input } from "@/components/ui/input";
 import { SaveIcon, Download } from "lucide-react";
 import {
   DropdownMenu,
@@ -36,7 +37,8 @@ import "./style/resumePreview.css";
 //import { saveLocally } from "./storeLocally";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { createResume } from "@/lib/actions/resumes.action";
+import { createResume, updateResume } from "@/lib/actions/resumes.action";
+import { revalidatePath } from "next/cache";
 
 export default function ResumePreview({ resumeId = "default", email = "" }) {
   const elementRef = useRef(null);
@@ -64,35 +66,71 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
   //   });
   // };
 
+  function fixExperience(rawExperiences) {
+    const formattedExperiences = rawExperiences.map((exp) => {
+      let endDate = exp.endDate;
+      console.log("endDate", endDate);
+      // Check if endDate is a string and not 'working', then parse it as a Date.
+      if (typeof endDate === "string" && endDate !== "working") {
+        endDate = new Date(endDate);
+      }
+
+      console.log("endDate", endDate);
+      return {
+        ...exp,
+        endDate: endDate,
+      };
+    });
+    return formattedExperiences;
+  }
+
+  function fixStructure(arrayOfObjects) {
+    arrayOfObjects = arrayOfObjects.map(
+      ({ _id, __v, email, createdAt, updatedAt, ...rest }) => rest
+    );
+    return arrayOfObjects;
+  }
+
   const handleSave = async () => {
+    const certificates = localStorage.getItem(
+      `certificates-${email}-${resumeId}`
+    );
+    const resumeHeader = localStorage.getItem(
+      `resumeHeader-${email}-${resumeId}`
+    );
+
+    const educations = localStorage.getItem(`educations-${email}-${resumeId}`);
+
+    const experiences = localStorage.getItem(
+      `experiences-${email}-${resumeId}`
+    );
+
+    const projects = localStorage.getItem(`projects-${email}-${resumeId}`);
+
+    const talents = localStorage.getItem(`talents-${email}-${resumeId}`);
+
+    const processedCertificates = fixStructure(
+      JSON.parse(certificates)["state"]["certificates"]
+    );
+    const processedEducation = fixStructure(
+      JSON.parse(educations)["state"]["educations"]
+    );
+    const processedProjects = fixStructure(
+      JSON.parse(projects)["state"]["projects"]
+    );
+    const processedHeader = JSON.parse(resumeHeader)["state"]["headerInfo"];
+    delete processedHeader._id;
+    delete processedHeader.__v;
+    const processedExperiences = fixStructure(
+      fixExperience(JSON.parse(experiences)["state"]["experiences"])
+    );
+
     if (resumeId === "default") {
       const newResumeId = uuidv4();
+      console.log("resmeId", newResumeId);
       //saveLocally(newResumeId);
       // add code to save to DB
       // show a toast
-      const certificates = localStorage.getItem(
-        `certificates-${email}-${resumeId}`
-      );
-      const resumeHeader = localStorage.getItem(
-        `resumeHeader-${email}-${resumeId}`
-      );
-
-      const educations = localStorage.getItem(
-        `educations-${email}-${resumeId}`
-      );
-
-      const experiences = localStorage.getItem(
-        `experiences-${email}-${resumeId}`
-      );
-
-      const projects = localStorage.getItem(`projects-${email}-${resumeId}`);
-
-      const talents = localStorage.getItem(`talents-${email}-${resumeId}`);
-
-      // const processedProjects = JSON.parse(projects)["state"]["projects"]
-      // const processedExperiences = JSON.parse(experiences)["state"]["experiences"]
-      console.log(JSON.parse(experiences)["state"]["experiences"]);
-
       const res = await createResume({
         email: email,
         resumeId: newResumeId,
@@ -100,34 +138,34 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
         skills: JSON.parse(talents)["state"]["skills"],
         languages: JSON.parse(talents)["state"]["languages"],
         interests: JSON.parse(talents)["state"]["interests"],
-        educations: JSON.parse(educations)["state"]["educations"],
-        certificates: JSON.parse(certificates)["state"]["certificates"],
-        experiences: JSON.parse(experiences)["state"]["experiences"],
-        //projects: JSON.parse(projects)["state"]["projects"],
-        headerInfo: JSON.parse(resumeHeader)["state"]["headerInfo"],
+        educations: processedEducation,
+        certificates: processedCertificates,
+        experiences: processedExperiences,
+        projects: processedProjects,
+        headerInfo: processedHeader,
       });
 
       if (res.isSuccess) {
-        // localStorage.setItem(
-        //   `certificates-${email}-${newResumeId}`,
-        //   certificates
-        // );
+        localStorage.setItem(
+          `certificates-${email}-${newResumeId}`,
+          certificates
+        );
 
-        // localStorage.setItem(
-        //   `resumeHeader-${email}-${newResumeId}`,
-        //   resumeHeader
-        // );
+        localStorage.setItem(
+          `resumeHeader-${email}-${newResumeId}`,
+          resumeHeader
+        );
 
-        // localStorage.setItem(`educations-${email}-${newResumeId}`, educations);
+        localStorage.setItem(`educations-${email}-${newResumeId}`, educations);
 
-        // localStorage.setItem(
-        //   `experiences-${email}-${newResumeId}`,
-        //   experiences
-        // );
+        localStorage.setItem(
+          `experiences-${email}-${newResumeId}`,
+          experiences
+        );
 
-        // localStorage.setItem(`projects-${email}-${newResumeId}`, projects);
+        localStorage.setItem(`projects-${email}-${newResumeId}`, projects);
 
-        // localStorage.setItem(`talents-${email}-${newResumeId}`, talents);
+        localStorage.setItem(`talents-${email}-${newResumeId}`, talents);
 
         toast({
           title: `Saved a new Resume 🥳: ${newResumeId} `,
@@ -143,20 +181,39 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
           title: `Failed: ${error} `,
         });
       }
-
-      // save to DB
-
-      // if successful, save to new local Storage, // redirect to /resumeId
     } else {
-      toast({
-        title: `Not New Resume 🥳: ${newResumeId} `,
+      const res = await updateResume({
+        email: email,
+        resumeId: resumeId,
+        skills: JSON.parse(talents)["state"]["skills"],
+        languages: JSON.parse(talents)["state"]["languages"],
+        interests: JSON.parse(talents)["state"]["interests"],
+        educations: processedEducation,
+        certificates: processedCertificates,
+        experiences: processedExperiences,
+        projects: processedProjects,
+        headerInfo: processedHeader,
       });
+
+      console.log("UPDATING RESUME", res);
+
+      if (res.isSuccess) {
+        toast({
+          title: `Resume Updated: ${resumeId} `,
+        });
+      } else {
+        console.log(res);
+        const error = res.error;
+        toast({
+          title: `Could Not Update: ${error} `,
+        });
+      }
     }
   };
 
   return (
     <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4">
-      <div className="flex justify-left space-x-4 mb-2">
+      <div className="w-full flex justify-right space-x-4 mb-2">
         <Button className="w-24 flex space-x-2" onClick={() => handleSave()}>
           <span className="hidden md:block">Save</span>
           <SaveIcon className="w-5 h-5" />

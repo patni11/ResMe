@@ -16,9 +16,17 @@ const ExperiencePage = async () => {
     throw new Error("User not found");
   }
 
-  const experiences: Experience[] | null = JSON.parse(
+  const rawExperiences = JSON.parse(
     JSON.stringify(await fetchExperiences(session.user.email))
   );
+
+  const experiences: Experience[] = rawExperiences.map((exp) => ({
+    ...exp,
+    description: Array.isArray(exp.description)
+      ? exp.description.join("\n")
+      : exp.description,
+  }));
+
   return (
     <ImageWrapper imgSrc="experience">
       <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">

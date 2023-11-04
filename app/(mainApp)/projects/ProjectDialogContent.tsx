@@ -57,11 +57,12 @@ const ProjectSchema = z
   })
   .refine(
     (data) => {
-      if (data.endDate instanceof Date && data.startDate instanceof Date) {
+      // If both dates are provided, check that endDate is not earlier than startDate
+      if (data.startDate && data.endDate) {
         return data.endDate >= data.startDate;
       }
-      // If endDate is not a date and not "working", this will fall through to the else block.
-      return false; // this line can be omitted as it's the default behavior
+      // If only one of the dates is provided or neither, the validation is passed
+      return true;
     },
     {
       message: "End date should not be less than start date.",

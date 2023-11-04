@@ -89,7 +89,7 @@ const ProjectSchema = new Schema(
     positionTitle: { type: String },
     startDate: { type: Date },
     endDate: { type: Date },
-    description: { type: String },
+    description: { type: [String] },
   },
   { timestamps: true }
 );
@@ -130,32 +130,99 @@ const ExperieceSchema = new Schema(
     endDate: {
       type: Schema.Types.Mixed,
       required: true,
-      validate: {
-        validator: function (props: any) {
-          return props.value === "working" || props.value instanceof Date;
-        },
-        message: (props: any) =>
-          `${props.value} is not a valid endDate! It should be a Date or 'working'.`,
-      },
+      // validate: {
+      //   validator: function (props: any) {
+      //     console.log("PROPS", props);
+      //     return (
+      //       props.value === "working" ||
+      //       props.value instanceof Date ||
+      //       !isNaN(Date.parse(props.value))
+      //     );
+      //   },
+      //   message: (props: any) =>
+      //     `${props.value} is not a valid endDate! It should be a Date or 'working'.`,
+      // },
     },
-    description: { type: String, required: true },
+    description: { type: [String], required: true },
   },
   { timestamps: true }
 );
 
-const ResumeSchema = new Schema({
-  _id: { type: String, required: true, unique: true },
-  email: { type: String, required: true }, // email is being used to find projects of this user
-  resumeName: { type: String, required: true },
-  skills: { type: [String] },
-  languages: { type: [String] },
-  interests: { type: [String] },
-  educations: [EducationSchema],
-  certificates: [CertificateSchema],
-  experiences: [ExperieceSchema],
-  projects: [ProjectSchema],
-  headerInfo: [ResumeHeaderInfoSchema],
-});
+const ResumeSchema = new Schema(
+  {
+    _id: { type: String, required: true, unique: true },
+    email: { type: String, required: true }, // email is being used to find projects of this user
+    resumeName: { type: String, required: true },
+    skills: { type: [String] },
+    languages: { type: [String] },
+    interests: { type: [String] },
+    educations: [
+      {
+        schoolName: { type: String, required: true },
+        major: { type: String, required: true },
+        degreeType: { type: String, required: true },
+        gpa: { type: Schema.Types.Decimal128, required: true },
+        startDate: { type: Date, required: true },
+        endDate: { type: Date, required: true },
+      },
+    ],
+    certificates: [
+      {
+        certificateName: { type: String, required: true },
+        organization: { type: String, required: true },
+        issueDate: { type: Date },
+      },
+    ],
+    experiences: [
+      {
+        company: { type: String, required: true },
+        location: { type: String, required: true },
+        positionTitle: { type: String, required: true },
+        experienceType: { type: String, required: true },
+        startDate: { type: Date, required: true },
+        endDate: {
+          type: Schema.Types.Mixed,
+          required: true,
+        },
+        description: { type: [String], required: true },
+      },
+    ],
+    projects: [
+      {
+        projectName: { type: String, required: true },
+        location: { type: String },
+        positionTitle: { type: String },
+        startDate: { type: Date },
+        endDate: { type: Date },
+        description: { type: [String] },
+      },
+    ],
+    headerInfo: {
+      displayName: { type: String, required: true },
+      contactInfo: {
+        type: [
+          {
+            contact: { type: String, required: true },
+            _id: false,
+          },
+        ],
+        _id: false,
+      },
+      location: { type: String },
+      links: {
+        type: [
+          {
+            linkName: { type: String, required: true },
+            link: { type: String, required: true },
+            _id: false,
+          },
+        ],
+        _id: false,
+      },
+    },
+  },
+  { timestamps: true }
+);
 
 const UserSchema = new Schema(
   {
@@ -166,7 +233,7 @@ const UserSchema = new Schema(
     stripePriceId: { type: String },
     stripeCurrentPeriodEnd: { type: Date },
     resumeCount: { type: Number },
-    resumes: [{ type: Schema.Types.ObjectId, ref: "ResumeSchema" }],
+    resumes: [{ type: String, ref: "Resume" }],
     skills: { type: [String] },
     languages: { type: [String] },
     interests: { type: [String] },
@@ -174,11 +241,11 @@ const UserSchema = new Schema(
   { timestamps: true }
 );
 
-export const Experience =
-  mongoose.models.Experience || mongoose.model("Experience", ExperieceSchema);
-
 export const Resume =
   mongoose.models.Resume || mongoose.model("Resume", ResumeSchema);
+
+export const Experience =
+  mongoose.models.Experience || mongoose.model("Experience", ExperieceSchema);
 
 export const Education =
   mongoose.models.Education || mongoose.model("Education", EducationSchema);

@@ -37,7 +37,9 @@ export async function updateProject(
         positionTitle: project.positionTitle,
         startDate: project.startDate,
         endDate: project.endDate,
-        description: project.description,
+        description: project.description
+          .split("\n")
+          .filter((item) => item.trim() !== ""),
         email: email,
       },
       {

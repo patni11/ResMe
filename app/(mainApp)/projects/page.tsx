@@ -16,9 +16,18 @@ const Projects = async () => {
     throw new Error("User not found");
   }
 
-  const projects: Project[] | null = JSON.parse(
+  const rawProjects = JSON.parse(
     JSON.stringify(await fetchUserProjects(session.user.email))
   );
+
+  const projects: Project[] = rawProjects.map((proj) => ({
+    ...proj,
+    description: Array.isArray(proj.description)
+      ? proj.description.join("\n")
+      : proj.description,
+  }));
+
+  console.log("Projects", projects);
 
   return (
     <ImageWrapper imgSrc="project">

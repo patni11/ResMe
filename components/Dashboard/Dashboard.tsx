@@ -1,23 +1,26 @@
 import { FC } from "react";
 import { ResumeCard } from "./ResumeCard";
-import { listenNowAlbums } from "../data/albums";
 
 import { cn } from "@/lib/utils";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
-
-async function deleteFunc() {
-  "use server";
-}
-
-async function renameFunc() {
-  "use server";
-  // rename in server
-  //revalidate path or tag to update
-}
+import { getServerSession } from "next-auth/next";
+import authOptions, { Session } from "@/lib/authOptions";
+import { fetchResumes } from "@/lib/actions/resumes.action";
+import { timeAgo } from "@/app/utils/FormattingFunctions";
 
 interface DashBoardProps {}
-const DashBoard: FC<DashBoardProps> = () => {
+const DashBoard: FC<DashBoardProps> = async () => {
+  const session: Session | null = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    throw new Error("User not found");
+  }
+
+  const resumes = await fetchResumes(session.user.email);
+
+  console.log(resumes);
+
   return (
     <>
       <div className="relative w-[90%]">
@@ -50,18 +53,17 @@ const DashBoard: FC<DashBoardProps> = () => {
               <h3 className="font-medium leading-none">Create Resume</h3>
             </div>
           </div>
-          {listenNowAlbums.map((album, index) => (
-            <Link key={index} href={`/buildResume/Shubh`}>
-              <ResumeCard
-                album={album}
-                className="w-[200px] mb-12"
-                aspectRatio="portrait"
-                width={200}
-                height={265}
-                deleteFunc={deleteFunc}
-                renameFunc={renameFunc}
-              />
-            </Link>
+          {resumes.map((resume) => (
+            <ResumeCard
+              resumeName={resume.resumeName}
+              resumeId={resume._id}
+              email={resume.email}
+              updatedAt={timeAgo(resume.updatedAt) || ""}
+              className="w-[200px] mb-12"
+              aspectRatio="portrait"
+              width={200}
+              height={265}
+            />
           ))}
         </div>
       </div>

@@ -38,7 +38,9 @@ export async function updateExperience(
         experienceType: experience.experienceType,
         startDate: experience.startDate,
         endDate: experience.endDate,
-        description: experience.description,
+        description: experience.description
+          .split("\n")
+          .filter((item) => item.trim() !== ""),
         _id: experience._id,
         email: email,
       },

@@ -81,8 +81,6 @@ export const createProjectsSection = (projectId: string) => {
             const projects: Project[] | [] =
               (await getData()).projects || INITIAL_STATE.projects;
 
-            console.log("Projects Info", projects);
-
             const hiddenProjects = projects
               ? projects.reduce((acc, project) => {
                   acc[project._id] = false;
@@ -111,15 +109,10 @@ export const createProjectsSection = (projectId: string) => {
                 }, {} as { [key: string]: boolean })
               : null;
 
-            const updateProjects = projects.map((project) => {
-              return {
-                ...project,
-                description: project.description.split("\n"),
-              };
-            });
+            console.log("Projects Info", projects);
 
             set({
-              projects: projects ? updateProjects : [],
+              projects: projects,
 
               hiddenProjects: hiddenProjects,
               hiddenDates: hiddenDates,

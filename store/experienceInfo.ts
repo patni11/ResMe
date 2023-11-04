@@ -81,15 +81,8 @@ export const createExperienceInfo = (experienceID: string) => {
                 }, {} as { [key: string]: boolean })
               : null;
 
-            const updatedExperiences = experiences.map((experience) => {
-              return {
-                ...experience,
-                description: experience.description.split("\n"),
-              };
-            });
-
             set({
-              experiences: experiences ? updatedExperiences : [],
+              experiences: experiences,
 
               hiddenExperiences: hiddenExperiences,
 
