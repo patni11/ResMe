@@ -41,7 +41,7 @@ const MobileNav = () => {
                   <Link
                     onClick={() => closeOnCurrent("/login")}
                     className="flex items-center w-full font-semibold text-green-600"
-                    href="/sign-up"
+                    href="/login"
                   >
                     Sign In
                     <ArrowRight className="ml-2 h-5 w-5" />
