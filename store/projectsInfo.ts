@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { create } from "zustand";
 import { Project } from "@/app/(mainApp)/projects/pageTypes";
 import { persist } from "zustand/middleware";

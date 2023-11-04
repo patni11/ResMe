@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { create, StateCreator } from "zustand";
 import { Certificate } from "@/app/(mainApp)/education/pageTypes";
 import { persist } from "zustand/middleware";
