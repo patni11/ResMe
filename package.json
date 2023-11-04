@@ -30,6 +30,7 @@
     "@react-pdf/renderer": "^3.1.14",
     "@tanstack/react-query": "^4.36.1",
     "@types/uuid": "^9.0.4",
+    "@xmldom/xmldom": "latest",
     "bcryptjs": "^2.4.3",
     "button": "^1.1.1",
     "class-variance-authority": "^0.7.0",
