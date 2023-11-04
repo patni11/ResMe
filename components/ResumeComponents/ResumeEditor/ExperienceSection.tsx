@@ -4,7 +4,7 @@ import { createExperienceInfo } from "@/store/experienceInfo";
 import ResumeComponentContainer from "./ResumeComponentContainer";
 import { FC } from "react";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
-import "./ListStyle.css";
+import "./listStyle.css";
 interface ExperienceSection {
   experienceID: string;
 }
