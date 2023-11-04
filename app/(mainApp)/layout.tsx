@@ -18,7 +18,7 @@ export default async function RootLayout({
   //   redirect('/auth-callback?origin=dashboard')
   // }
 
-  // return (
+  return (
     <div className="absolute flex flex-col space-y-4 h-full w-full items-center justify-center">
       <h1 className="text-xl font-light">
         We are making changes. App will be live on 6 Nov
