@@ -47,6 +47,7 @@ export const CertificateSectionCard: FC<CertificateSectionCard> = ({
     certificates,
     hiddenCertificates,
     hideAll,
+    isLoading,
     setHideAll,
     setHiddenCertificate,
     fetchCertificates,
@@ -63,6 +64,7 @@ export const CertificateSectionCard: FC<CertificateSectionCard> = ({
     <FormCardWrapper
       cardTitle="Certificate"
       refreshFunction={() => fetchCertificates()}
+      isLoading={isLoading}
       hideAll={hideAll}
       deleteFunction={setHideAll}
     >

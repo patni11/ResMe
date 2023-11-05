@@ -85,7 +85,6 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
   };
 
   const handleFormSubmit = (data: Certificate) => {
-    console.log("Handle Certificate Form Submit", data);
     let educationDataWithId = data;
     if (!data._id) {
       const uniqueId = uuidv4();

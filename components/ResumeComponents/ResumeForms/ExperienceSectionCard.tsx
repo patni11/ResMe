@@ -17,6 +17,7 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({ experienceID }) => {
     experiences,
     hiddenExperiences,
     hideAll,
+    isLoading,
     setHiddenExperience,
     fetchExperiences,
     setHideAll,
@@ -37,6 +38,7 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({ experienceID }) => {
       cardTitle="Experience"
       refreshFunction={() => fetchExperiences()}
       hideAll={hideAll}
+      isLoading={isLoading}
       deleteFunction={setHideAll}
     >
       {experiences.map((experience: any) => {
@@ -102,6 +104,8 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
     updateDescriptions(idx, e);
   };
 
+  console.log("descriptions", descriptions);
+
   return (
     <div className="flex flex-col w-full bg-secondary p-4 rounded-lg mb-2">
       <div className="flex flex-col w-full text-md">
@@ -121,7 +125,7 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
                 <li key={index} className="flex space-x-2 w-full">
                   <Input
                     className="w-full focus-visible:ring-0"
-                    defaultValue={desc}
+                    value={desc}
                     onChange={(e) =>
                       handleOnChange(e.currentTarget.value, index)
                     }
@@ -130,6 +134,7 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
                     variant="ghost"
                     className="hover:text-destructive"
                     onClick={() => deleteDescription(index)}
+                    aria-label="Hide Description"
                   >
                     <Trash2 className="w-4 h-4"></Trash2>
                   </Button>
@@ -142,6 +147,7 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
         className="mr-2 text-xs w-12 hover:bg-primary hover:text-primary-foreground"
         variant="ghost"
         onClick={addDescription}
+        aria-label="Add Description"
       >
         <PlusCircleIcon className="h-4 w-4" />
       </Button>

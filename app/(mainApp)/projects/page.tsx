@@ -27,8 +27,6 @@ const Projects = async () => {
       : proj.description,
   }));
 
-  console.log("Projects", projects);
-
   return (
     <ImageWrapper imgSrc="project">
       <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
@@ -76,7 +74,7 @@ const Projects = async () => {
                   dialogDetails={{
                     dialogTitle: "Edit Project",
                     dialogTrigger: (
-                      <Button variant="ghost">
+                      <Button variant="ghost" aria-label="Update">
                         <Settings2 className="w-5 h-5"></Settings2>
                       </Button>
                     ),

@@ -18,7 +18,7 @@ export async function fetchEducation(email: string) {
     }
     return education;
   } catch (error: any) {
-    //console.log("Failed to fetch user", error);
+    console.log("Failed to fetch user", error);
     throw new Error(`Failed to fetch educations: ${error.message}`);
   }
 }

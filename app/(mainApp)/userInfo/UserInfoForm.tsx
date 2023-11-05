@@ -50,8 +50,6 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
   const { toast } = useToast();
   const pathname = usePathname();
 
-  console.log("Loading form");
-
   const form = useForm<UserInfo>({
     resolver: zodResolver(UserInfoSchema),
     defaultValues: {
@@ -65,8 +63,6 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
   });
 
   const handleFormSubmit = async (data: UserInfo) => {
-    console.log("Handle User Info Form Submit", data);
-
     await updateResumeHeaderInfo(data, pathname);
     toast({
       title: "User Info Saved ",

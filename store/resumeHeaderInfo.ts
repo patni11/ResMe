@@ -40,7 +40,7 @@ const INITIAL_STATE: State = {
 async function getData() {
   try {
     const res = await fetch(`/api/resumeHeaderInfo`);
-    console.log("Fetched Data", res);
+
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -64,10 +64,10 @@ export const createResumeHeaderInfo = (resumeHeaderID: string) => {
         error: INITIAL_STATE.error,
         isLoading: INITIAL_STATE.isLoading,
         fetchHeaderInfo: async () => {
+          set({ isLoading: true });
           try {
             const headerInfo: UserInfo = (await getData()).headerInfo;
 
-            console.log("Header Info", headerInfo);
             const hidContacts =
               headerInfo.contactInfo?.map((contact) => ({
                 [contact.contact]: false,

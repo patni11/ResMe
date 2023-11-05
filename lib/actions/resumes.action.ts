@@ -63,8 +63,6 @@ export async function createResume({
       { new: true } // Return the updated document
     );
 
-    console.log("Updated User", updatedUser);
-
     return {
       isError: false,
       isSuccess: true,
@@ -100,7 +98,7 @@ export async function fetchResumes(email: string) {
 
     return resumes;
   } catch (error: any) {
-    //console.log("Failed to fetch user", error);
+    console.log("Failed to fetch user", error);
     throw new Error(`Failed to fetch educations: ${error.message}`);
   }
 }

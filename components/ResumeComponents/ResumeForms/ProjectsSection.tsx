@@ -20,6 +20,7 @@ export const ProjectSectionCard: FC<ProjectSectionCard> = ({ projectId }) => {
     hiddenLocation,
     hiddenPosition,
     hideAll,
+    isLoading,
     setHiddenProject,
     setHiddenDates,
     setHiddenLocation,
@@ -43,6 +44,7 @@ export const ProjectSectionCard: FC<ProjectSectionCard> = ({ projectId }) => {
       cardTitle="Project"
       refreshFunction={() => fetchProjects()}
       hideAll={hideAll}
+      isLoading={isLoading}
       deleteFunction={setHideAll}
     >
       {projects.map((project: any) => {
@@ -165,7 +167,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
                 <li key={index} className="flex space-x-2 w-full">
                   <Input
                     className="w-full focus-visible:ring-0"
-                    defaultValue={desc}
+                    value={desc}
                     onChange={(e) =>
                       handleOnChange(e.currentTarget.value, index)
                     }
@@ -174,6 +176,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
                     variant="ghost"
                     className="hover:text-destructive"
                     onClick={() => deleteDescription(projectId, index)}
+                    aria-label="Delete Description"
                   >
                     <Trash2 className="w-4 h-4"></Trash2>
                   </Button>
@@ -186,6 +189,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
         className="mr-2 text-xs w-12 hover:bg-primary hover:text-primary-foreground"
         variant="ghost"
         onClick={() => addDescription(projectId)}
+        aria-label="Add Description"
       >
         <PlusCircleIcon className="h-4 w-4" />
       </Button>

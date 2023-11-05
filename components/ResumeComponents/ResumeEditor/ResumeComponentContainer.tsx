@@ -11,7 +11,7 @@ export default function ResumeComponentContainer({
   const handleInput = (event: React.ChangeEvent<HTMLDivElement>) => {
     const sanitizedHTML = DOMPurify.sanitize(event.currentTarget.innerHTML);
     // Now use sanitizedHTML safely ...
-    console.log(sanitizedHTML); // Just for demonstration
+    // Just for demonstration
   };
 
   return (

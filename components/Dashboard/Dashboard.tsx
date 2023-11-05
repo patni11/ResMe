@@ -19,8 +19,6 @@ const DashBoard: FC<DashBoardProps> = async () => {
 
   const resumes = await fetchResumes(session.user.email);
 
-  console.log(resumes);
-
   return (
     <>
       <div className="relative w-[90%]">

@@ -22,8 +22,6 @@ const Skills: FC<SkillsProps> = async () => {
   const email = session.user.email || "";
   const talents: string[][] = (await fetchTalent(email)) || [[], [], []];
 
-  console.log("talents", talents);
-
   async function updateSkillsFunction(updatedSkills: string[]) {
     "use server";
     await updateSkills(email, updatedSkills, "/skills");

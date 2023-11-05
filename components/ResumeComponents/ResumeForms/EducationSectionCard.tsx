@@ -75,6 +75,7 @@ export const EducationSectionCard: FC<EducationSectionCard> = ({
     hiddenDates,
     relevantCourseWork,
     hideAll,
+    isLoading,
     updateRelevantCourseWork,
     setHiddenEducation,
     setHiddenDates,
@@ -95,6 +96,7 @@ export const EducationSectionCard: FC<EducationSectionCard> = ({
       cardTitle="Education"
       refreshFunction={() => fetchEducations()}
       hideAll={hideAll}
+      isLoading={isLoading}
       deleteFunction={setHideAll}
     >
       {educations.map((education: any) => {

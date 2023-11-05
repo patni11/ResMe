@@ -27,7 +27,7 @@ export async function GET(
 
     return NextResponse.json({ headerInfo }, { status: 200 });
   } catch (error: any) {
-    //console.log("Failed to fetch user", error);
+    console.log("Failed to fetch user", error);
     return NextResponse.json({
       status: 404,
       message: `Failed to fetch user: ${error.message}`,

@@ -80,7 +80,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="mb-80">
+          <div className="mb-0 md:mb-32 lg:mb-80">
             {/* <div className="mx-auto max-w-6xl px-6 lg:px-8">
               <div className="mt-16 flow-root sm:mt-24">
                 <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
@@ -115,7 +115,7 @@ export default function Home() {
       </div>
 
       {/* Feature section */}
-      <div className="mx-auto mb-32 mt-48 max-w-5xl sm:mt-56">
+      <div className="mx-auto mb-32 mt-0 max-w-5xl sm:mt-56">
         <div className="mb-12 px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
             <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">

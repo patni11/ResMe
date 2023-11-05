@@ -148,7 +148,6 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
   };
 
   const handleFormSubmit = (data: Experience) => {
-    console.log("Handle Form Submit", data);
     let experienceData = data;
     if (!data._id) {
       const uniqueId = uuidv4();

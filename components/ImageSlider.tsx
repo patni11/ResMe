@@ -7,12 +7,12 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
   const headings = [
     "Ituitive Dashboard",
     "Professional Formatting",
-    "Loved by both ATS Bots and Humans",
+    "❤️ by both ATS bots and humans",
   ];
   const subHeadings = [
     "Slide into ResMe's editor on the left for quick, hefty changes and catch the results instantly on the right-side preview. Plus, you can edit on the fly right in the preview. 🛠️👁️✨",
     "ResMe has the formatting for pro resumes down pat and auto-fits it to yours, so you can skip the fuss. 📄✔️✨",
-    "olorful resumes might catch the eye, but often drop the ball with ATS. ResMe&apos;s got the balance just right — resumes that dazzle both the ATS bots and human recruiters. 🤖💼👀✨",
+    "Colorful resumes might catch the eye, but often drop the ball with ATS. ResMe&apos;s got the balance just right — resumes that dazzle both the ATS bots and human recruiters. 🤖💼👀✨",
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -29,7 +29,7 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
   };
 
   return (
-    <div className="max-w-[1364px] h-[866px] w-full m-auto py-16 px-4 relative group justify-center items-center mb-32">
+    <div className="max-w-[1364px] h-[866px] w-full m-auto py-16 px-4 relative group justify-center items-center">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="mt-16 flow-root sm:mt-24">
           <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
@@ -68,7 +68,7 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
       </div> */}
 
       <div className="flex flex-col space-y-4 items-center justify-center w-full mt-16 mb-48">
-        <h2 className="mt-2 font-bold text-3xl text-gray-900 sm:text-3xl">
+        <h2 className="mt-2 font-bold text-3xl text-gray-900 sm:text-3xl text-center">
           {headings[currentIndex]}
         </h2>
         <p className="mt-4 text-md text-gray-600 max-w-[60%] text-center">

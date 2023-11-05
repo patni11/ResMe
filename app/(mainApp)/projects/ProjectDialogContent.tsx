@@ -116,7 +116,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
         _id: uniqueId,
       };
     }
-    console.log(projectData);
+
     toast({
       title: `Project Updated 🥳: ${projectData.projectName} `,
     });
@@ -127,7 +127,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
   const {
     formState: { errors },
   } = form;
-  console.log(errors);
+
   return (
     <>
       <Form {...form}>

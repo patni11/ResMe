@@ -30,8 +30,6 @@ const UserInfoPage = async () => {
     });
   }
 
-  console.log("userInfoData", userInfoData);
-
   const defaultValues: UserInfo = {
     displayName: userInfoData ? userInfoData?.displayName : "",
     contactInfo:

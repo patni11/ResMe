@@ -107,7 +107,6 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
     formState: { errors },
     register,
   } = form;
-  console.log("Form Error", errors);
 
   const handleDelete = async () => {
     if (defaultValues?._id) {
@@ -136,7 +135,7 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
         _id: defaultValues._id,
       };
     }
-    console.log("Education", educationDataWithId);
+
     toast({
       title: `Education Updated 🥳: ${educationDataWithId.schoolName} `,
     });

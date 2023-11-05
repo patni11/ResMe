@@ -63,7 +63,7 @@ const INITIAL_STATE: State = {
 async function getData() {
   try {
     const res = await fetch(`/api/educationsInfo`);
-    console.log("Fetched Data", res);
+
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -85,11 +85,10 @@ export const createEducationInfo = (educationHeaderID: string) => {
       (set, get) => ({
         ...INITIAL_STATE, // Spread the initial state
         fetchEducations: async () => {
+          set({ isLoading: true });
           try {
             const educations: EducationType[] | null =
               (await getData()).educations || INITIAL_STATE.educations;
-
-            console.log("Educations Info", educations);
 
             const hiddenGPAs = educations
               ? educations.reduce((acc, education) => {

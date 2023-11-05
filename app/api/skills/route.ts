@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       { status: 200 }
     );
   } catch (error: any) {
-    //console.log("Failed to fetch user", error);
+    console.log("Failed to fetch user", error);
     return NextResponse.json({
       status: 404,
       message: `Failed to fetch user: ${error.message}`,

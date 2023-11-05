@@ -62,6 +62,7 @@ export const createTalentsInfo = (talentsID: string) => {
       (set, get) => ({
         ...INITIAL_STATE, // Spread the initial state
         fetchSkills: async () => {
+          set({ isLoading: true });
           try {
             // const skills: string[] =
             //   (await getData()).skills || INITIAL_STATE.skills;
@@ -90,7 +91,7 @@ export const createTalentsInfo = (talentsID: string) => {
             } = (await getData()) || [];
 
             const languages = talent.languages;
-            console.log("Languages", languages);
+
             set({
               languages: languages.join(", "),
               isLoading: false,
@@ -108,7 +109,7 @@ export const createTalentsInfo = (talentsID: string) => {
             } = (await getData()) || [];
 
             const interests = talent.interests;
-            console.log("Interests", interests);
+
             set({
               interests: interests.join(", "),
               isLoading: false,

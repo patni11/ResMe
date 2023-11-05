@@ -8,8 +8,7 @@ import TalentSection from "@/components/ResumeComponents/ResumeEditor/TalentSect
 import ProjectSection from "@/components/ResumeComponents/ResumeEditor/ProjectSection";
 import { Button, buttonVariants } from "@/components/ui/button";
 import html2pdf from "html2pdf.js";
-import { useRef } from "react";
-import { Input } from "@/components/ui/input";
+import { useRef, useState } from "react";
 import { SaveIcon, Download } from "lucide-react";
 import {
   DropdownMenu,
@@ -38,10 +37,10 @@ import "./style/resumePreview.css";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { createResume, updateResume } from "@/lib/actions/resumes.action";
-import { revalidatePath } from "next/cache";
 
 export default function ResumePreview({ resumeId = "default", email = "" }) {
   const elementRef = useRef(null);
+  const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
   const downloadPDF = () => {
@@ -69,13 +68,12 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
   function fixExperience(rawExperiences) {
     const formattedExperiences = rawExperiences.map((exp) => {
       let endDate = exp.endDate;
-      console.log("endDate", endDate);
+
       // Check if endDate is a string and not 'working', then parse it as a Date.
       if (typeof endDate === "string" && endDate !== "working") {
         endDate = new Date(endDate);
       }
 
-      console.log("endDate", endDate);
       return {
         ...exp,
         endDate: endDate,
@@ -127,7 +125,7 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
 
     if (resumeId === "default") {
       const newResumeId = uuidv4();
-      console.log("resmeId", newResumeId);
+
       //saveLocally(newResumeId);
       // add code to save to DB
       // show a toast
@@ -168,7 +166,7 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
         localStorage.setItem(`talents-${email}-${newResumeId}`, talents);
 
         toast({
-          title: `Saved a new Resume 🥳: ${newResumeId} `,
+          title: `Saved a new Resume 🥳`,
         });
 
         setTimeout(() => {
@@ -181,6 +179,7 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
           title: `Failed: ${error} `,
         });
       }
+      setIsSaving(false);
     } else {
       const res = await updateResume({
         email: email,
@@ -195,8 +194,6 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
         headerInfo: processedHeader,
       });
 
-      console.log("UPDATING RESUME", res);
-
       if (res.isSuccess) {
         toast({
           title: `Resume Updated: ${resumeId} `,
@@ -208,22 +205,33 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
           title: `Could Not Update: ${error} `,
         });
       }
+      setIsSaving(false);
     }
   };
 
   return (
     <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4">
       <div className="w-full flex justify-right space-x-4 mb-2">
-        <Button className="w-24 flex space-x-2" onClick={() => handleSave()}>
+        <Button
+          className="w-24 flex space-x-2"
+          onClick={() => {
+            setIsSaving(true);
+            handleSave();
+          }}
+          disabled={isSaving}
+        >
           <span className="hidden md:block">Save</span>
           <SaveIcon className="w-5 h-5" />
         </Button>
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button className="w-24 flex space-x-2">
-              <span className="hidden md:block">Download</span>
-              <Download className="w-5 h-5" />
-            </Button>
+          <DropdownMenuTrigger
+            className={buttonVariants({
+              variant: "default",
+              className: "w-24 flex space-x-2",
+            })}
+          >
+            <span className="hidden md:block">Download</span>
+            <Download className="w-5 h-5" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem asChild>
@@ -270,7 +278,10 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
         <Document />
       </PDFViewer> */}
       {/* style={{ width: "595px" }} */}
-      <div className="px-12 py-12 relative bg-white w-full h-full">
+      <div
+        className="py-12 relative bg-white w-full h-full"
+        style={{ paddingLeft: "3rem", paddingRight: "3rem" }}
+      >
         <div
           className="relative bg-white mx-auto h-full overflow-y-auto font-serif leading-tight text-center align-middle"
           id="element-to-print"

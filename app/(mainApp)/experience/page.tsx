@@ -78,7 +78,7 @@ const ExperiencePage = async () => {
                     dialogDetails={{
                       dialogTitle: "Edit Education",
                       dialogTrigger: (
-                        <Button variant="ghost">
+                        <Button variant="ghost" aria-label="Update">
                           <Settings2 className="w-5 h-5"></Settings2>
                         </Button>
                       ),

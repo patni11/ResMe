@@ -34,13 +34,6 @@ interface ResumeCardProps extends React.HTMLAttributes<HTMLDivElement> {
   height?: number;
 }
 
-async function renameFunc(resumeId: string, newName: string) {
-  "use server";
-  console.log("called rename function", resumeId, newName);
-  // rename in server
-  //revalidate path or tag to update
-}
-
 export async function ResumeCard({
   resumeName,
   resumeId,
@@ -76,7 +69,7 @@ export async function ResumeCard({
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Settings2 className="h-4 w-4"></Settings2>
+            <Settings2 className="h-4 w-4" aria-label="Modify"></Settings2>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuLabel>{resumeName}</DropdownMenuLabel>

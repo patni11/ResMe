@@ -59,7 +59,7 @@ const storeCache: Record<string, any> = {};
 async function getData() {
   try {
     const res = await fetch(`/api/projectsInfo`);
-    console.log("Fetched Data", res);
+
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -79,6 +79,7 @@ export const createProjectsSection = (projectId: string) => {
       (set, get) => ({
         ...INITIAL_STATE, // Spread the initial state
         fetchProjects: async () => {
+          set({ isLoading: true });
           try {
             const projects: Project[] | [] =
               (await getData()).projects || INITIAL_STATE.projects;
@@ -110,8 +111,6 @@ export const createProjectsSection = (projectId: string) => {
                   return acc;
                 }, {} as { [key: string]: boolean })
               : null;
-
-            console.log("Projects Info", projects);
 
             set({
               projects: projects,

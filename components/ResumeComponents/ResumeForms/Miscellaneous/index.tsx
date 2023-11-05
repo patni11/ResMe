@@ -7,6 +7,7 @@ type MiscellaneousSectionCardProp = {
   skills: string;
   hideAll: boolean;
   talentsID: string;
+  isLoading: boolean;
   fetchSkills: () => void;
   setHideAll: () => void;
   setSkills: (newSkills: string) => void;
@@ -16,6 +17,7 @@ const MiscellaneousSectionCard: FC<MiscellaneousSectionCardProp> = ({
   skills,
   hideAll,
   talentsID,
+  isLoading,
   setHideAll,
   fetchSkills,
   setSkills,
@@ -32,6 +34,7 @@ const MiscellaneousSectionCard: FC<MiscellaneousSectionCardProp> = ({
       cardTitle={name}
       refreshFunction={() => fetchSkills()}
       hideAll={hideAll}
+      isLoading={isLoading}
       deleteFunction={setHideAll}
     >
       <div className="flex flex-col space-y-2 mt-4">
@@ -50,8 +53,14 @@ const MiscellaneousSectionCard: FC<MiscellaneousSectionCardProp> = ({
 import { createTalentsInfo } from "@/store/talentsInfo";
 export const SkillsSectionCard = ({ talentsID }: { talentsID: string }) => {
   const useTalentsInfo = createTalentsInfo(talentsID);
-  const { skills, hideSkills, setHideSkills, fetchSkills, setSkills } =
-    useTalentsInfo();
+  const {
+    skills,
+    isLoading,
+    hideSkills,
+    setHideSkills,
+    fetchSkills,
+    setSkills,
+  } = useTalentsInfo();
 
   return (
     <MiscellaneousSectionCard
@@ -59,6 +68,7 @@ export const SkillsSectionCard = ({ talentsID }: { talentsID: string }) => {
       skills={skills}
       hideAll={hideSkills}
       talentsID={talentsID}
+      isLoading={isLoading}
       setHideAll={() => setHideSkills()}
       fetchSkills={() => fetchSkills()}
       setSkills={(newSkills: string) => setSkills(newSkills)}
@@ -72,6 +82,7 @@ export const InterestsSectionCard = ({ talentsID }: { talentsID: string }) => {
     interests,
     hideInterests,
     setHideInterests,
+    isLoading,
     fetchInterests,
     setInterests,
   } = useTalentsInfo();
@@ -81,6 +92,7 @@ export const InterestsSectionCard = ({ talentsID }: { talentsID: string }) => {
       name="Interests"
       skills={interests}
       hideAll={hideInterests}
+      isLoading={isLoading}
       talentsID={talentsID}
       setHideAll={() => setHideInterests()}
       fetchSkills={() => fetchInterests()}
@@ -94,6 +106,7 @@ export const LanguagesSectionCard = ({ talentsID }: { talentsID: string }) => {
   const {
     languages,
     hideLanguages,
+    isLoading,
     setHideLanguages,
     fetchLanguages,
     setLanguages,
@@ -104,6 +117,7 @@ export const LanguagesSectionCard = ({ talentsID }: { talentsID: string }) => {
       name="Languages"
       skills={languages}
       hideAll={hideLanguages}
+      isLoading={isLoading}
       talentsID={talentsID}
       setHideAll={() => setHideLanguages()}
       fetchSkills={() => fetchLanguages()}

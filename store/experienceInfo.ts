@@ -50,7 +50,7 @@ const storeCache: Record<string, any> = {};
 async function getData() {
   try {
     const res = await fetch(`/api/experiencesInfo`);
-    console.log("Fetched Data", res);
+
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -70,11 +70,10 @@ export const createExperienceInfo = (experienceID: string) => {
       (set, get) => ({
         ...INITIAL_STATE, // Spread the initial state
         fetchExperiences: async () => {
+          set({ isLoading: true });
           try {
             const experiences: Experience[] | [] =
               (await getData()).experiences || INITIAL_STATE.experiences;
-
-            console.log("Experiences Info", experiences);
 
             const hiddenExperiences = experiences
               ? experiences.reduce((acc, experience) => {

@@ -6,7 +6,6 @@ import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 import UpdateDialogCard from "@/components/Cards/UpdateDialogCard";
 
 interface ProjectCardProps {
-  className?: string;
   cardDetails: Project;
   dialogDetails?: {
     dialogTitle: string;
@@ -23,12 +22,10 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({
-  className,
   cardDetails,
   dialogDetails,
   deleteDialogDetails,
 }) => {
-  console.log(cardDetails);
   return (
     <UpdateDialogCard
       cardDetails={{ cardTitle: cardDetails.projectName }}

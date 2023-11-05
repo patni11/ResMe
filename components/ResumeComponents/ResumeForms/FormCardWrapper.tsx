@@ -7,9 +7,9 @@ import { PlusCircleIcon, RefreshCw } from "lucide-react";
 import { FC, ReactNode, useState } from "react";
 
 interface FormCardWrapperProps {
-  className?: string;
   cardTitle: string;
   children?: ReactNode;
+  isLoading?: boolean;
   refreshFunction?: () => void;
   hideAll?: boolean;
   deleteFunction?: () => void;
@@ -47,10 +47,10 @@ const TrashButton: FC<TrashButtonProps> = ({
 };
 
 export const FormCardWrapper: FC<FormCardWrapperProps> = ({
-  className,
   cardTitle,
   children,
   refreshFunction,
+  isLoading,
   hideAll = false,
   deleteFunction,
 }) => {
@@ -60,7 +60,11 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center">
-              <TrashButton hideAll={hideAll} deleteFunction={deleteFunction} />
+              <TrashButton
+                hideAll={hideAll}
+                deleteFunction={deleteFunction}
+                aria-label="Hide"
+              />
 
               {cardTitle}
             </div>
@@ -68,10 +72,13 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
               <Button
                 onClick={() => {
                   hideAll = false;
+
                   refreshFunction();
                 }}
                 className="mr-2"
                 variant="ghost"
+                aria-label="Refresh"
+                disabled={isLoading}
               >
                 <RefreshCw className="h-4 w-4" />
               </Button>

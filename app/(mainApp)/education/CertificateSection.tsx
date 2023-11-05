@@ -18,8 +18,6 @@ const EducationSection: FC<EducationSectionProps> = async () => {
     throw new Error("User not found");
   }
 
-  console.log("Rloading Certificate Section");
-
   const certificates: Certificate[] | null = JSON.parse(
     JSON.stringify(await fetchCertificates(session.user.email))
   );
@@ -63,7 +61,7 @@ const EducationSection: FC<EducationSectionProps> = async () => {
                 dialogDetails={{
                   dialogTitle: "Edit Certificate",
                   dialogTrigger: (
-                    <Button variant="ghost">
+                    <Button variant="ghost" aria-label="Update">
                       <Settings2 className="w-5 h-5"></Settings2>
                     </Button>
                   ),

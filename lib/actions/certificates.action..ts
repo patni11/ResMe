@@ -16,7 +16,7 @@ export async function fetchCertificates(email: string) {
     }
     return certificates;
   } catch (error: any) {
-    //console.log("Failed to fetch user", error);
+    console.log("Failed to fetch user", error);
     throw new Error(`Failed to fetch certificatess: ${error.message}`);
   }
 }

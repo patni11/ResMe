@@ -18,6 +18,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
     hideLocation,
     hiddenContacts,
     hiddenLinks,
+
     setHideLocation,
     updateDisplayName,
     setHiddenLinks,
@@ -50,6 +51,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
     <FormCardWrapper
       cardTitle="Header"
       refreshFunction={() => fetchHeaderInfo()}
+      isLoading={isLoading}
     >
       <Label>Your Name</Label>
       <Input

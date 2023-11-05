@@ -47,7 +47,6 @@ const SkillsPageSection: FC<SkillsPageSectionProps> = ({
   };
 
   const handleTogglePress = (skill: string, pressed: boolean) => {
-    console.log("pressed", pressed);
     if (pressed) {
       setPressedSkills((prev) => [...prev, skill]);
     } else {

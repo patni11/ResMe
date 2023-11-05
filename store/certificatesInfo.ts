@@ -30,7 +30,7 @@ const INITIAL_STATE: State = {
 async function getData() {
   try {
     const res = await fetch(`/api/certificatesInfo`);
-    console.log("Fetched Data", res);
+
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -52,11 +52,10 @@ export const createCertificateInfo = (certificateHeaderID: string) => {
       (set, get) => ({
         ...INITIAL_STATE, // Spread the initial state
         fetchCertificates: async () => {
+          set({ isLoading: true });
           try {
             const certificates: Certificate[] | null =
               (await getData()).certificates || INITIAL_STATE.certificates;
-
-            console.log("Certificates Info", certificates);
 
             const hiddenCertificates = certificates
               ? certificates.reduce((acc, certificate) => {

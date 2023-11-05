@@ -6,7 +6,6 @@ import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 import UpdateDialogCard from "@/components/Cards/UpdateDialogCard";
 
 interface CertificateCardProps {
-  className?: string;
   cardDetails: Certificate;
   dialogDetails?: {
     dialogTitle: string;
@@ -23,7 +22,6 @@ interface CertificateCardProps {
 }
 
 const CertificateCard: FC<CertificateCardProps> = ({
-  className,
   cardDetails,
   dialogDetails,
   deleteDialogDetails,

@@ -14,10 +14,10 @@ export async function fetchExperiences(email: string) {
     if (!experience) {
       throw new Error(`No Experience Found`);
     }
-    console.log("Experience", experience);
+
     return experience;
   } catch (error: any) {
-    //console.log("Failed to fetch user", error);
+    console.log("Failed to fetch user", error);
     throw new Error(`Failed to fetch experiences: ${error.message}`);
   }
 }

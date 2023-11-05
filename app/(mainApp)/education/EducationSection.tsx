@@ -17,8 +17,6 @@ interface EducationSectionProps {}
 const EducationSection: FC<EducationSectionProps> = async () => {
   const session: Session | null = await getServerSession(authOptions);
 
-  console.log("Rloading Education Section");
-
   if (!session || !session.user) {
     throw new Error("User not found");
   }
@@ -71,7 +69,7 @@ const EducationSection: FC<EducationSectionProps> = async () => {
                 dialogDetails={{
                   dialogTitle: "Edit Education",
                   dialogTrigger: (
-                    <Button variant="ghost">
+                    <Button variant="ghost" aria-label="Update">
                       <Settings2 className="w-5 h-5"></Settings2>
                     </Button>
                   ),
