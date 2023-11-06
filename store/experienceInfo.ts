@@ -35,6 +35,8 @@ type Actions = {
   deleteDescription: (key: string, idx: number) => void;
   addDescription: (key: string) => void;
   setHideAll: () => void;
+  moveExpUp: (index: number) => void;
+  moveExpDown: (index: number) => void;
 };
 
 const INITIAL_STATE: State = {
@@ -92,6 +94,30 @@ export const createExperienceInfo = (experienceID: string) => {
           } catch (error) {
             set({ error, isLoading: false });
           }
+        },
+        moveExpUp: (index: number) => {
+          if (index === 0) return;
+          set((state) => {
+            const newExperiences = [...state.experiences];
+            [newExperiences[index], newExperiences[index - 1]] = [
+              newExperiences[index - 1],
+              newExperiences[index],
+            ];
+            return { experiences: newExperiences }; // make sure to return the new state
+          });
+        },
+        moveExpDown: (index) => {
+          const experiences = get().experiences;
+          if (index === experiences.length - 1) return;
+          set((state) => {
+            const newExperiences = [...state.experiences];
+            // Swap the current item with the one below it
+            [newExperiences[index], newExperiences[index + 1]] = [
+              newExperiences[index + 1],
+              newExperiences[index],
+            ];
+            return { experiences: newExperiences }; // make sure to return the new state
+          });
         },
         updateDescriptions: (
           key: string,

@@ -5,7 +5,7 @@ import { FormCardWrapper } from "./FormCardWrapper";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { PlusCircleIcon, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronUp, PlusCircleIcon, Trash2 } from "lucide-react";
 import { createExperienceInfo } from "@/store/experienceInfo";
 interface ExperienceSectionCard {
   experienceID: string;
@@ -32,6 +32,8 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
     updateDescriptions,
     deleteDescription,
     addDescription,
+    moveExpUp,
+    moveExpDown,
   } = useExperiencesInfo();
 
   useEffect(() => {
@@ -52,17 +54,16 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
       moveUp={moveUp}
       moveDown={moveDown}
     >
-      {experiences.map((experience: any) => {
+      {experiences.map((experience: any, index: number) => {
         return (
           <ExperienceCard
             key={experience._id}
-            experienceId={experience.experienceID}
+            index={index}
+            size={experiences.length}
+            moveExpUp={() => moveExpUp(index)}
+            moveExpDown={() => moveExpDown(index)}
             company={experience.company}
-            location={experience.location}
             positionTitle={experience.positionTitle}
-            experienceType={experience.experienceType}
-            startDate={experience.startDate}
-            endDate={experience.endDate}
             descriptions={experience.description}
             deleteDescription={(idx) => deleteDescription(experience._id, idx)}
             updateDescriptions={(idx, newDescription) =>
@@ -79,53 +80,70 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
 };
 
 interface ExperienceCardProps {
-  experienceId: string;
+  moveExpUp: () => void;
+  index: number;
+  size: number;
+  moveExpDown: () => void;
   company: string;
-  location: string;
   positionTitle: string;
-  experienceType: string;
-  startDate: Date;
-  endDate: Date | "working";
   descriptions: string[];
   deleteDescription: (idx: number) => void;
   updateDescriptions: (idx: number, newDescription: string) => void;
   addDescription: () => void;
   hideExperience: boolean;
   setHideEducation: () => void;
-  experienceID?: string;
 }
 
 const ExperienceCard: FC<ExperienceCardProps> = ({
-  experienceId,
+  moveExpUp,
+  moveExpDown,
   company,
-  location,
+  index,
   positionTitle,
-  experienceType,
-  startDate,
-  endDate,
+  size,
   descriptions,
   deleteDescription,
   updateDescriptions,
   addDescription,
   hideExperience,
   setHideEducation,
-  experienceID = "experiencesLocalStorage",
 }) => {
   const handleOnChange = (e: string, idx: number) => {
     updateDescriptions(idx, e);
   };
 
-  console.log("descriptions", descriptions);
-
   return (
     <div className="flex flex-col w-full bg-secondary p-4 rounded-lg mb-2">
-      <div className="flex flex-col w-full text-md">
-        <h1 className="font-semibold"> {positionTitle} </h1>
-        <div className="flex justify-between w-full items-center">
-          <h1 className="text-sm">{company}</h1>
-          <HideButtons hide={hideExperience} setHide={() => setHideEducation()}>
-            <span>Experience</span>
-          </HideButtons>
+      <div className="flex space-x-2 w-full">
+        <div className="flex flex-col mr-2">
+          {index != 0 ? (
+            <button
+              className="hover:bg-secondary rounded-lg p-1"
+              onClick={() => moveExpUp()}
+            >
+              <ChevronUp className="h-4 w-4" />
+            </button>
+          ) : null}
+          {index != size - 1 ? (
+            <button
+              className="hover:bg-secondary rounded-lg p-1"
+              onClick={() => moveExpDown()}
+            >
+              <ChevronDown className="h-4 w-4" />
+            </button>
+          ) : null}
+        </div>
+        <div className="flex flex-col w-full text-md">
+          <h1 className="font-semibold"> {positionTitle} </h1>
+          <div className="flex justify-between w-full items-center">
+            <h1 className="text-sm">{company}</h1>
+            <HideButtons
+              hide={hideExperience}
+              setHide={() => setHideEducation()}
+            >
+              <span>Experience</span>
+            </HideButtons>
+          </div>
         </div>
       </div>
 

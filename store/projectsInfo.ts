@@ -41,6 +41,8 @@ type Actions = {
   deleteDescription: (key: string, idx: number) => void;
   setHideAll: () => void;
   addDescription: (key: string) => void;
+  moveProjUp: (index: number) => void;
+  moveProjDown: (index: number) => void;
 };
 
 const INITIAL_STATE: State = {
@@ -125,6 +127,30 @@ export const createProjectsSection = (projectId: string) => {
           } catch (error) {
             set({ error, isLoading: false });
           }
+        },
+        moveProjUp: (index: number) => {
+          if (index === 0) return;
+          set((state) => {
+            const newProjects = [...state.projects];
+            [newProjects[index], newProjects[index - 1]] = [
+              newProjects[index - 1],
+              newProjects[index],
+            ];
+            return { projects: newProjects }; // make sure to return the new state
+          });
+        },
+        moveProjDown: (index) => {
+          const projects = get().projects;
+          if (index === projects.length - 1) return;
+          set((state) => {
+            const newProjects = [...state.projects];
+            // Swap the current item with the one below it
+            [newProjects[index], newProjects[index + 1]] = [
+              newProjects[index + 1],
+              newProjects[index],
+            ];
+            return { projects: newProjects }; // make sure to return the new state
+          });
         },
         updateDescriptions: (
           key: string,

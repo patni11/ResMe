@@ -4,7 +4,7 @@ import { FormCardWrapper } from "./FormCardWrapper";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { PlusCircleIcon, Trash2 } from "lucide-react";
+import { ChevronDown, ChevronUp, PlusCircleIcon, Trash2 } from "lucide-react";
 import { createProjectsSection } from "@/store/projectsInfo";
 
 interface ProjectSectionCard {
@@ -38,6 +38,8 @@ const ProjectSectionCard: FC<ProjectSectionCard> = ({
     setHideAll,
     deleteDescription,
     addDescription,
+    moveProjUp,
+    moveProjDown,
   } = useProjectsInfo();
 
   useEffect(() => {
@@ -58,7 +60,7 @@ const ProjectSectionCard: FC<ProjectSectionCard> = ({
       moveUp={moveUp}
       moveDown={moveDown}
     >
-      {projects.map((project: any) => {
+      {projects.map((project: any, index: number) => {
         return (
           <ProjectCard
             key={project._id}
@@ -86,6 +88,10 @@ const ProjectSectionCard: FC<ProjectSectionCard> = ({
               setHiddenDates: () => setHiddenDates(project._id),
             })}
             addDescription={addDescription}
+            index={index}
+            size={projects.length}
+            moveProjUp={() => moveProjUp(index)}
+            moveProjDown={() => moveProjDown(index)}
           />
         );
       })}
@@ -112,6 +118,10 @@ interface ProjectCardProps {
   setHiddenLocation?: () => void;
   setHiddenPosition?: () => void;
   addDescription: (key: string) => void;
+  moveProjUp: () => void;
+  index: number;
+  size: number;
+  moveProjDown: () => void;
 }
 
 const ProjectCard: FC<ProjectCardProps> = ({
@@ -129,6 +139,10 @@ const ProjectCard: FC<ProjectCardProps> = ({
   setHiddenLocation,
   setHiddenPosition,
   addDescription,
+  moveProjUp,
+  moveProjDown,
+  size,
+  index,
 }) => {
   const handleOnChange = (e: string, idx: number) => {
     updateDescriptions(projectId, idx, e);
@@ -136,38 +150,58 @@ const ProjectCard: FC<ProjectCardProps> = ({
 
   return (
     <div className="flex flex-col w-full bg-secondary p-4 rounded-lg mb-2">
-      <div className="flex flex-col w-full text-md">
-        <h1 className="font-semibold"> {projectName} </h1>
-        <div className="flex justify-end w-full items-center space-x-4">
-          <HideButtons hide={hideProject} setHide={() => setHiddenProject()}>
-            <span>Project</span>
-          </HideButtons>
+      <div className="flex space-x-2 w-full">
+        <div className="flex flex-col mr-2">
+          {index != 0 ? (
+            <button
+              className="hover:bg-secondary rounded-lg p-1"
+              onClick={() => moveProjUp()}
+            >
+              <ChevronUp className="h-4 w-4" />
+            </button>
+          ) : null}
+          {index != size - 1 ? (
+            <button
+              className="hover:bg-secondary rounded-lg p-1"
+              onClick={() => moveProjDown()}
+            >
+              <ChevronDown className="h-4 w-4" />
+            </button>
+          ) : null}
+        </div>
+        <div className="flex flex-col w-full text-md">
+          <h1 className="font-semibold"> {projectName} </h1>
+          <div className="flex justify-end w-full items-center space-x-4">
+            <HideButtons hide={hideProject} setHide={() => setHiddenProject()}>
+              <span>Project</span>
+            </HideButtons>
 
-          {setHiddenDates ? (
-            <HideButtons
-              hide={hideDates || false}
-              setHide={() => setHiddenDates()}
-            >
-              <span>Dates</span>
-            </HideButtons>
-          ) : null}
-          {setHiddenPosition ? (
-            <HideButtons
-              hide={hidePosition || false}
-              setHide={() => setHiddenPosition()}
-            >
-              <span>Position</span>
-            </HideButtons>
-          ) : null}
+            {setHiddenDates ? (
+              <HideButtons
+                hide={hideDates || false}
+                setHide={() => setHiddenDates()}
+              >
+                <span>Dates</span>
+              </HideButtons>
+            ) : null}
+            {setHiddenPosition ? (
+              <HideButtons
+                hide={hidePosition || false}
+                setHide={() => setHiddenPosition()}
+              >
+                <span>Position</span>
+              </HideButtons>
+            ) : null}
 
-          {setHiddenLocation ? (
-            <HideButtons
-              hide={hideLocation || false}
-              setHide={() => setHiddenLocation()}
-            >
-              <span>Location</span>
-            </HideButtons>
-          ) : null}
+            {setHiddenLocation ? (
+              <HideButtons
+                hide={hideLocation || false}
+                setHide={() => setHiddenLocation()}
+              >
+                <span>Location</span>
+              </HideButtons>
+            ) : null}
+          </div>
         </div>
       </div>
 
