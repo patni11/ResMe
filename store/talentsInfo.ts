@@ -15,9 +15,7 @@ type State = {
 };
 
 type Actions = {
-  fetchSkills: () => void;
-  fetchLanguages: () => void;
-  fetchInterests: () => void;
+  fetchAll: () => void;
   setHideSkills: () => void;
   setSkills: (newSkills: string) => void;
   setInterests: (newInterests: string) => void;
@@ -61,7 +59,7 @@ export const createTalentsInfo = (talentsID: string) => {
     persist<State & Actions>(
       (set, get) => ({
         ...INITIAL_STATE, // Spread the initial state
-        fetchSkills: async () => {
+        fetchAll: async () => {
           set({ isLoading: true });
           try {
             // const skills: string[] =
@@ -73,52 +71,16 @@ export const createTalentsInfo = (talentsID: string) => {
               interests: string[];
             } = (await getData()) || [];
 
-            const skills = talent.skills;
             set({
-              skills: skills.join(", "),
+              skills: talent.skills.join(", "),
+              interests: talent.interests.join(", "),
+              languages: talent.languages.join(", "),
               isLoading: false,
             });
           } catch (error) {
             set({ error, isLoading: false });
           }
         },
-        fetchLanguages: async () => {
-          try {
-            const talent: {
-              skills: string[];
-              languages: string[];
-              interests: string[];
-            } = (await getData()) || [];
-
-            const languages = talent.languages;
-
-            set({
-              languages: languages.join(", "),
-              isLoading: false,
-            });
-          } catch (error) {
-            set({ error, isLoading: false });
-          }
-        },
-        fetchInterests: async () => {
-          try {
-            const talent: {
-              skills: string[];
-              languages: string[];
-              interests: string[];
-            } = (await getData()) || [];
-
-            const interests = talent.interests;
-
-            set({
-              interests: interests.join(", "),
-              isLoading: false,
-            });
-          } catch (error) {
-            set({ error, isLoading: false });
-          }
-        },
-
         setHideSkills: () => {
           set((state) => {
             return {

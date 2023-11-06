@@ -1,127 +1,152 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC, memo, useEffect } from "react";
 import { FormCardWrapper } from "../FormCardWrapper";
 import { Input } from "@/components/ui/input";
-type MiscellaneousSectionCardProp = {
-  name: string;
-  skills: string;
-  hideAll: boolean;
+
+import { createTalentsInfo } from "@/store/talentsInfo";
+import { Button } from "@/components/ui/button";
+import { Eye, EyeOff, Trash2 } from "lucide-react";
+import { Label } from "@/components/ui/label";
+
+type TalentsSectionProp = {
+  // skills: string;
+  // hideAll: boolean;
   talentsID: string;
-  isLoading: boolean;
-  fetchSkills: () => void;
-  setHideAll: () => void;
-  setSkills: (newSkills: string) => void;
+  index: number;
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
+  // isLoading: boolean;
+  // fetchSkills: () => void;
+  // setHideAll: () => void;
+  // setSkills: (newSkills: string) => void;
 };
-const MiscellaneousSectionCard: FC<MiscellaneousSectionCardProp> = ({
-  name,
-  skills,
-  hideAll,
+const TalentsSection: FC<TalentsSectionProp> = ({
   talentsID,
-  isLoading,
-  setHideAll,
-  fetchSkills,
-  setSkills,
+  index,
+  moveUp,
+  moveDown,
 }) => {
+  const useTalentsInfo = createTalentsInfo(talentsID);
+  const {
+    skills,
+    interests,
+    languages,
+    hideSkills,
+    hideLanguages,
+    hideInterests,
+    isLoading,
+    setHideSkills,
+    setHideInterests,
+    setHideLanguages,
+    setSkills,
+    setInterests,
+    setLanguages,
+    fetchAll,
+  } = useTalentsInfo();
+
   useEffect(() => {
     let skillssLocalStorage = localStorage.getItem(talentsID);
     if (!skillssLocalStorage) {
-      fetchSkills();
+      fetchAll();
     }
-  }, [fetchSkills]);
+  }, [fetchAll]);
+
+  const setHideAll = () => {
+    setHideInterests(true);
+    setHideLanguages(true);
+    setHideSkills(true);
+  };
 
   return (
     <FormCardWrapper
-      cardTitle={name}
-      refreshFunction={() => fetchSkills()}
-      hideAll={hideAll}
+      cardTitle="Talent"
+      refreshFunction={() => fetchAll()}
+      hideAll={hideSkills && hideInterests & hideLanguages}
       isLoading={isLoading}
       deleteFunction={setHideAll}
+      index={index}
+      moveUp={moveUp}
+      moveDown={moveDown}
     >
       <div className="flex flex-col space-y-2 mt-4">
-        <Input
-          placeholder={`Your ${name}`}
-          value={skills}
-          onChange={(e) => {
-            setSkills(e.currentTarget.value);
-          }}
-        ></Input>
+        <div className="flex flex-col space-y-2 w-full">
+          <Label className="block"> Skills</Label>
+          <div className="flex">
+            <Input
+              className="w-full focus-visible:ring-0"
+              placeholder={`Your ${name}`}
+              value={skills}
+              onChange={(e) => {
+                setSkills(e.currentTarget.value);
+              }}
+            ></Input>
+            <Button
+              variant="ghost"
+              className="hover:text-destructive"
+              onClick={() => setHideSkills(!hideSkills)}
+              aria-label="Delete Description"
+            >
+              {!hideSkills ? (
+                <Eye className="w-4 h-4" />
+              ) : (
+                <EyeOff className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col space-y-2 w-full">
+          <Label className="block"> Interests</Label>
+          <div className="flex">
+            <Input
+              className="w-full focus-visible:ring-0"
+              placeholder={`Your Interests`}
+              value={interests}
+              onChange={(e) => {
+                setInterests(e.currentTarget.value);
+              }}
+            ></Input>
+            <Button
+              variant="ghost"
+              className="hover:text-destructive"
+              onClick={() => setHideInterests(!hideInterests)}
+              aria-label="Delete Description"
+            >
+              {!hideInterests ? (
+                <Eye className="w-4 h-4" />
+              ) : (
+                <EyeOff className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col space-y-2 w-full">
+          <Label className="block"> Languages</Label>
+          <div className="flex">
+            <Input
+              className="w-full focus-visible:ring-0"
+              placeholder={`Your Languages`}
+              value={languages}
+              onChange={(e) => {
+                setLanguages(e.currentTarget.value);
+              }}
+            ></Input>
+            <Button
+              variant="ghost"
+              className="hover:text-destructive"
+              onClick={() => setHideLanguages(!hideLanguages)}
+              aria-label="Delete Description"
+            >
+              {!hideLanguages ? (
+                <Eye className="w-4 h-4" />
+              ) : (
+                <EyeOff className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
+        </div>
       </div>
     </FormCardWrapper>
   );
 };
 
-import { createTalentsInfo } from "@/store/talentsInfo";
-export const SkillsSectionCard = ({ talentsID }: { talentsID: string }) => {
-  const useTalentsInfo = createTalentsInfo(talentsID);
-  const {
-    skills,
-    isLoading,
-    hideSkills,
-    setHideSkills,
-    fetchSkills,
-    setSkills,
-  } = useTalentsInfo();
-
-  return (
-    <MiscellaneousSectionCard
-      name="Skills"
-      skills={skills}
-      hideAll={hideSkills}
-      talentsID={talentsID}
-      isLoading={isLoading}
-      setHideAll={() => setHideSkills()}
-      fetchSkills={() => fetchSkills()}
-      setSkills={(newSkills: string) => setSkills(newSkills)}
-    />
-  );
-};
-
-export const InterestsSectionCard = ({ talentsID }: { talentsID: string }) => {
-  const useTalentsInfo = createTalentsInfo(talentsID);
-  const {
-    interests,
-    hideInterests,
-    setHideInterests,
-    isLoading,
-    fetchInterests,
-    setInterests,
-  } = useTalentsInfo();
-
-  return (
-    <MiscellaneousSectionCard
-      name="Interests"
-      skills={interests}
-      hideAll={hideInterests}
-      isLoading={isLoading}
-      talentsID={talentsID}
-      setHideAll={() => setHideInterests()}
-      fetchSkills={() => fetchInterests()}
-      setSkills={(newSkills: string) => setInterests(newSkills)}
-    />
-  );
-};
-
-export const LanguagesSectionCard = ({ talentsID }: { talentsID: string }) => {
-  const useTalentsInfo = createTalentsInfo(talentsID);
-  const {
-    languages,
-    hideLanguages,
-    isLoading,
-    setHideLanguages,
-    fetchLanguages,
-    setLanguages,
-  } = useTalentsInfo();
-
-  return (
-    <MiscellaneousSectionCard
-      name="Languages"
-      skills={languages}
-      hideAll={hideLanguages}
-      isLoading={isLoading}
-      talentsID={talentsID}
-      setHideAll={() => setHideLanguages()}
-      fetchSkills={() => fetchLanguages()}
-      setSkills={(newSkills: string) => setLanguages(newSkills)}
-    />
-  );
-};
+export default memo(TalentsSection);

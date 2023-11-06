@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { memo } from "react";
 import { EducationType } from "@/app/(mainApp)/education/pageTypes";
 
 interface EducationCardProps {
@@ -62,10 +63,16 @@ const EducationCard: FC<EducationCardProps> = ({
 };
 interface EducationSectionCard {
   educationID: string;
+  index: number;
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
 }
 
-export const EducationSectionCard: FC<EducationSectionCard> = ({
+const EducationSectionCard: FC<EducationSectionCard> = ({
   educationID,
+  index,
+  moveUp,
+  moveDown,
 }) => {
   const useEducationsInfo = createEducationInfo(educationID);
   const {
@@ -98,6 +105,9 @@ export const EducationSectionCard: FC<EducationSectionCard> = ({
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}
+      index={index}
+      moveUp={moveUp}
+      moveDown={moveDown}
     >
       {educations.map((education: any) => {
         return (
@@ -127,3 +137,5 @@ export const EducationSectionCard: FC<EducationSectionCard> = ({
     </FormCardWrapper>
   );
 };
+
+export default memo(EducationSectionCard);

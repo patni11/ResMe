@@ -1,21 +1,14 @@
 "use client";
-import { FC } from "react";
+import { FC, useState } from "react";
 
-import { EducationSectionCard } from "@/components/ResumeComponents/ResumeForms/EducationSectionCard";
+import EducationSectionCard from "@/components/ResumeComponents/ResumeForms/EducationSectionCard";
 import { buttonVariants } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import ExperienceSectionCard from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
 import ResumeHeader from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
-import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
-
-import { ProjectSectionCard } from "@/components/ResumeComponents/ResumeForms/ProjectsSection";
-import {
-  InterestsSectionCard,
-  LanguagesSectionCard,
-  SkillsSectionCard,
-} from "@/components/ResumeComponents/ResumeForms/Miscellaneous/index";
-import { CertificateSectionCard } from "@/components/ResumeComponents/ResumeForms/CertificateSectionCard";
-
+import ProjectSectionCard from "@/components/ResumeComponents/ResumeForms/ProjectsSection";
+import TalentsSection from "@/components/ResumeComponents/ResumeForms/Miscellaneous/index";
+import CertificateSectionCard from "@/components/ResumeComponents/ResumeForms/CertificateSectionCard";
 import {
   Dialog,
   DialogContent,
@@ -24,16 +17,96 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import React from "react";
 
 interface EditPanelProps {
-  resumeId?: string;
-  email?: string;
+  componentsData: { type: string; id: string }[];
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
 }
 
 const EditPanel: FC<EditPanelProps> = ({
-  resumeId = "default",
-  email = "",
+  componentsData,
+  moveUp,
+  moveDown,
 }) => {
+  // const initialComponents = [
+  //   <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />,
+  //   <EducationSectionCard educationID={`educations-${email}-${resumeId}`} />,
+  //   <CertificateSectionCard
+  //     certificateID={`certificates-${email}-${resumeId}`}
+  //   />,
+  //   <ExperienceSectionCard experienceID={`experiences-${email}-${resumeId}`} />,
+  //   <ProjectSectionCard projectId={`projects-${email}-${resumeId}`} />,
+  //   <TalentsSection talentsID={`talents-${email}-${resumeId}`} />,
+  //   // ... other components
+  // ];
+
+  const renderComponent = (
+    componentData: { type: string; id: string },
+    index: number
+  ) => {
+    switch (componentData.type) {
+      case "ResumeHeader":
+        return (
+          <ResumeHeader
+            resumeHeaderID={componentData.id}
+            index={index}
+            moveUp={moveUp}
+            moveDown={moveDown}
+          />
+        );
+      case "EducationSectionCard":
+        return (
+          <EducationSectionCard
+            educationID={componentData.id}
+            index={index}
+            moveUp={moveUp}
+            moveDown={moveDown}
+          />
+        );
+      case "CertificateSectionCard":
+        return (
+          <CertificateSectionCard
+            certificateID={componentData.id}
+            index={index}
+            moveUp={moveUp}
+            moveDown={moveDown}
+          />
+        );
+      case "ExperienceSectionCard":
+        return (
+          <ExperienceSectionCard
+            experienceID={componentData.id}
+            index={index}
+            moveUp={moveUp}
+            moveDown={moveDown}
+          />
+        );
+      case "ProjectSectionCard":
+        return (
+          <ProjectSectionCard
+            projectId={componentData.id}
+            index={index}
+            moveUp={moveUp}
+            moveDown={moveDown}
+          />
+        );
+      case "TalentsSection":
+        return (
+          <TalentsSection
+            talentsID={componentData.id}
+            index={index}
+            moveUp={moveUp}
+            moveDown={moveDown}
+          />
+        );
+      // ... other cases for other components
+      default:
+        return null;
+    }
+  };
+
   return (
     <main className="w-full h-screen overflow-y-auto flex flex-col items-start bg-gray-200 p-4 space-y-2">
       <div className="flex space-x-2 w-full  justify-right">
@@ -72,7 +145,7 @@ const EditPanel: FC<EditPanelProps> = ({
           <span>to Load Data</span>
         </h1>
       </div>
-      <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />
+      {/* <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />
       <EducationSectionCard educationID={`educations-${email}-${resumeId}`} />
       <CertificateSectionCard
         certificateID={`certificates-${email}-${resumeId}`}
@@ -83,7 +156,22 @@ const EditPanel: FC<EditPanelProps> = ({
       <ProjectSectionCard projectId={`projects-${email}-${resumeId}`} />
       <SkillsSectionCard talentsID={`talents-${email}-${resumeId}`} />
       <LanguagesSectionCard talentsID={`talents-${email}-${resumeId}`} />
-      <InterestsSectionCard talentsID={`talents-${email}-${resumeId}`} />
+      <InterestsSectionCard talentsID={`talents-${email}-${resumeId}`} /> */}
+      {/* <div>
+        {components.map((Component, index) => (
+          <div key={index}>
+            {Component}
+            <button onClick={() => moveUp(index)}>Up</button>
+            <button onClick={() => moveDown(index)}>Down</button>
+          </div>
+        ))}
+      </div> */}
+
+      {componentsData.map((componentData, index) => (
+        <div key={componentData.id} className="w-full">
+          {renderComponent(componentData, index)}
+        </div>
+      ))}
     </main>
   );
 };

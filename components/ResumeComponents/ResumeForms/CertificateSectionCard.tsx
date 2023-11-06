@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC, memo, useEffect } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { createCertificateInfo } from "@/store/certificatesInfo";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
@@ -37,10 +37,16 @@ const CertificateCard: FC<CertificateCardProps> = ({
 };
 interface CertificateSectionCard {
   certificateID: string;
+  index: number;
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
 }
 
-export const CertificateSectionCard: FC<CertificateSectionCard> = ({
+const CertificateSectionCard: FC<CertificateSectionCard> = ({
   certificateID,
+  index,
+  moveUp,
+  moveDown,
 }) => {
   const useCertificatesInfo = createCertificateInfo(certificateID);
   const {
@@ -67,6 +73,9 @@ export const CertificateSectionCard: FC<CertificateSectionCard> = ({
       isLoading={isLoading}
       hideAll={hideAll}
       deleteFunction={setHideAll}
+      index={index}
+      moveUp={moveUp}
+      moveDown={moveDown}
     >
       {certificates.map((certificate: any) => {
         return (
@@ -81,3 +90,5 @@ export const CertificateSectionCard: FC<CertificateSectionCard> = ({
     </FormCardWrapper>
   );
 };
+
+export default memo(CertificateSectionCard);

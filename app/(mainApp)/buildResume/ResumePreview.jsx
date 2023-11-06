@@ -38,7 +38,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { createResume, updateResume } from "@/lib/actions/resumes.action";
 
-export default function ResumePreview({ resumeId = "default", email = "" }) {
+export default function ResumePreview({
+  resumeId = "default",
+  email = "",
+  componentsData,
+}) {
   const elementRef = useRef(null);
   const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
@@ -209,6 +213,38 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
     }
   };
 
+  const renderComponent = (componentData) => {
+    switch (componentData.type) {
+      case "ResumeHeader":
+        return (
+          <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />
+        );
+      case "EducationSectionCard":
+        return (
+          <EducationSection educationID={`educations-${email}-${resumeId}`} />
+        );
+      case "CertificateSectionCard":
+        return (
+          <CertificateSection
+            certificateID={`certificates-${email}-${resumeId}`}
+          />
+        );
+      case "ExperienceSectionCard":
+        return (
+          <ExperienceSection
+            experienceID={`experiences-${email}-${resumeId}`}
+          />
+        );
+      case "ProjectSectionCard":
+        return <ProjectSection projectId={`projects-${email}-${resumeId}`} />;
+      case "TalentsSection":
+        return <TalentSection talentsID={`talents-${email}-${resumeId}`} />;
+      // ... other cases for other components
+      default:
+        return null;
+    }
+  };
+
   return (
     <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4">
       <div className="w-full flex justify-right space-x-4 mb-2">
@@ -287,7 +323,13 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
           id="element-to-print"
           ref={elementRef}
         >
-          <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />
+          {componentsData.map((componentData) => (
+            <div key={componentData.id} className="w-full">
+              {renderComponent(componentData)}
+            </div>
+          ))}
+
+          {/* <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />
           <EducationSection educationID={`educations-${email}-${resumeId}`} />
           <CertificateSection
             certificateID={`certificates-${email}-${resumeId}`}
@@ -296,7 +338,7 @@ export default function ResumePreview({ resumeId = "default", email = "" }) {
             experienceID={`experiences-${email}-${resumeId}`}
           />
           <ProjectSection projectId={`projects-${email}-${resumeId}`} />
-          <TalentSection talentsID={`talents-${email}-${resumeId}`} />
+          <TalentSection talentsID={`talents-${email}-${resumeId}`} /> */}
         </div>
       </div>
     </main>

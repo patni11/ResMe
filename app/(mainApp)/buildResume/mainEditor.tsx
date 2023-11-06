@@ -6,10 +6,50 @@ import EditPanel from "./EditPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
 
-const MainEditor = ({ resumeId }: { resumeId?: string }) => {
+const MainEditor = ({ resumeId = "default" }: { resumeId: string }) => {
   const { data: session } = useSession();
   const email = session?.user?.email || "";
+
+  const initialComponentsData = [
+    { type: "ResumeHeader", id: `resumeHeader-${email}-${resumeId}` },
+    { type: "EducationSectionCard", id: `educations-${email}-${resumeId}` },
+    { type: "CertificateSectionCard", id: `certificates-${email}-${resumeId}` },
+    { type: "ExperienceSectionCard", id: `experiences-${email}-${resumeId}` },
+    { type: "ProjectSectionCard", id: `projects-${email}-${resumeId}` },
+    { type: "TalentsSection", id: `talents-${email}-${resumeId}` },
+    // ... other components
+  ];
+
+  const [componentsData, setComponentsData] = useState(initialComponentsData);
+
+  // const [components, setComponents] = useState(initialComponents);
+
+  // Function to move a component up
+  const moveUp = (index: number) => {
+    if (index === 0) return; // Can't move up the first component
+    setComponentsData((prevComponents) => {
+      const newComponents = [...prevComponents];
+      [newComponents[index - 1], newComponents[index]] = [
+        newComponents[index],
+        newComponents[index - 1],
+      ];
+      return newComponents;
+    });
+  };
+
+  const moveDown = (index: number) => {
+    if (index === componentsData.length - 1) return; // Can't move down the last component
+    setComponentsData((prevComponents) => {
+      const newComponents = [...prevComponents];
+      [newComponents[index], newComponents[index + 1]] = [
+        newComponents[index + 1],
+        newComponents[index],
+      ];
+      return newComponents;
+    });
+  };
 
   return (
     <main className="flex justify-between w-full h-full">
@@ -27,14 +67,22 @@ const MainEditor = ({ resumeId }: { resumeId?: string }) => {
           <TabsContent value="editPanel">
             <div className="w-full">
               {email !== "" ? (
-                <EditPanel resumeId={resumeId} email={email} />
+                <EditPanel
+                  componentsData={componentsData}
+                  moveDown={moveDown}
+                  moveUp={moveUp}
+                />
               ) : null}
             </div>
           </TabsContent>
           <Separator className="m-0 sm:hidden" orientation="vertical" />
           <TabsContent value="preview">
             {email !== "" ? (
-              <ResumePreview resumeId={resumeId} email={email} />
+              <ResumePreview
+                resumeId={resumeId}
+                email={email}
+                componentsData={componentsData}
+              />
             ) : null}
           </TabsContent>
         </Tabs>
@@ -44,13 +92,21 @@ const MainEditor = ({ resumeId }: { resumeId?: string }) => {
       <div className="hidden xl:flex h-screen w-full overflow-hidden">
         <div className="w-1/2">
           {email !== "" ? (
-            <EditPanel resumeId={resumeId} email={email} />
+            <EditPanel
+              componentsData={componentsData}
+              moveDown={moveDown}
+              moveUp={moveUp}
+            />
           ) : null}
         </div>
         <Separator className="m-0 sm:hidden" orientation="vertical" />
         <div className="w-1/2 py-6 bg-gray-200">
           {email !== "" ? (
-            <ResumePreview resumeId={resumeId} email={email} />
+            <ResumePreview
+              resumeId={resumeId}
+              email={email}
+              componentsData={componentsData}
+            />
           ) : null}
         </div>
       </div>

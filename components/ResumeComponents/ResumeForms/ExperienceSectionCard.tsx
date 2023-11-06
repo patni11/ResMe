@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC, memo, useEffect } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 
 import { HideButtons } from "@/components/UIButtons/HideButtons";
@@ -9,9 +9,17 @@ import { PlusCircleIcon, Trash2 } from "lucide-react";
 import { createExperienceInfo } from "@/store/experienceInfo";
 interface ExperienceSectionCard {
   experienceID: string;
+  index: number;
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
 }
 
-const ExperienceSectionCard: FC<ExperienceSectionCard> = ({ experienceID }) => {
+const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
+  experienceID,
+  index,
+  moveUp,
+  moveDown,
+}) => {
   const useExperiencesInfo = createExperienceInfo(experienceID);
   const {
     experiences,
@@ -40,6 +48,9 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({ experienceID }) => {
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}
+      index={index}
+      moveUp={moveUp}
+      moveDown={moveDown}
     >
       {experiences.map((experience: any) => {
         return (
@@ -155,4 +166,4 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
   );
 };
 
-export default ExperienceSectionCard;
+export default memo(ExperienceSectionCard);

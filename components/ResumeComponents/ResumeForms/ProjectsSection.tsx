@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC, memo, useEffect } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Input } from "@/components/ui/input";
@@ -9,9 +9,17 @@ import { createProjectsSection } from "@/store/projectsInfo";
 
 interface ProjectSectionCard {
   projectId: string;
+  index: number;
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
 }
 
-export const ProjectSectionCard: FC<ProjectSectionCard> = ({ projectId }) => {
+const ProjectSectionCard: FC<ProjectSectionCard> = ({
+  projectId,
+  index,
+  moveUp,
+  moveDown,
+}) => {
   const useProjectsInfo = createProjectsSection(projectId);
   const {
     projects,
@@ -46,6 +54,9 @@ export const ProjectSectionCard: FC<ProjectSectionCard> = ({ projectId }) => {
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}
+      index={index}
+      moveUp={moveUp}
+      moveDown={moveDown}
     >
       {projects.map((project: any) => {
         return (
@@ -196,3 +207,5 @@ const ProjectCard: FC<ProjectCardProps> = ({
     </div>
   );
 };
+
+export default memo(ProjectSectionCard);

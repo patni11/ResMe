@@ -3,8 +3,13 @@
 import Trash2Button from "@/components/UIButtons/Trash2Button";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { PlusCircleIcon, RefreshCw } from "lucide-react";
-import { FC, ReactNode, useState } from "react";
+import {
+  ChevronDown,
+  ChevronUp,
+  PlusCircleIcon,
+  RefreshCw,
+} from "lucide-react";
+import { FC, ReactNode } from "react";
 
 interface FormCardWrapperProps {
   cardTitle: string;
@@ -13,6 +18,9 @@ interface FormCardWrapperProps {
   refreshFunction?: () => void;
   hideAll?: boolean;
   deleteFunction?: () => void;
+  index: number;
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
 }
 
 interface TrashButtonProps {
@@ -53,6 +61,9 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
   isLoading,
   hideAll = false,
   deleteFunction,
+  index,
+  moveUp,
+  moveDown,
 }) => {
   return (
     <section className="w-full justify-start">
@@ -60,6 +71,24 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center">
+              <div className="flex flex-col mr-2">
+                {index != 0 ? (
+                  <button
+                    className="hover:bg-secondary rounded-lg p-1"
+                    onClick={() => moveUp(index)}
+                  >
+                    <ChevronUp className="h-4 w-4" />
+                  </button>
+                ) : null}
+                {index != 5 ? (
+                  <button
+                    className="hover:bg-secondary rounded-lg p-1"
+                    onClick={() => moveDown(index)}
+                  >
+                    <ChevronDown className="h-4 w-4" />
+                  </button>
+                ) : null}
+              </div>
               <TrashButton
                 hideAll={hideAll}
                 deleteFunction={deleteFunction}

@@ -6,12 +6,20 @@ import { Label } from "@/components/ui/label";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
 import { useSession } from "next-auth/react";
-
+import { memo } from "react";
 interface ResumeHeaderProps {
   resumeHeaderID: string;
+  index: number;
+  moveUp: (index: number) => void;
+  moveDown: (index: number) => void;
 }
 
-const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
+const ResumeHeader: React.FC<ResumeHeaderProps> = ({
+  resumeHeaderID,
+  index,
+  moveUp,
+  moveDown,
+}) => {
   const useResumeHeaderInfo = createResumeHeaderInfo(resumeHeaderID);
   const {
     headerInfo,
@@ -52,6 +60,9 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
       cardTitle="Header"
       refreshFunction={() => fetchHeaderInfo()}
       isLoading={isLoading}
+      index={index}
+      moveUp={moveUp}
+      moveDown={moveDown}
     >
       <Label>Your Name</Label>
       <Input
@@ -99,4 +110,4 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ resumeHeaderID }) => {
   );
 };
 
-export default ResumeHeader;
+export default memo(ResumeHeader);

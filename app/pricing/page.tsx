@@ -27,7 +27,7 @@ const PricingPage = () => {
               title="Newbie"
               cost="Free"
               checkedPoints={[
-                "2 Resumes",
+                "3 Resumes",
                 "Instant CV",
                 "Download PDF",
                 "Professional Formatting",
@@ -35,7 +35,7 @@ const PricingPage = () => {
               unCheckedPoints={[
                 "Multiple Device Access",
                 "Tailored AI",
-                "Only 2 Resumes",
+                "Only 3 Resumes",
                 "Shareable Link",
                 "Download Docx",
               ]}
