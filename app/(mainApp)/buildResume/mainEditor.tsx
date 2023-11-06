@@ -8,7 +8,7 @@ import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-const MainEditor = ({ resumeId = "default" }: { resumeId: string }) => {
+const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
   const { data: session } = useSession();
   const email = session?.user?.email || "";
   type ComponentData = { type: string; id: string };
