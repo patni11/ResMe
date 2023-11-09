@@ -3,22 +3,11 @@ import {
   Document,
   HeadingLevel,
   Paragraph,
-  TabStopPosition,
   TabStopType,
   TextRun,
   UnderlineType,
   convertInchesToTwip,
-  IMargins,
-  Table,
-  TableRow,
-  TableCell,
   BorderStyle,
-  WidthType,
-  Tab,
-  PositionalTab,
-  PositionalTabAlignment,
-  PositionalTabRelativeTo,
-  PositionalTabLeader,
 } from "docx";
 // import { useEducationsInfo } from "@/store/educationInfo";
 // import { useExperiencesInfo } from "@/store/experienceInfo";
@@ -29,6 +18,37 @@ import { createCertificateInfo } from "@/store/certificatesInfo";
 import { createExperienceInfo } from "@/store/experienceInfo";
 import { createProjectsSection } from "@/store/projectsInfo";
 import { createTalentsInfo } from "@/store/talentsInfo";
+
+const componentFunctions = {
+  ResumeHeader: createHeader,
+  EducationSectionCard: createEducation,
+  CertificateSectionCard: createCertificates,
+  ExperienceSectionCard: createExperience,
+  ProjectSectionCard: createProject,
+  TalentsSection: createTalent,
+  // ... map other component types to their respective functions
+};
+
+const renderComponent = (componentsData: { type: string; id: string }) => {
+  switch (componentsData.type) {
+    case "ResumeHeader":
+      return createHeader({ id: componentsData.id });
+    case "EducationSectionCard":
+      return createEducation({ id: componentsData.id });
+    case "CertificateSectionCard":
+      return createCertificates({ id: componentsData.id });
+    case "ExperienceSectionCard":
+      return createExperience({ id: componentsData.id });
+    case "ProjectSectionCard":
+      return createProject({ id: componentsData.id });
+    case "TalentsSection":
+      return createTalent({ id: componentsData.id });
+    // ... other cases for other components
+    default:
+      return null;
+  }
+};
+
 const DocumentCreator = ({
   componentsData,
   resumeId,
@@ -126,16 +146,23 @@ const DocumentCreator = ({
               bottom: 720, // 0.5 inch in twips
               left: 720, // 0.5 inch in twips
             },
+            size: {
+              width: 11906, // Width of A4 in twentieths of a point (595mm)
+              height: 16838, // Height of A4 in twentieths of a point (841mm)
+            },
           },
         },
-        children: [
-          ...createHeader({ resumeId, email }),
-          ...createEducation({ resumeId, email }),
-          ...createCertificates({ resumeId, email }),
-          ...createExperience({ resumeId, email }),
-          ...createProject({ resumeId, email }),
-          ...createTalent({ resumeId, email }),
-        ],
+        // children: [
+        //   ...createHeader({ resumeId, email }),
+        //   ...createEducation({ resumeId, email }),
+        //   ...createCertificates({ resumeId, email }),
+        //   ...createExperience({ resumeId, email }),
+        //   ...createProject({ resumeId, email }),
+        //   ...createTalent({ resumeId, email }),
+        // ],
+        children: componentsData.flatMap((componentData) => {
+          return renderComponent(componentData) || [];
+        }),
       },
     ],
   });
@@ -197,16 +224,10 @@ export default DocumentCreator;
 //   ];
 // }
 
-function createHeader({
-  resumeId,
-  email,
-}: {
-  resumeId: string;
-  email: string;
-}) {
+function createHeader({ id }: { id: string }) {
   // Assuming createResumeHeaderInfo is a hook-like function that returns the current state
   const { headerInfo, hideLocation, hiddenContacts, hiddenLinks } =
-    createResumeHeaderInfo(`resumeHeader-${email}-${resumeId}`).getState();
+    createResumeHeaderInfo(id).getState();
 
   let location = headerInfo?.location ? headerInfo.location : "";
   location = hideLocation ? "" : location;
@@ -276,13 +297,7 @@ const sectionHeading = (text: string) => {
   return heading;
 };
 
-function createEducation({
-  resumeId,
-  email,
-}: {
-  resumeId: string;
-  email: string;
-}) {
+function createEducation({ id }: { id: string }) {
   // Your assumed state fetching function
   const {
     educations,
@@ -291,7 +306,7 @@ function createEducation({
     hiddenEducations,
     hideAll,
     relevantCourseWork,
-  } = createEducationInfo(`educations-${email}-${resumeId}`).getState();
+  } = createEducationInfo(id).getState();
 
   const educationParagraphs = [];
 
@@ -384,16 +399,9 @@ function createEducation({
   return educationParagraphs;
 }
 
-function createCertificates({
-  resumeId,
-  email,
-}: {
-  resumeId: string;
-  email: string;
-}) {
-  const { certificates, hiddenCertificates, hideAll } = createCertificateInfo(
-    `certificates-${email}-${resumeId}`
-  ).getState();
+function createCertificates({ id }: { id: string }) {
+  const { certificates, hiddenCertificates, hideAll } =
+    createCertificateInfo(id).getState();
 
   const certificateParagraphs = [];
 
@@ -426,17 +434,10 @@ function createCertificates({
   return certificateParagraphs;
 }
 
-function createExperience({
-  resumeId,
-  email,
-}: {
-  resumeId: string;
-  email: string;
-}) {
+function createExperience({ id }: { id: string }) {
   // Your assumed state fetching function
-  const { experiences, hiddenExperiences, hideAll } = createExperienceInfo(
-    `experiences-${email}-${resumeId}`
-  ).getState();
+  const { experiences, hiddenExperiences, hideAll } =
+    createExperienceInfo(id).getState();
 
   const experienceParagraphs = [];
 
@@ -460,7 +461,8 @@ function createExperience({
               bold: true,
             }),
             new TextRun({
-              text: "\t" + experience.positionTitle,
+              text:
+                "\t" + `${experience.experienceType} ${experience.location}`,
               bold: true,
             }),
           ],
@@ -493,7 +495,7 @@ function createExperience({
             },
           ],
           spacing: {
-            after: 120, // The value is in twentieths of a point, so 240 will result in 12 points or around 1/6 of an inch
+            after: 60, // The value is in twentieths of a point, so 240 will result in 12 points or around 1/6 of an inch
           },
         });
 
@@ -511,13 +513,7 @@ function createExperience({
   return experienceParagraphs;
 }
 
-function createProject({
-  resumeId,
-  email,
-}: {
-  resumeId: string;
-  email: string;
-}) {
+function createProject({ id }: { id: string }) {
   // Your assumed state fetching function
   const {
     projects,
@@ -526,7 +522,7 @@ function createProject({
     hiddenDates,
     hiddenLocation,
     hiddenPosition,
-  } = createProjectsSection(`projects-${email}-${resumeId}`).getState();
+  } = createProjectsSection(id).getState();
 
   const projectParagraphs = [];
 
@@ -644,13 +640,7 @@ function createProject({
   return projectParagraphs;
 }
 
-function createTalent({
-  resumeId,
-  email,
-}: {
-  resumeId: string;
-  email: string;
-}) {
+function createTalent({ id }: { id: string }) {
   const {
     skills,
     languages,
@@ -658,7 +648,7 @@ function createTalent({
     hideSkills,
     hideLanguages,
     hideInterests,
-  } = createTalentsInfo(`talents-${email}-${resumeId}`).getState();
+  } = createTalentsInfo(id).getState();
 
   const talentParagraphs = [];
 
@@ -719,18 +709,25 @@ function createTalent({
 
 function createBulletList(description: string[]): Paragraph[] {
   const bulletLists: Paragraph[] = [];
-  description.forEach((desc: string) => {
+  description.forEach((desc: string, index: number) => {
+    // Check if this is the last description and it's not empty
+    const isLastDescription = index === description.length - 1 && desc !== "";
+
     bulletLists.push(
       new Paragraph({
-        text: desc,
-        style: "bulletList",
-        bullet: {
-          level: 0, // How deep you want the bullet to be. Maximum level is 9
-        },
-
-        indent: {
-          left: convertInchesToTwip(0.15), // Decrease left indent as per requirement
-          hanging: convertInchesToTwip(0.15), // Adjust hanging to bring bullets closer to the text
+        children: [
+          new TextRun({
+            text: "\u2022", // Unicode for bullet character
+            size: 24, // Smaller font size in half points (e.g., 18 is equivalent to 9pt)
+          }),
+          new TextRun({
+            text: " " + desc, // Add a space after the bullet before the description
+            size: 22, // Your regular font size in half points (e.g., 22 is equivalent to 11pt)
+          }),
+        ],
+        spacing: {
+          // Add spacing only for the last bullet
+          after: isLastDescription ? 200 : 0, // Space after the last bullet (twentieths of a point)
         },
       })
     );
