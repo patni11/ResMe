@@ -16,9 +16,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-//import { saveAs } from "file-saver";
-//import { Packer } from "docx";
-//import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
+import { saveAs } from "file-saver";
+import { Packer } from "docx";
+import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
 import {
   Dialog,
   DialogContent,
@@ -59,15 +59,15 @@ export default function ResumePreview({
     html2pdf().set(opt).from(element).save();
   };
 
-  // const downloadDocx = () => {
-  //   const doc = DocumentCreator();
+  const downloadDocx = () => {
+    const doc = DocumentCreator({ componentsData, resumeId, email });
 
-  //   Packer.toBlob(doc).then((blob) => {
-  //     console.log(blob);
-  //     saveAs(blob, "resume.docx");
-  //     console.log("Document created successfully");
-  //   });
-  // };
+    Packer.toBlob(doc).then((blob) => {
+      console.log(blob);
+      saveAs(blob, "resume.docx");
+      console.log("Document created successfully");
+    });
+  };
 
   function fixExperience(rawExperiences) {
     const formattedExperiences = rawExperiences.map((exp) => {
@@ -271,7 +271,10 @@ export default function ResumePreview({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem asChild>
-              <Dialog>
+              <button onClick={downloadDocx} className="">
+                Docx
+              </button>
+              {/* <Dialog>
                 <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
                   <span>Docx</span>
                 </DialogTrigger>
@@ -296,7 +299,7 @@ export default function ResumePreview({
                     </DialogDescription>
                   </DialogHeader>
                 </DialogContent>
-              </Dialog>
+              </Dialog> */}
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <button onClick={downloadPDF} className="">
