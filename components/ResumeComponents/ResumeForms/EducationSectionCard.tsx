@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { memo } from "react";
 import { EducationType } from "@/app/(mainApp)/education/pageTypes";
+import { RefreshCw } from "lucide-react";
 
 interface EducationCardProps {
   education: EducationType;
@@ -109,6 +110,14 @@ const EducationSectionCard: FC<EducationSectionCard> = ({
       moveUp={moveUp}
       moveDown={moveDown}
     >
+      {educations.length <= 0 ? (
+        <div className="text-xs flex w-full space-x-4 justify-center">
+          <span>No Education Found, Click</span>
+          <RefreshCw className="h-4 w-4" />
+          <span>or add Education from Education section</span>
+        </div>
+      ) : null}
+
       {educations.map((education: any) => {
         return (
           <EducationCard

@@ -20,14 +20,7 @@ const ExperienceSection: FC<ExperienceSection> = ({ experienceID }) => {
   return (
     <ResumeComponentContainer>
       <div className="flex flex-col justify-start items-start w-full mt-4">
-        <h1 className="text-sm font-semibold" style={{ marginBottom: "2px" }}>
-          {" "}
-          EXPERIENCES{" "}
-        </h1>
-        <hr
-          className="h-[3px] bg-black w-full"
-          style={{ marginBottom: "1px" }}
-        />
+        <h1 className="sectionHeader">EXPERIENCE </h1>
 
         {experiences.map((experience: any) => {
           const isExperienceHidden =
@@ -70,25 +63,22 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
   const descriptions = experience.description;
 
   return (
-    <div className="flex flex-col space-between text-xs w-full leading-tight mb-3">
-      <div className="flex space-between">
-        <div className="flex flex-col w-full text-left">
-          {/* <p>Northeastern University</p> */}
-          <p className="font-bold">{experience.company}</p>
-          {/* <p>September 2021 - May 2025</p> */}
-          <p className="italic text-gray-900 font-normal">
-            {experience.positionTitle}
-          </p>
+    <div className="card-w-list">
+      <div className="card">
+        <div className="detail-col text-left">
+          <h2>{experience.company}</h2>
+          <span className="italicSecondary">{experience.positionTitle}</span>
         </div>
-        <div className="flex flex-col font-bold w-full text-right">
-          {/* <p>Bachelor&apos;s Computer Science</p> */}
-          {experience.experienceType} {experience.location}
-          <p className="font-light italic">
+        <div className="detail-col text-right">
+          <h2>
+            {experience.experienceType} {experience.location}
+          </h2>
+          <span className="italicSecondary">
             {getFormattedDate(new Date(experience.startDate))} - {endDate}
-          </p>
+          </span>
         </div>
       </div>
-      <ul className="text-left m-0 pl-2" style={{ listStyleType: "none" }}>
+      <ul>
         {Array.isArray(descriptions)
           ? descriptions.map((desc, index) => {
               return (

@@ -5,8 +5,15 @@ import { FormCardWrapper } from "./FormCardWrapper";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, PlusCircleIcon, Trash2 } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  PlusCircleIcon,
+  RefreshCw,
+  Trash2,
+} from "lucide-react";
 import { createExperienceInfo } from "@/store/experienceInfo";
+import { AIHelper } from "@/components/Cards/AIHelper";
 interface ExperienceSectionCard {
   experienceID: string;
   index: number;
@@ -54,6 +61,14 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
       moveUp={moveUp}
       moveDown={moveDown}
     >
+      {experiences.length <= 0 ? (
+        <div className="text-xs flex w-full space-x-4 justify-center">
+          <span>No Experiences Found, Click</span>
+          <RefreshCw className="h-4 w-4" />
+          <span>or add Experiences from Experiences section</span>
+        </div>
+      ) : null}
+
       {experiences.map((experience: any, index: number) => {
         return (
           <ExperienceCard
@@ -113,7 +128,11 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
   };
 
   return (
-    <div className="flex flex-col w-full bg-secondary p-4 rounded-lg mb-2">
+    <div
+      className={`flex flex-col w-full p-4 rounded-lg mb-2 ${
+        hideExperience ? "bg-secondary" : "bg-muted"
+      }`}
+    >
       <div className="flex space-x-2 w-full">
         <div className="flex flex-col mr-2">
           {index != 0 ? (
@@ -146,40 +165,46 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
           </div>
         </div>
       </div>
-
-      <ul className="flex flex-col w-full my-2">
-        {Array.isArray(descriptions)
-          ? descriptions.map((desc, index) => {
-              return (
-                <li key={index} className="flex space-x-2 w-full">
-                  <Input
-                    className="w-full focus-visible:ring-0"
-                    value={desc}
-                    onChange={(e) =>
-                      handleOnChange(e.currentTarget.value, index)
-                    }
-                  ></Input>
-                  <Button
-                    variant="ghost"
-                    className="hover:text-destructive"
-                    onClick={() => deleteDescription(index)}
-                    aria-label="Hide Description"
-                  >
-                    <Trash2 className="w-4 h-4"></Trash2>
-                  </Button>
-                </li>
-              );
-            })
-          : null}
-      </ul>
-      <Button
-        className="mr-2 text-xs w-12 hover:bg-primary hover:text-primary-foreground"
-        variant="ghost"
-        onClick={addDescription}
-        aria-label="Add Description"
-      >
-        <PlusCircleIcon className="h-4 w-4" />
-      </Button>
+      {hideExperience ? null : (
+        <ul className="flex flex-col w-full my-2">
+          {Array.isArray(descriptions)
+            ? descriptions.map((desc, index) => {
+                return (
+                  <li key={index} className="flex space-x-2 w-full">
+                    <Input
+                      className="w-full focus-visible:ring-0"
+                      value={desc}
+                      onChange={(e) =>
+                        handleOnChange(e.currentTarget.value, index)
+                      }
+                    ></Input>
+                    <Button
+                      variant="ghost"
+                      className="hover:text-destructive"
+                      onClick={() => deleteDescription(index)}
+                      aria-label="Hide Description"
+                    >
+                      <Trash2 className="w-4 h-4"></Trash2>
+                    </Button>
+                  </li>
+                );
+              })
+            : null}
+        </ul>
+      )}
+      {hideExperience ? null : (
+        <div className="flex justify-end space-x-2 w-full">
+          <Button
+            className="mr-2 text-xs w-12 hover:bg-primary hover:text-primary-foreground"
+            variant="ghost"
+            onClick={addDescription}
+            aria-label="Add Description"
+          >
+            <PlusCircleIcon className="h-4 w-4" />
+          </Button>
+          <AIHelper />
+        </div>
+      )}
     </div>
   );
 };

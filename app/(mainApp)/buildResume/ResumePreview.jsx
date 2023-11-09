@@ -1,5 +1,5 @@
 "use client";
-
+import { PremiumDialog } from "@/components/Cards/UpgradeToPremium";
 import ResumeHeader from "@/components/ResumeComponents/ResumeEditor/ResumeHeader";
 import EducationSection from "@/components/ResumeComponents/ResumeEditor/EducationSection";
 import ExperienceSection from "@/components/ResumeComponents/ResumeEditor/ExperienceSection";
@@ -52,7 +52,7 @@ export default function ResumePreview({
     var opt = {
       margin: 0.5,
       filename: "resume.pdf",
-      html2canvas: { scale: 2 },
+      html2canvas: { scale: 2, windowWidth: 694 },
       pagebreak: { mode: ["avoid-all"] },
       jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
     };
@@ -299,12 +299,15 @@ export default function ResumePreview({
               </Dialog>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <button
-                onClick={downloadPDF}
-                className="hover:text-destructive hover:text-semibold w-full cursor-pointer"
-              >
+              <button onClick={downloadPDF} className="">
                 PDF
               </button>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <PremiumDialog>
+                <button className="">Share Link</button>
+              </PremiumDialog>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -315,8 +318,8 @@ export default function ResumePreview({
       </PDFViewer> */}
       {/* style={{ width: "595px" }} */}
       <div
-        className="py-12 relative bg-white w-full h-full"
-        style={{ paddingLeft: "3rem", paddingRight: "3rem" }}
+        className="relative bg-white w-full h-full"
+        style={{ padding: "3rem", width: 694, height: 981 }}
       >
         <div
           className="relative bg-white mx-auto h-full overflow-y-auto font-serif leading-tight text-center align-middle"

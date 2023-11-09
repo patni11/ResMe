@@ -13,6 +13,8 @@ interface EducationSectionProps {
   educationID: string;
 }
 
+import "./sectionStyle.css";
+
 const EducationSection: React.FC<EducationSectionProps> = ({ educationID }) => {
   const useEducationsInfo = createEducationInfo(educationID);
   const {
@@ -33,14 +35,7 @@ const EducationSection: React.FC<EducationSectionProps> = ({ educationID }) => {
       <div className="flex flex-col justify-start items-start w-full">
         {/* <h1 className="text-sm font-semibold"> EDUCATION </h1>
         <hr className="h-[3px] bg-black w-full mb-[0.5px] mt-[0.5px]" /> */}
-        <h1 className="text-sm font-semibold" style={{ marginBottom: "2px" }}>
-          {" "}
-          EDUCATION{" "}
-        </h1>
-        <hr
-          className="h-[3px] bg-black w-full"
-          style={{ marginBottom: "1px" }}
-        />
+        <h1 className="sectionHeader">EDUCATION </h1>
 
         {educations.map((education: any) => {
           const isEducationHidden =
@@ -83,25 +78,27 @@ const EducationCard: FC<EducationCardProps> = ({
 }) => {
   const gpa = education?.gpa ? parseDecimal(education.gpa) : 0;
   return (
-    <div className="flex flex space-between text-xs w-full leading-tight mb-1">
-      <div className="flex flex-col w-full text-left">
-        {/* <p>Northeastern University</p> */}
-        <p className="font-bold">{education.schoolName}</p>
-        {/* <p>September 2021 - May 2025</p> */}
-        <p className="italic text-gray-900 font-normal">
+    <div className="card">
+      <div className="detail-col text-left">
+        <h2>{education.schoolName}</h2>
+
+        <span className="italicSecondary">
           {education.degreeType} {education.major}
-        </p>
+        </span>
       </div>
-      <div className="flex flex-col font-light italic w-full text-right">
+      <div className="detail-col text-right">
         {/* <p>Bachelor&apos;s Computer Science</p> */}
 
         {!hideDate ? (
-          <p className="font-bold">
+          <h2>
             {getFormattedDate(new Date(education.startDate))} -{" "}
             {getFormattedDate(new Date(education.endDate))}
-          </p>
+          </h2>
         ) : null}
-        {!hideGPA ? <p> GPA: {gpa.toString()}</p> : null}
+
+        {!hideGPA ? (
+          <span className="italicSecondary"> GPA: {gpa.toString()}</span>
+        ) : null}
       </div>
     </div>
   );

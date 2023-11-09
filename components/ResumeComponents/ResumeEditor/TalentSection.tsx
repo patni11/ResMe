@@ -21,13 +21,7 @@ export default function TalentSection({ talentsID }: { talentsID: string }) {
   return (
     <ResumeComponentContainer>
       <div className="flex flex-col justify-start items-start w-full">
-        <h1 className="text-sm font-semibold" style={{ marginBottom: "2px" }}>
-          SKILLS & INTERESTS{" "}
-        </h1>
-        <hr
-          className="h-[3px] bg-black w-full"
-          style={{ marginBottom: "1px" }}
-        />
+        <h1 className="sectionHeader">SKILLS & INTERESTS </h1>
 
         {skills != "" && !hideSkills ? (
           <p className="text-xs text-left">

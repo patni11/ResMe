@@ -1,0 +1,56 @@
+body {
+  font-family: "Arial", sans-serif;
+}
+
+.card {
+  width: 100%;
+  padding-bottom: 4px;
+  font-size: 11px;
+  display: flex;
+  flex-direction: row;
+}
+
+.card-w-list {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.sectionHeader {
+  font-size: 14px;
+  width: 100%;
+  text-align: left;
+  font-weight: bolder;
+  margin-bottom: 4px;
+}
+
+.sectionHeader::after {
+  content: "";
+  display: block;
+  clear: both;
+  border-top: 2px solid black; /* Creates a line */
+  margin-top: 4px;
+}
+
+.detail-col {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.italicSecondary {
+  font-style: italic;
+  color: #111827;
+}
+
+h2 {
+  font-size: 11px;
+  margin: 0 0 0 0;
+  font-weight: bold;
+}
+
+ul {
+  font-size: 11px;
+  text-align: left;
+  list-style-type: none;
+  margin-left: 8px;
+}

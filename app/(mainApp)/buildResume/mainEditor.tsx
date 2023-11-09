@@ -124,7 +124,7 @@ const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
           ) : null}
         </div>
         <Separator className="m-0 sm:hidden" orientation="vertical" />
-        <div className="w-1/2 py-6 bg-gray-200">
+        <div className="w-1/2 py-6 bg-gray-200" id="root">
           {email !== "" ? (
             <ResumePreview
               resumeId={resumeId}

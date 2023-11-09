@@ -4,8 +4,15 @@ import { FormCardWrapper } from "./FormCardWrapper";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp, PlusCircleIcon, Trash2 } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  PlusCircleIcon,
+  RefreshCw,
+  Trash2,
+} from "lucide-react";
 import { createProjectsSection } from "@/store/projectsInfo";
+import { AIHelper } from "@/components/Cards/AIHelper";
 
 interface ProjectSectionCard {
   projectId: string;
@@ -60,6 +67,14 @@ const ProjectSectionCard: FC<ProjectSectionCard> = ({
       moveUp={moveUp}
       moveDown={moveDown}
     >
+      {projects.length <= 0 ? (
+        <div className="text-xs flex w-full space-x-4 justify-center">
+          <span>No Projects Found, Click</span>
+          <RefreshCw className="h-4 w-4" />
+          <span>or add Projects from Projects section</span>
+        </div>
+      ) : null}
+
       {projects.map((project: any, index: number) => {
         return (
           <ProjectCard
@@ -149,7 +164,11 @@ const ProjectCard: FC<ProjectCardProps> = ({
   };
 
   return (
-    <div className="flex flex-col w-full bg-secondary p-4 rounded-lg mb-2">
+    <div
+      className={`flex flex-col w-full p-4 rounded-lg mb-2 ${
+        hideProject ? "bg-secondary" : "bg-muted"
+      }`}
+    >
       <div className="flex space-x-2 w-full">
         <div className="flex flex-col mr-2">
           {index != 0 ? (
@@ -204,40 +223,46 @@ const ProjectCard: FC<ProjectCardProps> = ({
           </div>
         </div>
       </div>
-
-      <ul className="flex flex-col w-full my-2">
-        {Array.isArray(descriptions)
-          ? descriptions.map((desc, index) => {
-              return (
-                <li key={index} className="flex space-x-2 w-full">
-                  <Input
-                    className="w-full focus-visible:ring-0"
-                    value={desc}
-                    onChange={(e) =>
-                      handleOnChange(e.currentTarget.value, index)
-                    }
-                  ></Input>
-                  <Button
-                    variant="ghost"
-                    className="hover:text-destructive"
-                    onClick={() => deleteDescription(projectId, index)}
-                    aria-label="Delete Description"
-                  >
-                    <Trash2 className="w-4 h-4"></Trash2>
-                  </Button>
-                </li>
-              );
-            })
-          : null}
-      </ul>
-      <Button
-        className="mr-2 text-xs w-12 hover:bg-primary hover:text-primary-foreground"
-        variant="ghost"
-        onClick={() => addDescription(projectId)}
-        aria-label="Add Description"
-      >
-        <PlusCircleIcon className="h-4 w-4" />
-      </Button>
+      {hideProject ? null : (
+        <ul className="flex flex-col w-full my-2">
+          {Array.isArray(descriptions)
+            ? descriptions.map((desc, index) => {
+                return (
+                  <li key={index} className="flex space-x-2 w-full">
+                    <Input
+                      className="w-full focus-visible:ring-0"
+                      value={desc}
+                      onChange={(e) =>
+                        handleOnChange(e.currentTarget.value, index)
+                      }
+                    ></Input>
+                    <Button
+                      variant="ghost"
+                      className="hover:text-destructive"
+                      onClick={() => deleteDescription(projectId, index)}
+                      aria-label="Delete Description"
+                    >
+                      <Trash2 className="w-4 h-4"></Trash2>
+                    </Button>
+                  </li>
+                );
+              })
+            : null}
+        </ul>
+      )}
+      {hideProject ? null : (
+        <div className="flex justify-end space-x-2 w-full">
+          <Button
+            className="mr-2 text-xs w-12 hover:bg-primary hover:text-primary-foreground"
+            variant="ghost"
+            onClick={() => addDescription(projectId)}
+            aria-label="Add Description"
+          >
+            <PlusCircleIcon className="h-4 w-4" />
+          </Button>
+          <AIHelper />
+        </div>
+      )}
     </div>
   );
 };

@@ -9,6 +9,7 @@ import bcrypt from "bcryptjs";
 import { User } from "../models/user";
 import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
+import { sendWelcomeEmail } from "./sendEmail";
 export type Session = {
   user: {
     email: string;
@@ -105,6 +106,16 @@ export const authOptions: NextAuthOptions = {
         session.user = token.user;
       }
       return session;
+    },
+  },
+  events: {
+    async createUser(message) {
+      const params = {
+        name: message.user.name,
+        email: message.user.email,
+      };
+      console.log("NEW USER");
+      await sendWelcomeEmail(params); // <-- send welcome email
     },
   },
 };

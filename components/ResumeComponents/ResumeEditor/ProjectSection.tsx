@@ -27,14 +27,7 @@ const ProjectSection: FC<ProjectSectionProps> = ({ projectId }) => {
   return (
     <ResumeComponentContainer>
       <div className="flex flex-col justify-start items-start w-full">
-        <h1 className="text-sm font-semibold" style={{ marginBottom: "2px" }}>
-          {" "}
-          PROJECTS{" "}
-        </h1>
-        <hr
-          className="h-[3px] bg-black w-full"
-          style={{ marginBottom: "1px" }}
-        />
+        <h1 className="sectionHeader">PROJECTS </h1>
 
         {projects.map((project: any) => {
           const isProjectHidden = hiddenProjects && hiddenProjects[project._id];
@@ -95,21 +88,20 @@ const ProjectCard: FC<ProjectCardProps> = ({
     : undefined;
   const newEndDate = endDate ? getFormattedDate(new Date(endDate)) : undefined;
   return (
-    <div className="flex flex-col space-between text-xs w-full leading-tight mb-3">
-      <div className="flex space-between">
-        <div className="flex flex-col w-full text-left">
-          {/* <p>Northeastern University</p> */}
-          <p className="font-bold">{projectName}</p>
-          {/* <p>September 2021 - May 2025</p> */}
-          <p className="italic text-gray-900 font-normal">{positionTitle}</p>
+    <div className="card-w-list">
+      <div className="card">
+        <div className="detail-col text-left">
+          <h2>{projectName}</h2>
+
+          <span className="italicSecondary">{positionTitle}</span>
         </div>
-        <div className="flex flex-col font-bold w-full text-right">
+        <div className="detail-col text-right">
           {/* <p>Bachelor&apos;s Computer Science</p> */}
-          {location}
+          <h2>{location}</h2>
           {newStartDate != undefined ? (
-            <p className="font-light italic">
+            <span className="italicSecondary">
               {newStartDate} - {newEndDate}
-            </p>
+            </span>
           ) : null}
         </div>
       </div>
