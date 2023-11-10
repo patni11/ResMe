@@ -38,6 +38,13 @@ export default function ResumePreview({
   const { toast } = useToast();
   const router = useRouter();
   const downloadPDF = () => {
+    gtag.event({
+      clientWindow: window,
+      action: "Download PDF",
+      category: "Download",
+      label: "Download PDF",
+    });
+
     var element = document.getElementById("element-to-print");
     var opt = {
       margin: 0.5,
@@ -50,6 +57,13 @@ export default function ResumePreview({
   };
 
   const downloadDocx = () => {
+    gtag.event({
+      clientWindow: window,
+      action: "Download Docx",
+      category: "Download",
+      label: "Download Docx",
+    });
+
     const doc = DocumentCreator({ componentsData, resumeId, email });
 
     Packer.toBlob(doc).then((blob) => {
@@ -84,6 +98,13 @@ export default function ResumePreview({
   }
 
   const handleSave = async () => {
+    gtag.event({
+      clientWindow: window,
+      action: "Save",
+      category: "Download",
+      label: "Save",
+    });
+
     const certificates = localStorage.getItem(
       `certificates-${email}-${resumeId}`
     );
@@ -260,7 +281,17 @@ export default function ResumePreview({
             <Download className="w-5 h-5" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem asChild>
+            <DropdownMenuItem
+              asChild
+              onClick={() => {
+                gtag.event({
+                  clientWindow: window,
+                  action: "Download Docx",
+                  category: "Download",
+                  label: "Download Docx",
+                });
+              }}
+            >
               {/* <button onClick={downloadDocx} className="">
                 Docx
               </button> */}
@@ -281,7 +312,18 @@ export default function ResumePreview({
               </PremiumDialog> */}
 
               <ComingSoon>
-                <span>Share Link</span>
+                <span
+                  onClick={() => {
+                    gtag.event({
+                      clientWindow: window,
+                      action: "Share Link",
+                      category: "Download",
+                      label: "Share Link",
+                    });
+                  }}
+                >
+                  Share Link
+                </span>
               </ComingSoon>
             </DropdownMenuItem>
           </DropdownMenuContent>

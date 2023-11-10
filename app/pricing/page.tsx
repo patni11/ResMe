@@ -5,10 +5,21 @@ import { CheckCircle2, XCircle } from "lucide-react";
 import { FC } from "react";
 import Link from "next/link";
 import { GoPremium } from "./premiumButton";
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/rRBlufM
- */
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ResMe",
+  description: "Pricing",
+  verification: {
+    google: "google-site-verification=G-501H6DW77H",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+  },
+};
+
 const PricingPage = () => {
   return (
     <div>

@@ -10,6 +10,7 @@ interface DeleteButtonProps {
 export const DeleteButton: FC<DeleteButtonProps> = ({ deleteFunction }) => {
   const handleDelete = () => {
     deleteFunction();
+    localStorage.clear();
     signOut();
   };
   return (

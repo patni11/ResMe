@@ -8,6 +8,19 @@ import { Project } from "./pageTypes";
 import { fetchUserProjects } from "@/lib/actions/userProject.actions";
 import ProjectCard from "./projectCard";
 import ImageWrapper from "@/components/ImageWrapper";
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Projects - ResMe",
+  description: "Your Projects",
+  verification: {
+    google: "google-site-verification=G-501H6DW77H",
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+  },
+};
 
 const Projects = async () => {
   const session: Session | null = await getServerSession(authOptions);

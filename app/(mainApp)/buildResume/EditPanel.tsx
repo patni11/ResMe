@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 import EducationSectionCard from "@/components/ResumeComponents/ResumeForms/EducationSectionCard";
 import { buttonVariants } from "@/components/ui/button";
@@ -122,15 +122,19 @@ const EditPanel: FC<EditPanelProps> = ({
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle className="text-center mb-4">
+              <DialogTitle className="text-center mb-4 text-xl font-semibold">
                 How ResMe Works
               </DialogTitle>
-              <DialogDescription className="flex flex-col space-y-4 items-center">
-                <ul className="flex flex-col space-y-4">
-                  <li>Step1: Enter your details to sections in sidebar</li>
-                  <li>Step2: Click refresh to reset or load data</li>
-                  <li>Step3: Make your changes</li>
-                  <li>Step4: Save or Download</li>
+              <DialogDescription className="flex flex-col space-y-8 items-center">
+                <ul className="flex flex-col space-y-8 mb-4">
+                  <li className="text-lg">
+                    Step1: Enter your details to sections in sidebar
+                  </li>
+                  <li className="text-lg">
+                    Step2: Click refresh to reset or load data
+                  </li>
+                  <li className="text-lg">Step3: Make your changes</li>
+                  <li className="text-lg">Step4: Save or Download</li>
                 </ul>
               </DialogDescription>
             </DialogHeader>

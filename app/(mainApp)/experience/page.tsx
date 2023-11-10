@@ -9,6 +9,20 @@ import { fetchExperiences } from "@/lib/actions/experience.actions";
 import ExperienceCard from "./experienceCard";
 import ImageWrapper from "@/components/ImageWrapper";
 
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Experience - ResMe",
+  description: "Your Experiences",
+  verification: {
+    google: "google-site-verification=G-501H6DW77H",
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+  },
+};
+
 const ExperiencePage = async () => {
   const session: Session | null = await getServerSession(authOptions);
 

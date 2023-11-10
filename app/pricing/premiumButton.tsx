@@ -7,14 +7,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
+import GoPremiumButton from "./goPremiumButton";
+import { buttonVariants } from "@/components/ui/button";
 export const GoPremium = () => {
   return (
     <Dialog>
       <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 w-full">
-        <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-500">
-          Go Premium
-        </Button>
+        <GoPremiumButton />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

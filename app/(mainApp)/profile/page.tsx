@@ -20,6 +20,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DeleteButton, LogOut } from "./signOutButtons";
+
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Profile - ResMe",
+  description: "Your Profile",
+  verification: {
+    google: "google-site-verification=G-501H6DW77H",
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+  },
+};
+
 const Profile = async () => {
   const session: Session | null = await getServerSession(authOptions);
 

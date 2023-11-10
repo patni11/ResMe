@@ -2,23 +2,8 @@ import { SidebarMain } from "@/components/Navigation/SideBarMain";
 //import { Sidebar } from "@/components/Navigation/Sidebar";
 
 import { authOptions } from "@/lib/authOptions";
-import { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-
-export const metadata: Metadata = {
-  metadataBase: new URL("https://resme.xyz/"),
-  title: "ResMe",
-  description: "Create Professional Resumes",
-  verification: {
-    google: "google-site-verification=G-501H6DW77H",
-  },
-  robots: {
-    index: false,
-    follow: true,
-    nocache: true,
-  },
-};
 
 export default async function RootLayout({
   children,

@@ -8,6 +8,20 @@ import {
 import { UserInfo } from "./pageType";
 import { getServerSession } from "next-auth/next";
 import authOptions, { Session } from "@/lib/authOptions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "User Info - ResMe",
+  description: "Your Info",
+  verification: {
+    google: "google-site-verification=G-501H6DW77H",
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+  },
+};
 
 const UserInfoPage = async () => {
   const session: Session | null = await getServerSession(authOptions);

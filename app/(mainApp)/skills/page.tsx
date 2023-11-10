@@ -11,6 +11,19 @@ import {
 } from "@/lib/actions/user.actions";
 
 interface SkillsProps {}
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Talents - ResMe",
+  description: "Your Talents",
+  verification: {
+    google: "google-site-verification=G-501H6DW77H",
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+  },
+};
 
 const Skills: FC<SkillsProps> = async () => {
   const session: Session | null = await getServerSession(authOptions);

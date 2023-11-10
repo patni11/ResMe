@@ -3,6 +3,20 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import authOptions from "@/lib/authOptions";
 import { Session, getServerSession } from "next-auth";
 
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Build Resume - ResMe",
+  description: "Create Professional Resume",
+  verification: {
+    google: "google-site-verification=G-501H6DW77H",
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+  },
+};
+
 const BuildResume = async () => {
   const session: Session | null = await getServerSession(authOptions);
 

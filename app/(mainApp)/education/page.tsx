@@ -2,6 +2,20 @@ import ImageWrapper from "@/components/ImageWrapper";
 import EducationSection from "./EducationSection";
 import CertificateSection from "./CertificateSection";
 
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Education - ResMe",
+  description: "Your Educations",
+  verification: {
+    google: "google-site-verification=G-501H6DW77H",
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true,
+  },
+};
+
 const Education = () => {
   return (
     <ImageWrapper imgSrc="education">

@@ -12,8 +12,14 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://resme.xyz/"),
   title: "ResMe",
   description: "Create Professional Resumes",
+
   verification: {
     google: "google-site-verification=G-501H6DW77H",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
   },
 };
 
