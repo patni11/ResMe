@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   AlignmentType,
   Document,
@@ -18,16 +19,6 @@ import { createCertificateInfo } from "@/store/certificatesInfo";
 import { createExperienceInfo } from "@/store/experienceInfo";
 import { createProjectsSection } from "@/store/projectsInfo";
 import { createTalentsInfo } from "@/store/talentsInfo";
-
-const componentFunctions = {
-  ResumeHeader: createHeader,
-  EducationSectionCard: createEducation,
-  CertificateSectionCard: createCertificates,
-  ExperienceSectionCard: createExperience,
-  ProjectSectionCard: createProject,
-  TalentsSection: createTalent,
-  // ... map other component types to their respective functions
-};
 
 const renderComponent = (componentsData: { type: string; id: string }) => {
   switch (componentsData.type) {

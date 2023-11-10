@@ -1,5 +1,4 @@
 "use client";
-import { PremiumDialog } from "@/components/Cards/UpgradeToPremium";
 import ResumeHeader from "@/components/ResumeComponents/ResumeEditor/ResumeHeader";
 import EducationSection from "@/components/ResumeComponents/ResumeEditor/EducationSection";
 import ExperienceSection from "@/components/ResumeComponents/ResumeEditor/ExperienceSection";
@@ -19,15 +18,6 @@ import {
 import { saveAs } from "file-saver";
 import { Packer } from "docx";
 import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import Link from "next/link";
 // import { PDFViewer } from "@react-pdf/renderer";
 // import Document from "@/components/ResumeComponents/ReactPDF/index";
 const { v4: uuidv4 } = require("uuid");
