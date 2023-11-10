@@ -7,7 +7,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ReactElement } from "react";
-import { Button, buttonVariants } from "../ui/button";
 import Link from "next/link";
 export const PremiumDialog = ({ children }: { children: ReactElement }) => {
   return (

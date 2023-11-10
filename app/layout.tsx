@@ -7,9 +7,14 @@ import { GA_TRACKING_ID } from "../lib/gtag";
 //import { Session } from "next-auth";
 const inter = Inter({ subsets: ["latin"] });
 import { NextAuthProvider } from "@/components/NextAuthProvider";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://resme.xyz/"),
   title: "ResMe",
   description: "Create Professional Resumes",
+  verification: {
+    google: "google-site-verification=G-501H6DW77H",
+  },
 };
 
 export default function RootLayout({

@@ -31,7 +31,7 @@ import Link from "next/link";
 // import { PDFViewer } from "@react-pdf/renderer";
 // import Document from "@/components/ResumeComponents/ReactPDF/index";
 const { v4: uuidv4 } = require("uuid");
-
+import { ComingSoon } from "@/components/Cards/ComingSoon";
 import "./style/resumePreview.css";
 //import { saveLocally } from "./storeLocally";
 import { useToast } from "@/components/ui/use-toast";
@@ -271,46 +271,28 @@ export default function ResumePreview({
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem asChild>
-              <button onClick={downloadDocx} className="">
+              {/* <button onClick={downloadDocx} className="">
                 Docx
-              </button>
-              {/* <Dialog>
-                <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  <span>Docx</span>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle className="flex w-full justify-center">
-                      Coming Soon! 😄
-                    </DialogTitle>
-                    <DialogDescription className="flex flex-col space-y-4 items-center">
-                      <span>
-                        We are currently working on it, Follow us to stay
-                        updated!
-                      </span>
-                      <Link
-                        href="https://twitter.com/resmexyz"
-                        className={`${buttonVariants({
-                          variant: "outline",
-                        })}`}
-                      >
-                        Follow
-                      </Link>
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog> */}
+              </button> */}
+
+              <ComingSoon>
+                <span>Docx</span>
+              </ComingSoon>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <button onClick={downloadPDF} className="">
+              <button onClick={downloadPDF} className="font-bold">
                 PDF
               </button>
             </DropdownMenuItem>
 
             <DropdownMenuItem asChild>
-              <PremiumDialog>
+              {/* <PremiumDialog>
                 <button className="">Share Link</button>
-              </PremiumDialog>
+              </PremiumDialog> */}
+
+              <ComingSoon>
+                <span>Share Link</span>
+              </ComingSoon>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
