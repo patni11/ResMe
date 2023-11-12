@@ -26,6 +26,7 @@ import "./style/resumePreview.css";
 //import { saveLocally } from "./storeLocally";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { createResume, updateResume } from "@/lib/actions/resumes.action";
 import * as gtag from "@/lib/gtag";
 export default function ResumePreview({
@@ -35,9 +36,12 @@ export default function ResumePreview({
 }) {
   const elementRef = useRef(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
   const downloadPDF = () => {
+    setIsDownloading(true);
+
     gtag.event({
       clientWindow: window,
       action: "Download PDF",
@@ -54,6 +58,7 @@ export default function ResumePreview({
       jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
     };
     html2pdf().set(opt).from(element).save();
+    setIsDownloading(false);
   };
 
   const downloadDocx = () => {
@@ -258,7 +263,7 @@ export default function ResumePreview({
 
   return (
     <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4">
-      <div className="w-full flex justify-right space-x-4 mb-2">
+      <div className="w-full flex justify-right space-x-4 mb-2 items-center">
         <Button
           className="w-24 flex space-x-2"
           onClick={() => {
@@ -276,8 +281,14 @@ export default function ResumePreview({
               variant: "default",
               className: "w-24 flex space-x-2",
             })}
+            disabled={isDownloading}
           >
-            <span className="hidden md:block">Download</span>
+            {isDownloading ? (
+              <LoadingSpinner />
+            ) : (
+              <span className="hidden md:block">Download</span>
+            )}
+
             <Download className="w-5 h-5" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>

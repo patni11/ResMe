@@ -80,7 +80,7 @@ const EducationCard: FC<EducationCardProps> = ({
   return (
     <div className="card">
       <div className="detail-col text-left">
-        <h2>{education.schoolName}</h2>
+        <h2 className="sideText">{education.schoolName}</h2>
 
         <span className="italicSecondary">
           {education.degreeType} {education.major}
@@ -90,7 +90,7 @@ const EducationCard: FC<EducationCardProps> = ({
         {/* <p>Bachelor&apos;s Computer Science</p> */}
 
         {!hideDate ? (
-          <h2>
+          <h2 className="sideText">
             {getFormattedDate(new Date(education.startDate))} -{" "}
             {getFormattedDate(new Date(education.endDate))}
           </h2>

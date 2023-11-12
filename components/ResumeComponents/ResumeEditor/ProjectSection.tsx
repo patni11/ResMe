@@ -91,13 +91,13 @@ const ProjectCard: FC<ProjectCardProps> = ({
     <div className="card-w-list">
       <div className="card">
         <div className="detail-col text-left">
-          <h2>{projectName}</h2>
+          <h2 className="sideText">{projectName}</h2>
 
           <span className="italicSecondary">{positionTitle}</span>
         </div>
         <div className="detail-col text-right">
           {/* <p>Bachelor&apos;s Computer Science</p> */}
-          <h2>{location}</h2>
+          <h2 className="sideText">{location}</h2>
           {newStartDate != undefined ? (
             <span className="italicSecondary">
               {newStartDate} - {newEndDate}
@@ -105,7 +105,7 @@ const ProjectCard: FC<ProjectCardProps> = ({
           ) : null}
         </div>
       </div>
-      <ul className="text-left m-0 pl-2" style={{ listStyleType: "none" }}>
+      <ul className="sectionList">
         {Array.isArray(descriptions)
           ? descriptions.map((desc, index) => {
               return (

@@ -66,11 +66,11 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
     <div className="card-w-list">
       <div className="card">
         <div className="detail-col text-left">
-          <h2>{experience.company}</h2>
+          <h2 className="sideText">{experience.company}</h2>
           <span className="italicSecondary">{experience.positionTitle}</span>
         </div>
         <div className="detail-col text-right">
-          <h2>
+          <h2 className="sideText">
             {experience.experienceType} {experience.location}
           </h2>
           <span className="italicSecondary">
@@ -78,7 +78,7 @@ const ExperienceCard: FC<ExperienceCardProps> = ({ experience }) => {
           </span>
         </div>
       </div>
-      <ul>
+      <ul className="sectionList">
         {Array.isArray(descriptions)
           ? descriptions.map((desc, index) => {
               return (
