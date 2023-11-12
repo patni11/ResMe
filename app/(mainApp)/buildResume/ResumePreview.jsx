@@ -27,7 +27,7 @@ import "./style/resumePreview.css";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { createResume, updateResume } from "@/lib/actions/resumes.action";
-
+import * as gtag from "@/lib/gtag";
 export default function ResumePreview({
   resumeId = "default",
   email = "",
