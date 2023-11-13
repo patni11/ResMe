@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export const ImageSlider = ({ slides }: { slides: any }) => {
   const headings = [
-    "Ituitive Dashboard",
+    "Intuitive Dashboard",
     "Professional Formatting",
     "❤️ by both ATS bots and humans",
   ];
