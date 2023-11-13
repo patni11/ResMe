@@ -7162,6 +7162,7 @@ __metadata:
     react-dom: ^18.2.0
     react-email: ^1.9.5
     react-hook-form: ^7.47.0
+    react-zoom-pan-pinch: ^3.3.0
     resend: ^2.0.0
     shadcn-ui: ^0.4.1
     sharp: ^0.32.6
@@ -8362,6 +8363,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 7ee8ef3aab74c7ae1d70ff34a27643d11ba1a8d62d072c767827d9ff9a520905223e567002e0bf6c772929d8ea1c781a3ba0cc4a563e92b1e3dc2eaa817ecbe8
+  languageName: node
+  linkType: hard
+
+"react-zoom-pan-pinch@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "react-zoom-pan-pinch@npm:3.3.0"
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+  checksum: a68af3237d73ef2fd08927a6ba94dbfb62952056fda7b68c26eae032e8ad40cf1a7613f81a7bda3c09be144f9e9a7e440817e85be44ef283bcd8ebf4abb3d113
   languageName: node
   linkType: hard
 

@@ -188,6 +188,19 @@ export default function Home() {
         </div>
         <div className="mt-8 ml-0 md:mt-0 w-full md:w-[60%]">
           <Accordion type="single" collapsible>
+            <AccordionItem value="item-0">
+              <AccordionTrigger>Get Free Resume Review</AccordionTrigger>
+              <AccordionContent>
+                <p>
+                  We have created a exclusive community of ResMe users like
+                  yourself. Join our discord and get free resume reviews by me
+                  personally and wider community
+                </p>
+                <br />
+                <p>Discord - https://discord.gg/Ghypc6rN</p>
+              </AccordionContent>
+            </AccordionItem>
+
             <AccordionItem value="item-1">
               <AccordionTrigger>What is ResMe</AccordionTrigger>
               <AccordionContent>

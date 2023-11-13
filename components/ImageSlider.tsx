@@ -12,7 +12,7 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
   const subHeadings = [
     "Slide into ResMe's editor on the left for quick, hefty changes and catch the results instantly on the right-side preview. Plus, you can edit on the fly right in the preview. 🛠️👁️✨",
     "ResMe has the formatting for pro resumes down pat and auto-fits it to yours, so you can skip the fuss. 📄✔️✨",
-    "Colorful resumes might catch the eye, but often drop the ball with ATS. ResMe&apos;s got the balance just right — resumes that dazzle both the ATS bots and human recruiters. 🤖💼👀✨",
+    "Colorful resumes might catch the eye, but often drop the ball with ATS. ResMe's got the balance just right — resumes that dazzle both the ATS bots and human recruiters. 🤖💼👀✨",
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
