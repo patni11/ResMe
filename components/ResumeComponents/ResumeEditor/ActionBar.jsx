@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { SaveIcon, ArrowUpRightSquare, File } from "lucide-react";
 
-import { saveAs } from "file-saver";
-import { Packer } from "docx";
-import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
+//import { saveAs } from "file-saver";
+//import { Packer } from "docx";
+//import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
 // import { PDFViewer } from "@react-pdf/renderer";
 // import Document from "@/components/ResumeComponents/ReactPDF/index";
 const { v4: uuidv4 } = require("uuid");
@@ -19,26 +19,26 @@ import * as gtag from "@/lib/gtag";
 
 const ActionBar = ({ componentsData, resumeId, email, children }) => {
   const [isSaving, setIsSaving] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
+  //const [isDownloading, setIsDownloading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
 
-  const downloadDocx = () => {
-    gtag.event({
-      clientWindow: window,
-      action: "Download Docx",
-      category: "Download",
-      label: "Download Docx",
-    });
+  // const downloadDocx = () => {
+  //   gtag.event({
+  //     clientWindow: window,
+  //     action: "Download Docx",
+  //     category: "Download",
+  //     label: "Download Docx",
+  //   });
 
-    const doc = DocumentCreator({ componentsData, resumeId, email });
+  //   const doc = DocumentCreator({ componentsData, resumeId, email });
 
-    Packer.toBlob(doc).then((blob) => {
-      console.log(blob);
-      saveAs(blob, "resume.docx");
-      console.log("Document created successfully");
-    });
-  };
+  //   Packer.toBlob(doc).then((blob) => {
+  //     console.log(blob);
+  //     saveAs(blob, "resume.docx");
+  //     console.log("Document created successfully");
+  //   });
+  // };
   function fixExperience(rawExperiences) {
     const formattedExperiences = rawExperiences.map((exp) => {
       let endDate = exp.endDate;
