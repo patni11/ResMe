@@ -7156,6 +7156,7 @@ __metadata:
     mongoose: ^7.5.4
     next: ^13.5.4
     next-auth: ^4.23.2
+    next-themes: ^0.2.1
     postcss: ^8.4.31
     react: ^18.2.0
     react-day-picker: ^8.8.2
@@ -7250,6 +7251,17 @@ __metadata:
     nodemailer:
       optional: true
   checksum: 93d14137609f0759da35173b648f882d505b6a04d1366f73ddabd8cf88c4198439960c1167c3ace0c09396aea26d3d4a9996e7f29db3c4a1b1db46ceb9b323e2
+  languageName: node
+  linkType: hard
+
+"next-themes@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "next-themes@npm:0.2.1"
+  peerDependencies:
+    next: "*"
+    react: "*"
+    react-dom: "*"
+  checksum: ebc248b956138e73436c4ed0a0f0a877a0a48a33156db577029b8b8469e48b5c777d61abf2baeb75953378febea74e067a4869ff90b4a3e94fce123289b862ba
   languageName: node
   linkType: hard
 

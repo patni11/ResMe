@@ -1,4 +1,4 @@
-import { Page, View, Document, Text } from "@react-pdf/renderer";
+import { Page, Document, Text } from "@react-pdf/renderer";
 import { styles, spacing } from "./styles";
 import ResumeHeader from "./ResumeHeader";
 import {
@@ -50,6 +50,7 @@ export const ResumePDF = ({
     documentSize: DEFAULT_DOCUMENT_SIZE,
   },
   componentsData,
+  setPage,
 }: {
   resume: {
     headerData: HeaderState;
@@ -62,6 +63,7 @@ export const ResumePDF = ({
   settings: { fontFamily: string; fontSize: string; documentSize: string };
   componentsData: { type: string; id: string }[];
   isPDF?: boolean;
+  setPage: (totalPages: number) => void;
 }) => {
   const renderComponent = (componentsData: { type: string; id: string }) => {
     switch (componentsData.type) {
@@ -122,8 +124,6 @@ export const ResumePDF = ({
 
   const { fontFamily, fontSize, documentSize } = settings;
 
-  //const showFormsOrder = formsOrder.filter((form) => formToShow[form]);
-
   return (
     <>
       <Document title={`Resume`} author={"Some Author"} producer={"ResMe"}>
@@ -141,6 +141,13 @@ export const ResumePDF = ({
           {componentsData.map((componentData) =>
             renderComponent(componentData)
           )}
+          <Text
+            render={({ totalPages }) => {
+              setPage(totalPages);
+              return "";
+            }}
+            style={{ display: "none" }}
+          />
         </Page>
       </Document>
       <SuppressResumePDFErrorMessage />

@@ -21,9 +21,9 @@ const ResumeControlBar = ({
 
   if (instance.loading) {
     return (
-      <button disabled={instance.loading}>
+      <Button disabled={instance.loading}>
         <LoadingSpinner />
-      </button>
+      </Button>
     );
   }
 
@@ -31,10 +31,14 @@ const ResumeControlBar = ({
 
   return (
     <a
-      className="flex text-sm pl-2 font-semibold cursor-pointer w-full hover:bg-secondary"
       href={instance.url!}
       download={fileName}
+      className={buttonVariants({
+        variant: "default",
+        className: "flex space-x-2",
+      })}
     >
+      <Download className="w-4 h-4" />
       <span>PDF</span>
     </a>
   );

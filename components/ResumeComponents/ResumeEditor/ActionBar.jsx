@@ -1,13 +1,8 @@
 "use client";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { SaveIcon, Download } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { SaveIcon, ArrowUpRightSquare, File } from "lucide-react";
+
 import { saveAs } from "file-saver";
 import { Packer } from "docx";
 import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
@@ -18,7 +13,7 @@ import { ComingSoon } from "@/components/Cards/ComingSoon";
 //import { saveLocally } from "./storeLocally";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import LoadingSpinner from "@/components/LoadingSpinner";
+
 import { createResume, updateResume } from "@/lib/actions/resumes.action";
 import * as gtag from "@/lib/gtag";
 
@@ -198,76 +193,52 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
   return (
     <div className="w-full flex justify-right space-x-4 mb-2 items-center">
       <Button
-        className="w-24 flex space-x-2"
+        className="flex space-x-2"
         onClick={() => {
           setIsSaving(true);
           handleSave();
         }}
         disabled={isSaving}
       >
+        <SaveIcon className="w-4 h-4" />
         <span className="hidden md:block">Save</span>
-        <SaveIcon className="w-5 h-5" />
       </Button>
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          className={buttonVariants({
-            variant: "default",
-            className: "w-24 flex space-x-2",
-          })}
-          disabled={isDownloading}
+      <ComingSoon>
+        <Button
+          className="flex space-x-2"
+          onClick={() => {
+            gtag.event({
+              clientWindow: window,
+              action: "Download Docx",
+              category: "Download",
+              label: "Download Docx",
+            });
+          }}
+          disabled={isSaving}
         >
-          {isDownloading ? (
-            <LoadingSpinner />
-          ) : (
-            <span className="hidden md:block">Download</span>
-          )}
+          <File className="w-4 h-4" />
 
-          <Download className="w-5 h-5" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem
-            asChild
-            onClick={() => {
-              gtag.event({
-                clientWindow: window,
-                action: "Download Docx",
-                category: "Download",
-                label: "Download Docx",
-              });
-            }}
-          >
-            {/* <button onClick={downloadDocx} className="">
-        Docx
-      </button> */}
+          <span>Docx</span>
+        </Button>
+      </ComingSoon>
+      <ComingSoon>
+        <Button
+          className="flex space-x-2"
+          onClick={() => {
+            gtag.event({
+              clientWindow: window,
+              action: "Share Link",
+              category: "Download",
+              label: "Share Link",
+            });
+          }}
+        >
+          <ArrowUpRightSquare className="w-4 h-4" />
 
-            <ComingSoon>
-              <span>Docx</span>
-            </ComingSoon>
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>{children}</DropdownMenuItem>
-
-          <DropdownMenuItem asChild>
-            {/* <PremiumDialog>
-        <button className="">Share Link</button>
-      </PremiumDialog> */}
-
-            <ComingSoon>
-              <span
-                onClick={() => {
-                  gtag.event({
-                    clientWindow: window,
-                    action: "Share Link",
-                    category: "Download",
-                    label: "Share Link",
-                  });
-                }}
-              >
-                Share Link
-              </span>
-            </ComingSoon>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          <span>Copy</span>
+        </Button>
+      </ComingSoon>
+      {children}
     </div>
   );
 };

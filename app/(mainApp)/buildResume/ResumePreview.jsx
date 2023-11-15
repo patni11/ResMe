@@ -1,28 +1,16 @@
 "use client";
-// import ResumeHeader from "@/components/ResumeComponents/ResumeEditor/ResumeHeader";
-// import EducationSection from "@/components/ResumeComponents/ResumeEditor/EducationSection";
-// import ExperienceSection from "@/components/ResumeComponents/ResumeEditor/ExperienceSection";
-// import CertificateSection from "@/components/ResumeComponents/ResumeEditor/CertificateSections";
-// import TalentSection from "@/components/ResumeComponents/ResumeEditor/TalentSection";
-// import ProjectSection from "@/components/ResumeComponents/ResumeEditor/ProjectSection";
 import ActionBar from "@/components/ResumeComponents/ResumeEditor/ActionBar";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-// import { useState, useRef, useEffect } from "react";
-// import { Button } from "@/components/ui/button";
-// import { Hand, Pencil } from "lucide-react";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import { Download } from "lucide-react";
+
 import { ResumePDF } from "@/components/ResumeComponents/ReactPDF/ResumePDF";
 import { ResumeControlBarCSR } from "@/components/ResumeComponents/ReactPDF/ResumeControlBar";
-import { usePDF } from "@react-pdf/renderer";
+
+import { useState } from "react";
 import { ResumeIframeCSR } from "@/components/ResumeComponents/ReactPDF/ResumeIFrame";
-import {
-  DEBUG_RESUME_PDF_FLAG,
-  DEFAULT_DOCUMENT_SIZE,
-} from "@/components/ResumeComponents/ReactPDF/constants";
+import { DEFAULT_DOCUMENT_SIZE } from "@/components/ResumeComponents/ReactPDF/constants";
 import { useMemo } from "react";
 import { DEFAULT_FONT_FAMILY } from "@/components/ResumeComponents/ReactPDF/constants";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { Toggle } from "@/components/ui/toggle";
+
 import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
 import { createCertificateInfo } from "@/store/certificatesInfo";
 import { createEducationInfo } from "@/store/educationInfo";
@@ -32,13 +20,21 @@ import {
   useRegisterReactPDFFont,
   useRegisterReactPDFHyphenationCallback,
 } from "@/components/fonts/hooks";
-import { Button } from "@/components/ui/button";
+
 import { createTalentsInfo } from "@/store/talentsInfo";
+
+import {
+  A4_WIDTH_PX,
+  LETTER_WIDTH_PX,
+} from "@/components/ResumeComponents/ReactPDF/constants";
+
 export default function ResumePreview({
   resumeId = "default",
   email = "",
   componentsData,
 }) {
+  const [pdfPreview, setPDFPreview] = useState(false);
+
   const useEducationsInfo = createEducationInfo(
     `educations-${email}-${resumeId}`
   );
@@ -78,11 +74,18 @@ export default function ResumePreview({
 
   useRegisterReactPDFFont();
   useRegisterReactPDFHyphenationCallback(DEFAULT_FONT_FAMILY);
+  const [page, setPage] = useState(1);
 
   const document = useMemo(() => {
-    return <ResumePDF resume={resume} componentsData={componentsData} />;
-  }, [resume, componentsData]);
-
+    return (
+      <ResumePDF
+        resume={resume}
+        componentsData={componentsData}
+        setPage={(totalPages) => setPage(totalPages)}
+      />
+    );
+  }, [resume, componentsData, page]);
+  const width = DEFAULT_DOCUMENT_SIZE === "A4" ? A4_WIDTH_PX : LETTER_WIDTH_PX;
   return (
     <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4">
       <ActionBar
@@ -106,7 +109,17 @@ export default function ResumePreview({
             }}
           </PDFDownloadLink>
         </button> */}
+
         <ResumeControlBarCSR document={document} fileName={"somename"} />
+        <div className="flex items-center space-x-2">
+          <Toggle
+            id="edit"
+            pressed={pdfPreview}
+            onPressedChange={() => setPDFPreview(!pdfPreview)}
+          >
+            {!pdfPreview ? "View" : "Edit"}
+          </Toggle>
+        </div>
       </ActionBar>
 
       {/* <TransformWrapper
@@ -122,14 +135,34 @@ export default function ResumePreview({
         <TransformComponent wrapperClass="w-full overflow-visible">
         </TransformComponent>
       </TransformWrapper> */}
-
-      <ResumeIframeCSR
-        documentSize={DEFAULT_DOCUMENT_SIZE}
-        scale={0.8}
-        enablePDFViewer={DEBUG_RESUME_PDF_FLAG}
+      <div
+        style={{
+          position: "relative",
+        }}
+        className="h-full w-full"
       >
-        {document}
-      </ResumeIframeCSR>
+        <ResumeIframeCSR
+          documentSize={DEFAULT_DOCUMENT_SIZE}
+          scale={0.8}
+          enablePDFViewer={pdfPreview}
+          totalPages={page}
+        >
+          {document}
+        </ResumeIframeCSR>
+        {!pdfPreview ? (
+          <div
+            style={{
+              width: `${width * 0.8}px`,
+              height: "2rem",
+              backgroundColor: "white",
+              position: "absolute bottom-0",
+              bottom: 0,
+              left: 0,
+              zIndex: 3, // Higher z-index to overlay over the Frame
+            }}
+          />
+        ) : null}
+      </div>
     </main>
   );
 }
