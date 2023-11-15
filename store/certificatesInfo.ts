@@ -5,7 +5,7 @@ import { Certificate } from "@/app/(mainApp)/education/pageTypes";
 import { persist } from "zustand/middleware";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-type State = {
+export type State = {
   certificates: Certificate[] | [];
   hiddenCertificates: { [key: string]: boolean } | null;
   hideAll: boolean;

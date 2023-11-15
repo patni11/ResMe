@@ -5,7 +5,7 @@ import { Project } from "@/app/(mainApp)/projects/pageTypes";
 import { persist } from "zustand/middleware";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-type State = {
+export type State = {
   projects:
     | {
         projectName: string;

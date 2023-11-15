@@ -5,7 +5,7 @@ import { Experience } from "@/app/(mainApp)/experience/pageTypes";
 import { persist } from "zustand/middleware";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-type State = {
+export type State = {
   experiences:
     | {
         _id: string;

@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
-type State = {
+export type State = {
   skills: string;
   languages: string;
   interests: string;

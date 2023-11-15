@@ -1,7 +1,6 @@
 "use client";
 import { Button, buttonVariants } from "@/components/ui/button";
-import html2pdf from "html2pdf.js";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { SaveIcon, Download } from "lucide-react";
 import {
   DropdownMenu,
@@ -28,28 +27,6 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
-
-  const downloadPDF = () => {
-    setIsDownloading(true);
-
-    gtag.event({
-      clientWindow: window,
-      action: "Download PDF",
-      category: "Download",
-      label: "Download PDF",
-    });
-
-    var element = document.getElementById("element-to-print");
-    var opt = {
-      margin: 0.5,
-      filename: "resume.pdf",
-      html2canvas: { scale: 2, windowWidth: 694 },
-      pagebreak: { mode: ["avoid-all"] },
-      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
-    };
-    html2pdf().set(opt).from(element).save();
-    setIsDownloading(false);
-  };
 
   const downloadDocx = () => {
     gtag.event({
@@ -267,11 +244,7 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
               <span>Docx</span>
             </ComingSoon>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <button onClick={downloadPDF} className="font-bold">
-              PDF
-            </button>
-          </DropdownMenuItem>
+          <DropdownMenuItem asChild>{children}</DropdownMenuItem>
 
           <DropdownMenuItem asChild>
             {/* <PremiumDialog>
@@ -295,8 +268,6 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {children}
     </div>
   );
 };

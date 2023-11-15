@@ -41,41 +41,4 @@ const CertificateSection: React.FC<CertificateSectionProps> = ({
   );
 };
 
-// interface CertificateCardProps {
-//   certificate: CertificateType;
-//   hideGPA: boolean;
-//   hideDate: boolean;
-// }
-
-// const CertificateCard: FC<CertificateCardProps> = ({
-//   certificate,
-//   hideGPA,
-//   hideDate,
-// }) => {
-//   const gpa = certificate?.gpa ? parseDecimal(certificate.gpa) : 0;
-//   return (
-//     <div className="flex flex space-between text-xs w-full leading-tight mb-1">
-//       <div className="flex flex-col w-full text-left">
-//         {/* <p>Northeastern University</p> */}
-//         <p className="font-bold">{certificate.schoolName}</p>
-//         {/* <p>September 2021 - May 2025</p> */}
-//         <p className="italic text-gray-500 font-normal">
-//           {certificate.degreeType} {certificate.major}
-//         </p>
-//       </div>
-//       <div className="flex flex-col font-light italic w-full text-right">
-//         {/* <p>Bachelor&apos;s Computer Science</p> */}
-
-//         {!hideDate ? (
-//           <p className="font-bold">
-//             {getFormattedDate(new Date(certificate.startDate))} -{" "}
-//             {getFormattedDate(new Date(certificate.endDate))}
-//           </p>
-//         ) : null}
-//         {!hideGPA ? <p> GPA: {gpa.toString()}</p> : null}
-//       </div>
-//     </div>
-//   );
-// };
-
 export default CertificateSection;

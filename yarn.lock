@@ -7161,6 +7161,7 @@ __metadata:
     react-day-picker: ^8.8.2
     react-dom: ^18.2.0
     react-email: ^1.9.5
+    react-frame-component: ^5.2.6
     react-hook-form: ^7.47.0
     react-zoom-pan-pinch: ^3.3.0
     resend: ^2.0.0
@@ -8286,6 +8287,17 @@ __metadata:
   bin:
     email: dist/source/index.js
   checksum: 46170e283aafe494d585eaf43a080511e0e89e3b23888917a36d2a3be994f69649c047c7126a83c50e92f95c24c79d03030d19f284278e848f173df1f48cc905
+  languageName: node
+  linkType: hard
+
+"react-frame-component@npm:^5.2.6":
+  version: 5.2.6
+  resolution: "react-frame-component@npm:5.2.6"
+  peerDependencies:
+    prop-types: ^15.5.9
+    react: ">= 16.3"
+    react-dom: ">= 16.3"
+  checksum: 6669a0acc1532b53e80b14688b06d64bfab88103a1e4377a386f4350a51d76494b48ac1b8f6818bd60ae2d37cce015314ce725d807be72e9fe9258e9303bb6ec
   languageName: node
   linkType: hard
 

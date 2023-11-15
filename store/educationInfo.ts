@@ -5,7 +5,7 @@ import { EducationType } from "@/app/(mainApp)/education/pageTypes";
 import { persist } from "zustand/middleware";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-type State = {
+export type State = {
   educations: EducationType[] | [];
   hiddenEducations: { [key: string]: boolean } | null;
   hiddenGPAs: { [key: string]: boolean } | null;

@@ -5,7 +5,7 @@ import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { persist } from "zustand/middleware";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-type State = {
+export type State = {
   headerInfo: UserInfo;
   hideLocation: boolean;
   hiddenContacts: any;
