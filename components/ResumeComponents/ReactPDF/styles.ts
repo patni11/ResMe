@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
   },
   sectionHeader: {
     fontWeight: 700,
-    fontSize: "12pt",
+    fontSize: "11pt",
     letterSpacing: "0.3pt",
     fontFamily: DEFAULT_FONT_FAMILY,
   },

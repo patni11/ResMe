@@ -33,6 +33,7 @@ const ResumeTalent = ({
             ...styles.flexRow,
             marginTop: spacing["1.5"],
             gap: spacing["1"],
+            paddingRight: `${spacing["10"]}`,
           }}
         >
           <ResumePDFText bold={true}>{`Skills:`}</ResumePDFText>
@@ -46,6 +47,7 @@ const ResumeTalent = ({
             ...styles.flexRow,
             marginTop: spacing["1.5"],
             gap: spacing["1"],
+            paddingRight: `${spacing["10"]}`,
           }}
         >
           <ResumePDFText bold={true}>{`Interests:`}</ResumePDFText>
@@ -59,6 +61,7 @@ const ResumeTalent = ({
             ...styles.flexRow,
             marginTop: spacing["1.5"],
             gap: spacing["1"],
+            paddingRight: `${spacing["10"]}`,
           }}
         >
           <ResumePDFText bold={true}>{`Languages:`}</ResumePDFText>

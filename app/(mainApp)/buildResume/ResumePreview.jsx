@@ -1,5 +1,5 @@
 "use client";
-import ActionBar from "@/components/ResumeComponents/ResumeEditor/ActionBar";
+import ActionBar from "@/components/Navigation/ActionBar";
 
 import { ResumePDF } from "@/components/ResumeComponents/ReactPDF/ResumePDF";
 import { ResumeControlBarCSR } from "@/components/ResumeComponents/ReactPDF/ResumeControlBar";

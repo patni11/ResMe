@@ -30,7 +30,7 @@ const ResumeExperience = ({
 
         const endDate =
           experience.endDate == "working"
-            ? "Current"
+            ? "Present"
             : getFormattedDate(new Date(experience.endDate));
 
         const descriptions = experience.description;
