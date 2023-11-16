@@ -40,8 +40,9 @@ const SERIF_ENGLISH_FONT_FAMILIES = [
   // "Lora",
   // "RobotoSlab",
   // "PlayfairDisplay",
-  // "Merriweather",
-  "TimesNewRoman",
+  "Merriweather",
+  // "TimesRoman",
+  // "TimesNewRoman",
 ] as const;
 
 export const ENGLISH_FONT_FAMILIES = [
@@ -73,8 +74,9 @@ export const FONT_FAMILY_TO_STANDARD_SIZE_IN_PT: Record<FontFamily, number> = {
   // Lora: 11,
   // RobotoSlab: 10,
   // PlayfairDisplay: 10,
-  // Merriweather: 10,
-  TimesNewRoman: 11,
+  Merriweather: 10,
+  // TimesRoman: 11,
+  // TimesNewRoman: 11,
   // Non-English Fonts
 
   NotoSansSC: 11,
@@ -92,8 +94,9 @@ export const FONT_FAMILY_TO_DISPLAY_NAME: Record<FontFamily, string> = {
   // Lora: "Lora",
   // RobotoSlab: "Roboto Slab",
   // PlayfairDisplay: "Playfair Display",
-  // Merriweather: "Merriweather",
-  TimesNewRoman: "TimesNewRoman",
+  Merriweather: "Merriweather",
+  // TimesRoman: "TimesRoman",
+  // TimesNewRoman: "TimesNewRoman",
   // Non-English Fonts
 
   NotoSansSC: "思源黑体(简体)",

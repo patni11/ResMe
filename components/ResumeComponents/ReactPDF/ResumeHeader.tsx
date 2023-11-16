@@ -22,7 +22,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
     : [{ linkName: "", link: "" }];
 
   return (
-    <ResumePDFSection style={{ marginTop: spacing[2] }}>
+    <ResumePDFSection>
       <ResumePDFText
         bold={true}
         style={{ fontSize: "24pt", textAlign: "center" }}
@@ -42,7 +42,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
       >
         {!hideLocation && location != "" ? (
           <ResumePDFText style={{ marginHorizontal: spacing["0.5"] }}>
-            {location} |{" "}
+            {`${location}  |  `}
           </ResumePDFText>
         ) : null}
 
@@ -59,7 +59,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
                 gap: spacing["1"],
               }}
             >
-              <ResumePDFText>{` ${contactKey} | `}</ResumePDFText>
+              <ResumePDFText>{` ${contactKey}  |  `}</ResumePDFText>
             </View>
           );
         })}
@@ -68,7 +68,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
           const linkKey = link.linkName;
           if (hiddenLinks[index][linkKey]) return null;
           const linkText =
-            ` ${link.link}` + `${index != links.length - 1 ? ` | ` : ""}`;
+            ` ${link.link}` + `${index != links.length - 1 ? `  |  ` : ""}`;
           return (
             <View
               key={index}

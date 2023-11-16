@@ -58,7 +58,7 @@ const ResumeEducation = ({
             heading={education.schoolName}
             subHeading={`${education.degreeType} ${education.major}`}
             dates={dates}
-            value={gpa?.toString()}
+            value={`GPA: ${gpa?.toString()}`}
             key={idx}
           />
         );

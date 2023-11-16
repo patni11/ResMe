@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
 import { SaveIcon, ArrowUpRightSquare, File } from "lucide-react";
 
@@ -177,7 +177,7 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
 
       if (res.isSuccess) {
         toast({
-          title: `Resume Updated: ${resumeId} `,
+          title: `Resume Updated 🥳`,
         });
       } else {
         console.log(res);
@@ -192,8 +192,11 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
 
   return (
     <div className="w-full flex justify-right space-x-4 mb-2 items-center">
-      <Button
-        className="flex space-x-2"
+      <div
+        className={buttonVariants({
+          variant: "default",
+          className: "flex space-x-2",
+        })}
         onClick={() => {
           setIsSaving(true);
           handleSave();
@@ -202,10 +205,13 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
       >
         <SaveIcon className="w-4 h-4" />
         <span className="hidden md:block">Save</span>
-      </Button>
+      </div>
       <ComingSoon>
-        <Button
-          className="flex space-x-2"
+        <div
+          className={buttonVariants({
+            variant: "default",
+            className: "flex space-x-2",
+          })}
           onClick={() => {
             gtag.event({
               clientWindow: window,
@@ -219,11 +225,14 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
           <File className="w-4 h-4" />
 
           <span>Docx</span>
-        </Button>
+        </div>
       </ComingSoon>
       <ComingSoon>
-        <Button
-          className="flex space-x-2"
+        <div
+          className={buttonVariants({
+            variant: "default",
+            className: "flex space-x-2",
+          })}
           onClick={() => {
             gtag.event({
               clientWindow: window,
@@ -236,7 +245,7 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
           <ArrowUpRightSquare className="w-4 h-4" />
 
           <span>Copy</span>
-        </Button>
+        </div>
       </ComingSoon>
       {children}
     </div>

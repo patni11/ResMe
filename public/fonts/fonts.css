@@ -92,18 +92,36 @@
   src: url("/fonts/Merriweather-Bold.ttf");
   font-weight: bold;
 }
+
+@font-face {
+  font-family: "Merriweather";
+  src: url("/fonts/Merriweather-Italic.ttf");
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "TimesRoman";
+  src: url("/fonts/TimesRoman-Regular.ttf");
+}
+@font-face {
+  font-family: "TimesRoman";
+  src: url("/fonts/TimesRoman-Bold.ttf");
+  font-weight: bold;
+}
+
 @font-face {
   font-family: "TimesNewRoman";
   src: url("/fonts/TimesNewRoman-Regular.ttf");
 }
 @font-face {
-  font-family: "TimesNewRoman";
+  font-family: "TimesRoman";
   src: url("/fonts/TimesNewRoman-Bold.ttf");
   font-weight: bold;
 }
+
 @font-face {
-  font-family: "TimesNewRoman";
-  src: url("/fonts/TimesNewRoman-Italic.ttf");
+  font-family: "TimesRoman";
+  src: url("/fonts/TimesRoman-Italic.ttf");
   font-weight: bold;
   font-style: italic;
 }

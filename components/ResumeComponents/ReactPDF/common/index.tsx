@@ -209,7 +209,9 @@ export const ResumePDFCard = ({
           }}
         >
           <ResumePDFText bold={true}>{heading}</ResumePDFText>
-          <ResumePDFText>{subHeading}</ResumePDFText>
+          <ResumePDFText style={{ fontStyle: "italic" }}>
+            {subHeading}
+          </ResumePDFText>
         </View>
 
         <View
@@ -219,7 +221,7 @@ export const ResumePDFCard = ({
           }}
         >
           <ResumePDFText bold={true}>{dates}</ResumePDFText>
-          <ResumePDFText>{value}</ResumePDFText>
+          <ResumePDFText style={{ fontStyle: "italic" }}>{value}</ResumePDFText>
           {/* style={{ fontStyle: "normal" }} */}
         </View>
       </View>
