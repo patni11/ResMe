@@ -433,7 +433,7 @@ function createExperience({ id }: { id: string }) {
   const experienceParagraphs = [];
 
   if (!hideAll) {
-    experienceParagraphs.push(sectionHeading("EXPERIENCES"));
+    experienceParagraphs.push(sectionHeading("PROFESSIONAL EXPERIENCE"));
     experiences.forEach((experience) => {
       if (!hiddenExperiences[experience._id]) {
         const endDate =
@@ -518,7 +518,7 @@ function createProject({ id }: { id: string }) {
   const projectParagraphs = [];
 
   if (!hideAll) {
-    projectParagraphs.push(sectionHeading("PROJECTS"));
+    projectParagraphs.push(sectionHeading("PROJECTS & OUTSIDE EXPERIENCE"));
     projects.forEach((project) => {
       if (!hiddenProjects[project._id]) {
         // Initialize an empty string for date range

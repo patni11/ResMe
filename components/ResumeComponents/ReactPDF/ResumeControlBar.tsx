@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Download } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { sendPDFDownloadEmail } from "@/lib/actions/sendEmail.action";
+import { useSession } from "next-auth/react";
 const ResumeControlBar = ({
   document,
   fileName,
@@ -13,6 +15,9 @@ const ResumeControlBar = ({
   fileName: string;
 }) => {
   const [instance, update] = usePDF({ document });
+  const { data: session } = useSession();
+  const email = session?.user?.email || "";
+  const name = session?.user?.name || "";
 
   //Hook to update pdf when document changes
   useEffect(() => {
@@ -37,6 +42,9 @@ const ResumeControlBar = ({
         variant: "default",
         className: "flex space-x-2",
       })}
+      onClick={() => {
+        sendPDFDownloadEmail({ name: name, email: email });
+      }}
     >
       <Download className="w-4 h-4" />
       <span>PDF</span>

@@ -28,9 +28,9 @@ const PricingPage = () => {
         <div className="flex flex-col container px-4 md:px-6 items-center">
           <div className="font-bold text-3xl lg:text-5xl tracking-tight mb-16 mx-auto text-center">
             <h1>Why Spend Hours on Your Resume?</h1>
-            <h1>
+            <h2>
               Let <span className="text-blue-600">ResMe</span> Do It in Seconds!
-            </h1>
+            </h2>
           </div>
 
           <div className="flex flex-col space-y-24 md:flex-row md:space-y-0 md:space-x-4 lg:space-x-24 lg:w-[60%] w-[80%]">

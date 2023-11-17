@@ -9,7 +9,7 @@ import bcrypt from "bcryptjs";
 import { User } from "../models/user";
 import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
-import { sendWelcomeEmail } from "./sendEmail";
+import { sendWelcomeEmail } from "./actions/sendEmail.action";
 export type Session = {
   user: {
     email: string;
@@ -96,8 +96,10 @@ export const authOptions: NextAuthOptions = {
         token.user = {
           _id: user._id,
           email: user.email,
+          name: token.name,
         };
       }
+
       return token;
     },
     // If we want to access our extra user info from sessions we have to pass it the token here to get them in sync:
@@ -114,7 +116,7 @@ export const authOptions: NextAuthOptions = {
         name: message.user.name,
         email: message.user.email,
       };
-      console.log("NEW USER");
+
       await sendWelcomeEmail(params); // <-- send welcome email
     },
   },

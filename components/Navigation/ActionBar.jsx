@@ -3,9 +3,9 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
 import { SaveIcon, ArrowUpRightSquare, File } from "lucide-react";
 
-//import { saveAs } from "file-saver";
-//import { Packer } from "docx";
-//import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
+import { saveAs } from "file-saver";
+import { Packer } from "docx";
+import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
 // import { PDFViewer } from "@react-pdf/renderer";
 // import Document from "@/components/ResumeComponents/ReactPDF/index";
 const { v4: uuidv4 } = require("uuid");
@@ -23,22 +23,22 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
   const { toast } = useToast();
   const router = useRouter();
 
-  // const downloadDocx = () => {
-  //   gtag.event({
-  //     clientWindow: window,
-  //     action: "Download Docx",
-  //     category: "Download",
-  //     label: "Download Docx",
-  //   });
+  const downloadDocx = () => {
+    gtag.event({
+      clientWindow: window,
+      action: "Download Docx",
+      category: "Download",
+      label: "Download Docx",
+    });
 
-  //   const doc = DocumentCreator({ componentsData, resumeId, email });
+    const doc = DocumentCreator({ componentsData, resumeId, email });
 
-  //   Packer.toBlob(doc).then((blob) => {
-  //     console.log(blob);
-  //     saveAs(blob, "resume.docx");
-  //     console.log("Document created successfully");
-  //   });
-  // };
+    Packer.toBlob(doc).then((blob) => {
+      console.log(blob);
+      saveAs(blob, "resume.docx");
+      console.log("Document created successfully");
+    });
+  };
   function fixExperience(rawExperiences) {
     const formattedExperiences = rawExperiences.map((exp) => {
       let endDate = exp.endDate;
@@ -206,27 +206,29 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
         <SaveIcon className="w-4 h-4" />
         <span className="hidden md:block">Save</span>
       </div>
-      <ComingSoon>
-        <div
-          className={buttonVariants({
-            variant: "default",
-            className: "flex space-x-2",
-          })}
-          onClick={() => {
-            gtag.event({
-              clientWindow: window,
-              action: "Download Docx",
-              category: "Download",
-              label: "Download Docx",
-            });
-          }}
-          disabled={isSaving}
-        >
-          <File className="w-4 h-4" />
 
-          <span>Docx</span>
-        </div>
-      </ComingSoon>
+      <div
+        className={buttonVariants({
+          variant: "default",
+          className: "flex space-x-2",
+        })}
+        onClick={() => {
+          gtag.event({
+            clientWindow: window,
+            action: "Download Docx",
+            category: "Download",
+            label: "Download Docx",
+          });
+          setIsSaving(true);
+          downloadDocx();
+        }}
+        disabled={isSaving}
+      >
+        <File className="w-4 h-4" />
+
+        <span>Docx</span>
+      </div>
+
       <ComingSoon>
         <div
           className={buttonVariants({

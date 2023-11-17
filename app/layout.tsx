@@ -10,8 +10,8 @@ import { NextAuthProvider } from "@/components/NextAuthProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://resme.xyz/"),
-  title: "ResMe",
-  description: "Create Professional Resumes",
+  title: "ResMe - Free Resume Builder",
+  description: "Create Professional Resumes with ResMe GPT For FREE",
 
   verification: {
     google: "google-site-verification=G-501H6DW77H",

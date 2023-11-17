@@ -84,7 +84,10 @@ export function SignInModal() {
       >
         <Card>
           <CardHeader className="space-y-1 min-w-[350px]">
-            <CardTitle className="text-2xl">Sign In</CardTitle>
+            <CardTitle className="text-2xl">
+              {" "}
+              <h1>Sign In</h1>
+            </CardTitle>
             <CardDescription>Enter your details to Sign In</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
