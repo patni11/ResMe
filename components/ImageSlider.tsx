@@ -38,7 +38,8 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
               alt="product preview"
               width={1364}
               height={866}
-              quality={100}
+              quality={70}
+              placeholder="blur"
               objectFit="scale-down"
               layout="intrinsic"
               className="rounded-md bg-white p-2 sm:p-8 md:p-10 shadow-2xl ring-1 ring-gray-900/10 duration-500"

@@ -36,7 +36,7 @@ export default async function ImageWrapper({
         >
           <Image
             src={imageToDisplay}
-            quality={100}
+            quality={70}
             alt="graphic"
             placeholder="blur"
             fill // This makes the image take up the full width and height of its container
