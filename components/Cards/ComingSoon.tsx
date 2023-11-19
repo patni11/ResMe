@@ -9,11 +9,23 @@ import {
 import { ReactElement } from "react";
 import { buttonVariants } from "../ui/button";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-export const ComingSoon = ({ children }: { children: ReactElement }) => {
+export const ComingSoon = ({
+  children,
+  style,
+}: {
+  children: ReactElement;
+  style?: string;
+}) => {
   return (
     <Dialog>
-      <DialogTrigger className=" text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+      <DialogTrigger
+        className={cn(
+          "text-sm transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+          style
+        )}
+      >
         {children}
       </DialogTrigger>
       <DialogContent>
