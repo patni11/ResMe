@@ -3,9 +3,9 @@ import CertificateSection from "../education/CertificateSection";
 import OnboardingCard from "./onboardingCard";
 import { UserInfoFormOnboarding } from "../userInfo/UserInfoForm";
 import FinishedOnboardingCard from "./FinishedOnboardingCard";
-import { ExperienceSection } from "../experience/page";
-import { ProjectSection } from "../projects/page";
-import { OnboardSkills } from "../skills/page";
+import { ExperienceSection } from "../experience/ExperienceSection";
+import { ProjectSection } from "../projects/ProjectSection";
+import { OnboardSkills } from "../skills/OnboardSkills";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
 
@@ -17,13 +17,13 @@ const Onboarding = async () => {
   }
 
   const reactElements = [
-    <UserInfoFormOnboarding />,
-    <EducationSection />,
-    <CertificateSection />,
-    <ExperienceSection />,
-    <ProjectSection />,
-    <OnboardSkills />,
-    <FinishedOnboardingCard />,
+    <UserInfoFormOnboarding key="UserInfoFormOnboarding" />,
+    <EducationSection key="EducationSection" />,
+    <CertificateSection key="CertificateSection" />,
+    <ExperienceSection key="ExperienceSection" />,
+    <ProjectSection key="ProjectSection" />,
+    <OnboardSkills key="OnboardSkills" />,
+    <FinishedOnboardingCard key="FinishedOnboardingCard" />,
   ];
 
   return (
@@ -32,7 +32,7 @@ const Onboarding = async () => {
         <h1 className="font-bold text-4xl leading-none tracking-tight">
           Welcome to ResMe
         </h1>
-        <h3 className="text-2xl">Let's get you setup :)</h3>
+        <h3 className="text-2xl">Let&apos;s get you setup :)</h3>
       </div>
       <OnboardingCard reactElements={reactElements} />
     </main>

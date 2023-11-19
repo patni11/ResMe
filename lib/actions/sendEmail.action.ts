@@ -2,7 +2,7 @@
 import { Resend } from "resend";
 import WelcomeEmail from "@/components/EmailTemplates/welcomeEmail";
 import PDFDownloadedEmail from "@/components/EmailTemplates/pdfDownloadedEmail";
-
+import { renderAsync } from "@react-email/render";
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function sendWelcomeEmail({
@@ -12,7 +12,7 @@ export async function sendWelcomeEmail({
   name: string | null | undefined;
   email: string | null | undefined;
 }) {
-  const emailTemplate = WelcomeEmail({ name });
+  const emailTemplate = await renderAsync(WelcomeEmail({ name }));
   try {
     // Send the email using the Resend API
     await resend.emails.send({
@@ -35,7 +35,7 @@ export async function sendPDFDownloadEmail({
   name: string | null | undefined;
   email: string | null | undefined;
 }) {
-  const emailTemplate = PDFDownloadedEmail({ name });
+  const emailTemplate = await renderAsync(PDFDownloadedEmail({ name }));
   try {
     // Send the email using the Resend API
     await resend.emails.send({
