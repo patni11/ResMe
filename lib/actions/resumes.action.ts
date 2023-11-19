@@ -92,7 +92,6 @@ export async function createResume({
 
 export async function fetchResumes() {
   const session: Session | null = await getServerSession(authOptions);
-  console.log("Session Onboard", session);
 
   if (
     session == undefined ||

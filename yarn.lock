@@ -5333,7 +5333,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-to-text@npm:9.0.5, html-to-text@npm:^9.0.5":
+"html-to-text@npm:9.0.5":
   version: 9.0.5
   resolution: "html-to-text@npm:9.0.5"
   dependencies:
@@ -6714,6 +6714,14 @@ __metadata:
     "@radix-ui/react-toast": ^1.1.5
     "@radix-ui/react-toggle": ^1.0.3
     "@react-email/components": 0.0.11
+    "@react-email/container": 0.0.10
+    "@react-email/head": 0.0.6
+    "@react-email/heading": 0.0.9
+    "@react-email/html": 0.0.6
+    "@react-email/link": 0.0.6
+    "@react-email/preview": 0.0.7
+    "@react-email/tailwind": 0.0.12
+    "@react-email/text": 0.0.6
     "@react-pdf/renderer": ^3.1.14
     "@tanstack/react-query": ^4.36.1
     "@types/bcryptjs": ^2.4.4
@@ -6734,7 +6742,6 @@ __metadata:
     docx: ^8.2.3
     eslint: ^8.50.0
     eslint-config-next: ^13.5.4
-    html-to-text: ^9.0.5
     lucide-react: ^0.284.0
     mongodb-client-encryption: ^6.0.0
     mongoose: ^7.5.4
@@ -6748,6 +6755,7 @@ __metadata:
     react-email: ^1.9.5
     react-frame-component: ^5.2.6
     react-hook-form: ^7.47.0
+    react-zoom-pan-pinch: ^3.3.0
     resend: ^2.0.0
     shadcn-ui: ^0.4.1
     sharp: ^0.32.6
@@ -7894,6 +7902,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 7ee8ef3aab74c7ae1d70ff34a27643d11ba1a8d62d072c767827d9ff9a520905223e567002e0bf6c772929d8ea1c781a3ba0cc4a563e92b1e3dc2eaa817ecbe8
+  languageName: node
+  linkType: hard
+
+"react-zoom-pan-pinch@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "react-zoom-pan-pinch@npm:3.3.0"
+  peerDependencies:
+    react: "*"
+    react-dom: "*"
+  checksum: a68af3237d73ef2fd08927a6ba94dbfb62952056fda7b68c26eae032e8ad40cf1a7613f81a7bda3c09be144f9e9a7e440817e85be44ef283bcd8ebf4abb3d113
   languageName: node
   linkType: hard
 

@@ -4,12 +4,21 @@ import {
   Container,
   Head,
   Heading,
+  Link,
   Html,
   Preview,
-  Text,
   Tailwind,
-  Link,
+  Text,
 } from "@react-email/components";
+
+// import { Preview } from "@react-email/preview";
+// import { Head } from "@react-email/head";
+// import { Text } from "@react-email/text";
+// import { Tailwind } from "@react-email/tailwind";
+// import { Container } from "@react-email/container";
+// import { Heading } from "@react-email/heading";
+// import { Link } from "@react-email/link";
+// import { Html } from "@react-email/html";
 
 interface PDFDownloadedEmailProps {
   name: string | null | undefined;

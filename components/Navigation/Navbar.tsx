@@ -25,6 +25,16 @@ const Navbar = () => {
 
           <div className="hidden items-center space-x-4 sm:flex">
             <Link
+              href="/support"
+              className={buttonVariants({
+                variant: "ghost",
+                size: "sm",
+              })}
+            >
+              Support
+            </Link>
+
+            <Link
               href="/pricing"
               className={`${buttonVariants({
                 variant: "ghost",

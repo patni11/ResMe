@@ -10,6 +10,15 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
+
+// import { Preview } from "@react-email/preview";
+// import { Head } from "@react-email/head";
+// import { Text } from "@react-email/text";
+// import { Tailwind } from "@react-email/tailwind";
+// import { Container } from "@react-email/container";
+// import { Heading } from "@react-email/heading";
+// import { Link } from "@react-email/link";
+// import { Html } from "@react-email/html";
 import * as React from "react";
 
 interface ContactMeEmailProps {

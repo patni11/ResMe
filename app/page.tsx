@@ -195,7 +195,7 @@ export default function Home() {
                   personally and wider community
                 </p>
                 <br />
-                <a href="https://discord.gg/Ghypc6rN" className="underline">
+                <a href="https://discord.gg/UwTwQeZkp5" className="underline">
                   Discord
                 </a>
               </AccordionContent>

@@ -1,7 +1,7 @@
 "use client";
 import { ChevronLeft, ChevronRight, DotIcon } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const ImageSlider = ({ slides }: { slides: any }) => {
   const headings = [
@@ -27,6 +27,14 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
+
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      nextSlide(); // Call nextSlide function to change the slide
+    }, 3000);
+
+    return () => clearInterval(slideInterval); // Clear the interval when the component unmounts
+  }, [currentIndex, slides.length]);
 
   return (
     <div className="max-w-[1364px] h-[866px] w-full m-auto py-16 px-4 relative group justify-center items-center">
@@ -56,17 +64,6 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
       <div className="hidden group-hover:block absolute top-[55%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
         <ChevronRight onClick={nextSlide} size={30} />
       </div>
-      {/* <div className="flex top-4 justify-center py-2">
-        {slides.map((slide, slideIndex) => (
-          <div
-            key={slideIndex}
-            onClick={() => goToSlide(slideIndex)}
-            className="text-2xl cursor-pointer"
-          >
-            <DotIcon />
-          </div>
-        ))}
-      </div> */}
 
       <div className="flex flex-col space-y-4 items-center justify-center w-full mt-16 mb-48">
         <h2 className="mt-2 font-bold text-3xl text-gray-900 sm:text-3xl text-center">

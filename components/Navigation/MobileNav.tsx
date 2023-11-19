@@ -3,7 +3,7 @@
 import { ArrowRight, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 const MobileNav = () => {
   const [isOpen, setOpen] = useState<boolean>(false);
@@ -47,8 +47,6 @@ const MobileNav = () => {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </li>
-                <li className="my-3 h-px w-full bg-gray-300" />
-                <li className="my-3 h-px w-full bg-gray-300" />
                 <li>
                   <Link
                     onClick={() => closeOnCurrent("/pricing")}
@@ -68,6 +66,16 @@ const MobileNav = () => {
                     href="/dashboard"
                   >
                     Dashboard
+                  </Link>
+                </li>
+                <li className="my-3 h-px w-full bg-gray-300" />
+                <li>
+                  <Link
+                    onClick={() => closeOnCurrent("/dashboard")}
+                    className="flex items-center w-full font-semibold"
+                    href="/support"
+                  >
+                    Support
                   </Link>
                 </li>
                 <li className="my-3 h-px w-full bg-gray-300" />
