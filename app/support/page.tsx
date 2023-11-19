@@ -21,14 +21,14 @@ const Support = () => {
           </CardHeader>
 
           <CardContent className="flex justify-between">
-            <a href="https://discord.gg/UwTwQeZkp5" className="underline">
+            <a href="https://discord.gg/xn8xYGKqhF" className="underline">
               Discord{" "}
               <span className="text-xs text-secondary-foreground">
                 (Recommended)
               </span>
             </a>
 
-            <a href="mailto:someone@example.com" className="underline">
+            <a href="mailto:founder@resme.xyz" className="underline">
               Send email
             </a>
           </CardContent>
