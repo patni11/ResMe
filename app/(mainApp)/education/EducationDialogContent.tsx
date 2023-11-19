@@ -48,29 +48,18 @@ const EducationFormSchema = z
         message: "School Name cannot be empty",
       })
       .default(""),
-    major: z
-      .string()
-      .min(1, {
-        message: "Major cannot be empty",
-      })
-      .default(""),
-    degreeType: z
-      .string()
-      .min(1, {
-        message: "DegreeType cannot be empty",
-      })
-      .default(""),
-    gpa: z.number().positive().multipleOf(0.01).min(0).max(10).default(0),
-    startDate: z
-      .date({
-        required_error: "A start date is required.",
-      })
-      .default(new Date()),
-    endDate: z
-      .date({
-        required_error: "An end date or expected end date is required.",
-      })
-      .default(new Date()),
+    major: z.string().default(""),
+    degreeType: z.string().default(""),
+    gpa: z
+      .number()
+      .positive()
+      .multipleOf(0.01)
+      .min(0)
+      .max(10)
+      .default(0)
+      .optional(),
+    startDate: z.date().default(new Date()),
+    endDate: z.date().default(new Date()),
   })
   .refine((data) => data.endDate >= data.startDate, {
     message: "End date should not be less than start date.",

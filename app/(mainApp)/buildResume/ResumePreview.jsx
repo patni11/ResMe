@@ -87,7 +87,7 @@ export default function ResumePreview({
   }, [resume, componentsData, page]);
   const width = DEFAULT_DOCUMENT_SIZE === "A4" ? A4_WIDTH_PX : LETTER_WIDTH_PX;
   return (
-    <main className="sticky top-0 w-full h-full flex flex-col justify-center bg-gray-200 p-4">
+    <main className="sticky top-0 w-full h-full flex flex-col bg-gray-200 px-4">
       <ActionBar
         resumeId={resumeId}
         email={email}
@@ -110,31 +110,19 @@ export default function ResumePreview({
           </PDFDownloadLink>
         </button> */}
 
-        <ResumeControlBarCSR document={document} fileName={"somename"} />
         <div className="flex items-center space-x-2">
+          <ResumeControlBarCSR document={document} fileName={"somename"} />
           <Toggle
             id="edit"
             pressed={pdfPreview}
             onPressedChange={() => setPDFPreview(!pdfPreview)}
+            size="xs"
+            variant="outlineHover"
           >
-            {!pdfPreview ? "View" : "Edit"}
+            {pdfPreview ? "View" : "Edit"}
           </Toggle>
         </div>
       </ActionBar>
-
-      {/* <TransformWrapper
-        centerOnInit
-        minScale={0.25}
-        initialScale={0.55}
-        limitToBounds={true}
-        centerZoomedOut={true}
-        pinch={{ step: 3 }}
-        wheel={{ step: 0.1 }}
-        // disabled={!interactionEnabled}
-      >
-        <TransformComponent wrapperClass="w-full overflow-visible">
-        </TransformComponent>
-      </TransformWrapper> */}
       <div
         style={{
           position: "relative",

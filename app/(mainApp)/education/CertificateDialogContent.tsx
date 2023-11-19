@@ -34,18 +34,8 @@ import {
 
 const CertificateSchema = z.object({
   _id: z.string().optional(),
-  certificateName: z
-    .string()
-    .nonempty({
-      message: "Certificate Name is Required",
-    })
-    .default(""),
-  organization: z
-    .string()
-    .nonempty({
-      message: "Organization Name is Required",
-    })
-    .default(""),
+  certificateName: z.string().default(""),
+  organization: z.string().default(""),
   issueDate: z.date().default(new Date()),
 });
 

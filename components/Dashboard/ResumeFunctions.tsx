@@ -10,5 +10,4 @@ export async function deleteFunc(resumeId: string, email: string) {
 export async function renameResume(resumeId: string, newName: string) {
   await updateResumeName(resumeId, newName);
   revalidatePath("/dashboard");
-  console.log("DELETED");
 }

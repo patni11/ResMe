@@ -1,4 +1,5 @@
 import { SidebarMain } from "@/components/Navigation/SideBarMain";
+
 //import { Sidebar } from "@/components/Navigation/Sidebar";
 
 import { authOptions } from "@/lib/authOptions";
@@ -15,6 +16,7 @@ export default async function RootLayout({
   if (!session) {
     redirect("/login");
   }
+
   // if (!isAuthenticated){
   //   redirect('/auth-callback?origin=dashboard')
   // }

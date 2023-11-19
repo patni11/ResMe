@@ -254,7 +254,7 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">
+                <FormLabel className={`${headingClass}`}>
                   Location
                   <LightText>optional</LightText>
                 </FormLabel>
@@ -282,3 +282,162 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
 };
 
 export default UserInfoForm;
+
+export const UserInfoFormOnboarding = () => {
+  const form = useForm<UserInfo>({
+    resolver: zodResolver(UserInfoSchema),
+    defaultValues: {
+      displayName: "",
+      contactInfo: [{ contact: "" }],
+      location: "",
+      links: [{ linkName: "", link: "" }],
+      email: "",
+    },
+    mode: "onSubmit",
+  });
+
+  const handleFormSubmit = async (data: UserInfo) => {
+    await updateResumeHeaderInfo(data);
+  };
+
+  const { register } = form;
+  const { fields: contactFields } = useFieldArray({
+    control: form.control,
+    name: "contactInfo",
+  });
+
+  const { fields: linkFields } = useFieldArray({
+    control: form.control,
+    name: "links",
+  });
+
+  //console.log(errors);
+
+  const headingClass = "text-sm md:text-md";
+  const inputFields = "text-sm md:text-md";
+
+  return (
+    <>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleFormSubmit)}
+          className="flex flex-col space-y-4 m-8 lg:m-0"
+        >
+          <FormField
+            control={form.control}
+            name="displayName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className={`${headingClass}`}>Your Name</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter Your Name"
+                    {...field}
+                    className={`${inputFields}`}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex flex-col space-y-4">
+            <FormLabel className={`${headingClass}`}>
+              Your Contact Info
+            </FormLabel>
+            <section className="flex flex-col space-y-4">
+              {contactFields.map((field, index) => {
+                return (
+                  <FormField
+                    key={field.id}
+                    name={`contactInfo.${index}.contact`}
+                    render={({}) => (
+                      <FormItem className="flex flex-col space-y-4">
+                        <div className="flex space-x-4">
+                          <FormControl>
+                            <Input
+                              placeholder="Enter Your Email"
+                              {...register(`contactInfo.${index}.contact`)}
+                              className={`${inputFields}`}
+                            />
+                          </FormControl>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                );
+              })}
+            </section>
+          </div>
+
+          <div className="flex flex-col space-y-4">
+            <FormLabel className={`${headingClass}`}>Your Links</FormLabel>
+            <section className="flex flex-col w-full">
+              {linkFields.map((field, index) => {
+                return (
+                  <FormItem
+                    key={field.id}
+                    className="flex space-x-4 space-y-0 items-center"
+                  >
+                    <FormField
+                      name={`links.${index}.linkName`}
+                      render={({}) => (
+                        <FormItem>
+                          <Input
+                            placeholder="Ex: Github"
+                            {...register(`links.${index}.linkName`)}
+                            className={`${inputFields}`}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      name={`links.${index}.link`}
+                      render={({}) => (
+                        <FormItem>
+                          <Input
+                            placeholder="https://"
+                            {...register(`links.${index}.link`)}
+                            className={`${inputFields}`}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </FormItem>
+                );
+              })}
+            </section>
+          </div>
+
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className={`${headingClass}`}>Location</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Enter Location"
+                    {...field}
+                    className={`${inputFields}`}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex justify-end w-full">
+            <Button type="submit" className="w-16">
+              Save
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </>
+  );
+};

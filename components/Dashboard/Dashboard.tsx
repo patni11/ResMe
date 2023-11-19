@@ -4,20 +4,13 @@ import { ResumeCard } from "./ResumeCard";
 import { cn } from "@/lib/utils";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
-import { getServerSession } from "next-auth/next";
-import authOptions, { Session } from "@/lib/authOptions";
 import { fetchResumes } from "@/lib/actions/resumes.action";
 import { timeAgo } from "@/app/utils/FormattingFunctions";
 
 interface DashBoardProps {}
 const DashBoard: FC<DashBoardProps> = async () => {
-  const session: Session | null = await getServerSession(authOptions);
-
-  if (!session || !session.user) {
-    throw new Error("User not found");
-  }
-
-  const resumes = await fetchResumes(session.user.email);
+  const resumes = await fetchResumes();
+  console.log("Dashboard");
 
   return (
     <>

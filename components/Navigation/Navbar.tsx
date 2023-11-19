@@ -8,7 +8,6 @@ import { buttonVariants } from "../ui/button";
 // } from "@kinde-oss/kinde-auth-nextjs/server";
 import UserAccountNav from "./UserBox/UserAccountNav";
 import MobileNav from "./MobileNav";
-import { ModeToggle } from "../UIButtons/Theme";
 
 const Navbar = () => {
   // const { getUser } = getKindeServerSession();

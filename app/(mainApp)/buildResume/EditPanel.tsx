@@ -2,7 +2,7 @@
 import { FC } from "react";
 
 import EducationSectionCard from "@/components/ResumeComponents/ResumeForms/EducationSectionCard";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import ExperienceSectionCard from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
 import ResumeHeader from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
@@ -18,6 +18,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import React from "react";
+import { Label } from "@/components/ui/label";
+import { RenameDialog } from "@/components/Dashboard/ResumeFuncitonButtons";
 
 interface EditPanelProps {
   componentsData: { type: string; id: string }[];
@@ -109,9 +111,30 @@ const EditPanel: FC<EditPanelProps> = ({
 
   return (
     <main className="w-full h-screen overflow-y-auto flex flex-col items-start bg-gray-200 p-4 space-y-2">
-      <div className="flex space-x-2 w-full  justify-right">
+      <div className="flex space-x-2 w-full justify-start">
+        {/* <div className="items-center justify-center flex px-4 py-1 space-x-2 bg-secondary rounded-md">
+          <Label>
+            {componentsData[0].id == "default" ? "Untitled" : "Old Resume"}
+          </Label>
+          <Dialog>
+            <DialogTrigger>
+              <Button size="xs" variant="outlineHover">
+                Rename
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Rename Resume</DialogTitle>
+                <DialogDescription className="flex flex-col space-y-4 items-center">
+                  <RenameDialog resumeId={componentsData[0].id} />
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        </div> */}
+
         <Dialog>
-          <DialogTrigger className="w-full ">
+          <DialogTrigger className="">
             <span
               className={buttonVariants({
                 variant: "outline",
@@ -134,16 +157,17 @@ const EditPanel: FC<EditPanelProps> = ({
                     Step2: Click refresh to reset or load data
                   </li>
                   <li className="text-lg">Step3: Make your changes</li>
-                  <li className="text-lg">Step4: Save or Download</li>
+                  <li className="text-lg">Step4: Save or Download !</li>
                 </ul>
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>
+
         <h1
           className={`${buttonVariants({
             variant: "secondary",
-          })} w-full flex space-x-2`}
+          })} flex space-x-2`}
         >
           <span>Click</span> <RefreshCw className="h-4 w-4" />{" "}
           <span>to Load Data</span>

@@ -54,33 +54,40 @@ const Skills: FC<SkillsProps> = async () => {
     <ImageWrapper imgSrc="skill">
       <div className="flex-1 flex flex-col items-center px-8">
         <div className="flex flex-col w-full items-center">
-          <SkillsPageSection
-            cardDetails={{
-              title: "Add Skills",
-              description:
-                "Add all your skills like Java, TS, AWS, Figma, Business Development etc",
-            }}
-            fetchedSkills={talents[0]}
-            updateFunction={updateSkillsFunction}
-          ></SkillsPageSection>
-          <SkillsPageSection
-            cardDetails={{
-              title: "Add Interests",
-              description:
-                "Add your interests like sports, music, reading, etc",
-            }}
-            fetchedSkills={talents[2]}
-            updateFunction={updateInterestsFunction}
-          ></SkillsPageSection>
-          <SkillsPageSection
-            cardDetails={{
-              title: "Add Languages",
-              description:
-                "Add the languages you know like Hindi, English, Spanish etc",
-            }}
-            fetchedSkills={talents[1]}
-            updateFunction={updateLanguagesFunction}
-          ></SkillsPageSection>
+          <div className="flex flex-col w-[100%] md:w-[80%] items-center py-12 space-y-8">
+            <SkillsPageSection
+              cardDetails={{
+                title: "Add Skills",
+                description:
+                  "Add all your skills like Java, TS, AWS, Figma, Business Development etc",
+              }}
+              fetchedSkills={talents[0]}
+              updateFunction={updateSkillsFunction}
+            />
+          </div>
+          <div className="flex flex-col w-[100%] md:w-[80%] items-center py-12 space-y-8">
+            <SkillsPageSection
+              cardDetails={{
+                title: "Add Interests",
+                description:
+                  "Add your interests like sports, music, reading, etc",
+              }}
+              fetchedSkills={talents[2]}
+              updateFunction={updateInterestsFunction}
+            />
+          </div>
+
+          <div className="flex flex-col w-[100%] md:w-[80%] items-center py-12 space-y-8">
+            <SkillsPageSection
+              cardDetails={{
+                title: "Add Languages",
+                description:
+                  "Add the languages you know like Hindi, English, Spanish etc",
+              }}
+              fetchedSkills={talents[1]}
+              updateFunction={updateLanguagesFunction}
+            ></SkillsPageSection>
+          </div>
         </div>
       </div>
     </ImageWrapper>
@@ -88,3 +95,31 @@ const Skills: FC<SkillsProps> = async () => {
 };
 
 export default Skills;
+
+export const OnboardSkills = async () => {
+  const session: Session | null = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    throw new Error("User not found");
+  }
+
+  const email = session.user.email || "";
+  const talents: string[][] = (await fetchTalent(email)) || [[], [], []];
+
+  async function updateSkillsFunction(updatedSkills: string[]) {
+    "use server";
+    await updateSkills(email, updatedSkills, "/onboarding");
+  }
+
+  return (
+    <SkillsPageSection
+      cardDetails={{
+        title: "Add Skills",
+        description:
+          "Add all your skills like Java, TS, AWS, Figma, Business Development etc",
+      }}
+      fetchedSkills={talents[0]}
+      updateFunction={updateSkillsFunction}
+    ></SkillsPageSection>
+  );
+};

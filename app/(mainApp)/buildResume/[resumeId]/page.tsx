@@ -11,7 +11,7 @@ const BuildResume = async ({ params }: { params: { resumeId: string } }) => {
     throw new Error("User not found");
   }
 
-  const user = await fetchUser(session.user.email);
+  const user = await fetchUser();
 
   if (!user.resumes.includes(params.resumeId)) {
     return (

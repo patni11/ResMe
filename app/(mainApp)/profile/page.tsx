@@ -42,7 +42,7 @@ const Profile = async () => {
     throw new Error("User not found");
   }
 
-  const user = await fetchUser(session.user.email);
+  const user = await fetchUser();
 
   const handleDelete = async () => {
     "use server";

@@ -43,7 +43,9 @@ const ResumeEducation = ({
         let dates = undefined;
 
         if (!hiddenGPAs![education._id]) {
-          gpa = education?.gpa ? parseDecimal(education.gpa) : 0;
+          gpa = education?.gpa
+            ? `GPA: ${parseDecimal(education.gpa).toString()}`
+            : undefined;
         }
 
         if (!hiddenDates![education._id]) {
@@ -58,7 +60,7 @@ const ResumeEducation = ({
             heading={education.schoolName}
             subHeading={`${education.degreeType} ${education.major}`}
             dates={dates}
-            value={`GPA: ${gpa?.toString()}`}
+            value={gpa}
             key={idx}
           />
         );

@@ -113,7 +113,7 @@ const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
       </div>
 
       {/* Display for large screens (1024px and above) */}
-      <div className="hidden xl:flex h-screen w-full overflow-hidden">
+      <div className="hidden xl:flex h-screen w-full overflow-hidden justify-center">
         <div className="w-1/2">
           {email !== "" ? (
             <EditPanel
@@ -124,7 +124,7 @@ const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
           ) : null}
         </div>
         <Separator className="m-0 sm:hidden" orientation="vertical" />
-        <div className="w-1/2 py-6 bg-gray-200" id="root">
+        <div className="w-1/2 py-4 bg-gray-200 h-full" id="root">
           {email !== "" ? (
             <ResumePreview
               resumeId={resumeId}

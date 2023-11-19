@@ -1,5 +1,6 @@
 import Dashboard from "@/components/Dashboard/Dashboard";
-
+import { fetchUser } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Dashboard - ResMe",
@@ -15,6 +16,10 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
+  const user = await fetchUser();
+  if (user.isOnboarded === false) {
+    redirect("/onboarding");
+  }
   return (
     <>
       <div>

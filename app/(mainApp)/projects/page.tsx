@@ -23,6 +23,18 @@ export const metadata: Metadata = {
 };
 
 const Projects = async () => {
+  return (
+    <ImageWrapper imgSrc="project">
+      <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
+        <ProjectSection />
+      </div>
+    </ImageWrapper>
+  );
+};
+
+export default Projects;
+
+export const ProjectSection = async () => {
   const session: Session | null = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -41,71 +53,64 @@ const Projects = async () => {
   }));
 
   return (
-    <ImageWrapper imgSrc="project">
-      <div className="flex-1 flex flex-col items-center py-12 space-y-8 px-8">
-        {" "}
-        <ContentSection
-          cardDetails={{
-            title: "Add Projects",
-            description:
-              "Add personal projects, outside experiences, hackathons, etc.",
-          }}
-          dialogDetails={{
-            dialogTitle: "Add Project",
-            dialogTrigger: (
-              <Button>
-                Add <PlusCircleIcon className="ml-1.5 h-5 w-5" />
-              </Button>
-            ),
-            dialogContent: <ProjectDialogContent email={session.user.email} />,
-          }}
-        >
-          {!projects || projects.length <= 0 ? (
-            <div className="flex text-sm text-accent-foreground justify-center w-full font-semibold italic">
-              {" "}
-              <p>You do not have any projects. Add some</p>{" "}
-            </div>
-          ) : (
-            projects.map((projectVal: Project) => {
-              projectVal = {
-                projectName: projectVal.projectName,
-                location: projectVal.location,
-                positionTitle: projectVal.positionTitle,
-                startDate: projectVal.startDate
-                  ? new Date(projectVal.startDate)
-                  : projectVal.startDate,
-                endDate: projectVal.endDate
-                  ? new Date(projectVal.endDate)
-                  : projectVal.endDate,
-                description: projectVal.description,
-                _id: projectVal._id,
-              };
-              return (
-                <ProjectCard
-                  key={projectVal._id}
-                  cardDetails={projectVal}
-                  dialogDetails={{
-                    dialogTitle: "Edit Project",
-                    dialogTrigger: (
-                      <Button variant="ghost" aria-label="Update">
-                        <Settings2 className="w-5 h-5"></Settings2>
-                      </Button>
-                    ),
-                    dialogContent: (
-                      <ProjectDialogContent
-                        email={session.user.email}
-                        defaultValues={projectVal}
-                      />
-                    ),
-                  }}
-                />
-              );
-            })
-          )}
-        </ContentSection>
-      </div>
-    </ImageWrapper>
+    <ContentSection
+      cardDetails={{
+        title: "Add Projects",
+        description:
+          "Add personal projects, outside experiences, hackathons, etc.",
+      }}
+      dialogDetails={{
+        dialogTitle: "Add Project",
+        dialogTrigger: (
+          <Button>
+            Add <PlusCircleIcon className="ml-1.5 h-5 w-5" />
+          </Button>
+        ),
+        dialogContent: <ProjectDialogContent email={session.user.email} />,
+      }}
+    >
+      {!projects || projects.length <= 0 ? (
+        <div className="flex text-sm text-accent-foreground justify-center w-full font-semibold italic">
+          {" "}
+          <p>You do not have any projects. Add some</p>{" "}
+        </div>
+      ) : (
+        projects.map((projectVal: Project) => {
+          projectVal = {
+            projectName: projectVal.projectName,
+            location: projectVal.location,
+            positionTitle: projectVal.positionTitle,
+            startDate: projectVal.startDate
+              ? new Date(projectVal.startDate)
+              : projectVal.startDate,
+            endDate: projectVal.endDate
+              ? new Date(projectVal.endDate)
+              : projectVal.endDate,
+            description: projectVal.description,
+            _id: projectVal._id,
+          };
+          return (
+            <ProjectCard
+              key={projectVal._id}
+              cardDetails={projectVal}
+              dialogDetails={{
+                dialogTitle: "Edit Project",
+                dialogTrigger: (
+                  <Button variant="ghost" aria-label="Update">
+                    <Settings2 className="w-5 h-5"></Settings2>
+                  </Button>
+                ),
+                dialogContent: (
+                  <ProjectDialogContent
+                    email={session.user.email}
+                    defaultValues={projectVal}
+                  />
+                ),
+              }}
+            />
+          );
+        })
+      )}
+    </ContentSection>
   );
 };
-
-export default Projects;

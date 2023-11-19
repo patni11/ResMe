@@ -13,7 +13,7 @@ import Link from "next/link";
 export const ComingSoon = ({ children }: { children: ReactElement }) => {
   return (
     <Dialog>
-      <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+      <DialogTrigger className=" text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
         {children}
       </DialogTrigger>
       <DialogContent>

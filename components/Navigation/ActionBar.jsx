@@ -1,7 +1,7 @@
 "use client";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
-import { SaveIcon, ArrowUpRightSquare, File } from "lucide-react";
+import { SaveIcon, File } from "lucide-react";
 
 //import { saveAs } from "file-saver";
 //import { Packer } from "docx";
@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import { createResume, updateResume } from "@/lib/actions/resumes.action";
 import * as gtag from "@/lib/gtag";
 
-const ActionBar = ({ componentsData, resumeId, email, children }) => {
+const ActionBar = ({ resumeId, email, children }) => {
   const [isSaving, setIsSaving] = useState(false);
   //const [isDownloading, setIsDownloading] = useState(false);
   const { toast } = useToast();
@@ -191,10 +191,11 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
   };
 
   return (
-    <div className="w-full flex justify-right space-x-4 mb-2 items-center">
+    <div className="relative w-[80%] flex justify-center items-cetner space-x-2 py-1.5 mb-2 items-center bg-secondary rounded-full">
       <div
         className={buttonVariants({
-          variant: "default",
+          variant: "outlineHover",
+          size: "xs",
           className: "flex space-x-2",
         })}
         onClick={() => {
@@ -209,7 +210,8 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
       <ComingSoon>
         <div
           className={buttonVariants({
-            variant: "default",
+            variant: "outlineHover",
+            size: "xs",
             className: "flex space-x-2",
           })}
           onClick={() => {
@@ -229,26 +231,7 @@ const ActionBar = ({ componentsData, resumeId, email, children }) => {
           <span>Docx</span>
         </div>
       </ComingSoon>
-      <ComingSoon>
-        <div
-          className={buttonVariants({
-            variant: "default",
-            className: "flex space-x-2",
-          })}
-          onClick={() => {
-            gtag.event({
-              clientWindow: window,
-              action: "Share Link",
-              category: "Download",
-              label: "Share Link",
-            });
-          }}
-        >
-          <ArrowUpRightSquare className="w-4 h-4" />
 
-          <span>Copy</span>
-        </div>
-      </ComingSoon>
       {children}
     </div>
   );

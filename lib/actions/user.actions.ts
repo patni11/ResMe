@@ -1,5 +1,8 @@
+"use server";
+import { getServerSession } from "next-auth/next";
+import authOptions, { Session } from "@/lib/authOptions";
 import { User } from "@/models/user";
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
 import { ResumeHeaderInfo } from "@/models/user";
@@ -65,7 +68,19 @@ export async function deleteUser(email: string) {
 //   }
 // }
 
-export async function fetchUser(email: string) {
+export async function fetchUser() {
+  const session: Session | null = await getServerSession(authOptions);
+
+  if (
+    session == undefined ||
+    session.user == undefined ||
+    session.user.email == undefined
+  ) {
+    throw new Error("User not found");
+  }
+
+  const email = session.user.email;
+
   try {
     await connectMongoDB();
     const user = await User.findOne({ email: email });
@@ -161,5 +176,35 @@ export async function updateLanguages(
     }
   } catch (e) {
     throw new Error(`Failed to create/update project: ${e}`);
+  }
+}
+
+export async function onboardUser(path?: string) {
+  const session: Session | null = await getServerSession(authOptions);
+
+  if (
+    session == undefined ||
+    session.user == undefined ||
+    session.user.email == undefined
+  ) {
+    throw new Error("User not found");
+  }
+
+  const email = session.user.email;
+
+  try {
+    await connectMongoDB();
+    await User.findOneAndUpdate(
+      { email: email },
+      {
+        isOnboarded: true,
+      }
+    );
+    if (path != undefined) {
+      revalidatePath(path);
+    }
+  } catch (error: any) {
+    //console.log("Failed to fetch projects", error);
+    throw new Error(`Failed to fetch projects: ${error.message}`);
   }
 }

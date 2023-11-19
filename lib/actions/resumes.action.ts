@@ -1,5 +1,6 @@
 "use server";
-import mongoose from "mongoose";
+import { getServerSession } from "next-auth/next";
+import authOptions, { Session } from "@/lib/authOptions";
 import connectMongoDB from "../mongodb";
 import { Resume, User } from "@/models/user";
 
@@ -89,7 +90,20 @@ export async function createResume({
   }
 }
 
-export async function fetchResumes(email: string) {
+export async function fetchResumes() {
+  const session: Session | null = await getServerSession(authOptions);
+  console.log("Session Onboard", session);
+
+  if (
+    session == undefined ||
+    session.user == undefined ||
+    session.user.email == undefined
+  ) {
+    throw new Error("User not found");
+  }
+
+  const email = session.user.email;
+
   try {
     await connectMongoDB();
     const resumes = await Resume.find({

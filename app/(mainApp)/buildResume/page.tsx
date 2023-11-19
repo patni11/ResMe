@@ -6,7 +6,6 @@ import { Session, getServerSession } from "next-auth";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Build Resume - ResMe",
-  description: "Create Professional Resume",
   verification: {
     google: "google-site-verification=G-501H6DW77H",
   },
@@ -24,12 +23,14 @@ const BuildResume = async () => {
     throw new Error("User not found");
   }
 
-  const user = await fetchUser(session.user.email);
+  const user = await fetchUser();
 
   if (user.resumeCount >= 3) {
     return (
       <main className="flex w-full h-full items-center justify-center">
-        <h1 className="text-4xl ">Upgrade to premium to create more resumes</h1>
+        <h1 className="text-4xl ">
+          Upgrade to premium to create more resumes or delete old resumes
+        </h1>
       </main>
     );
   }

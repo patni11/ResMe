@@ -99,11 +99,11 @@ const EducationSchema = new Schema(
     _id: { type: String, required: true },
     email: { type: String, required: true }, // email is being used to find projects of this user
     schoolName: { type: String, required: true },
-    major: { type: String, required: true },
-    degreeType: { type: String, required: true },
-    gpa: { type: Schema.Types.Decimal128, required: true },
-    startDate: { type: Date, required: true },
-    endDate: { type: Date, required: true },
+    major: { type: String },
+    degreeType: { type: String },
+    gpa: { type: Schema.Types.Decimal128 },
+    startDate: { type: Date },
+    endDate: { type: Date },
   },
   { timestamps: true }
 );
@@ -112,8 +112,8 @@ const CertificateSchema = new Schema(
   {
     _id: { type: String, required: true },
     email: { type: String, required: true }, // email is being used to find projects of this user
-    certificateName: { type: String, required: true },
-    organization: { type: String, required: true },
+    certificateName: { type: String },
+    organization: { type: String },
     issueDate: { type: Date },
   },
   { timestamps: true }
@@ -123,10 +123,10 @@ const ExperieceSchema = new Schema(
     _id: { type: String, required: true, unique: true },
     email: { type: String, required: true }, // email is being used to find projects of this user
     company: { type: String, required: true },
-    location: { type: String, required: true },
-    positionTitle: { type: String, required: true },
-    experienceType: { type: String, required: true },
-    startDate: { type: Date, required: true },
+    location: { type: String },
+    positionTitle: { type: String },
+    experienceType: { type: String },
+    startDate: { type: Date },
     endDate: {
       type: Schema.Types.Mixed,
       required: true,
@@ -143,7 +143,7 @@ const ExperieceSchema = new Schema(
       //     `${props.value} is not a valid endDate! It should be a Date or 'working'.`,
       // },
     },
-    description: { type: [String], required: true },
+    description: { type: [String] },
   },
   { timestamps: true }
 );
@@ -158,38 +158,37 @@ const ResumeSchema = new Schema(
     interests: { type: [String] },
     educations: [
       {
-        schoolName: { type: String, required: true },
-        major: { type: String, required: true },
-        degreeType: { type: String, required: true },
-        gpa: { type: Schema.Types.Decimal128, required: true },
-        startDate: { type: Date, required: true },
-        endDate: { type: Date, required: true },
+        schoolName: { type: String },
+        major: { type: String },
+        degreeType: { type: String },
+        gpa: { type: Schema.Types.Decimal128 },
+        startDate: { type: Date },
+        endDate: { type: Date },
       },
     ],
     certificates: [
       {
-        certificateName: { type: String, required: true },
-        organization: { type: String, required: true },
+        certificateName: { type: String },
+        organization: { type: String },
         issueDate: { type: Date },
       },
     ],
     experiences: [
       {
-        company: { type: String, required: true },
-        location: { type: String, required: true },
-        positionTitle: { type: String, required: true },
-        experienceType: { type: String, required: true },
-        startDate: { type: Date, required: true },
+        company: { type: String },
+        location: { type: String },
+        positionTitle: { type: String },
+        experienceType: { type: String },
+        startDate: { type: Date },
         endDate: {
           type: Schema.Types.Mixed,
-          required: true,
         },
-        description: { type: [String], required: true },
+        description: { type: [String] },
       },
     ],
     projects: [
       {
-        projectName: { type: String, required: true },
+        projectName: { type: String },
         location: { type: String },
         positionTitle: { type: String },
         startDate: { type: Date },
@@ -228,6 +227,7 @@ const ResumeSchema = new Schema(
 const UserSchema = new Schema(
   {
     email: { type: String, required: true, unique: true },
+    isOnboarded: { type: Boolean, required: true, default: false },
     password: { type: String, required: true },
     stripeCustomerId: { type: String },
     stripeSubscriptionId: { type: String },

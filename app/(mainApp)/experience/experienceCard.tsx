@@ -56,7 +56,6 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
             </span>
           </div>
         </div>
-
         <ul className="w-full p-4 rounded-md shadow-md">
           {cardDetails.description
             .split("\n")

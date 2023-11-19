@@ -52,35 +52,11 @@ const ExperienceSchema = z
         message: "Company Name is required",
       })
       .default(""),
-    location: z
-      .string()
-      .nonempty({
-        message: "Location is required",
-      })
-      .default(""),
-    positionTitle: z
-      .string()
-      .nonempty({
-        message: "Position Title is required",
-      })
-      .default(""),
-    experienceType: z
-      .string()
-      .nonempty({
-        message: "Experience Level is required",
-      })
-      .default(""),
-    description: z
-      .string()
-      .nonempty({
-        message: "Description is required",
-      })
-      .default(""),
-    startDate: z
-      .date({
-        required_error: "A start date is required.",
-      })
-      .default(new Date()),
+    location: z.string().default(""),
+    positionTitle: z.string().default(""),
+    experienceType: z.string().default(""),
+    description: z.string().default(""),
+    startDate: z.date().default(new Date()),
     endDate: z
       .union([
         z.date({

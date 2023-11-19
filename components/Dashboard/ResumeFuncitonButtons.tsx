@@ -5,7 +5,6 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { deleteFunc, renameResume } from "./ResumeFunctions";
 import { useToast } from "../ui/use-toast";
-import { revalidatePath } from "next/cache";
 import { DialogClose } from "../ui/dialog";
 
 export const DeleteButton = ({
