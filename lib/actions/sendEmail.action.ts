@@ -36,12 +36,11 @@ export async function sendPDFDownloadEmail({
   email: string | null | undefined;
 }) {
   const emailTemplate = await renderAsync(PDFDownloadedEmail({ name }));
-  console.log("Email Template", emailTemplate);
   try {
     // Send the email using the Resend API
     await resend.emails.send({
       from: "Shubh From ResMe <founder@resme.xyz>",
-      to: "delivered@resend.dev", //email as string,
+      to: email as string,
       subject: "Resume Downloaded",
       html: emailTemplate,
     });
