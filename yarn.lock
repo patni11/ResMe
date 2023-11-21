@@ -6740,6 +6740,7 @@ __metadata:
     clsx: ^2.0.0
     date-fns: ^2.30.0
     docx: ^8.2.3
+    encoding: ^0.1.13
     eslint: ^8.50.0
     eslint-config-next: ^13.5.4
     lucide-react: ^0.284.0

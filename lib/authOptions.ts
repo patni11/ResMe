@@ -31,6 +31,9 @@ export const authOptions: NextAuthOptions = {
       id: "google",
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
+      httpOptions: {
+        timeout: 10000,
+      },
     }),
     FacebookProvider({
       name: "facebook",
@@ -89,6 +92,9 @@ export const authOptions: NextAuthOptions = {
     //newUser: "/onboarding",
   },
   //debug: true,
+  jwt: {
+    maxAge: 60 * 60 * 24 * 30,
+  },
 
   callbacks: {
     // We can pass in additional information from the user document MongoDB returns

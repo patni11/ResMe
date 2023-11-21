@@ -1,7 +1,5 @@
 import MainEditor from "./mainEditor";
 import { fetchUser } from "@/lib/actions/user.actions";
-import authOptions from "@/lib/authOptions";
-import { Session, getServerSession } from "next-auth";
 
 import { Metadata } from "next";
 export const metadata: Metadata = {
@@ -17,12 +15,6 @@ export const metadata: Metadata = {
 };
 
 const BuildResume = async () => {
-  const session: Session | null = await getServerSession(authOptions);
-
-  if (!session || !session.user || !session.user.email) {
-    throw new Error("User not found");
-  }
-
   const user = await fetchUser();
 
   if (user.resumeCount >= 3) {

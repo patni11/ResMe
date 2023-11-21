@@ -61,9 +61,10 @@ export const GoForward = ({
             label: "OnBoard Complete",
           });
           await onboardUser();
+          router.push(page);
+        } else {
+          router.push(page);
         }
-
-        router.push(page);
       }}
     >
       <ChevronRight className="h-5 w-5" />{" "}
