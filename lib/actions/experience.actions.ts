@@ -49,9 +49,7 @@ export async function updateExperience(
       }
     );
 
-    if (path === "/experience") {
-      revalidatePath(path);
-    }
+    revalidatePath(path || "/experience");
   } catch (e) {
     throw new Error(`Failed to create/update experience: ${e}`);
   }
@@ -64,7 +62,5 @@ export async function deleteExperience(id: string, path?: string) {
   }
 
   await Experience.deleteOne({ _id: experience._id });
-  if (path) {
-    revalidatePath(path);
-  }
+  revalidatePath(path || "/experience");
 }

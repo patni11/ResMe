@@ -47,9 +47,7 @@ export async function updateProject(
       }
     );
 
-    if (path === "/projects") {
-      revalidatePath(path);
-    }
+    revalidatePath(path || "/projects");
   } catch (e) {
     throw new Error(`Failed to create/update project: ${e}`);
   }

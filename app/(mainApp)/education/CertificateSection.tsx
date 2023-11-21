@@ -1,6 +1,6 @@
 import ContentSection from "@/components/Sections/ContentSection";
 import { PlusCircleIcon, Settings2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { getServerSession } from "next-auth/next";
 import authOptions, { Session } from "@/lib/authOptions";
 import { Certificate } from "./pageTypes";
@@ -9,9 +9,11 @@ import { fetchCertificates } from "@/lib/actions/certificates.action.";
 import CertificateCard from "./certificateCard";
 import CertificateDialogContent from "./CertificateDialogContent";
 
-interface EducationSectionProps {}
+interface CertificateSectionProps {
+  path?: string;
+}
 
-const EducationSection: FC<EducationSectionProps> = async () => {
+const CertificateSection: FC<CertificateSectionProps> = async ({ path }) => {
   const session: Session | null = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -31,11 +33,13 @@ const EducationSection: FC<EducationSectionProps> = async () => {
       dialogDetails={{
         dialogTitle: "Add Certificate",
         dialogTrigger: (
-          <Button>
+          <div className={buttonVariants({ variant: "default" })}>
             Add <PlusCircleIcon className="ml-1.5 h-5 w-5" />
-          </Button>
+          </div>
         ),
-        dialogContent: <CertificateDialogContent email={session.user.email} />,
+        dialogContent: (
+          <CertificateDialogContent email={session.user.email} path={path} />
+        ),
       }}
     >
       {!certificates || certificates.length <= 0 ? (
@@ -81,4 +85,4 @@ const EducationSection: FC<EducationSectionProps> = async () => {
   );
 };
 
-export default EducationSection;
+export default CertificateSection;

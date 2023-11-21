@@ -8,7 +8,7 @@ import { Project } from "./pageTypes";
 import { fetchUserProjects } from "@/lib/actions/userProject.actions";
 import ProjectCard from "./projectCard";
 
-export const ProjectSection = async () => {
+export const ProjectSection = async ({ path }: { path?: string }) => {
   const session: Session | null = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -40,7 +40,9 @@ export const ProjectSection = async () => {
             Add <PlusCircleIcon className="ml-1.5 h-5 w-5" />
           </Button>
         ),
-        dialogContent: <ProjectDialogContent email={session.user.email} />,
+        dialogContent: (
+          <ProjectDialogContent email={session.user.email} path={path} />
+        ),
       }}
     >
       {!projects || projects.length <= 0 ? (

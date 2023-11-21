@@ -6,6 +6,7 @@ import { User } from "@/models/user";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
 import { ResumeHeaderInfo } from "@/models/user";
+import { originalPathname } from "next/dist/build/templates/app-page";
 export async function deleteUser(email: string) {
   try {
     // Connect to the MongoDB server
@@ -126,9 +127,10 @@ export async function updateSkills(
         skills: updatedSkills,
       }
     );
-
-    if (path === "/skills") {
+    if (path) {
       revalidatePath(path);
+    } else {
+      revalidatePath("/skills");
     }
   } catch (e) {
     throw new Error(`Failed to create/update project: ${e}`);

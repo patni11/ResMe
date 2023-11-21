@@ -37,9 +37,7 @@ export async function updateResumeHeaderInfo(
       }
     );
 
-    if (path === "/userInfo") {
-      revalidatePath(path);
-    }
+    revalidatePath(path || "/userInfo");
   } catch (e) {
     throw new Error(`Failed to create/update userData: ${e}`);
   }

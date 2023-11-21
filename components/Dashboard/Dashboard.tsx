@@ -10,7 +10,6 @@ import { timeAgo } from "@/app/utils/FormattingFunctions";
 interface DashBoardProps {}
 const DashBoard: FC<DashBoardProps> = async () => {
   const resumes = await fetchResumes();
-  console.log("Dashboard");
 
   return (
     <>

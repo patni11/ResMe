@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default async function DashboardPage() {
   const user = await fetchUser();
   if (user.isOnboarded === false) {
-    redirect("/onboarding");
+    redirect("/onboarding/header");
   }
   return (
     <>

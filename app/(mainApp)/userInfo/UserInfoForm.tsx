@@ -283,21 +283,30 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
 
 export default UserInfoForm;
 
-export const UserInfoFormOnboarding = () => {
+export const UserInfoFormOnboarding = ({
+  defaultValues,
+}: {
+  defaultValues?: UserInfo;
+}) => {
+  const { toast } = useToast();
+
   const form = useForm<UserInfo>({
     resolver: zodResolver(UserInfoSchema),
     defaultValues: {
-      displayName: "",
-      contactInfo: [{ contact: "" }],
-      location: "",
-      links: [{ linkName: "", link: "" }],
-      email: "",
+      displayName: defaultValues?.displayName || "",
+      contactInfo: defaultValues?.contactInfo || [{ contact: "" }],
+      location: defaultValues?.location || "",
+      links: defaultValues?.links || [{ linkName: "", link: "" }],
+      email: defaultValues?.email || "",
     },
     mode: "onSubmit",
   });
 
   const handleFormSubmit = async (data: UserInfo) => {
     await updateResumeHeaderInfo(data);
+    toast({
+      title: "User Info Saved :)",
+    });
   };
 
   const { register } = form;

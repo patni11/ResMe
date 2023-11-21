@@ -32,7 +32,7 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogFooter, DialogTrigger } from "@/components/ui/dialog";
@@ -42,7 +42,6 @@ import {
   deleteExperience,
   updateExperience,
 } from "@/lib/actions/experience.actions";
-import { DayPicker } from "react-day-picker";
 const ExperienceSchema = z
   .object({
     _id: z.string().optional(),
@@ -86,12 +85,15 @@ const ExperienceSchema = z
 interface ExperienceDialogContentProps {
   email: string;
   defaultValues?: Experience;
+  path?: string;
 }
 
 const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
   email,
   defaultValues,
+  path,
 }) => {
+  const validatePath = path || "/experience";
   const { toast } = useToast();
   const form = useForm<Experience>({
     resolver: zodResolver(ExperienceSchema),
@@ -112,10 +114,11 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
 
   const handleDelete = async () => {
     if (defaultValues?._id) {
-      await deleteExperience(defaultValues?._id, "/experience");
+      await deleteExperience(defaultValues?._id, validatePath);
       toast({
         title: `Deleted Experience 🎈: ${defaultValues.company} `,
       });
+      document.getElementById("closeDialog")?.click();
     } else {
       toast({
         title: "No Value to delete, please try again",
@@ -136,7 +139,7 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
     toast({
       title: `Experience Updated 🥳: ${experienceData.company} `,
     });
-    updateExperience(experienceData, email, "/experience");
+    updateExperience(experienceData, email, validatePath);
     document.getElementById("closeDialog")?.click();
   };
 
@@ -371,9 +374,12 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
               Delete
             </Button>
             <DialogTrigger>
-              <Button variant="outline" id="closeDialog">
+              <div
+                className={buttonVariants({ variant: "outline" })}
+                id="closeDialog"
+              >
                 Cancel
-              </Button>
+              </div>
             </DialogTrigger>
 
             <Button type="submit" id="none">

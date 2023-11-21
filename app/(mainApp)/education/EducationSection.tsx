@@ -12,9 +12,11 @@ import { EducationDialogContent } from "./EducationDialogContent";
 import { fetchEducation } from "@/lib/actions/education.actions";
 import { parseDecimal } from "@/app/utils/FormattingFunctions";
 
-interface EducationSectionProps {}
+interface EducationSectionProps {
+  path?: string;
+}
 
-const EducationSection: FC<EducationSectionProps> = async () => {
+const EducationSection: FC<EducationSectionProps> = async ({ path }) => {
   const session: Session | null = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -38,7 +40,9 @@ const EducationSection: FC<EducationSectionProps> = async () => {
             Add <PlusCircleIcon className="ml-1.5 h-5 w-5" />
           </Button>
         ),
-        dialogContent: <EducationDialogContent email={session.user.email} />,
+        dialogContent: (
+          <EducationDialogContent email={session.user.email} path={path} />
+        ),
       }}
     >
       {!education || education.length <= 0 ? (

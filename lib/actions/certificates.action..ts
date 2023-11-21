@@ -44,9 +44,7 @@ export async function updateCertificate(
       }
     );
 
-    if (path === "/education") {
-      revalidatePath(path);
-    }
+    revalidatePath(path || "/education");
   } catch (e) {
     throw new Error(`Failed to create/update Certificates: ${e}`);
   }

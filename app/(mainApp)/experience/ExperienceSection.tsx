@@ -7,7 +7,7 @@ import authOptions, { Session } from "@/lib/authOptions";
 import { Experience } from "./pageTypes";
 import { fetchExperiences } from "@/lib/actions/experience.actions";
 import ExperienceCard from "./experienceCard";
-export const ExperienceSection = async () => {
+export const ExperienceSection = async ({ path }: { path?: string }) => {
   const session: Session | null = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -37,7 +37,9 @@ export const ExperienceSection = async () => {
             Add <PlusCircleIcon className="ml-1.5 h-5 w-5" />
           </Button>
         ),
-        dialogContent: <ExperienceDialogContent email={session.user.email} />,
+        dialogContent: (
+          <ExperienceDialogContent email={session.user.email} path={path} />
+        ),
       }}
     >
       {!experiences || experiences.length <= 0 ? (

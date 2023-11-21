@@ -49,7 +49,7 @@ export async function updateEducation(
       }
     );
 
-    if (path === "/education") {
+    if (path) {
       revalidatePath(path);
     }
   } catch (e) {

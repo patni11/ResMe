@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
@@ -71,12 +71,16 @@ const EducationFormSchema = z
 interface EducationDialogContentProps {
   email: string;
   defaultValues?: EducationType;
+  path?: string;
 }
 
 export const EducationDialogContent: FC<EducationDialogContentProps> = ({
   email,
   defaultValues,
+  path,
 }) => {
+  const validatePath = path || "/education";
+
   const { toast } = useToast();
   const form = useForm<EducationType>({
     resolver: zodResolver(EducationFormSchema),
@@ -99,10 +103,11 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
 
   const handleDelete = async () => {
     if (defaultValues?._id) {
-      await deleteEducation(defaultValues?._id, "/education");
+      await deleteEducation(defaultValues?._id, validatePath);
       toast({
         title: `Deleted Education 🎈: ${defaultValues.schoolName} `,
       });
+      document.getElementById("closeDialog")?.click();
     } else {
       toast({
         title: "No Value to delete, please try again",
@@ -128,7 +133,7 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
     toast({
       title: `Education Updated 🥳: ${educationDataWithId.schoolName} `,
     });
-    updateEducation(educationDataWithId, email, "/education");
+    updateEducation(educationDataWithId, email, validatePath);
 
     document.getElementById("closeDialog")?.click();
   };
@@ -326,9 +331,12 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
             Delete
           </Button>
           <DialogTrigger>
-            <Button variant="outline" id="closeDialog">
+            <div
+              className={buttonVariants({ variant: "outline" })}
+              id="closeDialog"
+            >
               Cancel
-            </Button>
+            </div>
           </DialogTrigger>
 
           <Button type="submit" id="none">

@@ -19,7 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -42,12 +42,15 @@ const CertificateSchema = z.object({
 interface CertificateDialogContentProps {
   email: string;
   defaultValues?: Certificate;
+  path?: string;
 }
 
 const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
   email,
   defaultValues,
+  path,
 }) => {
+  const validatePath = path || "/education";
   const { toast } = useToast();
   const form = useForm<Certificate>({
     resolver: zodResolver(CertificateSchema),
@@ -63,10 +66,11 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
 
   const handleDelete = async () => {
     if (defaultValues?._id) {
-      await deleteCertificate(defaultValues?._id, "/education");
+      await deleteCertificate(defaultValues?._id, validatePath);
       toast({
         title: `Deleted Certificate 🎈: ${defaultValues.certificateName} `,
       });
+      document.getElementById("closeDialog")?.click();
     } else {
       toast({
         title: "No Value to delete, please try again",
@@ -86,7 +90,8 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
     toast({
       title: `Certificate Updated 🥳: ${educationDataWithId.certificateName} `,
     });
-    updateCertificate(educationDataWithId, email, "/education");
+    console.log("Validate Path", validatePath);
+    updateCertificate(educationDataWithId, email, validatePath);
 
     document.getElementById("closeDialog")?.click();
   };
@@ -179,9 +184,12 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
               Delete
             </Button>
             <DialogTrigger>
-              <Button variant="outline" id="closeDialog">
+              <div
+                className={buttonVariants({ variant: "outline" })}
+                id="closeDialog"
+              >
                 Cancel
-              </Button>
+              </div>
             </DialogTrigger>
 
             <Button type="submit" id="none">

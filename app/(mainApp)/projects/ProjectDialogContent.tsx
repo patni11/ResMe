@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogFooter, DialogTrigger } from "@/components/ui/dialog";
@@ -73,12 +73,15 @@ const ProjectSchema = z
 interface ProjectDialogContentProps {
   defaultValues?: Project;
   email: string;
+  path?: string;
 }
 
 const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
   defaultValues,
   email,
+  path,
 }) => {
+  const validatePath = path || "/projects";
   const { toast } = useToast();
   const form = useForm<Project>({
     resolver: zodResolver(ProjectSchema),
@@ -96,10 +99,11 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
 
   const handleDelete = async () => {
     if (defaultValues?._id) {
-      await deleteProject(defaultValues?._id, "/projects");
+      await deleteProject(defaultValues?._id, validatePath);
       toast({
         title: `Deleted Project 🎈: ${defaultValues.projectName} `,
       });
+      document.getElementById("closeDialog")?.click();
     } else {
       toast({
         title: "No Value to delete, please try again",
@@ -120,7 +124,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
     toast({
       title: `Project Updated 🥳: ${projectData.projectName} `,
     });
-    updateProject(projectData, email, "/projects");
+    updateProject(projectData, email, validatePath);
     document.getElementById("closeDialog")?.click();
   };
 
@@ -311,9 +315,12 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
               Delete
             </Button>
             <DialogTrigger>
-              <Button variant="outline" id="closeDialog">
+              <div
+                className={buttonVariants({ variant: "outline" })}
+                id="closeDialog"
+              >
                 Cancel
-              </Button>
+              </div>
             </DialogTrigger>
 
             <Button type="submit" id="none">
