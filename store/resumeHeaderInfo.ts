@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
 import { persist } from "zustand/middleware";
+import { getCleanedHeaderData } from "@/lib/apiFunctions";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 export type State = {
@@ -22,34 +23,6 @@ type Actions = {
   fetchHeaderInfo: () => Promise<void>;
 };
 
-const INITIAL_STATE: State = {
-  headerInfo: {
-    displayName: "",
-    contactInfo: [],
-    location: "",
-    links: [],
-    email: "",
-  },
-  hideLocation: false,
-  hiddenContacts: [{ key: false }],
-  hiddenLinks: [{ key: false }],
-  isLoading: false,
-  error: null,
-};
-
-async function getData() {
-  try {
-    const res = await fetch(`/api/resumeHeaderInfo`);
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return res.json();
-  } catch (e) {
-    console.log("error loading topic in zustand:", e);
-  }
-}
-
 const storeCache: Record<string, any> = {};
 
 export const createResumeHeaderInfo = (resumeHeaderID: string) => {
@@ -57,44 +30,37 @@ export const createResumeHeaderInfo = (resumeHeaderID: string) => {
     return storeCache[resumeHeaderID];
   }
 
+  const savedState = localStorage.getItem(resumeHeaderID);
+  const INITIAL_STATE = savedState
+    ? JSON.parse(savedState)
+    : {
+        headerInfo: {
+          displayName: "",
+          contactInfo: [],
+          location: "",
+          links: [],
+          email: "",
+        },
+        hideLocation: false,
+        hiddenContacts: [{ key: false }],
+        hiddenLinks: [{ key: false }],
+        isLoading: false,
+        error: null,
+      };
+
   const useResumeHeaderInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        headerInfo: INITIAL_STATE.headerInfo,
-        error: INITIAL_STATE.error,
-        isLoading: INITIAL_STATE.isLoading,
+        ...INITIAL_STATE,
         fetchHeaderInfo: async () => {
           set({ isLoading: true });
           try {
-            const headerInfo: UserInfo = (await getData()).headerInfo;
-
-            const hidContacts =
-              headerInfo.contactInfo?.map((contact) => ({
-                [contact.contact]: false,
-              })) || [];
-            const hidLinks =
-              headerInfo.links?.map((link) => ({ [link.linkName]: false })) ||
-              [];
-
-            set({
-              headerInfo: headerInfo,
-              hiddenContacts: hidContacts,
-              hiddenLinks: hidLinks,
-              hideLocation: false,
-              isLoading: false,
-            });
+            const data = await getCleanedHeaderData();
+            set(data);
           } catch (error) {
             set({ error, isLoading: false });
           }
         },
-        hideLocation: INITIAL_STATE.hideLocation,
-        hiddenContacts: INITIAL_STATE.hiddenContacts as Array<{
-          [key: string]: boolean;
-        }>,
-
-        hiddenLinks: INITIAL_STATE.hiddenLinks as Array<{
-          [key: string]: boolean;
-        }>,
         updateDisplayName: (newDisplayName: string) => {
           set((state) => {
             return {

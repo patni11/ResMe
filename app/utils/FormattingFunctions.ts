@@ -59,3 +59,27 @@ export function timeAgo(dateParam: Date | string): string | null {
     return `${years} year(s) ago`;
   }
 }
+
+export function fixExperience(rawExperiences: any) {
+  const formattedExperiences = rawExperiences.map((exp: any) => {
+    let endDate = exp.endDate;
+
+    // Check if endDate is a string and not 'working', then parse it as a Date.
+    if (typeof endDate === "string" && endDate !== "working") {
+      endDate = new Date(endDate);
+    }
+
+    return {
+      ...exp,
+      endDate: endDate,
+    };
+  });
+  return formattedExperiences;
+}
+
+export function fixStructure(arrayOfObjects: any) {
+  arrayOfObjects = arrayOfObjects.map(
+    ({ _id, __v, email, createdAt, updatedAt, ...rest }) => rest
+  );
+  return arrayOfObjects;
+}

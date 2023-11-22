@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { Experience } from "@/app/(mainApp)/experience/pageTypes";
 import { persist } from "zustand/middleware";
+import { getCleanedExperienceData } from "@/lib/apiFunctions";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 export type State = {
@@ -39,33 +40,23 @@ type Actions = {
   moveExpDown: (index: number) => void;
 };
 
-const INITIAL_STATE: State = {
-  experiences: [], // should be []
-  hiddenExperiences: {}, //should be null
-  hideAll: false,
-  isLoading: false,
-  error: null,
-};
-
 const storeCache: Record<string, any> = {};
-
-async function getData() {
-  try {
-    const res = await fetch(`/api/experiencesInfo`);
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return res.json();
-  } catch (e) {
-    console.log("error loading topic in zustand:", e);
-  }
-}
 
 export const createExperienceInfo = (experienceID: string) => {
   if (storeCache[experienceID]) {
     return storeCache[experienceID];
   }
+
+  const savedState = localStorage.getItem(experienceID);
+  const INITIAL_STATE = savedState
+    ? JSON.parse(savedState)
+    : {
+        experiences: [], // should be []
+        hiddenExperiences: {}, //should be null
+        hideAll: false,
+        isLoading: false,
+        error: null,
+      };
 
   const useExperiencesInfo = create(
     persist<State & Actions>(
@@ -74,23 +65,8 @@ export const createExperienceInfo = (experienceID: string) => {
         fetchExperiences: async () => {
           set({ isLoading: true });
           try {
-            const experiences: Experience[] | [] =
-              (await getData()).experiences || INITIAL_STATE.experiences;
-
-            const hiddenExperiences = experiences
-              ? experiences.reduce((acc, experience) => {
-                  acc[experience._id] = false;
-                  return acc;
-                }, {} as { [key: string]: boolean })
-              : null;
-
-            set({
-              experiences: experiences,
-
-              hiddenExperiences: hiddenExperiences,
-
-              isLoading: false,
-            });
+            const experiences = await getCleanedExperienceData();
+            set(experiences);
           } catch (error) {
             set({ error, isLoading: false });
           }

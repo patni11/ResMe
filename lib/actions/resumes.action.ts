@@ -27,7 +27,7 @@ export async function createResume({
   certificates: any[]; // Replace 'any' with the actual type
   experiences: any[]; // Replace 'any' with the actual type
   projects: any[]; // Replace 'any' with the actual type
-  headerInfo: any[]; // Replace 'any' with the actual type
+  headerInfo: any; // Replace 'any' with the actual type
 }): Promise<{
   isError: boolean;
   isSuccess: boolean;

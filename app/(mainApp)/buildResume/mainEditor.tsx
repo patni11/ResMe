@@ -5,44 +5,32 @@ import ResumePreview from "./ResumePreview";
 import EditPanel from "./EditPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+//import { useSession } from "next-auth/react";
+import { useState } from "react";
 
-const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
-  const { data: session } = useSession();
-  const email = session?.user?.email || "";
+const MainEditor = ({
+  email,
+  resumeId,
+}: {
+  email: string;
+  resumeId: string;
+}) => {
+  // const { data: session } = useSession();
+  // const email = session?.user?.email || "";
   type ComponentData = { type: string; id: string };
 
-  const [componentsData, setComponentsData] = useState<ComponentData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Assuming session?.user?.email will eventually be populated
-    const email = session?.user?.email;
-
-    // If email isn't available yet, don't set the components
-    if (!email) {
-      return;
-    }
-
-    // Define initial components data with the available email
-    const initialComponentsData = [
-      { type: "ResumeHeader", id: `resumeHeader-${email}-${resumeId}` },
-      { type: "EducationSectionCard", id: `educations-${email}-${resumeId}` },
-      {
-        type: "CertificateSectionCard",
-        id: `certificates-${email}-${resumeId}`,
-      },
-      { type: "ExperienceSectionCard", id: `experiences-${email}-${resumeId}` },
-      { type: "ProjectSectionCard", id: `projects-${email}-${resumeId}` },
-      { type: "TalentsSection", id: `talents-${email}-${resumeId}` },
-      // ... other components
-    ];
-
-    // Set the initial components data into state
-    setComponentsData(initialComponentsData);
-    setIsLoading(false);
-  }, [session, resumeId]);
+  const [componentsData, setComponentsData] = useState<ComponentData[]>([
+    { type: "ResumeHeader", id: `resumeHeader-${email}-${resumeId}` },
+    { type: "EducationSectionCard", id: `educations-${email}-${resumeId}` },
+    {
+      type: "CertificateSectionCard",
+      id: `certificates-${email}-${resumeId}`,
+    },
+    { type: "ExperienceSectionCard", id: `experiences-${email}-${resumeId}` },
+    { type: "ProjectSectionCard", id: `projects-${email}-${resumeId}` },
+    { type: "TalentsSection", id: `talents-${email}-${resumeId}` },
+    // ... other components
+  ]);
 
   // const [components, setComponents] = useState(initialComponents);
 
@@ -70,10 +58,6 @@ const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
       return newComponents;
     });
   };
-
-  if (isLoading) {
-    return <div></div>;
-  }
 
   return (
     <main className="flex justify-between w-full h-full">

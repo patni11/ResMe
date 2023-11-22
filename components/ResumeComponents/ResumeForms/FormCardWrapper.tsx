@@ -1,7 +1,7 @@
 "use client";
 
 import Trash2Button from "@/components/UIButtons/Trash2Button";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   ChevronDown,
@@ -10,6 +10,14 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { FC, ReactNode } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface FormCardWrapperProps {
   cardTitle: string;
@@ -98,19 +106,60 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
               {cardTitle}
             </div>
             {refreshFunction && !hideAll ? (
-              <Button
-                onClick={() => {
-                  hideAll = false;
+              <div className="flex items-center justify-center">
+                <Dialog>
+                  <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                    <Button
+                      className={buttonVariants({
+                        variant: "ghost",
+                        className: "mr-2",
+                      })}
+                      aria-label="Refresh"
+                    >
+                      Reset
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Reset To Profile</DialogTitle>
+                      <DialogDescription className="flex flex-col space-y-4 items-center">
+                        <span>
+                          This will reset the fields to your default profile
+                          settings
+                        </span>
 
-                  refreshFunction();
-                }}
-                className="mr-2"
-                variant="ghost"
-                aria-label="Refresh"
-                disabled={isLoading}
-              >
-                <RefreshCw className="h-4 w-4" />
-              </Button>
+                        <Button
+                          onClick={() => {
+                            hideAll = false;
+
+                            refreshFunction();
+                          }}
+                          className="mr-2"
+                          variant="default"
+                          aria-label="Refresh"
+                          disabled={isLoading}
+                        >
+                          Reset
+                        </Button>
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+
+                <Button
+                  onClick={() => {
+                    hideAll = false;
+
+                    refreshFunction();
+                  }}
+                  className="mr-2"
+                  variant="ghost"
+                  aria-label="Refresh"
+                  disabled={isLoading}
+                >
+                  <RefreshCw className="h-4 w-4" />
+                </Button>
+              </div>
             ) : (
               <div></div>
             )}

@@ -2668,10 +2668,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:8.3.4":
+  version: 8.3.4
+  resolution: "@types/uuid@npm:8.3.4"
+  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
+  languageName: node
+  linkType: hard
+
 "@types/uuid@npm:^9.0.4":
   version: 9.0.7
   resolution: "@types/uuid@npm:9.0.7"
   checksum: c7321194aeba9ea173efd1e721403bdf4e7ae6945f8f8cdbc87c791f4b505ccf3dbc4a8883d90b394ef13b7c2dc778045792b05dbb23b3c746f8ea347804d448
+  languageName: node
+  linkType: hard
+
+"@types/uuidv4@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "@types/uuidv4@npm:5.0.0"
+  dependencies:
+    uuidv4: "*"
+  checksum: 0cd1b610c50cf13c3bc7cc1068c996e0cc54f84d1a075a7d58cbc129a6cc6ed3514b46d4bc56f8ae94bbab2e315f0c37b370fcf656d24439f496d8e650ca23e5
   languageName: node
   linkType: hard
 
@@ -6730,6 +6746,7 @@ __metadata:
     "@types/react": ^18.2.25
     "@types/react-dom": ^18.2.10
     "@types/uuid": ^9.0.4
+    "@types/uuidv4": ^5.0.0
     "@uploadthing/react": ^6.0.0
     "@xmldom/xmldom": latest
     add: ^2.0.6
@@ -6765,6 +6782,7 @@ __metadata:
     tailwindcss-animate: ^1.0.7
     typescript: ^5.2.2
     uploadthing: ^6.0.1
+    uuidv4: ^6.2.13
     yarn: ^1.22.19
     yarn-upgrade-all: ^0.7.2
     zod: ^3.22.4
@@ -9442,12 +9460,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.3.2":
+"uuid@npm:8.3.2, uuid@npm:^8.3.2":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:
     uuid: dist/bin/uuid
   checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
+  languageName: node
+  linkType: hard
+
+"uuidv4@npm:*, uuidv4@npm:^6.2.13":
+  version: 6.2.13
+  resolution: "uuidv4@npm:6.2.13"
+  dependencies:
+    "@types/uuid": 8.3.4
+    uuid: 8.3.2
+  checksum: 25b3ce1d5860c7fb2232270f20d36c320e52817356cc0dfc88610965e6faced3e7050b3628be08ed08092dffc099288ed24ac0404a2869d59963a2be1939f476
   languageName: node
   linkType: hard
 

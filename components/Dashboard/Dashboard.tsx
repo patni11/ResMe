@@ -1,14 +1,14 @@
 import { FC } from "react";
 import { ResumeCard } from "./ResumeCard";
-
 import { cn } from "@/lib/utils";
-import { PlusCircle } from "lucide-react";
-import Link from "next/link";
 import { fetchResumes } from "@/lib/actions/resumes.action";
 import { timeAgo } from "@/app/utils/FormattingFunctions";
+import { CreateResumeButton } from "../UIButtons/CreateResume";
 
-interface DashBoardProps {}
-const DashBoard: FC<DashBoardProps> = async () => {
+interface DashBoardProps {
+  email: string;
+}
+const DashBoard: FC<DashBoardProps> = async ({ email }) => {
   const resumes = await fetchResumes();
 
   return (
@@ -24,20 +24,7 @@ const DashBoard: FC<DashBoardProps> = async () => {
             height={265}
           /> */}
           <div className={cn("space-y-3 w-[200px] ml-4")}>
-            <div className="overflow-hidden rounded-md border">
-              <Link
-                href="/buildResume"
-                className={cn(
-                  "h-auto w-auto aspect-[3/4] flex justify-center items-center object-cover transition-all hover:scale-105"
-                )}
-              >
-                <PlusCircle
-                  width={50}
-                  height={50}
-                  strokeWidth="0.75px"
-                ></PlusCircle>
-              </Link>
-            </div>
+            <CreateResumeButton email={email} />
 
             <div className="flex justify-left text-sm">
               <h3 className="font-medium leading-none">Create Resume</h3>

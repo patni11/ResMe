@@ -28,11 +28,7 @@ import {
   LETTER_WIDTH_PX,
 } from "@/components/ResumeComponents/ReactPDF/constants";
 
-export default function ResumePreview({
-  resumeId = "default",
-  email = "",
-  componentsData,
-}) {
+export default function ResumePreview({ resumeId, email, componentsData }) {
   const [pdfPreview, setPDFPreview] = useState(false);
 
   const useEducationsInfo = createEducationInfo(

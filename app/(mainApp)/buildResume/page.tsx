@@ -1,7 +1,7 @@
 import MainEditor from "./mainEditor";
 import { fetchUser } from "@/lib/actions/user.actions";
-
 import { Metadata } from "next";
+
 export const metadata: Metadata = {
   title: "Build Resume - ResMe",
   verification: {
@@ -26,10 +26,11 @@ const BuildResume = async () => {
       </main>
     );
   }
+  const email = user.email;
 
   return (
     <main className="flex justify-between w-full h-full">
-      <MainEditor></MainEditor>
+      {/* <MainEditor email={email} /> */}
     </main>
   );
 };

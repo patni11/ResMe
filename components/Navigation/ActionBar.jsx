@@ -2,7 +2,7 @@
 import { buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
 import { SaveIcon, File } from "lucide-react";
-
+import { fixExperience, fixStructure } from "@/app/utils/FormattingFunctions";
 //import { saveAs } from "file-saver";
 //import { Packer } from "docx";
 //import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
@@ -39,29 +39,29 @@ const ActionBar = ({ resumeId, email, children }) => {
   //     console.log("Document created successfully");
   //   });
   // };
-  function fixExperience(rawExperiences) {
-    const formattedExperiences = rawExperiences.map((exp) => {
-      let endDate = exp.endDate;
+  // function fixExperience(rawExperiences) {
+  //   const formattedExperiences = rawExperiences.map((exp) => {
+  //     let endDate = exp.endDate;
 
-      // Check if endDate is a string and not 'working', then parse it as a Date.
-      if (typeof endDate === "string" && endDate !== "working") {
-        endDate = new Date(endDate);
-      }
+  //     // Check if endDate is a string and not 'working', then parse it as a Date.
+  //     if (typeof endDate === "string" && endDate !== "working") {
+  //       endDate = new Date(endDate);
+  //     }
 
-      return {
-        ...exp,
-        endDate: endDate,
-      };
-    });
-    return formattedExperiences;
-  }
+  //     return {
+  //       ...exp,
+  //       endDate: endDate,
+  //     };
+  //   });
+  //   return formattedExperiences;
+  // }
 
-  function fixStructure(arrayOfObjects) {
-    arrayOfObjects = arrayOfObjects.map(
-      ({ _id, __v, email, createdAt, updatedAt, ...rest }) => rest
-    );
-    return arrayOfObjects;
-  }
+  // function fixStructure(arrayOfObjects) {
+  //   arrayOfObjects = arrayOfObjects.map(
+  //     ({ _id, __v, email, createdAt, updatedAt, ...rest }) => rest
+  //   );
+  //   return arrayOfObjects;
+  // }
 
   const handleSave = async () => {
     gtag.event({

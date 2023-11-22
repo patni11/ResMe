@@ -1,11 +1,10 @@
 "use client";
-import { useEffect } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
-import { useSession } from "next-auth/react";
+//import { useSession } from "next-auth/react";
 import { memo } from "react";
 interface ResumeHeaderProps {
   resumeHeaderID: string;
@@ -36,15 +35,15 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
     fetchHeaderInfo,
   } = useResumeHeaderInfo();
 
-  const session = useSession();
-  const email = session.data?.user?.email;
+  //const session = useSession();
+  //const email = session.data?.user?.email;
 
-  useEffect(() => {
-    let resumeHeaderLocalStorage = localStorage.getItem(resumeHeaderID);
-    if (!resumeHeaderLocalStorage) {
-      fetchHeaderInfo();
-    }
-  }, [fetchHeaderInfo]);
+  // useEffect(() => {
+  //   let resumeHeaderLocalStorage = localStorage.getItem(resumeHeaderID);
+  //   if (!resumeHeaderLocalStorage) {
+  //     fetchHeaderInfo();
+  //   }
+  // }, [fetchHeaderInfo]);
 
   const { displayName } = headerInfo;
   const contactInfo = headerInfo.contactInfo

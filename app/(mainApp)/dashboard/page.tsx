@@ -24,7 +24,7 @@ export default async function DashboardPage() {
     <>
       <div>
         <main className="flex min-h-screen flex-col items-center justify-between py-6">
-          <Dashboard></Dashboard>
+          <Dashboard email={user.email}></Dashboard>
         </main>
       </div>
     </>
