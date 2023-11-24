@@ -5,7 +5,7 @@ import { PlusCircle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { createResume } from "@/lib/actions/resumes.action";
 import { v4 } from "uuid";
-import { fixExperience, fixStructure } from "@/app/utils/FormattingFunctions";
+//import { fixExperience, fixStructure } from "@/app/utils/FormattingFunctions";
 import { useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
 import {
@@ -27,18 +27,23 @@ import {
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-export function CreateResumeButton({ email }: { email: string }) {
+export function CreateResumeButton({
+  email,
+  canCreateResumes,
+}: {
+  email: string;
+  canCreateResumes: boolean;
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
   const [resumeName, setResumeName] = useState("");
 
-  const handleSave = async () => {
-    setIsLoading(true);
-
+  const buildResume = async () => {
     const newResumeId = v4();
 
-    const resumeHeader = await getCleanedHeaderData();
+    const headerInfo = await getCleanedHeaderData();
+    console.log("Resume Header", headerInfo);
 
     const certificates = await getCleanedCertificateData();
 
@@ -50,32 +55,6 @@ export function CreateResumeButton({ email }: { email: string }) {
 
     const talents = await getCleanedTalentsData();
 
-    const processedCertificates = fixStructure(certificates.certificates);
-    const processedEducation = fixStructure(educations.educations);
-    const processedProjects = fixStructure(projects.projects);
-    const processedHeader = resumeHeader.headerInfo;
-    // delete processedHeader._id;
-    // delete processedHeader.__v;
-    const processedExperiences = fixStructure(
-      fixExperience(experiences.experiences)
-    );
-
-    // const res = await createResume({
-    //   email: email,
-    //   resumeId: newResumeId,
-    //   resumeName: "New Resume",
-    //   skills: talents.skills.split(", "),
-    //   languages: talents.languages.split(", "),
-    //   interests: talents.interests.split(", "),
-    //   educations: educations.educations,
-    //   certificates: certificates.certificates,
-    //   experiences: experiences.experiences,
-    //   projects: projects.projects,
-    //   headerInfo: resumeHeader.headerInfo,
-    // });
-
-    console.log("Resume Header", processedHeader);
-
     const res = await createResume({
       email: email,
       resumeId: newResumeId,
@@ -83,17 +62,12 @@ export function CreateResumeButton({ email }: { email: string }) {
       skills: talents.skills.split(", "),
       languages: talents.languages.split(", "),
       interests: talents.interests.split(", "),
-      educations: processedEducation,
-      certificates: processedCertificates,
-      experiences: processedExperiences,
-      projects: processedProjects,
-      headerInfo: processedHeader,
+      educations: educations,
+      certificates: certificates,
+      experiences: experiences,
+      projects: projects,
+      headerInfo: headerInfo,
     });
-
-    // const res = {
-    //   isSuccess: true,
-    //   error: false,
-    // };
 
     if (res.isSuccess) {
       localStorage.setItem(
@@ -103,7 +77,7 @@ export function CreateResumeButton({ email }: { email: string }) {
 
       localStorage.setItem(
         `resumeHeader-${email}-${newResumeId}`,
-        JSON.stringify(resumeHeader)
+        JSON.stringify(headerInfo)
       );
 
       localStorage.setItem(
@@ -148,10 +122,13 @@ export function CreateResumeButton({ email }: { email: string }) {
           <PlusCircle width={50} height={50} strokeWidth="0.75px"></PlusCircle>
         </div>
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create Resume</DialogTitle>
-          <DialogDescription className="flex flex-col space-y-4 items-center">
+
+      {canCreateResumes ? (
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create Resume</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col space-y-4 items-center">
             <div className="w-full flex flex-col space-y-4 mt-8">
               <Input
                 value={resumeName}
@@ -164,16 +141,36 @@ export function CreateResumeButton({ email }: { email: string }) {
               <Button
                 disabled={isLoading}
                 onClick={() => {
-                  handleSave();
+                  setIsLoading(true);
+                  buildResume();
                 }}
                 variant="default"
               >
-                Create
+                {isLoading ? <LoadingSpinner /> : "Create"}
               </Button>
             </div>
-          </DialogDescription>
-        </DialogHeader>
-      </DialogContent>
+          </div>
+        </DialogContent>
+      ) : (
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Upgrade Plan</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col space-y-4 items-center">
+            <div className="w-full flex flex-col space-y-4 mt-8">
+              <span>Upgrade your plan to create more resumes</span>
+              <Button
+                variant="default"
+                onClick={() => {
+                  router.push("/pricing");
+                }}
+              >
+                Upgrade
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      )}
     </Dialog>
   );
 }

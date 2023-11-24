@@ -27,26 +27,32 @@ export const createCertificateInfo = (certificateHeaderID: string) => {
     return storeCache[certificateHeaderID];
   }
 
-  const savedState = localStorage.getItem(certificateHeaderID);
-  const INITIAL_STATE = savedState
-    ? JSON.parse(savedState)
-    : {
-        certificates: [], // should be []
-        hideAll: false,
-        hiddenCertificates: null,
-        isLoading: false,
-        error: null,
-      };
+  let INITIAL_STATE = {
+    certificates: [], // should be []
+    hideAll: false,
+    hiddenCertificates: null,
+    isLoading: false,
+    error: null,
+  };
+
+  if (typeof window !== "undefined") {
+    const savedState = localStorage.getItem(certificateHeaderID);
+    if (savedState) {
+      INITIAL_STATE = JSON.parse(savedState);
+    }
+  }
 
   const useCertificatesInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        ...INITIAL_STATE, // Spread the initial state
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
         fetchCertificates: async () => {
           set({ isLoading: true });
           try {
             const certificates = await getCleanedCertificateData();
-            set(certificates);
+            set({ ...certificates, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -12,12 +12,16 @@ import { ArrowUpRightSquare } from "lucide-react";
 import * as gtag from "@/lib/gtag";
 import { useToast } from "@/components/ui/use-toast";
 import { useUploadThing } from "@/lib/uploadthing";
+import { getPDFLink, updatePDFLink } from "@/lib/actions/resumes.action";
+import { Input } from "@/components/ui/input";
 const ResumeControlBar = ({
   document,
   fileName,
+  resumeId,
 }: {
   document: JSX.Element;
   fileName: string;
+  resumeId: string;
 }) => {
   const [instance, update] = usePDF({ document });
   const [isLoading, setIsLoading] = useState(false);
@@ -25,83 +29,111 @@ const ResumeControlBar = ({
   const email = session?.user?.email || "";
   const name = session?.user?.name || "";
   const { toast } = useToast();
+  const [url, setURL] = useState("");
+  const [popup, setPopup] = useState(true);
 
   //Hook to update pdf when document changes
   useEffect(() => {
     update(document);
   }, [document]);
 
+  console.log("instance url", instance.url);
   if (instance.error) return <div>Download Error</div>;
 
-  // const getShareUrl = useCallback(async () => {
-  //   const res = await startUpload([new File([instance.blob!], "pdf")]);
-  //   //startUpload([new File([instance.blob], { type: "application/pdf" })
+  const { startUpload } = useUploadThing("pdfUploader");
 
-  //   if (!res) {
-  //     //show error
-  //     toast({
-  //       title: "Couldn't copy the file link",
-  //       variant: "destructive",
-  //     });
-  //     return "";
-  //   }
-  //   // get the link of the url from upload thing
-  //   console.log("Res", res);
-  //   const [fileResponse] = res;
-  //   const key = fileResponse?.key;
-  //   console.log("File resp", fileResponse);
+  const getShareUrl = async () => {
+    const res = await startUpload([new File([instance.blob!], "pdf")], {
+      resumeId: resumeId,
+    });
 
-  //   if (!key) {
-  //     //show error
-  //     toast({
-  //       title: "Couldn't copy the file link",
-  //       variant: "destructive",
-  //     });
-  //     return "";
-  //   }
+    if (!res) {
+      //show error
+      toast({
+        title: "Couldn't copy the file link",
+        variant: "destructive",
+      });
+      return "";
+    }
+    // get the link of the url from upload thing
+    const [fileResponse] = res;
+    const key = fileResponse?.key;
 
-  //   return fileResponse.url;
-  // }, [document]);
+    if (!key) {
+      //show error
+      toast({
+        title: "Couldn't copy the file link",
+        variant: "destructive",
+      });
+      return "";
+    }
 
-  // const handleCopyToClipboard = async (url: string) => {
-  //   await navigator.clipboard.writeText(url);
+    await updatePDFLink(resumeId, key);
 
-  //   toast({
-  //     title: "URL Link Copied",
-  //   });
-  // };
+    const pollInterval = 500; // 5 seconds
+    const checkKeyInDB = async () => {
+      const savedKey = await getPDFLink(resumeId);
+      if (key == savedKey) {
+        console.log("Key found in DB");
+        clearInterval(polling);
+        return `${process.env.UPLOADTHING_URL}${key}`;
+      } else {
+        await updatePDFLink(resumeId, key);
+      }
+    };
+    const polling = setInterval(checkKeyInDB, pollInterval);
+    return `${process.env.UPLOADTHING_URL}${key}`;
+  };
 
-  //  const { startUpload } = useUploadThing("pdfUploader");
+  const handleCopyToClipboard = async (url: string) => {
+    await navigator.clipboard.writeText(url);
+
+    toast({
+      title: "URL Link Copied",
+    });
+  };
 
   return (
     <div className="flex space-x-2">
-      <ComingSoon>
-        <Button
-          disabled={instance.loading || isLoading}
-          variant="outlineHover"
-          size="xs"
-          className="flex space-x-2"
-          onClick={async () => {
-            //setIsLoading(true);
-            gtag.event({
-              clientWindow: window,
-              action: "Share Link",
-              category: "Download",
-              label: "Share Link",
-            });
-            // call upload thing to save the link as pdf
-            //const url = await getShareUrl();
-            //console.log("URL", url);
-            // put it in the person's clipboard
-            //handleCopyToClipboard(url);
-            //setIsLoading(false);
-          }}
-        >
-          <ArrowUpRightSquare className="w-4 h-4" />
+      <Button
+        disabled={instance.loading || isLoading}
+        variant="outlineHover"
+        size="xs"
+        className="flex space-x-2"
+        onClick={async () => {
+          setIsLoading(true);
+          gtag.event({
+            clientWindow: window,
+            action: "Share Link",
+            category: "Download",
+            label: "Share Link",
+          });
+          // call upload thing to save the link as pdf
+          const url = await getShareUrl();
+          console.log("RECEIVED URL", url);
+          // put it in the person's clipboard
+          handleCopyToClipboard(url);
+          setURL(url);
+          setPopup(true);
+          setIsLoading(false);
+        }}
+      >
+        <ArrowUpRightSquare className="w-4 h-4" />
 
-          <span>Copy</span>
-        </Button>
-      </ComingSoon>
+        <span>Copy</span>
+      </Button>
+      {popup ? (
+        <div className="fixed top-[50%] left[50%] flex flex-col space-y-2 bg-white rounded-lg p-4">
+          <button
+            onClick={() => {
+              setPopup(false);
+            }}
+          >
+            Cross
+          </button>
+          <Input value={url} readOnly />
+        </div>
+      ) : null}
 
       {instance.loading || isLoading ? (
         <Button

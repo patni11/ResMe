@@ -108,16 +108,17 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
             {refreshFunction && !hideAll ? (
               <div className="flex items-center justify-center">
                 <Dialog>
-                  <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                    <Button
+                  <DialogTrigger>
+                    <div
                       className={buttonVariants({
                         variant: "ghost",
                         className: "mr-2",
+                        size: "xs",
                       })}
                       aria-label="Refresh"
                     >
                       Reset
-                    </Button>
+                    </div>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
@@ -149,7 +150,6 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
                 <Button
                   onClick={() => {
                     hideAll = false;
-
                     refreshFunction();
                   }}
                   className="mr-2"

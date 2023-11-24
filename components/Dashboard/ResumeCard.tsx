@@ -17,11 +17,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import ResumeCardImage from "@/public/resumeCard.png";
 import Link from "next/link";
-
+import { ResumeCardImage } from "./ResumeCardImg";
 import { DeleteButton, RenameDialog } from "./ResumeFuncitonButtons";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
+import { Input } from "../ui/input";
 
 //import { useToast } from "../ui/use-toast";
 interface ResumeCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,6 +32,7 @@ interface ResumeCardProps extends React.HTMLAttributes<HTMLDivElement> {
   aspectRatio?: "portrait" | "square";
   width?: number;
   height?: number;
+  pdfLink?: string;
 }
 
 export async function ResumeCard({
@@ -43,11 +44,20 @@ export async function ResumeCard({
   width,
   height,
   className,
+  pdfLink,
 }: ResumeCardProps) {
   //const { toast } = useToast();
   return (
     <div className={cn("space-y-3", className)}>
-      <Link key={resumeId} href={`/buildResume/${resumeId}`}>
+      <ResumeCardImage
+        resumeName={resumeName}
+        resumeId={resumeId}
+        email={email}
+        aspectRatio={aspectRatio}
+        width={width}
+        height={height}
+      />
+      {/* <Link key={resumeId} href={`/buildResume/${resumeId}`}>
         <div className="overflow-hidden rounded-md">
           <Image
             src={ResumeCardImage}
@@ -58,9 +68,10 @@ export async function ResumeCard({
               "h-auto w-auto object-cover transition-all hover:scale-105",
               aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
             )}
+            priority={true}
           />
         </div>
-      </Link>
+      </Link> */}
 
       <div className="space-y-1 text-sm flex justify-between w-full align-center">
         <div className="flex flex-col">
@@ -77,13 +88,14 @@ export async function ResumeCard({
             <DropdownMenuItem asChild>
               <Dialog>
                 <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  <Button
-                    //onClick={() => renameFunc(resumeId, "Shubh Patni")}
-                    variant="outline"
-                    className="w-full"
+                  <div
+                    className={buttonVariants({
+                      variant: "outline",
+                      className: "w-full",
+                    })}
                   >
                     Rename
-                  </Button>
+                  </div>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
@@ -99,13 +111,14 @@ export async function ResumeCard({
             <DropdownMenuItem asChild>
               <Dialog>
                 <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  <Button
-                    //onClick={() => renameFunc(resumeId, "Shubh Patni")}
-                    variant="outline"
-                    className="w-full"
+                  <div
+                    className={buttonVariants({
+                      variant: "outline",
+                      className: "w-full",
+                    })}
                   >
                     Delete
-                  </Button>
+                  </div>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
@@ -117,6 +130,31 @@ export async function ResumeCard({
                       </span>
 
                       <DeleteButton resumeId={resumeId} email={email} />
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <Dialog>
+                <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                  <div
+                    //onClick={() => renameFunc(resumeId, "Shubh Patni")}
+
+                    className={buttonVariants({
+                      variant: "outline",
+                      className: "w-full",
+                    })}
+                  >
+                    Copy Link
+                  </div>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Share Link</DialogTitle>
+                    <DialogDescription className="flex flex-col space-y-4 items-center">
+                      <Input value={pdfLink} readOnly />
                     </DialogDescription>
                   </DialogHeader>
                 </DialogContent>

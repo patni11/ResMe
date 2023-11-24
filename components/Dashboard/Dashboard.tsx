@@ -1,16 +1,16 @@
 import { FC } from "react";
 import { ResumeCard } from "./ResumeCard";
 import { cn } from "@/lib/utils";
-import { fetchResumes } from "@/lib/actions/resumes.action";
 import { timeAgo } from "@/app/utils/FormattingFunctions";
 import { CreateResumeButton } from "../UIButtons/CreateResume";
 
 interface DashBoardProps {
   email: string;
+  resumes:
+    | { id: string; resumeName: string; updatedAt: Date; pdfLink: string }[]
+    | [];
 }
-const DashBoard: FC<DashBoardProps> = async ({ email }) => {
-  const resumes = await fetchResumes();
-
+const DashBoard: FC<DashBoardProps> = async ({ email, resumes }) => {
   return (
     <>
       <div className="relative w-[90%]">
@@ -24,7 +24,10 @@ const DashBoard: FC<DashBoardProps> = async ({ email }) => {
             height={265}
           /> */}
           <div className={cn("space-y-3 w-[200px] ml-4")}>
-            <CreateResumeButton email={email} />
+            <CreateResumeButton
+              email={email}
+              canCreateResumes={resumes.length < 3}
+            />
 
             <div className="flex justify-left text-sm">
               <h3 className="font-medium leading-none">Create Resume</h3>
@@ -32,10 +35,11 @@ const DashBoard: FC<DashBoardProps> = async ({ email }) => {
           </div>
           {resumes.map((resume) => (
             <ResumeCard
-              key={resume._id}
+              key={resume.id}
               resumeName={resume.resumeName}
-              resumeId={resume._id}
-              email={resume.email}
+              resumeId={resume.id}
+              email={email}
+              pdfLink={resume.pdfLink}
               updatedAt={timeAgo(resume.updatedAt) || ""}
               className="w-[200px] mb-12"
               aspectRatio="portrait"

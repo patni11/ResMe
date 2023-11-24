@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth/next";
 import { Session } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { User } from "@/models/user";
+import { z } from "zod";
+import { getPDFLink } from "@/lib/actions/resumes.action";
 
 const f = createUploadthing();
 
@@ -29,10 +31,22 @@ const isSubscribed = async (req: Request) => {
 
 export const ourFileRouter = {
   pdfUploader: f({ blob: { maxFileSize: "2MB" } })
-    .middleware(async ({ req }) => {
+    .input(z.object({ resumeId: z.string() }))
+    .middleware(async ({ req, input }) => {
       //const user = await isSubscribed(req);
       //if (!user) throw new Error("Unauthorized");
 
+      const session: Session | null = await getServerSession(authOptions);
+      if (!session || !session?.user?.email) {
+        throw new Error("User not found");
+      }
+
+      const existingLink = await getPDFLink(input.resumeId);
+      // if (existingLink) {
+      //   // delete from upload thing
+      //   await utapi.deleteFiles(existingLink);
+      // }
+      console.log("middleware link", existingLink);
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { success: true };
     })

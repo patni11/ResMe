@@ -1,12 +1,12 @@
 "use server";
-import { getServerSession } from "next-auth/next";
-import authOptions, { Session } from "@/lib/authOptions";
+//import { getServerSession } from "next-auth/next";
+//import authOptions, { Session } from "@/lib/authOptions";
 import { User } from "@/models/user";
+import { getUserEmailFromSession } from "./utils.action";
 //import bcrypt from "bcryptjs";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
 import { ResumeHeaderInfo } from "@/models/user";
-import { originalPathname } from "next/dist/build/templates/app-page";
 export async function deleteUser(email: string) {
   try {
     // Connect to the MongoDB server
@@ -70,19 +70,8 @@ export async function deleteUser(email: string) {
 // }
 
 export async function fetchUser() {
-  const session: Session | null = await getServerSession(authOptions);
-
-  if (
-    session == undefined ||
-    session.user == undefined ||
-    session.user.email == undefined
-  ) {
-    throw new Error("User not found");
-  }
-
-  const email = session.user.email;
-
   try {
+    const email = await getUserEmailFromSession();
     await connectMongoDB();
     const user = await User.findOne({ email: email });
     if (!user) {
@@ -96,21 +85,68 @@ export async function fetchUser() {
   }
 }
 
-export async function fetchTalent(email: string): Promise<string[][] | null> {
+export async function fetchDashboardData(): Promise<{
+  isOnboarded: boolean;
+  email: string;
+  //TODO: Get subscription type
+  resumes: Array<{
+    id: string;
+    resumeName: string;
+    updatedAt: Date;
+    pdfLink: string;
+  }>;
+}> {
   try {
+    const email = await getUserEmailFromSession();
     await connectMongoDB();
-    const user = await User.findOne({ email: email });
+    // Fetch specific fields from User and populate specific fields from Resume
+    const user = await User.findOne({ email: email })
+      .select("isOnboarded email resumes") // Select specific fields from User
+      .populate({
+        path: "resumes", // Assuming 'resumes' is an array of Resume references
+        select: "_id resumeName updatedAt pdfLink", // Select specific fields from Resume
+      });
+
     if (!user) {
       throw new Error(`User Not Found`);
     }
 
-    const skills = user.skills;
-    const languages = user.languages;
-    const interests = user.interests;
-    return [skills, languages, interests];
+    // Extracting the desired fields to return
+    const result = {
+      isOnboarded: user.isOnboarded,
+      email: user.email,
+      resumes: user.resumes.map((resume: any) => ({
+        id: resume._id,
+        resumeName: resume.resumeName,
+        updatedAt: resume.updatedAt,
+      })),
+    };
+
+    return result;
   } catch (error: any) {
-    //console.log("Failed to fetch projects", error);
-    throw new Error(`Failed to fetch projects: ${error.message}`);
+    throw new Error(`Failed to fetch dashboard data: ${error.message}`);
+  }
+}
+
+export async function fetchTalent(email: string): Promise<string[][] | null> {
+  try {
+    await connectMongoDB();
+    // Fetch only skills, languages, and interests fields
+    const user = await User.findOne(
+      { email: email },
+      "skills languages interests"
+    );
+    if (!user) {
+      throw new Error(`User Not Found`);
+    }
+
+    const skills = user.skills || [];
+    const languages = user.languages || [];
+    const interests = user.interests || [];
+    return [skills, languages, interests];
+  } catch (error) {
+    //console.log("Failed to fetch talent details", error);
+    throw new Error(`Failed to fetch talent details: ${error}`);
   }
 }
 
@@ -182,19 +218,8 @@ export async function updateLanguages(
 }
 
 export async function onboardUser(path?: string) {
-  const session: Session | null = await getServerSession(authOptions);
-
-  if (
-    session == undefined ||
-    session.user == undefined ||
-    session.user.email == undefined
-  ) {
-    throw new Error("User not found");
-  }
-
-  const email = session.user.email;
-
   try {
+    const email = await getUserEmailFromSession();
     await connectMongoDB();
     await User.findOneAndUpdate(
       { email: email },

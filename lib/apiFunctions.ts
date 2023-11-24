@@ -21,18 +21,23 @@ export async function getHeaderData() {
 
 export async function getCleanedHeaderData() {
   const headerInfo: UserInfo = (await getHeaderData()).headerInfo;
-  const hidContacts =
-    headerInfo.contactInfo?.map((contact) => ({
-      [contact.contact]: false,
-    })) || [];
-  const hidLinks =
-    headerInfo.links?.map((link) => ({ [link.linkName]: false })) || [];
+  const hiddenContacts: { [key: string]: boolean } = {};
+  const hiddenLinks: { [key: string]: boolean } = {};
+
+  // Populate the objects
+  headerInfo.contactInfo?.forEach((contact) => {
+    hiddenContacts[contact.contact] = false;
+  });
+
+  headerInfo.links?.forEach((link) => {
+    hiddenLinks[link.linkName] = false;
+  });
+
   return {
-    headerInfo: headerInfo,
-    hiddenContacts: hidContacts,
-    hiddenLinks: hidLinks,
+    headerInfo,
+    hiddenContacts,
+    hiddenLinks,
     hideLocation: false,
-    isLoading: false,
   };
 }
 
@@ -78,7 +83,8 @@ export async function getCleanedEducationData() {
     hiddenDates: hiddenDates,
     hiddenEducations: hiddenEducations,
     hiddenGPAs: hiddenGPAs,
-    isLoading: false,
+    relevantCourseWork: "",
+    hideAll: false,
   };
 }
 
@@ -109,7 +115,7 @@ export async function getCleanedCertificateData() {
   return {
     certificates: certificates ? certificates : [],
     hiddenCertificates: hiddenCertificates,
-    isLoading: false,
+    hideAll: false,
   };
 }
 
@@ -142,7 +148,7 @@ export async function getCleanedExperienceData() {
 
     hiddenExperiences: hiddenExperiences,
 
-    isLoading: false,
+    hideAll: false,
   };
 }
 
@@ -198,7 +204,7 @@ export async function getCleanedProjectData() {
     hiddenLocation: hiddenLocation,
     hiddenPosition: hiddenPosition,
 
-    isLoading: false,
+    hideAll: false,
   };
 }
 

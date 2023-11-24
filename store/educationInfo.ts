@@ -24,31 +24,7 @@ type Actions = {
   setHiddenDates: (key: string) => void;
   fetchEducations: () => void;
   setHideAll: () => void;
-  //updateDisplayName: (newDisplayName: string) => void;
-  //setHideLocation: () => void;
-  //setHiddenGPAs: (key: string) => void;
-  //fetchHeaderInfo: (email: string) => Promise<void>;
 };
-
-// const generateSetHidden = (
-//   stateKey: keyof Omit<
-//     State,
-//     "educations" | "relevantCourseWork" | "isLoading" | "error"
-//   >
-// ) => {
-//   return (key: string) => (set: any, get: any) => {
-//     const state = get();
-//     console.log("State:", state[stateKey]);
-//     if (!state[stateKey]) return { [stateKey]: null };
-
-//     return {
-//       [stateKey]: {
-//         ...state[stateKey],
-//         [key]: !state[stateKey][key],
-//       },
-//     };
-//   };
-// };
 
 const storeCache: Record<string, any> = {};
 
@@ -57,30 +33,35 @@ export const createEducationInfo = (educationHeaderID: string) => {
     return storeCache[educationHeaderID];
   }
 
-  const savedState = localStorage.getItem(educationHeaderID);
-  const INITIAL_STATE = savedState
-    ? JSON.parse(savedState)
-    : {
-        educations: [], // should be []
-        hiddenGPAs: null,
-        hiddenEducations: null, //should be null
-        hiddenDates: null,
-        hideAll: false,
-        relevantCourseWork: "",
-        isLoading: false,
-        error: null,
-      };
+  let INITIAL_STATE = {
+    educations: [], // should be []
+    hiddenGPAs: null,
+    hiddenEducations: null, //should be null
+    hiddenDates: null,
+    hideAll: false,
+    relevantCourseWork: "",
+    isLoading: false,
+    error: null,
+  };
 
+  if (typeof window !== "undefined") {
+    const savedState = localStorage.getItem(educationHeaderID);
+    if (savedState) {
+      INITIAL_STATE = JSON.parse(savedState);
+    }
+  }
   const useEducationsInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        ...INITIAL_STATE, // Spread the initial state
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
         fetchEducations: async () => {
           set({ isLoading: true });
           try {
             const educations = await getCleanedEducationData();
 
-            set(educations);
+            set({ ...educations, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

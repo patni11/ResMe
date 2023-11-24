@@ -1,5 +1,5 @@
 "use client";
-import { FC, memo, useEffect } from "react";
+import { FC, memo } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Input } from "@/components/ui/input";
@@ -48,13 +48,6 @@ const ProjectSectionCard: FC<ProjectSectionCard> = ({
     moveProjUp,
     moveProjDown,
   } = useProjectsInfo();
-
-  useEffect(() => {
-    let projectsLocalStorage = localStorage.getItem(projectId);
-    if (!projectsLocalStorage) {
-      fetchProjects();
-    }
-  }, [fetchProjects]);
 
   return (
     <FormCardWrapper

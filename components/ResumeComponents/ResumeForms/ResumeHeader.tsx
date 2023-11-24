@@ -38,13 +38,6 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
   //const session = useSession();
   //const email = session.data?.user?.email;
 
-  // useEffect(() => {
-  //   let resumeHeaderLocalStorage = localStorage.getItem(resumeHeaderID);
-  //   if (!resumeHeaderLocalStorage) {
-  //     fetchHeaderInfo();
-  //   }
-  // }, [fetchHeaderInfo]);
-
   const { displayName } = headerInfo;
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo
@@ -72,7 +65,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
         }}
       ></Input>
 
-      <div className="flex justify-between mt-2 whitespace-normal flex-wrap">
+      {/* <div className="flex justify-between mt-2 whitespace-normal flex-wrap">
         {location !== "" ? (
           <HideButtons hide={hideLocation} setHide={() => setHideLocation()}>
             <span>Location</span>
@@ -85,7 +78,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
           ? links.map((link: any, index: any) => (
               <HideButtons
                 key={index}
-                hide={hiddenLinks[index] && hiddenLinks[index][link.linkName]}
+                hide={hiddenLinks ? hiddenLinks[link.linkName] : false}
                 setHide={() => setHiddenLinks(link.linkName)}
               >
                 <span>{link.linkName}</span>
@@ -97,14 +90,14 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
           ? contactInfo.map((contact: any, index: any) => (
               <HideButtons
                 key={index}
-                hide={hiddenContacts[index][contact.contact]}
+                hide={hiddenContacts ? hiddenContacts[contact.contact] : false}
                 setHide={() => setHiddenContacts(contact.contact)}
               >
                 <span>{contact.contact}</span>
               </HideButtons>
             ))
           : null}
-      </div>
+      </div> */}
     </FormCardWrapper>
   );
 };

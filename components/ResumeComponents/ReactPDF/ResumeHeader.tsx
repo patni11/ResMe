@@ -49,7 +49,8 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
         {contactInfo.map((info: any, index: any) => {
           const contactKey = info.contact;
           // Check if the contact is hidden
-          if (hiddenContacts[index][contactKey]) return null; // Skip rendering if hidden
+          console.log("Resume Heasder", hiddenContacts, contactKey);
+          if (hiddenContacts[contactKey]) return null; // Skip rendering if hidden
           return (
             <View
               key={contactKey}
@@ -66,7 +67,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
 
         {links.map((link: any, index: any) => {
           const linkKey = link.linkName;
-          if (hiddenLinks[index][linkKey]) return null;
+          if (hiddenLinks[linkKey]) return null;
           const linkText =
             ` ${link.link}` + `${index != links.length - 1 ? `  |  ` : ""}`;
           return (

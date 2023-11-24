@@ -107,7 +107,11 @@ export default function ResumePreview({ resumeId, email, componentsData }) {
         </button> */}
 
         <div className="flex items-center space-x-2">
-          <ResumeControlBarCSR document={document} fileName={"somename"} />
+          <ResumeControlBarCSR
+            document={document}
+            fileName={"somename"}
+            resumeId={resumeId}
+          />
           <Toggle
             id="edit"
             pressed={pdfPreview}

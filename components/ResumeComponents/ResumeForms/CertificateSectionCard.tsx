@@ -1,5 +1,5 @@
 "use client";
-import { FC, memo, useEffect } from "react";
+import { FC, memo } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { createCertificateInfo } from "@/store/certificatesInfo";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
@@ -58,13 +58,6 @@ const CertificateSectionCard: FC<CertificateSectionCard> = ({
     setHiddenCertificate,
     fetchCertificates,
   } = useCertificatesInfo();
-
-  useEffect(() => {
-    let certificatesLocalStorage = localStorage.getItem(certificateID);
-    if (!certificatesLocalStorage) {
-      fetchCertificates();
-    }
-  }, [fetchCertificates]);
 
   return (
     <FormCardWrapper

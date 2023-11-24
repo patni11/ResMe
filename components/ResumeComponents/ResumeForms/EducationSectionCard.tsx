@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -91,13 +91,6 @@ const EducationSectionCard: FC<EducationSectionCard> = ({
     fetchEducations,
     setHideAll,
   } = useEducationsInfo();
-
-  useEffect(() => {
-    let educationsLocalStorage = localStorage.getItem(educationID);
-    if (!educationsLocalStorage) {
-      fetchEducations();
-    }
-  }, [fetchEducations]);
 
   return (
     <FormCardWrapper

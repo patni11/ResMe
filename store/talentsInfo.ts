@@ -32,24 +32,30 @@ export const createTalentsInfo = (talentsID: string) => {
     return storeCache[talentsID];
   }
 
-  const savedState = localStorage.getItem(talentsID);
-  const INITIAL_STATE = savedState
-    ? JSON.parse(savedState)
-    : {
-        skills: "",
-        languages: "",
-        interests: "",
-        hideSkills: false,
-        hideLanguages: false,
-        hideInterests: false,
-        isLoading: false,
-        error: null,
-      };
+  let INITIAL_STATE = {
+    skills: "",
+    languages: "",
+    interests: "",
+    hideSkills: false,
+    hideLanguages: false,
+    hideInterests: false,
+    isLoading: false,
+    error: null,
+  };
+
+  if (typeof window !== "undefined") {
+    const savedState = localStorage.getItem(talentsID);
+    if (savedState) {
+      INITIAL_STATE = JSON.parse(savedState);
+    }
+  }
 
   const useTalentsInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        ...INITIAL_STATE, // Spread the initial state
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
         fetchAll: async () => {
           set({ isLoading: true });
           try {
@@ -58,7 +64,7 @@ export const createTalentsInfo = (talentsID: string) => {
 
             const talent = await getCleanedTalentsData();
 
-            set(talent);
+            set({ ...talent, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

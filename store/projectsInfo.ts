@@ -53,30 +53,36 @@ export const createProjectsSection = (projectId: string) => {
     return storeCache[projectId];
   }
 
-  const savedState = localStorage.getItem(projectId);
-  const INITIAL_STATE = savedState
-    ? JSON.parse(savedState)
-    : {
-        projects: [], // should be []
-        hiddenProjects: {}, //should be null
-        hiddenLocation: {},
-        hiddenDates: {},
-        hiddenPosition: {},
-        hideAll: false,
-        isLoading: false,
-        error: null,
-      };
+  let INITIAL_STATE = {
+    projects: [], // should be []
+    hiddenProjects: {}, //should be null
+    hiddenLocation: {},
+    hiddenDates: {},
+    hiddenPosition: {},
+    hideAll: false,
+    isLoading: false,
+    error: null,
+  };
+
+  if (typeof window !== "undefined") {
+    const savedState = localStorage.getItem(projectId);
+    if (savedState) {
+      INITIAL_STATE = JSON.parse(savedState);
+    }
+  }
 
   const useProjectsInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        ...INITIAL_STATE, // Spread the initial state
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
         fetchProjects: async () => {
           set({ isLoading: true });
           try {
             const projects = await getCleanedProjectData();
 
-            set(projects);
+            set({ ...projects, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

@@ -55,12 +55,6 @@ export function Sidebar({ className, children }: SidebarProps) {
                     <span className="ml-2">Dashboard</span>
                   </div>
                 </Link>
-                <Link href="/buildResume">
-                  <div className={`${buttonDesign} w-full border border-input`}>
-                    <PenSquare absoluteStrokeWidth></PenSquare>
-                    <span className="ml-2">Create Resume</span>
-                  </div>
-                </Link>
                 <Link href="/education">
                   <div className={`${buttonDesign} w-full border border-input`}>
                     <GraduationCap absoluteStrokeWidth></GraduationCap>

@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { Experience } from "@/app/(mainApp)/experience/pageTypes";
+//import { Experience } from "@/app/(mainApp)/experience/pageTypes";
 import { persist } from "zustand/middleware";
 import { getCleanedExperienceData } from "@/lib/apiFunctions";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
@@ -47,26 +47,32 @@ export const createExperienceInfo = (experienceID: string) => {
     return storeCache[experienceID];
   }
 
-  const savedState = localStorage.getItem(experienceID);
-  const INITIAL_STATE = savedState
-    ? JSON.parse(savedState)
-    : {
-        experiences: [], // should be []
-        hiddenExperiences: {}, //should be null
-        hideAll: false,
-        isLoading: false,
-        error: null,
-      };
+  let INITIAL_STATE = {
+    experiences: [], // should be []
+    hiddenExperiences: {}, //should be null
+    hideAll: false,
+    isLoading: false,
+    error: null,
+  };
+
+  if (typeof window !== "undefined") {
+    const savedState = localStorage.getItem(experienceID);
+    if (savedState) {
+      INITIAL_STATE = JSON.parse(savedState);
+    }
+  }
 
   const useExperiencesInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        ...INITIAL_STATE, // Spread the initial state
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
         fetchExperiences: async () => {
           set({ isLoading: true });
           try {
             const experiences = await getCleanedExperienceData();
-            set(experiences);
+            set({ ...experiences, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

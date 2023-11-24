@@ -74,7 +74,7 @@ const TalentsSection: FC<TalentsSectionProp> = ({
           <div className="flex">
             <Input
               className="w-full focus-visible:ring-0"
-              placeholder={`Your ${name}`}
+              placeholder={`Your Skills`}
               value={skills}
               onChange={(e) => {
                 setSkills(e.currentTarget.value);

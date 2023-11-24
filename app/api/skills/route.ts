@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const skills = user.skills;
     const languages = user.languages;
     const interests = user.interests;
-    console.log(skills, languages, interests);
+
     return NextResponse.json(
       { skills: skills, languages: languages, interests: interests },
       { status: 200 }

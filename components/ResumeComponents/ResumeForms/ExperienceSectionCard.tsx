@@ -1,5 +1,5 @@
 "use client";
-import { FC, memo, useEffect } from "react";
+import { FC, memo } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 
 import { HideButtons } from "@/components/UIButtons/HideButtons";
@@ -42,13 +42,6 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
     moveExpUp,
     moveExpDown,
   } = useExperiencesInfo();
-
-  useEffect(() => {
-    let experiencesLocalStorage = localStorage.getItem(experienceID);
-    if (!experiencesLocalStorage) {
-      fetchExperiences();
-    }
-  }, [fetchExperiences]);
 
   return (
     <FormCardWrapper

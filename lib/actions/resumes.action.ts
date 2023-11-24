@@ -1,8 +1,9 @@
 "use server";
-import { getServerSession } from "next-auth/next";
-import authOptions, { Session } from "@/lib/authOptions";
 import connectMongoDB from "../mongodb";
 import { Resume, User } from "@/models/user";
+import { getUserEmailFromSession } from "./utils.action";
+import { Session, getServerSession } from "next-auth";
+import authOptions from "../authOptions";
 
 export async function createResume({
   email,
@@ -23,10 +24,10 @@ export async function createResume({
   skills: string[];
   languages: string[];
   interests: string[];
-  educations: any[]; // Replace 'any' with the actual type
-  certificates: any[]; // Replace 'any' with the actual type
-  experiences: any[]; // Replace 'any' with the actual type
-  projects: any[]; // Replace 'any' with the actual type
+  educations: any; // Replace 'any' with the actual type
+  certificates: any; // Replace 'any' with the actual type
+  experiences: any; // Replace 'any' with the actual type
+  projects: any; // Replace 'any' with the actual type
   headerInfo: any; // Replace 'any' with the actual type
 }): Promise<{
   isError: boolean;
@@ -50,12 +51,13 @@ export async function createResume({
       experiences,
       projects,
       headerInfo,
+      pdfLink: "",
     });
     //console.log("Saved Resume", newResume);
 
     await newResume.save();
 
-    const updatedUser = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { email: email },
       {
         $inc: { resumeCount: 1 },
@@ -90,29 +92,61 @@ export async function createResume({
   }
 }
 
-export async function fetchResumes() {
-  const session: Session | null = await getServerSession(authOptions);
-
-  if (
-    session == undefined ||
-    session.user == undefined ||
-    session.user.email == undefined
-  ) {
-    throw new Error("User not found");
-  }
-
-  const email = session.user.email;
-
+export async function fetchResume(resumeId: string) {
   try {
+    //const email = await getUserEmailFromSession();
     await connectMongoDB();
-    const resumes = await Resume.find({
-      email: email,
-    });
+    const resume = await Resume.findOne({ _id: resumeId }).lean();
+    if (!resume) {
+      throw new Error(`Resume Not Found`);
+    }
 
-    return resumes;
+    return resume;
   } catch (error: any) {
-    console.log("Failed to fetch user", error);
-    throw new Error(`Failed to fetch educations: ${error.message}`);
+    throw new Error(`Failed to fetch resume: ${error.message}`);
+  }
+}
+
+export async function getPDFLink(resumeId: string) {
+  try {
+    // Connect to the MongoDB server
+    const db = await connectMongoDB();
+    if (!db) {
+      throw new Error(`Connection Failed`);
+    }
+
+    // Find the resume by ID and only return the pdfLink field
+    const resume = await Resume.findOne({ _id: resumeId }, "pdfLink");
+
+    if (!resume) {
+      throw new Error(`Resume not found`);
+    }
+
+    return resume.pdfLink;
+  } catch (err) {
+    console.error("Error fetching resume pdfLink:", err);
+    throw err; // Rethrow the error for the caller to handle
+  }
+}
+
+export async function updatePDFLink(resumeId: string, newResumeLink: string) {
+  try {
+    // Connect to the MongoDB server
+    const db = await connectMongoDB();
+    if (!db) {
+      throw new Error(`Connection Failed`);
+    }
+
+    // Update the resume with the new name
+    await Resume.findOneAndUpdate(
+      { _id: resumeId }, // Ensure that the resume belongs to the user
+      {
+        $set: { pdfLink: newResumeLink }, // Set the new resume name
+      }
+    );
+  } catch (err) {
+    console.error("Error updating resume name:", err);
+    throw err; // It's often a good idea to rethrow the error so that the caller can handle it
   }
 }
 
@@ -204,11 +238,11 @@ export async function updateResume({
   skills: string[];
   languages: string[];
   interests: string[];
-  educations: any[]; // Replace 'any' with the actual type
-  certificates: any[]; // Replace 'any' with the actual type
-  experiences: any[]; // Replace 'any' with the actual type
-  projects: any[]; // Replace 'any' with the actual type
-  headerInfo: any[]; // Replace 'any' with the actual type
+  educations: any; // Replace 'any' with the actual type
+  certificates: any; // Replace 'any' with the actual type
+  experiences: any; // Replace 'any' with the actual type
+  projects: any; // Replace 'any' with the actual type
+  headerInfo: any; // Replace 'any' with the actual type
 }): Promise<{
   isError: boolean;
   isSuccess: boolean;

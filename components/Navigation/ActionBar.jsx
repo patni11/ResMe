@@ -2,26 +2,30 @@
 import { buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
 import { SaveIcon, File } from "lucide-react";
-import { fixExperience, fixStructure } from "@/app/utils/FormattingFunctions";
+import {
+  fixCertificateFormat,
+  fixEducationFormat,
+  fixProjectFormat,
+  fixExperienceFormat,
+  fixHeaderInfo,
+  fixTalent,
+} from "@/app/utils/FormattingFunctions";
+import { updateResume } from "@/lib/actions/resumes.action";
 //import { saveAs } from "file-saver";
 //import { Packer } from "docx";
 //import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
 // import { PDFViewer } from "@react-pdf/renderer";
 // import Document from "@/components/ResumeComponents/ReactPDF/index";
-const { v4: uuidv4 } = require("uuid");
 import { ComingSoon } from "@/components/Cards/ComingSoon";
 //import { saveLocally } from "./storeLocally";
 import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
-
-import { createResume, updateResume } from "@/lib/actions/resumes.action";
 import * as gtag from "@/lib/gtag";
 
 const ActionBar = ({ resumeId, email, children }) => {
   const [isSaving, setIsSaving] = useState(false);
   //const [isDownloading, setIsDownloading] = useState(false);
   const { toast } = useToast();
-  const router = useRouter();
+  //const router = useRouter();
 
   // const downloadDocx = () => {
   //   gtag.event({
@@ -71,123 +75,62 @@ const ActionBar = ({ resumeId, email, children }) => {
       label: "Save",
     });
 
-    const certificates = localStorage.getItem(
-      `certificates-${email}-${resumeId}`
-    );
     const resumeHeader = localStorage.getItem(
       `resumeHeader-${email}-${resumeId}`
     );
+    console.log("header", `resumeHeader-${email}-${resumeId}`, resumeHeader);
+    const processedHeader = fixHeaderInfo(JSON.parse(resumeHeader)["state"]);
 
     const educations = localStorage.getItem(`educations-${email}-${resumeId}`);
+    const processedEducation = fixEducationFormat(
+      JSON.parse(educations)["state"]
+    );
+
+    const certificates = localStorage.getItem(
+      `certificates-${email}-${resumeId}`
+    );
+    const processedCertificates = fixCertificateFormat(
+      JSON.parse(certificates)["state"]
+    );
 
     const experiences = localStorage.getItem(
       `experiences-${email}-${resumeId}`
     );
+    const processedExperiences = fixExperienceFormat(
+      JSON.parse(experiences)["state"]
+    );
 
     const projects = localStorage.getItem(`projects-${email}-${resumeId}`);
+    const processedProjects = fixProjectFormat(JSON.parse(projects)["state"]);
 
     const talents = localStorage.getItem(`talents-${email}-${resumeId}`);
+    const processedTalents = fixTalent(JSON.parse(talents)["state"]);
 
-    const processedCertificates = fixStructure(
-      JSON.parse(certificates)["state"]["certificates"]
-    );
-    const processedEducation = fixStructure(
-      JSON.parse(educations)["state"]["educations"]
-    );
-    const processedProjects = fixStructure(
-      JSON.parse(projects)["state"]["projects"]
-    );
-    const processedHeader = JSON.parse(resumeHeader)["state"]["headerInfo"];
-    delete processedHeader._id;
-    delete processedHeader.__v;
-    const processedExperiences = fixStructure(
-      fixExperience(JSON.parse(experiences)["state"]["experiences"])
-    );
+    const res = await updateResume({
+      email: email,
+      resumeId: resumeId,
+      skills: processedTalents.skills,
+      languages: processedTalents.languages,
+      interests: processedTalents.interests,
+      educations: processedEducation,
+      certificates: processedCertificates,
+      experiences: processedExperiences,
+      projects: processedProjects,
+      headerInfo: processedHeader,
+    });
 
-    if (resumeId === "default") {
-      const newResumeId = uuidv4();
-
-      //saveLocally(newResumeId);
-      // add code to save to DB
-      // show a toast
-      const res = await createResume({
-        email: email,
-        resumeId: newResumeId,
-        resumeName: "New Resume",
-        skills: JSON.parse(talents)["state"]["skills"],
-        languages: JSON.parse(talents)["state"]["languages"],
-        interests: JSON.parse(talents)["state"]["interests"],
-        educations: processedEducation,
-        certificates: processedCertificates,
-        experiences: processedExperiences,
-        projects: processedProjects,
-        headerInfo: processedHeader,
+    if (res.isSuccess) {
+      toast({
+        title: `Resume Updated 🥳`,
       });
-
-      if (res.isSuccess) {
-        localStorage.setItem(
-          `certificates-${email}-${newResumeId}`,
-          certificates
-        );
-
-        localStorage.setItem(
-          `resumeHeader-${email}-${newResumeId}`,
-          resumeHeader
-        );
-
-        localStorage.setItem(`educations-${email}-${newResumeId}`, educations);
-
-        localStorage.setItem(
-          `experiences-${email}-${newResumeId}`,
-          experiences
-        );
-
-        localStorage.setItem(`projects-${email}-${newResumeId}`, projects);
-
-        localStorage.setItem(`talents-${email}-${newResumeId}`, talents);
-
-        toast({
-          title: `Saved a new Resume 🥳`,
-        });
-
-        setTimeout(() => {
-          router.push(`/buildResume/${newResumeId}`);
-        }, 1000);
-      } else {
-        console.log(res);
-        const error = res.error;
-        toast({
-          title: `Failed: ${error} `,
-        });
-      }
-      setIsSaving(false);
     } else {
-      const res = await updateResume({
-        email: email,
-        resumeId: resumeId,
-        skills: JSON.parse(talents)["state"]["skills"],
-        languages: JSON.parse(talents)["state"]["languages"],
-        interests: JSON.parse(talents)["state"]["interests"],
-        educations: processedEducation,
-        certificates: processedCertificates,
-        experiences: processedExperiences,
-        projects: processedProjects,
-        headerInfo: processedHeader,
+      console.log(res);
+      const error = res.error;
+      toast({
+        title: `Could Not Update: ${error} `,
       });
-
-      if (res.isSuccess) {
-        toast({
-          title: `Resume Updated 🥳`,
-        });
-      } else {
-        console.log(res);
-        const error = res.error;
-        toast({
-          title: `Could Not Update: ${error} `,
-        });
-      }
-      setIsSaving(false);
     }
+    setIsSaving(false);
   };
 
   return (
