@@ -119,6 +119,7 @@ export async function fetchDashboardData(): Promise<{
         id: resume._id,
         resumeName: resume.resumeName,
         updatedAt: resume.updatedAt,
+        pdfLink: resume.pdfLink,
       })),
     };
 

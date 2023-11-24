@@ -5,6 +5,7 @@ import ResumeCardImageImage from "@/public/resumeCard.png";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchResume } from "@/lib/actions/resumes.action";
+import dynamic from "next/dynamic";
 
 //import { useToast } from "../ui/use-toast";
 interface ResumeCardImageProps {
@@ -17,7 +18,7 @@ interface ResumeCardImageProps {
   height?: number;
 }
 
-export async function ResumeCardImage({
+async function ResumeCardImage({
   resumeName,
   resumeId,
   email,
@@ -34,6 +35,7 @@ export async function ResumeCardImage({
     );
 
     if (!resumeHeaderLocalStorage) {
+      console.log("REsume Img Fetching");
       try {
         const resume = await fetchResume(resumeId);
         console.log("Fetched Resume", resume);
@@ -105,3 +107,8 @@ export async function ResumeCardImage({
     </button>
   );
 }
+
+export const ResumeCardImageComponent = dynamic(
+  () => Promise.resolve(ResumeCardImage),
+  { ssr: false }
+);

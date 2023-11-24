@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Settings2 } from "lucide-react";
 import {
@@ -17,10 +16,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Link from "next/link";
-import { ResumeCardImage } from "./ResumeCardImg";
+import { ResumeCardImageComponent } from "./ResumeCardImg";
 import { DeleteButton, RenameDialog } from "./ResumeFuncitonButtons";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import { Input } from "../ui/input";
 
 //import { useToast } from "../ui/use-toast";
@@ -48,8 +46,8 @@ export async function ResumeCard({
 }: ResumeCardProps) {
   //const { toast } = useToast();
   return (
-    <div className={cn("space-y-3", className)}>
-      <ResumeCardImage
+    <div className={cn("space-y-1", className)}>
+      <ResumeCardImageComponent
         resumeName={resumeName}
         resumeId={resumeId}
         email={email}
@@ -73,13 +71,13 @@ export async function ResumeCard({
         </div>
       </Link> */}
 
-      <div className="space-y-1 text-sm flex justify-between w-full align-center">
+      <div className="text-sm flex justify-between w-full align-center m-0">
         <div className="flex flex-col">
           <h3 className="font-medium leading-none">{resumeName}</h3>
           <p className="text-xs text-muted-foreground">{updatedAt}</p>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger className="hover:bg-secondary p-2 rounded-md">
             <Settings2 className="h-4 w-4" aria-label="Modify"></Settings2>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -154,7 +152,17 @@ export async function ResumeCard({
                   <DialogHeader>
                     <DialogTitle>Share Link</DialogTitle>
                     <DialogDescription className="flex flex-col space-y-4 items-center">
-                      <Input value={pdfLink} readOnly />
+                      {pdfLink || pdfLink != "" ? (
+                        <Input
+                          value={`https://utfs.io/f/${pdfLink}`}
+                          readOnly
+                        />
+                      ) : (
+                        <span>
+                          You don't have any links generated yet, open resume,
+                          copy link and next time you can copy from here 😉
+                        </span>
+                      )}
                     </DialogDescription>
                   </DialogHeader>
                 </DialogContent>

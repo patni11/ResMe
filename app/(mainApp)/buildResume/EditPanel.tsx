@@ -2,7 +2,7 @@
 import { FC } from "react";
 
 import EducationSectionCard from "@/components/ResumeComponents/ResumeForms/EducationSectionCard";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import ExperienceSectionCard from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
 import ResumeHeader from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
@@ -18,8 +18,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import React from "react";
-import { Label } from "@/components/ui/label";
-import { RenameDialog } from "@/components/Dashboard/ResumeFuncitonButtons";
+//import { Label } from "@/components/ui/label";
+//import { RenameDialog } from "@/components/Dashboard/ResumeFuncitonButtons";
 
 interface EditPanelProps {
   componentsData: { type: string; id: string }[];

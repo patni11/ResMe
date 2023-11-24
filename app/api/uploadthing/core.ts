@@ -7,6 +7,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { User } from "@/models/user";
 import { z } from "zod";
 import { getPDFLink } from "@/lib/actions/resumes.action";
+import { UTApi } from "uploadthing/server";
+
+const utapi = new UTApi();
 
 const f = createUploadthing();
 
@@ -42,10 +45,10 @@ export const ourFileRouter = {
       }
 
       const existingLink = await getPDFLink(input.resumeId);
-      // if (existingLink) {
-      //   // delete from upload thing
-      //   await utapi.deleteFiles(existingLink);
-      // }
+      if (existingLink) {
+        // delete from upload thing
+        await utapi.deleteFiles(existingLink);
+      }
       console.log("middleware link", existingLink);
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { success: true };

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { Download } from "lucide-react";
+import { Download, X } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { sendPDFDownloadEmail } from "@/lib/actions/sendEmail.action";
 import { useSession } from "next-auth/react";
@@ -14,6 +14,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useUploadThing } from "@/lib/uploadthing";
 import { getPDFLink, updatePDFLink } from "@/lib/actions/resumes.action";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 const ResumeControlBar = ({
   document,
   fileName,
@@ -30,7 +31,7 @@ const ResumeControlBar = ({
   const name = session?.user?.name || "";
   const { toast } = useToast();
   const [url, setURL] = useState("");
-  const [popup, setPopup] = useState(true);
+  const [popup, setPopup] = useState(false);
 
   //Hook to update pdf when document changes
   useEffect(() => {
@@ -76,13 +77,14 @@ const ResumeControlBar = ({
       if (key == savedKey) {
         console.log("Key found in DB");
         clearInterval(polling);
-        return `${process.env.UPLOADTHING_URL}${key}`;
+        return `https://utfs.io/f/${key}`;
       } else {
+        console.log("Updating DB");
         await updatePDFLink(resumeId, key);
       }
     };
     const polling = setInterval(checkKeyInDB, pollInterval);
-    return `${process.env.UPLOADTHING_URL}${key}`;
+    return `https://utfs.io/f/${key}`;
   };
 
   const handleCopyToClipboard = async (url: string) => {
@@ -93,6 +95,24 @@ const ResumeControlBar = ({
     });
   };
 
+  const handleButtonClick = async () => {
+    setIsLoading(true);
+    gtag.event({
+      clientWindow: window,
+      action: "Share Link",
+      category: "Download",
+      label: "Share Link",
+    });
+    // call upload thing to save the link as pdf
+    const url = await getShareUrl();
+    console.log("RECEIVED URL", url);
+    // put it in the person's clipboard
+    handleCopyToClipboard(url);
+    setURL(url);
+    setPopup(true);
+    setIsLoading(false);
+  };
+
   return (
     <div className="flex space-x-2">
       <Button
@@ -100,22 +120,9 @@ const ResumeControlBar = ({
         variant="outlineHover"
         size="xs"
         className="flex space-x-2"
-        onClick={async () => {
-          setIsLoading(true);
-          gtag.event({
-            clientWindow: window,
-            action: "Share Link",
-            category: "Download",
-            label: "Share Link",
-          });
-          // call upload thing to save the link as pdf
-          const url = await getShareUrl();
-          console.log("RECEIVED URL", url);
-          // put it in the person's clipboard
-          handleCopyToClipboard(url);
-          setURL(url);
-          setPopup(true);
-          setIsLoading(false);
+        onClick={(e) => {
+          e.preventDefault();
+          handleButtonClick();
         }}
       >
         <ArrowUpRightSquare className="w-4 h-4" />
@@ -123,15 +130,25 @@ const ResumeControlBar = ({
         <span>Copy</span>
       </Button>
       {popup ? (
-        <div className="fixed top-[50%] left[50%] flex flex-col space-y-2 bg-white rounded-lg p-4">
-          <button
-            onClick={() => {
-              setPopup(false);
-            }}
-          >
-            Cross
-          </button>
-          <Input value={url} readOnly />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+          <div className="flex flex-col space-y-4 bg-white rounded-lg p-4 w-[80%] md:w-[30%]">
+            <div className="flex w-full justify-between items-center">
+              <Label htmlFor="url" className="text-md">
+                Share Link
+              </Label>
+              <button
+                className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+                onClick={() => {
+                  setPopup(false);
+                }}
+              >
+                <X className="h-5 w-5" />
+                <span className="sr-only">Close</span>
+              </button>
+            </div>
+
+            <Input value={url} readOnly className="w-full" id="url" />
+          </div>
         </div>
       ) : null}
 
