@@ -21,7 +21,8 @@ type Actions = {
   setHideLocation: () => void;
   setHiddenLinks: (key: string) => void;
   setHiddenContacts: (key: string) => void;
-  fetchHeaderInfo: () => Promise<void>;
+  fetchDefaultHeader: () => Promise<void>;
+  fetchHeader: (resumeId: string) => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
@@ -47,9 +48,12 @@ export const createResumeHeaderInfo = (resumeHeaderID: string) => {
   };
 
   if (typeof window !== "undefined") {
-    const savedState = localStorage.getItem(resumeHeaderID);
+    const savedState = JSON.parse(localStorage.getItem(resumeHeaderID));
     if (savedState) {
-      INITIAL_STATE = JSON.parse(savedState);
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
     }
   }
 
@@ -59,10 +63,19 @@ export const createResumeHeaderInfo = (resumeHeaderID: string) => {
         ...INITIAL_STATE,
         isLoading: false,
         error: null,
-        fetchHeaderInfo: async () => {
+        fetchDefaultHeader: async () => {
           set({ isLoading: true });
           try {
             const data = await getCleanedHeaderData();
+            set({ ...data, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchHeader: async (resumeId: string) => {
+          set({ isLoading: true });
+          try {
+            const data = await fetchResumeSection(resumeId, "headerInfo");
             set({ ...data, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });

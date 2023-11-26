@@ -159,8 +159,9 @@ export async function ResumeCard({
                         />
                       ) : (
                         <span>
-                          You don't have any links generated yet, open resume,
-                          copy link and next time you can copy from here 😉
+                          You don&apos;t have any links generated yet, open
+                          resume, copy link and next time you can copy from here
+                          😉
                         </span>
                       )}
                     </DialogDescription>

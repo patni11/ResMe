@@ -2,14 +2,15 @@
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import ResumePreview from "./ResumePreview";
-import EditPanel from "./EditPanel";
+
+//import EditPanel from "./EditPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
 //import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import { fetchResume } from "@/lib/actions/resumes.action";
+import { useState } from "react";
+import dynamic from "next/dynamic";
 
+const EditPanel = dynamic(() => import("./EditPanel"), { ssr: false });
 const MainEditor = ({
   email,
   resumeId,
@@ -20,7 +21,6 @@ const MainEditor = ({
   // const { data: session } = useSession();
   // const email = session?.user?.email || "";
   type ComponentData = { type: string; id: string };
-  const [isLoading, setIsLoading] = useState(false);
 
   const [componentsData, setComponentsData] = useState<ComponentData[]>([
     { type: "ResumeHeader", id: `resumeHeader-${email}-${resumeId}` },
@@ -34,61 +34,6 @@ const MainEditor = ({
     { type: "TalentsSection", id: `talents-${email}-${resumeId}` },
     // ... other components
   ]);
-
-  // useEffect(() => {
-  //   console.log("In Use Effect");
-  //   const reloadResume = async () => {
-  //     try {
-  //       console.log("fetching resume");
-  //       const resume = await fetchResume(resumeId);
-
-  //       console.log("Fetched Resume", resume);
-
-  //       // localStorage.setItem(
-  //       //   `certificates-${email}-${resumeId}`,
-  //       //   JSON.stringify(resume.certificates)
-  //       // );
-
-  //       // localStorage.setItem(
-  //       //   `resumeHeader-${email}-${resumeId}`,
-  //       //   JSON.stringify(resume.resumeHeader)
-  //       // );
-
-  //       // localStorage.setItem(
-  //       //   `educations-${email}-${resumeId}`,
-  //       //   JSON.stringify(resume.educations)
-  //       // );
-
-  //       // localStorage.setItem(
-  //       //   `experiences-${email}-${resumeId}`,
-  //       //   JSON.stringify(resume.experiences)
-  //       // );
-
-  //       // localStorage.setItem(
-  //       //   `projects-${email}-${resumeId}`,
-  //       //   JSON.stringify(resume.projects)
-  //       // );
-
-  //       // localStorage.setItem(
-  //       //   `talents-${email}-${resumeId}`,
-  //       //   JSON.stringify(resume.talents)
-  //       // );
-  //     } catch (e) {
-  //       console.log(e);
-  //       throw alert(`There was an error ${e}`);
-  //     }
-  //   };
-
-  //   let resumeHeaderLocalStorage = localStorage.getItem(
-  //     `resumeHeader-${email}-${resumeId}`
-  //   );
-
-  //   if (!resumeHeaderLocalStorage) {
-  //     reloadResume();
-  //   }
-
-  //   setIsLoading(false);
-  // }, [resumeId]);
 
   const moveUp = (index: number) => {
     if (index === 0) return; // Can't move up the first component
@@ -113,16 +58,6 @@ const MainEditor = ({
       return newComponents;
     });
   };
-
-  if (isLoading) {
-    return (
-      <main className="flex justify-between w-full h-full items-center justify-center">
-        <div className="w-full flex justify-center">
-          <LoadingSpinner />
-        </div>
-      </main>
-    );
-  }
 
   return (
     <main className="flex justify-between w-full h-full">

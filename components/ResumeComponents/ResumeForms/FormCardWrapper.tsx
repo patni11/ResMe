@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   ChevronDown,
   ChevronUp,
+  Eye,
   PlusCircleIcon,
   RefreshCw,
 } from "lucide-react";
@@ -18,12 +19,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 
 interface FormCardWrapperProps {
   cardTitle: string;
   children?: ReactNode;
   isLoading?: boolean;
   refreshFunction?: () => void;
+  refreshSection?: () => void;
   hideAll?: boolean;
   deleteFunction?: () => void;
   index: number;
@@ -44,11 +52,13 @@ const TrashButton: FC<TrashButtonProps> = ({
   return (
     <>
       {!hideAll ? (
-        <Trash2Button
+        <Button
+          variant="ghost"
           className="mr-2"
           onClick={() => deleteFunction()}
-          size="small"
-        />
+        >
+          <Eye className="w-5 h-5" />
+        </Button>
       ) : (
         <Button
           onClick={() => deleteFunction()}
@@ -66,6 +76,7 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
   cardTitle,
   children,
   refreshFunction,
+  refreshSection,
   isLoading,
   hideAll = false,
   deleteFunction,
@@ -105,20 +116,29 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
 
               {cardTitle}
             </div>
-            {refreshFunction && !hideAll ? (
+            {refreshFunction && !hideAll && refreshSection ? (
               <div className="flex items-center justify-center">
                 <Dialog>
                   <DialogTrigger>
-                    <div
-                      className={buttonVariants({
-                        variant: "ghost",
-                        className: "mr-2",
-                        size: "xs",
-                      })}
-                      aria-label="Refresh"
-                    >
-                      Reset
-                    </div>
+                    <TooltipProvider>
+                      <Tooltip delayDuration={400}>
+                        <TooltipTrigger className="cursor-default ml-1.5">
+                          <div
+                            className={buttonVariants({
+                              variant: "ghost",
+                              className: "mr-2",
+                              size: "xs",
+                            })}
+                            aria-label="Refresh"
+                          >
+                            Reset
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent className="p-2 text-xs font-normal">
+                          Reset to default values
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </DialogTrigger>
                   <DialogContent>
                     <DialogHeader>
@@ -132,7 +152,6 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
                         <Button
                           onClick={() => {
                             hideAll = false;
-
                             refreshFunction();
                           }}
                           className="mr-2"
@@ -147,18 +166,27 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
                   </DialogContent>
                 </Dialog>
 
-                <Button
-                  onClick={() => {
-                    hideAll = false;
-                    refreshFunction();
-                  }}
-                  className="mr-2"
-                  variant="ghost"
-                  aria-label="Refresh"
-                  disabled={isLoading}
-                >
-                  <RefreshCw className="h-4 w-4" />
-                </Button>
+                <TooltipProvider>
+                  <Tooltip delayDuration={300}>
+                    <TooltipTrigger className="cursor-default ml-1.5">
+                      <Button
+                        onClick={() => {
+                          hideAll = false;
+                          refreshSection();
+                        }}
+                        className="mr-2"
+                        variant="ghost"
+                        aria-label="Refresh"
+                        disabled={isLoading}
+                      >
+                        <RefreshCw className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent className="p-2 text-xs font-normal">
+                      Reload resume data
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             ) : (
               <div></div>

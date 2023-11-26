@@ -17,7 +17,8 @@ export type State = {
 type Actions = {
   setHiddenCertificate: (key: string) => void;
   setHideAll: () => void;
-  fetchCertificates: () => void;
+  fetchDefaultCertificates: () => Promise<void>;
+  fetchCertificates: (resumeId: string) => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
@@ -36,9 +37,12 @@ export const createCertificateInfo = (certificateHeaderID: string) => {
   };
 
   if (typeof window !== "undefined") {
-    const savedState = localStorage.getItem(certificateHeaderID);
+    const savedState = JSON.parse(localStorage.getItem(certificateHeaderID));
     if (savedState) {
-      INITIAL_STATE = JSON.parse(savedState);
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
     }
   }
 
@@ -48,7 +52,7 @@ export const createCertificateInfo = (certificateHeaderID: string) => {
         ...INITIAL_STATE,
         isLoading: false,
         error: null,
-        fetchCertificates: async () => {
+        fetchDefaultCertificates: async () => {
           set({ isLoading: true });
           try {
             const certificates = await getCleanedCertificateData();
@@ -57,7 +61,15 @@ export const createCertificateInfo = (certificateHeaderID: string) => {
             set({ error, isLoading: false });
           }
         },
-
+        fetchCertificates: async (resumeId: string) => {
+          set({ isLoading: true });
+          try {
+            const data = await fetchResumeSection(resumeId, "certificates");
+            set({ ...data, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
         setHiddenCertificate: (key: string) => {
           set((state) => {
             if (!state.hiddenCertificates) return { hiddenCertificates: null };

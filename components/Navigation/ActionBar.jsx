@@ -10,6 +10,12 @@ import {
   fixHeaderInfo,
   fixTalent,
 } from "@/app/utils/FormattingFunctions";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 import { updateResume } from "@/lib/actions/resumes.action";
 //import { saveAs } from "file-saver";
 //import { Packer } from "docx";
@@ -135,45 +141,64 @@ const ActionBar = ({ resumeId, email, children }) => {
 
   return (
     <div className="relative w-[80%] flex justify-center items-cetner space-x-2 py-1.5 mb-2 items-center bg-secondary rounded-full">
-      <div
-        className={buttonVariants({
-          variant: "outlineHover",
-          size: "xs",
-          className: "flex space-x-2",
-        })}
-        onClick={() => {
-          setIsSaving(true);
-          handleSave();
-        }}
-        disabled={isSaving}
-      >
-        <SaveIcon className="w-4 h-4" />
-        <span className="hidden md:block">Save</span>
-      </div>
-      <ComingSoon>
-        <div
-          className={buttonVariants({
-            variant: "outlineHover",
-            size: "xs",
-            className: "flex space-x-2",
-          })}
-          onClick={() => {
-            gtag.event({
-              clientWindow: window,
-              action: "Download Docx",
-              category: "Download",
-              label: "Download Docx",
-            });
-            // setIsSaving(true);
-            // downloadDocx();
-          }}
-          disabled={isSaving}
-        >
-          <File className="w-4 h-4" />
+      <TooltipProvider>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger className="cursor-default ml-1.5">
+            <div
+              className={buttonVariants({
+                variant: "outlineHover",
+                size: "xs",
+                className: "flex space-x-2",
+              })}
+              onClick={() => {
+                setIsSaving(true);
+                handleSave();
+              }}
+              disabled={isSaving}
+            >
+              <SaveIcon className="w-4 h-4" />
+              <span className="hidden md:block">Save</span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent className="p-2 text-xs font-normal">
+            Save Data
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
-          <span>Docx</span>
-        </div>
-      </ComingSoon>
+      <TooltipProvider>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger className="cursor-default ml-1.5">
+            <ComingSoon>
+              <div
+                className={buttonVariants({
+                  variant: "outlineHover",
+                  size: "xs",
+                  className: "flex space-x-2",
+                })}
+                onClick={() => {
+                  gtag.event({
+                    clientWindow: window,
+                    action: "Download Docx",
+                    category: "Download",
+                    label: "Download Docx",
+                  });
+                  // setIsSaving(true);
+                  // downloadDocx();
+                }}
+                disabled={isSaving}
+              >
+                <File className="w-4 h-4" />
+
+                <span>Docx</span>
+              </div>
+            </ComingSoon>
+          </TooltipTrigger>
+          <TooltipContent className="p-2 text-xs font-normal">
+            Download microsoft docx file
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
       {children}
     </div>

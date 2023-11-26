@@ -30,7 +30,7 @@ import { useToast } from "@/components/ui/use-toast";
 import {
   deleteCertificate,
   updateCertificate,
-} from "@/lib/actions/certificates.action.";
+} from "@/lib/actions/certificates.action";
 
 const CertificateSchema = z.object({
   _id: z.string().optional(),

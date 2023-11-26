@@ -32,7 +32,8 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
     setHiddenContacts,
     error,
     isLoading,
-    fetchHeaderInfo,
+    fetchDefaultHeader,
+    fetchHeader,
   } = useResumeHeaderInfo();
 
   //const session = useSession();
@@ -50,8 +51,9 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
   return (
     <FormCardWrapper
       cardTitle="Header"
-      refreshFunction={() => fetchHeaderInfo()}
+      refreshFunction={() => fetchDefaultHeader()}
       isLoading={isLoading}
+      refreshSection={() => fetchHeader(resumeHeaderID.split("-")[2])}
       index={index}
       moveUp={moveUp}
       moveDown={moveDown}
@@ -65,7 +67,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
         }}
       ></Input>
 
-      {/* <div className="flex justify-between mt-2 whitespace-normal flex-wrap">
+      <div className="flex justify-between mt-2 whitespace-normal flex-wrap">
         {location !== "" ? (
           <HideButtons hide={hideLocation} setHide={() => setHideLocation()}>
             <span>Location</span>
@@ -97,7 +99,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
               </HideButtons>
             ))
           : null}
-      </div> */}
+      </div>
     </FormCardWrapper>
   );
 };

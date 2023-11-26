@@ -3,7 +3,12 @@ import ActionBar from "@/components/Navigation/ActionBar";
 
 import { ResumePDF } from "@/components/ResumeComponents/ReactPDF/ResumePDF";
 import { ResumeControlBarCSR } from "@/components/ResumeComponents/ReactPDF/ResumeControlBar";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useState } from "react";
 import { ResumeIframeCSR } from "@/components/ResumeComponents/ReactPDF/ResumeIFrame";
 import { DEFAULT_DOCUMENT_SIZE } from "@/components/ResumeComponents/ReactPDF/constants";
@@ -109,18 +114,28 @@ export default function ResumePreview({ resumeId, email, componentsData }) {
         <div className="flex items-center space-x-2">
           <ResumeControlBarCSR
             document={document}
-            fileName={"somename"}
+            fileName={"resume"}
             resumeId={resumeId}
           />
-          <Toggle
-            id="edit"
-            pressed={pdfPreview}
-            onPressedChange={() => setPDFPreview(!pdfPreview)}
-            size="xs"
-            variant="outlineHover"
-          >
-            {pdfPreview ? "View" : "Edit"}
-          </Toggle>
+
+          <TooltipProvider>
+            <Tooltip delayDuration={300}>
+              <TooltipTrigger className="cursor-default ml-1.5">
+                <Toggle
+                  id="edit"
+                  pressed={pdfPreview}
+                  onPressedChange={() => setPDFPreview(!pdfPreview)}
+                  size="xs"
+                  variant="outlineHover"
+                >
+                  {pdfPreview ? "View" : "Edit"}
+                </Toggle>
+              </TooltipTrigger>
+              <TooltipContent className="p-2 text-xs font-normal">
+                Switch to Edit/View Mode
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </ActionBar>
       <div

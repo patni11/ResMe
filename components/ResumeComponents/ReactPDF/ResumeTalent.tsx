@@ -45,7 +45,7 @@ const ResumeTalent = ({
         <View
           style={{
             ...styles.flexRow,
-            marginTop: spacing["1.5"],
+            marginTop: spacing["0.5"],
             gap: spacing["1"],
             paddingRight: `${spacing["10"]}`,
           }}
@@ -59,7 +59,7 @@ const ResumeTalent = ({
         <View
           style={{
             ...styles.flexRow,
-            marginTop: spacing["1.5"],
+            marginTop: spacing["0.5"],
             gap: spacing["1"],
             paddingRight: `${spacing["10"]}`,
           }}

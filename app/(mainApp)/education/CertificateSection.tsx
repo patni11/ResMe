@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth/next";
 import authOptions, { Session } from "@/lib/authOptions";
 import { Certificate } from "./pageTypes";
 import { FC } from "react";
-import { fetchCertificates } from "@/lib/actions/certificates.action.";
+import { fetchCertificates } from "@/lib/actions/certificates.action";
 import CertificateCard from "./certificateCard";
 import CertificateDialogContent from "./CertificateDialogContent";
 

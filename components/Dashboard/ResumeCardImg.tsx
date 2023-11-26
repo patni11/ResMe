@@ -18,7 +18,7 @@ interface ResumeCardImageProps {
   height?: number;
 }
 
-async function ResumeCardImage({
+function ResumeCardImage({
   resumeName,
   resumeId,
   email,
@@ -98,10 +98,11 @@ async function ResumeCardImage({
           width={width}
           height={height}
           className={cn(
-            "h-auto w-auto object-cover transition-all hover:scale-105",
+            "object-cover transition-all hover:scale-105",
             aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
           )}
           priority={true}
+          style={{ width: "auto", height: "auto" }}
         />
       </div>
     </button>

@@ -262,7 +262,7 @@ export async function updateResume({
         certificates: certificates,
         experiences: experiences,
         projects: projects,
-        headerInfo: headerInfo,
+        //   headerInfo: headerInfo,
       }
     );
     return {
@@ -277,5 +277,25 @@ export async function updateResume({
       message: e.message,
       statusCode: e.code,
     };
+  }
+}
+
+export async function fetchResumeSection(
+  resumeId: string,
+  resumeSection: string
+) {
+  try {
+    //const email = await getUserEmailFromSession();
+    await connectMongoDB();
+    const sectionInfo = await Resume.findOne({ _id: resumeId }).select(
+      resumeSection
+    );
+    if (!sectionInfo) {
+      throw new Error(`Info Not Found`);
+    }
+
+    return sectionInfo;
+  } catch (error: any) {
+    throw new Error(`Failed to fetch info: ${error.message}`);
   }
 }

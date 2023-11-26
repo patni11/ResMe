@@ -1,12 +1,18 @@
 import Navbar from "@/components/Navigation/Navbar";
 
 // import { PriceCards } from "./pricingCard";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { CheckCircle2, HelpCircle, XCircle } from "lucide-react";
 
 import { Metadata } from "next";
 import { ComingSoon } from "@/components/Cards/ComingSoon";
 import { GoPremiumButton, GoStudentButton } from "./goPremiumButton";
 import { cn } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
   title: "ResMe",
@@ -34,7 +40,7 @@ const PricingPage = () => {
             </h2>
           </div>
 
-          <div className="flex flex-col space-y-24 md:flex-row md:space-y-0 md:space-x-4">
+          <div className="flex flex-col space-y-24 md:flex-row md:space-y-0 md:space-x-8">
             <FreeCard />
             <StudentCard />
             <ExpertCard />
@@ -65,19 +71,34 @@ const StudentCard = () => {
   ];
   const unCheckedPoints = ["Limited Tailored AI", "Limited Resumes"];
   return (
-    <div className={cn(cardClass, "relative border-blue-600")}>
+    <div
+      className={cn(cardClass, "relative border-blue-600 shadow-blue-500/50 ")}
+    >
       <div className="px-3 py-1 text-sm text-white bg-blue-600 rounded-full inline-block absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         Most Popular
       </div>
+
       <div>
         <h3 className="text-2xl font-bold text-center">{title}</h3>
         <div className="flex space-y-2 flex-col mt-4 text-center text-zinc-600 dark:text-zinc-400 justify-center items-center">
           <div className="flex mt-4 text-center text-zinc-600 dark:text-zinc-400 justify-center space-x-4">
             <span className="text-4xl font-bold">{cost}</span>/Once
           </div>
-          <span className="text-sm text-blue-600 rounded-full border border:blue-600 py-1 px-4 ">
-            Lifetime
-          </span>
+          <div className="flex">
+            <span className="text-sm text-blue-600 rounded-full border border-blue-600 py-1 px-4 hover:bg-blue-600 hover:text-white">
+              Lifetime
+            </span>
+            <TooltipProvider>
+              <Tooltip delayDuration={300}>
+                <TooltipTrigger className="cursor-default ml-1.5">
+                  <HelpCircle className="h-4 w-4 text-zinc-500" />
+                </TooltipTrigger>
+                <TooltipContent className="p-2 text-xs font-normal">
+                  Pay once, use forever
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
         </div>
         <ul className="mt-4 mb-4 space-y-8">
           {checkedPoints.map((point, idx) => {
@@ -101,9 +122,7 @@ const StudentCard = () => {
         </ul>
       </div>
       <div className="mt-6 w-full">
-        <ComingSoon style="w-full">
-          <GoStudentButton />
-        </ComingSoon>
+        <GoStudentButton />
       </div>
     </div>
   );
@@ -123,7 +142,12 @@ const ExpertCard = () => {
     "Download Docx",
   ];
   return (
-    <div className={cn(cardClass, "relative border-purple-500")}>
+    <div
+      className={cn(
+        cardClass,
+        "relative border-purple-500 shadow-purple-500/50"
+      )}
+    >
       <div className="px-3 py-1 text-sm text-white bg-gradient-to-r from-pink-500 to-purple-500 rounded-full inline-block absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         Premium
       </div>

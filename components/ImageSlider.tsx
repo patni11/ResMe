@@ -1,7 +1,18 @@
 "use client";
 import { ChevronLeft, ChevronRight, DotIcon } from "lucide-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useEffect, useState } from "react";
+import GlobeImage from "@/public/globe.png";
+import CloudCubeImage from "@/public/cloudCube.png";
+import NoteImage from "@/public/note.png";
+
+type ImageKey = "globe" | "cloud" | "note";
+
+const imageMap: Record<ImageKey, StaticImageData> = {
+  globe: GlobeImage,
+  cloud: CloudCubeImage,
+  note: NoteImage,
+};
 
 export const ImageSlider = ({ slides }: { slides: any }) => {
   const headings = [
@@ -41,7 +52,7 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="mt-16 flow-root sm:mt-24">
           <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-            <Image
+            {/* <Image
               src={slides[currentIndex]}
               alt="product preview"
               width={1364}
@@ -51,6 +62,17 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
               objectFit="scale-down"
               layout="intrinsic"
               className="rounded-md bg-white p-2 sm:p-8 md:p-10 shadow-2xl ring-1 ring-gray-900/10 duration-500"
+            /> */}
+            <Image
+              src={slides[currentIndex]}
+              alt="product preview"
+              width={1364}
+              height={866}
+              quality={70}
+              placeholder="blur"
+              className="rounded-md bg-white p-2 sm:p-8 md:p-10 shadow-2xl ring-1 ring-gray-900/10 duration-500"
+              // Added styles for image sizing
+              style={{ maxWidth: "100%", height: "auto" }}
             />
           </div>
         </div>
@@ -74,5 +96,35 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
         </p>
       </div>
     </div>
+  );
+};
+
+export const ImageBox = ({
+  image,
+  title,
+  text,
+}: {
+  image: ImageKey;
+  title: string;
+  text: string;
+}) => {
+  return (
+    <li className="md:flex-1">
+      <div className="flex flex-col space-y-2 md:pb-0 md:pl-0 md:pt-4">
+        <Image
+          src={imageMap[image]}
+          alt="product preview"
+          width={500}
+          height={500}
+          quality={70}
+          placeholder="blur"
+          className="rounded-md bg-white shadow-2xl ring-1 ring-gray-900/10 duration-500 mb-2 h-auto w-auto transition-all hover:scale-105"
+          // Added styles for image sizing
+          style={{ maxWidth: "100%", height: "auto" }}
+        />
+        <span className="text-2xl font-bold">{title}</span>
+        <span className="mt-2 text-zinc-700">{text}</span>
+      </div>
+    </li>
   );
 };

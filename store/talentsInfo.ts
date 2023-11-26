@@ -16,7 +16,7 @@ export type State = {
 };
 
 type Actions = {
-  fetchAll: () => void;
+  fetchDefaultTalent: () => Promise<void>;
   setHideSkills: () => void;
   setSkills: (newSkills: string) => void;
   setInterests: (newInterests: string) => void;
@@ -44,9 +44,12 @@ export const createTalentsInfo = (talentsID: string) => {
   };
 
   if (typeof window !== "undefined") {
-    const savedState = localStorage.getItem(talentsID);
+    const savedState = JSON.parse(localStorage.getItem(talentsID));
     if (savedState) {
-      INITIAL_STATE = JSON.parse(savedState);
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
     }
   }
 
@@ -56,7 +59,7 @@ export const createTalentsInfo = (talentsID: string) => {
         ...INITIAL_STATE,
         isLoading: false,
         error: null,
-        fetchAll: async () => {
+        fetchDefaultTalent: async () => {
           set({ isLoading: true });
           try {
             // const skills: string[] =
@@ -65,6 +68,18 @@ export const createTalentsInfo = (talentsID: string) => {
             const talent = await getCleanedTalentsData();
 
             set({ ...talent, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchTalents: async (resumeId: string) => {
+          set({ isLoading: true });
+          try {
+            const data = await fetchResumeSection(
+              resumeId,
+              "skills languages interests"
+            );
+            set({ ...data, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

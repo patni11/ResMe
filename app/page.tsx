@@ -13,7 +13,7 @@ import {
 import robotHuman from "@/public/robotHuman.png";
 import dashboard from "@/public/dashboard.png";
 import annotedResume from "@/public/annotatedResume.png";
-import { ImageSlider } from "@/components/ImageSlider";
+import { ImageBox, ImageSlider } from "@/components/ImageSlider";
 
 export default function Home() {
   const slides = [dashboard, annotedResume, robotHuman];
@@ -113,6 +113,41 @@ export default function Home() {
       </div>
 
       {/* Feature section */}
+      <div className="mx-auto mb-32 mt-0 max-w-5xl sm:mt-56">
+        <div className="mb-12 px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl sm:text-center">
+            <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
+              Elevate Your Career with Tailored Resumes
+            </h2>
+            <p className="mt-4 text-lg text-gray-600">
+              Create, Customize, and Share Your Professional Story with Ease
+            </p>
+          </div>
+        </div>
+
+        {/* steps */}
+        <ol className="mb-12 px-6 lg:px-8 my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0 md:px-6">
+          <ImageBox
+            image="cloud"
+            title="Store"
+            text="Organise your career history with ease on our platform"
+          />
+
+          <ImageBox
+            image="note"
+            title="Edit"
+            text="Need it fast? Craft a resume instantly with our easy-to-use, pre-formatted tools"
+          />
+
+          <ImageBox
+            image="globe"
+            title="Publish"
+            text="Quickly download as PDF or Word, or share a direct link to your resume"
+          />
+        </ol>
+      </div>
+
+      {/* Signup section */}
       <div className="mx-auto mb-32 mt-0 max-w-5xl sm:mt-56">
         <div className="mb-12 px-6 lg:px-8">
           <div className="mx-auto max-w-2xl sm:text-center">
@@ -255,30 +290,29 @@ export default function Home() {
               <AccordionTrigger>Why ResMe Over Others?</AccordionTrigger>
               <AccordionContent>
                 <p>
-                  Alright, friend! 🚀 So, think of standard tools like Google
-                  Docs or those other basic resume builders. They&apos;re like
-                  blank canvases; you have to figure out the whole painting
-                  yourself.{" "}
+                  Most resume building tools are not optimized for ATS and
+                  parsers. You can try it yourself. Just create one, download
+                  pdf, and try to copy/paste its text. You will get all
+                  gibberish for many of them. Repeat the same with a ResMe pdf.
                 </p>
                 <br />
                 <p>
-                  But ResMe? It&apos;s like having an artist by your side,
-                  guiding every brushstroke. Instead of wrestling with
-                  formatting, fonts, and keywords, ResMe&apos;s got your back.{" "}
+                  Unlike other tools, ResMe allows your to save your resumes,
+                  manage them, and share a live link to them. Our AI even helps
+                  you find the perfect keywods and right formatting
                 </p>
                 <br />
                 <p>
-                  We don&apos;t just offer a platform, we offer an experience.
-                  It&apos;s all about making your professional journey shine,
-                  without the usual hassle. And hey, whether you&apos;re
-                  juggling 5 or 100 resumes, we handle it like pros. So why
+                  But thats not all. We don&apos;t just offer a platform, we
+                  offer an experience. It&apos;s all about making your
+                  professional journey shine, without the usual hassle. So why
                   settle for basic when you can go premium with ResMe? 🎨🖌️✨
                 </p>
               </AccordionContent>
             </AccordionItem>
 
             <AccordionItem value="item-5">
-              <AccordionTrigger>Newbie vs Expert Plan</AccordionTrigger>
+              <AccordionTrigger>Newbie vs Student vs Expert</AccordionTrigger>
               <AccordionContent>
                 <p>
                   As the name says: Newbie is for Noobs and Expert plan is for
@@ -287,15 +321,21 @@ export default function Home() {
                 <br />
                 <p>
                   JK! 😂 With free plan: Newbie, you get everything you need to
-                  craft a perfect Resume and to Organize it. However,you are
-                  limited to 2 Resumes, don&apos;t get AI, link sharing, docx
-                  export
+                  craft a perfect Resume and to organize it. However,you are
+                  limited to 3 Resumes, don&apos;t get AI, link sharing, and
+                  docx export
+                </p>
+                <br />
+                <p>
+                  Student plan is pay once use forever! You get everything in
+                  free plan with 10 resumes, link sharing, docx export, and
+                  limited AI
                 </p>
                 <br />
                 <p>
                   With Expert plan, Sire, you would get an AI butler to help you
                   craft a masterpiece, shareable link to PDF, Docx support and
-                  many supply of beautiful resumes
+                  upto 100 beautiful resumes
                 </p>
               </AccordionContent>
             </AccordionItem>

@@ -27,7 +27,7 @@ export type State = {
 
 type Actions = {
   setHiddenExperience: (key: string) => void;
-  fetchExperiences: () => void;
+  fetchDefaultExperiences: () => Promise<void>;
   updateDescriptions: (
     key: string,
     idx: number,
@@ -38,6 +38,7 @@ type Actions = {
   setHideAll: () => void;
   moveExpUp: (index: number) => void;
   moveExpDown: (index: number) => void;
+  fetchExperiences: (resumeId: string) => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
@@ -56,9 +57,12 @@ export const createExperienceInfo = (experienceID: string) => {
   };
 
   if (typeof window !== "undefined") {
-    const savedState = localStorage.getItem(experienceID);
+    const savedState = JSON.parse(localStorage.getItem(experienceID));
     if (savedState) {
-      INITIAL_STATE = JSON.parse(savedState);
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
     }
   }
 
@@ -68,11 +72,20 @@ export const createExperienceInfo = (experienceID: string) => {
         ...INITIAL_STATE,
         isLoading: false,
         error: null,
-        fetchExperiences: async () => {
+        fetchDefaultExperiences: async () => {
           set({ isLoading: true });
           try {
             const experiences = await getCleanedExperienceData();
             set({ ...experiences, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchExperiences: async (resumeId: string) => {
+          set({ isLoading: true });
+          try {
+            const data = await fetchResumeSection(resumeId, "experiences");
+            set({ ...data, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

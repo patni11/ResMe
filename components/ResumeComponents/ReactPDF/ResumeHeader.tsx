@@ -35,8 +35,8 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
           ...styles.flexRow,
           flexWrap: "wrap",
           textAlign: "center",
+          justifyContent: "center",
           marginTop: spacing["0.5"],
-          alignSelf: "center",
           gap: spacing["1"],
         }}
       >

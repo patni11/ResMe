@@ -35,31 +35,29 @@ const EducationCard: FC<EducationCardProps> = ({
   setHideGpa,
 }) => {
   return (
-    <>
-      <Card className="mb-2">
-        <CardHeader className="flex flex-row justify-between">
-          <div className="flex flex-col space-y-2">
-            <CardTitle>{education.schoolName}</CardTitle>
-            <CardDescription>
-              {education.degreeType} {education.major}
-            </CardDescription>
-          </div>
-          <div className="flex space-x-4">
-            <HideButtons hide={hideEducation} setHide={setHideEducation}>
-              <span>Education</span>
-            </HideButtons>
+    <Card className="mb-2">
+      <CardHeader className="flex flex-row justify-between">
+        <div className="flex flex-col space-y-2">
+          <CardTitle>{education.schoolName}</CardTitle>
+          <CardDescription>
+            {education.degreeType} {education.major}
+          </CardDescription>
+        </div>
+        <div className="flex space-x-4">
+          <HideButtons hide={hideEducation} setHide={setHideEducation}>
+            <span>Education</span>
+          </HideButtons>
 
-            <HideButtons hide={hideGPA} setHide={setHideGpa}>
-              <span>GPA</span>
-            </HideButtons>
+          <HideButtons hide={hideGPA} setHide={setHideGpa}>
+            <span>GPA</span>
+          </HideButtons>
 
-            <HideButtons hide={hideDate} setHide={setHideDate}>
-              <span>Date</span>
-            </HideButtons>
-          </div>
-        </CardHeader>
-      </Card>
-    </>
+          <HideButtons hide={hideDate} setHide={setHideDate}>
+            <span>Date</span>
+          </HideButtons>
+        </div>
+      </CardHeader>
+    </Card>
   );
 };
 interface EducationSectionCard {
@@ -88,6 +86,7 @@ const EducationSectionCard: FC<EducationSectionCard> = ({
     setHiddenEducation,
     setHiddenDates,
     setHiddenGPAs,
+    fetchDefaultEducations,
     fetchEducations,
     setHideAll,
   } = useEducationsInfo();
@@ -95,7 +94,8 @@ const EducationSectionCard: FC<EducationSectionCard> = ({
   return (
     <FormCardWrapper
       cardTitle="Education"
-      refreshFunction={() => fetchEducations()}
+      refreshFunction={() => fetchDefaultEducations()}
+      refreshSection={() => fetchEducations(educationID.split("-")[2])}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}

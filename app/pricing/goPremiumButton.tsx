@@ -1,5 +1,6 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
+import { createStripeSession } from "@/lib/actions/stripe.action";
 import * as gtag from "@/lib/gtag";
 export const GoPremiumButton = () => {
   const clickTracking = () => {
@@ -15,7 +16,7 @@ export const GoPremiumButton = () => {
       className={buttonVariants({
         variant: "ghost",
         className:
-          "w-full bg-gradient-to-r from-pink-500 to-purple-500 text-primary-foreground hover:text-primary-foreground",
+          "w-full bg-gradient-to-r font-semibold from-pink-500 to-purple-500 hover:bg-purple-500 text-primary-foreground hover:text-primary-foreground",
       })}
       onClick={clickTracking}
     >
@@ -32,17 +33,19 @@ export const GoStudentButton = () => {
       category: "purchase",
       label: "student",
     });
+
+    createStripeSession();
   };
   return (
-    <div
+    <button
       className={buttonVariants({
         variant: "ghost",
         className:
-          "w-full text-blue-600 rounded-full border border-blue-600 hover:bg-blue-600 hover:text-primary-foreground ",
+          "w-full text-blue-600 font-semibold rounded-full border border-blue-600 hover:bg-blue-600 hover:text-primary-foreground ",
       })}
       onClick={clickTracking}
     >
       Go Student
-    </div>
+    </button>
   );
 };

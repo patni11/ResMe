@@ -56,13 +56,15 @@ const CertificateSectionCard: FC<CertificateSectionCard> = ({
     isLoading,
     setHideAll,
     setHiddenCertificate,
+    fetchDefaultCertificates,
     fetchCertificates,
   } = useCertificatesInfo();
 
   return (
     <FormCardWrapper
       cardTitle="Certificate"
-      refreshFunction={() => fetchCertificates()}
+      refreshFunction={() => fetchDefaultCertificates()}
+      refreshSection={() => fetchCertificates(certificateID.split("-")[2])}
       isLoading={isLoading}
       hideAll={hideAll}
       deleteFunction={setHideAll}

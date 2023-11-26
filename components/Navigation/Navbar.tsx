@@ -39,7 +39,7 @@ const Navbar = () => {
               className={`${buttonVariants({
                 variant: "ghost",
                 size: "sm",
-              })} hover:border hover:border-blue-600 hover:bg-transparent`}
+              })}  border border-transparent hover:border-blue-600 bg-transparent hover:bg-transparent`}
             >
               <span className="text-blue-600 font-semibold">Premium</span>
             </Link>

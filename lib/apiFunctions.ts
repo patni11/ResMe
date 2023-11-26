@@ -41,6 +41,30 @@ export async function getCleanedHeaderData() {
   };
 }
 
+// export async function getCleanedHeaderData() {
+//   const headerInfo: UserInfo = (await getHeaderData()).headerInfo;
+//   const hiddenContactsMap = new Map<string, boolean>();
+//   const hiddenLinksMap = new Map<string, boolean>();
+
+//   // Populate the maps
+//   headerInfo.contactInfo?.forEach((contact) => {
+//     hiddenContactsMap.set(contact.contact, false);
+//   });
+
+//   headerInfo.links?.forEach((link) => {
+//     hiddenLinksMap.set(link.linkName, false);
+//   });
+
+//   // Assuming headerInfo also needs to be converted
+//   // Modify headerInfo to include these maps instead of plain objects
+//   return {
+//     headerInfo,
+//     hiddenContacts: hiddenContactsMap,
+//     hiddenLinks: hiddenLinksMap,
+//     hideLocation: false,
+//   };
+// }
+
 export async function getEducationData() {
   try {
     const res = await fetch(`/api/educationsInfo`);

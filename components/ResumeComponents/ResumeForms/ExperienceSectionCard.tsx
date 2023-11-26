@@ -34,6 +34,7 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
     hideAll,
     isLoading,
     setHiddenExperience,
+    fetchDefaultExperiences,
     fetchExperiences,
     setHideAll,
     updateDescriptions,
@@ -46,7 +47,8 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
   return (
     <FormCardWrapper
       cardTitle="Experience"
-      refreshFunction={() => fetchExperiences()}
+      refreshFunction={() => fetchDefaultExperiences()}
+      refreshSection={() => fetchExperiences(experienceID.split("-")[2])}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}

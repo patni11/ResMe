@@ -22,8 +22,9 @@ type Actions = {
   setHiddenEducation: (key: string) => void;
   setHiddenGPAs: (key: string) => void;
   setHiddenDates: (key: string) => void;
-  fetchEducations: () => void;
+  fetchDefaultEducations: () => Promise<void>;
   setHideAll: () => void;
+  fetchEducations: (resumeId: string) => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
@@ -45,9 +46,12 @@ export const createEducationInfo = (educationHeaderID: string) => {
   };
 
   if (typeof window !== "undefined") {
-    const savedState = localStorage.getItem(educationHeaderID);
+    const savedState = JSON.parse(localStorage.getItem(educationHeaderID));
     if (savedState) {
-      INITIAL_STATE = JSON.parse(savedState);
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
     }
   }
   const useEducationsInfo = create(
@@ -56,12 +60,21 @@ export const createEducationInfo = (educationHeaderID: string) => {
         ...INITIAL_STATE,
         isLoading: false,
         error: null,
-        fetchEducations: async () => {
+        fetchDefaultEducations: async () => {
           set({ isLoading: true });
           try {
             const educations = await getCleanedEducationData();
 
             set({ ...educations, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchEducations: async (resumeId: string) => {
+          set({ isLoading: true });
+          try {
+            const data = await fetchResumeSection(resumeId, "educations");
+            set({ ...data, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

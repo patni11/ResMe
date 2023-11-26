@@ -8,6 +8,12 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { sendPDFDownloadEmail } from "@/lib/actions/sendEmail.action";
 import { useSession } from "next-auth/react";
 import { ComingSoon } from "@/components/Cards/ComingSoon";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { ArrowUpRightSquare } from "lucide-react";
 import * as gtag from "@/lib/gtag";
 import { useToast } from "@/components/ui/use-toast";
@@ -38,10 +44,9 @@ const ResumeControlBar = ({
     update(document);
   }, [document]);
 
-  console.log("instance url", instance.url);
-  if (instance.error) return <div>Download Error</div>;
-
   const { startUpload } = useUploadThing("pdfUploader");
+
+  if (instance.error) return <div>Download Error</div>;
 
   const getShareUrl = async () => {
     const res = await startUpload([new File([instance.blob!], "pdf")], {
@@ -115,20 +120,30 @@ const ResumeControlBar = ({
 
   return (
     <div className="flex space-x-2">
-      <Button
-        disabled={instance.loading || isLoading}
-        variant="outlineHover"
-        size="xs"
-        className="flex space-x-2"
-        onClick={(e) => {
-          e.preventDefault();
-          handleButtonClick();
-        }}
-      >
-        <ArrowUpRightSquare className="w-4 h-4" />
+      <TooltipProvider>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger className="cursor-default ml-1.5">
+            <Button
+              disabled={instance.loading || isLoading}
+              variant="outlineHover"
+              size="xs"
+              className="flex space-x-2"
+              onClick={(e) => {
+                e.preventDefault();
+                handleButtonClick();
+              }}
+            >
+              <ArrowUpRightSquare className="w-4 h-4" />
 
-        <span>Copy</span>
-      </Button>
+              <span>Copy</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="p-2 text-xs font-normal">
+            Share Link to PDF
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       {popup ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
           <div className="flex flex-col space-y-4 bg-white rounded-lg p-4 w-[80%] md:w-[30%]">
@@ -162,32 +177,41 @@ const ResumeControlBar = ({
           <LoadingSpinner />
         </Button>
       ) : (
-        <a
-          href={instance.url!}
-          download={fileName}
-          className={buttonVariants({
-            variant: "outlineHover",
-            size: "xs",
-            className: "flex space-x-2",
-          })}
-          onClick={() => {
-            setIsLoading(true);
-            gtag.event({
-              clientWindow: window,
-              action: "Download PDF",
-              category: "Download",
-              label: "Download PDF",
-            });
-            toast({
-              title: "PDF Downloaded Successfully 🥳",
-            });
-            sendPDFDownloadEmail({ name: name, email: email });
-            setIsLoading(false);
-          }}
-        >
-          <Download className="w-4 h-4" />
-          <span>PDF</span>
-        </a>
+        <TooltipProvider>
+          <Tooltip delayDuration={300}>
+            <TooltipTrigger className="cursor-default ml-1.5">
+              <a
+                href={instance.url!}
+                download={fileName}
+                className={buttonVariants({
+                  variant: "outlineHover",
+                  size: "xs",
+                  className: "flex space-x-2",
+                })}
+                onClick={() => {
+                  setIsLoading(true);
+                  gtag.event({
+                    clientWindow: window,
+                    action: "Download PDF",
+                    category: "Download",
+                    label: "Download PDF",
+                  });
+                  toast({
+                    title: "PDF Downloaded Successfully 🥳",
+                  });
+                  sendPDFDownloadEmail({ name: name, email: email });
+                  setIsLoading(false);
+                }}
+              >
+                <Download className="w-4 h-4" />
+                <span>PDF</span>
+              </a>
+            </TooltipTrigger>
+            <TooltipContent className="p-2 text-xs font-normal">
+              Download PDF file
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
     </div>
   );

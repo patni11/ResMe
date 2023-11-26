@@ -144,7 +144,7 @@ export const ResumePDF = ({
           <Text
             render={({ totalPages }) => {
               setPage(totalPages);
-              return "";
+              return null;
             }}
             style={{ display: "none" }}
           />

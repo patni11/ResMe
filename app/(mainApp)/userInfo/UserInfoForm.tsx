@@ -39,7 +39,12 @@ const UserInfoSchema = z.object({
   links: z
     .array(
       z.object({
-        linkName: z.string().min(1, { message: "Enter value or remote it" }),
+        linkName: z
+          .string()
+          .min(1, { message: "Enter value or remove it" })
+          .refine((value) => !value.includes("."), {
+            message: "Link name should not contain a period ('.')",
+          }),
         link: z.string().min(1, { message: "Enter value or remote it" }),
       })
     )
@@ -188,7 +193,7 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
               This includes your twitter, linkedin, or any other resource you
               need in your resume
             </FormDescription>
-            <section className="flex flex-col w-full">
+            <section className="flex flex-col space-y-4 w-full">
               {linkFields.map((field, index) => {
                 return (
                   <FormItem

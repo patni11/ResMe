@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { Project } from "@/app/(mainApp)/projects/pageTypes";
 import { persist } from "zustand/middleware";
 import { getCleanedProjectData } from "@/lib/apiFunctions";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
@@ -33,7 +32,8 @@ type Actions = {
   setHiddenDates: (key: string) => void;
   setHiddenLocation: (key: string) => void;
   setHiddenPosition: (key: string) => void;
-  fetchProjects: () => void;
+  fetchDefaultProjects: () => Promise<void>;
+  fetchProjects: (resumeId: string) => Promise<void>;
   updateDescriptions: (
     key: string,
     idx: number,
@@ -65,9 +65,12 @@ export const createProjectsSection = (projectId: string) => {
   };
 
   if (typeof window !== "undefined") {
-    const savedState = localStorage.getItem(projectId);
+    const savedState = JSON.parse(localStorage.getItem(projectId));
     if (savedState) {
-      INITIAL_STATE = JSON.parse(savedState);
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
     }
   }
 
@@ -77,12 +80,21 @@ export const createProjectsSection = (projectId: string) => {
         ...INITIAL_STATE,
         isLoading: false,
         error: null,
-        fetchProjects: async () => {
+        fetchDefaultProjects: async () => {
           set({ isLoading: true });
           try {
             const projects = await getCleanedProjectData();
 
             set({ ...projects, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchProjects: async (resumeId: string) => {
+          set({ isLoading: true });
+          try {
+            const data = await fetchResumeSection(resumeId, "projects");
+            set({ ...data, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }
