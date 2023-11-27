@@ -224,7 +224,7 @@ const EditPanel: FC<EditPanelProps> = ({
                         the default data you entered in each section
                       </span>
                       <span className="flex space-x-2">
-                        click "Reset" to load default data
+                        click &quot;Reset&quot; to load default data
                       </span>
 
                       <span className="flex space-x-2">

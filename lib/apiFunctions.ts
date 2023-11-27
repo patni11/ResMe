@@ -1,10 +1,7 @@
-import {
-  Certificate,
-  EducationType,
-} from "@/app/(mainApp)/education/pageTypes";
-import { Experience } from "@/app/(mainApp)/experience/pageTypes";
-import { Project } from "@/app/(mainApp)/projects/pageTypes";
-import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
+import { Certificate, EducationType } from "@/lib/types";
+import { Experience } from "@/lib/types";
+import { Project } from "@/lib/types";
+import { UserInfo } from "@/lib/types";
 
 export async function getHeaderData() {
   try {
@@ -26,7 +23,7 @@ export async function getCleanedHeaderData() {
 
   // Populate the objects
   headerInfo.contactInfo?.forEach((contact) => {
-    hiddenContacts[contact.contact] = false;
+    hiddenContacts[contact.contactName] = false;
   });
 
   headerInfo.links?.forEach((link) => {

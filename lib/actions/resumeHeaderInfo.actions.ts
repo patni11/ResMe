@@ -3,7 +3,7 @@
 import { ResumeHeaderInfo } from "@/models/user";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
-import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
+import { UserInfo } from "@/lib/types";
 
 export async function fetchResumeHeaderInfo(email: string) {
   try {

@@ -48,7 +48,7 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
     <FormCardWrapper
       cardTitle="Experience"
       refreshFunction={() => fetchDefaultExperiences()}
-      refreshSection={() => fetchExperiences(experienceID.split("-")[2])}
+      refreshSection={() => fetchExperiences()}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}
@@ -197,7 +197,14 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
           >
             <PlusCircleIcon className="h-4 w-4" />
           </Button>
-          <AIHelper />
+          <AIHelper
+            userMessage={descriptions.join("\n")}
+            setMessage={(message: string) => {
+              message.split("\n").forEach((desc, idx) => {
+                updateDescriptions(idx, desc);
+              });
+            }}
+          />
         </div>
       )}
     </div>

@@ -3,7 +3,7 @@
 import { Certificate } from "@/models/user";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
-import { Certificate as CertificateType } from "@/app/(mainApp)/education/pageTypes";
+import { Certificate as CertificateType } from "@/lib/types";
 
 export async function fetchCertificates(email: string) {
   try {

@@ -1,5 +1,5 @@
 "use client";
-import { UserInfo } from "./pageType";
+import { UserInfo } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
@@ -31,6 +31,12 @@ const UserInfoSchema = z.object({
   contactInfo: z
     .array(
       z.object({
+        contactName: z
+          .string()
+          .min(1, { message: "Enter value or remove it" })
+          .refine((value) => !value.includes("."), {
+            message: "Link name should not contain a period ('.')",
+          }),
         contact: z.string().min(1, { message: "Enter value or remote it" }),
       })
     )
@@ -59,7 +65,9 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
     resolver: zodResolver(UserInfoSchema),
     defaultValues: {
       displayName: defaultValues?.displayName || "",
-      contactInfo: defaultValues?.contactInfo || [{ contact: "" }],
+      contactInfo: defaultValues?.contactInfo || [
+        { contactName: "", contact: "" },
+      ],
       location: defaultValues?.location || "",
       links: defaultValues?.links || [{ linkName: "", link: "" }],
       email: defaultValues?.email || "",
@@ -139,44 +147,59 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
               This includes your email, phone, or any other resource you need in
               your resume.
             </FormDescription>
-            <section className="flex flex-col space-y-4">
+            <section className="flex flex-col space-y-4 w-full">
               {contactFields.map((field, index) => {
                 return (
-                  <FormField
+                  <FormItem
                     key={field.id}
-                    name={`contactInfo.${index}.contact`}
-                    render={({}) => (
-                      <FormItem className="flex flex-col space-y-4">
-                        <div className="flex space-x-4">
-                          <FormControl>
-                            <Input
-                              placeholder="Enter Your Contact info"
-                              {...register(`contactInfo.${index}.contact`)}
-                              className={`${inputFields}`}
-                            />
-                          </FormControl>
-                          <Button
-                            type="button"
-                            onClick={() => removeContact(index)}
-                            variant="ghost"
-                            className={
-                              "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
-                            }
-                          >
-                            <Trash2 className="w-5 h-5"></Trash2>
-                          </Button>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    className="flex space-x-4 space-y-0 items-center"
+                  >
+                    <FormField
+                      name={`contactInfo.${index}.contactName`}
+                      render={({}) => (
+                        <FormItem>
+                          <Input
+                            placeholder="Ex: Email"
+                            {...register(`contactInfo.${index}.contactName`)}
+                            className={`${inputFields}`}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      name={`contactInfo.${index}.contact`}
+                      render={({}) => (
+                        <FormItem>
+                          <Input
+                            placeholder="email@gmail.com"
+                            {...register(`contactInfo.${index}.contact`)}
+                            className={`${inputFields}`}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <Button
+                      type="button"
+                      onClick={() => removeContact(index)}
+                      variant="ghost"
+                      className={
+                        "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                      }
+                    >
+                      <Trash2 className="w-5 h-5"></Trash2>
+                    </Button>
+                  </FormItem>
                 );
               })}
             </section>
 
             <Button
               type="button"
-              onClick={() => appendContact({ contact: "" })}
+              onClick={() => appendContact({ contactName: "", contact: "" })}
               className="max-w-[fit-content]"
             >
               <PlusCircle className="w-5 h-5"></PlusCircle>
@@ -299,7 +322,9 @@ export const UserInfoFormOnboarding = ({
     resolver: zodResolver(UserInfoSchema),
     defaultValues: {
       displayName: defaultValues?.displayName || "",
-      contactInfo: defaultValues?.contactInfo || [{ contact: "" }],
+      contactInfo: defaultValues?.contactInfo || [
+        { contactName: "", contact: "" },
+      ],
       location: defaultValues?.location || "",
       links: defaultValues?.links || [{ linkName: "", link: "" }],
       email: defaultValues?.email || "",
@@ -359,27 +384,42 @@ export const UserInfoFormOnboarding = ({
             <FormLabel className={`${headingClass}`}>
               Your Contact Info
             </FormLabel>
-            <section className="flex flex-col space-y-4">
+
+            <section className="flex flex-col w-full">
               {contactFields.map((field, index) => {
                 return (
-                  <FormField
+                  <FormItem
                     key={field.id}
-                    name={`contactInfo.${index}.contact`}
-                    render={({}) => (
-                      <FormItem className="flex flex-col space-y-4">
-                        <div className="flex space-x-4">
-                          <FormControl>
-                            <Input
-                              placeholder="Enter Your Email"
-                              {...register(`contactInfo.${index}.contact`)}
-                              className={`${inputFields}`}
-                            />
-                          </FormControl>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    className="flex space-x-4 space-y-0 items-center"
+                  >
+                    <FormField
+                      name={`contactInfo.${index}.contactName`}
+                      render={({}) => (
+                        <FormItem>
+                          <Input
+                            placeholder="Ex: Email"
+                            {...register(`contactInfo.${index}.contactName`)}
+                            className={`${inputFields}`}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      name={`contactInfo.${index}.contact`}
+                      render={({}) => (
+                        <FormItem>
+                          <Input
+                            placeholder="email@gmail.coms"
+                            {...register(`contactInfo.${index}.contact`)}
+                            className={`${inputFields}`}
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </FormItem>
                 );
               })}
             </section>

@@ -7,6 +7,7 @@ const ResumeHeaderInfoSchema = new Schema(
     contactInfo: {
       type: [
         {
+          contactName: { type: String },
           contact: { type: String, required: true },
           _id: false,
         },
@@ -17,7 +18,7 @@ const ResumeHeaderInfoSchema = new Schema(
     links: {
       type: [
         {
-          linkName: { type: String, required: true },
+          linkName: { type: String },
           link: { type: String, required: true },
           _id: false,
         },
@@ -161,15 +162,17 @@ const UserSchema = new Schema(
     email: { type: String, required: true, unique: true },
     isOnboarded: { type: Boolean, required: true, default: false },
     password: { type: String, required: true },
-    stripeCustomerId: { type: String },
-    stripeSubscriptionId: { type: String },
+    stripeCustomerId: { type: String, unique: true },
+    stripeSubscriptionId: { type: String, unique: true },
     stripePriceId: { type: String },
     stripeCurrentPeriodEnd: { type: Date },
+    //subscriptionPlan: { type: String, default: "Newbie" },
     resumeCount: { type: Number },
     resumes: [{ type: String, ref: "Resume" }],
     skills: { type: [String] },
     languages: { type: [String] },
     interests: { type: [String] },
+    AICalls: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

@@ -225,10 +225,10 @@ function createHeader({ id }: { id: string }) {
 
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo
-    : [{ contact: "" }];
+    : [{ contactName: "", contact: "" }];
 
   const contacts = contactInfo
-    .filter((info, index) => !hiddenContacts[index][info.contact])
+    .filter((info, index) => !hiddenContacts[index][info.contactName])
     .map((info) => info.contact)
     .join(" | ");
 

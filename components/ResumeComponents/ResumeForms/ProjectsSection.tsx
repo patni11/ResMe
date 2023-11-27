@@ -54,7 +54,7 @@ const ProjectSectionCard: FC<ProjectSectionCard> = ({
     <FormCardWrapper
       cardTitle="Project"
       refreshFunction={() => fetchDefaultProjects()}
-      refreshSection={() => fetchProjects(projectId.split("-")[2])}
+      refreshSection={() => fetchProjects()}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}
@@ -255,7 +255,14 @@ const ProjectCard: FC<ProjectCardProps> = ({
           >
             <PlusCircleIcon className="h-4 w-4" />
           </Button>
-          <AIHelper />
+          <AIHelper
+            userMessage={descriptions.join("\n")}
+            setMessage={(message: string) => {
+              message.split("\n").forEach((desc, idx) => {
+                updateDescriptions(projectId, idx, desc);
+              });
+            }}
+          />
         </div>
       )}
     </div>

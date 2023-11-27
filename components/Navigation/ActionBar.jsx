@@ -84,7 +84,7 @@ const ActionBar = ({ resumeId, email, children }) => {
     const resumeHeader = localStorage.getItem(
       `resumeHeader-${email}-${resumeId}`
     );
-    console.log("header", `resumeHeader-${email}-${resumeId}`, resumeHeader);
+
     const processedHeader = fixHeaderInfo(JSON.parse(resumeHeader)["state"]);
 
     const educations = localStorage.getItem(`educations-${email}-${resumeId}`);
@@ -111,7 +111,7 @@ const ActionBar = ({ resumeId, email, children }) => {
 
     const talents = localStorage.getItem(`talents-${email}-${resumeId}`);
     const processedTalents = fixTalent(JSON.parse(talents)["state"]);
-
+    console.log("header", processedHeader);
     const res = await updateResume({
       email: email,
       resumeId: resumeId,

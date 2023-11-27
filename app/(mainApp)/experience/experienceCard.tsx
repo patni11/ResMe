@@ -1,7 +1,7 @@
 "use client";
 import { FC, ReactNode } from "react";
 import { CardContent } from "@/components/ui/card";
-import { Experience } from "./pageTypes";
+import { Experience } from "@/lib/types";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 import UpdateDialogCard from "@/components/Cards/UpdateDialogCard";
 

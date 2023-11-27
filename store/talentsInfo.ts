@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getCleanedTalentsData } from "@/lib/apiFunctions";
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 export type State = {
   skills: string;
@@ -23,6 +24,7 @@ type Actions = {
   setLanguages: (newLanguages: string) => void;
   setHideLanguages: () => void;
   setHideInterests: () => void;
+  fetchTalents: () => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
@@ -72,11 +74,12 @@ export const createTalentsInfo = (talentsID: string) => {
             set({ error, isLoading: false });
           }
         },
-        fetchTalents: async (resumeId: string) => {
+        fetchTalents: async () => {
           set({ isLoading: true });
+          const id = talentsID.split("-").slice(2).join("-");
           try {
             const data = await fetchResumeSection(
-              resumeId,
+              id,
               "skills languages interests"
             );
             set({ ...data, isLoading: false });

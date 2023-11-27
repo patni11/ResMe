@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getCleanedProjectData } from "@/lib/apiFunctions";
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 export type State = {
@@ -33,7 +34,7 @@ type Actions = {
   setHiddenLocation: (key: string) => void;
   setHiddenPosition: (key: string) => void;
   fetchDefaultProjects: () => Promise<void>;
-  fetchProjects: (resumeId: string) => Promise<void>;
+  fetchProjects: () => Promise<void>;
   updateDescriptions: (
     key: string,
     idx: number,
@@ -90,11 +91,12 @@ export const createProjectsSection = (projectId: string) => {
             set({ error, isLoading: false });
           }
         },
-        fetchProjects: async (resumeId: string) => {
+        fetchProjects: async () => {
           set({ isLoading: true });
+          const id = projectId.split("-").slice(2).join("-");
           try {
-            const data = await fetchResumeSection(resumeId, "projects");
-            set({ ...data, isLoading: false });
+            const data = await fetchResumeSection(id, "projects");
+            set({ ...data.projects, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

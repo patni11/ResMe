@@ -2,11 +2,11 @@
 // @ts-nocheck
 "use client";
 import { create } from "zustand";
-import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
+import { UserInfo } from "@/lib/types";
 import { persist } from "zustand/middleware";
 import { getCleanedHeaderData } from "@/lib/apiFunctions";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
-
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
 export type State = {
   headerInfo: UserInfo;
   hideLocation: boolean;
@@ -22,7 +22,7 @@ type Actions = {
   setHiddenLinks: (key: string) => void;
   setHiddenContacts: (key: string) => void;
   fetchDefaultHeader: () => Promise<void>;
-  fetchHeader: (resumeId: string) => Promise<void>;
+  fetchHeader: () => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
@@ -72,11 +72,14 @@ export const createResumeHeaderInfo = (resumeHeaderID: string) => {
             set({ error, isLoading: false });
           }
         },
-        fetchHeader: async (resumeId: string) => {
+        fetchHeader: async () => {
           set({ isLoading: true });
+          const id = resumeHeaderID.split("-").slice(2).join("-");
+
           try {
-            const data = await fetchResumeSection(resumeId, "headerInfo");
-            set({ ...data, isLoading: false });
+            const data = await fetchResumeSection(id, "headerInfo");
+            console.log(data);
+            set({ ...data.headerInfo, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

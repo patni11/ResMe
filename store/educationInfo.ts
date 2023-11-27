@@ -1,9 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { EducationType } from "@/app/(mainApp)/education/pageTypes";
+import { EducationType } from "@/lib/types";
 import { persist } from "zustand/middleware";
 import { getCleanedEducationData } from "@/lib/apiFunctions";
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 export type State = {
@@ -24,7 +25,7 @@ type Actions = {
   setHiddenDates: (key: string) => void;
   fetchDefaultEducations: () => Promise<void>;
   setHideAll: () => void;
-  fetchEducations: (resumeId: string) => Promise<void>;
+  fetchEducations: () => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
@@ -70,11 +71,12 @@ export const createEducationInfo = (educationHeaderID: string) => {
             set({ error, isLoading: false });
           }
         },
-        fetchEducations: async (resumeId: string) => {
+        fetchEducations: async () => {
           set({ isLoading: true });
+          const id = educationHeaderID.split("-").slice(2).join("-");
           try {
-            const data = await fetchResumeSection(resumeId, "educations");
-            set({ ...data, isLoading: false });
+            const data = await fetchResumeSection(id, "educations");
+            set({ ...data.educations, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

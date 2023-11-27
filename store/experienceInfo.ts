@@ -1,9 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-//import { Experience } from "@/app/(mainApp)/experience/pageTypes";
+//import { Experience } from "@/lib/types";
 import { persist } from "zustand/middleware";
 import { getCleanedExperienceData } from "@/lib/apiFunctions";
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 export type State = {
@@ -38,7 +39,7 @@ type Actions = {
   setHideAll: () => void;
   moveExpUp: (index: number) => void;
   moveExpDown: (index: number) => void;
-  fetchExperiences: (resumeId: string) => Promise<void>;
+  fetchExperiences: () => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
@@ -81,11 +82,12 @@ export const createExperienceInfo = (experienceID: string) => {
             set({ error, isLoading: false });
           }
         },
-        fetchExperiences: async (resumeId: string) => {
+        fetchExperiences: async () => {
           set({ isLoading: true });
+          const id = experienceID.split("-").slice(2).join("-");
           try {
-            const data = await fetchResumeSection(resumeId, "experiences");
-            set({ ...data, isLoading: false });
+            const data = await fetchResumeSection(id, "experiences");
+            set({ ...data.experiences, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

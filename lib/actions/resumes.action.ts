@@ -4,6 +4,7 @@ import { Resume, User } from "@/models/user";
 import { getUserEmailFromSession } from "./utils.action";
 import { Session, getServerSession } from "next-auth";
 import authOptions from "../authOptions";
+import { ResumeType } from "../types";
 
 export async function createResume({
   email,
@@ -92,11 +93,13 @@ export async function createResume({
   }
 }
 
-export async function fetchResume(resumeId: string) {
+export async function fetchResume(resumeId: string): Promise<ResumeType> {
   try {
     //const email = await getUserEmailFromSession();
     await connectMongoDB();
-    const resume = await Resume.findOne({ _id: resumeId }).lean();
+    const resume: ResumeType | null = await Resume.findOne({
+      _id: resumeId,
+    }).lean();
     if (!resume) {
       throw new Error(`Resume Not Found`);
     }
@@ -262,7 +265,7 @@ export async function updateResume({
         certificates: certificates,
         experiences: experiences,
         projects: projects,
-        //   headerInfo: headerInfo,
+        headerInfo: headerInfo,
       }
     );
     return {
@@ -287,9 +290,9 @@ export async function fetchResumeSection(
   try {
     //const email = await getUserEmailFromSession();
     await connectMongoDB();
-    const sectionInfo = await Resume.findOne({ _id: resumeId }).select(
-      resumeSection
-    );
+    const sectionInfo = await Resume.findOne({ _id: resumeId })
+      .select(resumeSection)
+      .lean();
     if (!sectionInfo) {
       throw new Error(`Info Not Found`);
     }

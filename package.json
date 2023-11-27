@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "email": "email dev --dir ./components/EmailTemplates --port 3001"
+    "email": "email dev --dir ./components/EmailTemplates --port 3001",
+    "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -39,6 +40,7 @@
     "@react-email/tailwind": "0.0.12",
     "@react-email/text": "0.0.6",
     "@react-pdf/renderer": "^3.1.14",
+    "@stripe/stripe-js": "^2.2.0",
     "@tanstack/react-query": "^4.36.1",
     "@types/uuid": "^9.0.4",
     "@types/uuidv4": "^5.0.0",
@@ -56,6 +58,7 @@
     "next": "^13.5.4",
     "next-auth": "^4.23.2",
     "next-themes": "^0.2.1",
+    "openai": "^4.20.0",
     "react": "^18.2.0",
     "react-day-picker": "^8.8.2",
     "react-dom": "^18.2.0",

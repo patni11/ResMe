@@ -85,6 +85,28 @@ export async function fetchUser() {
   }
 }
 
+export async function updateUserAICalls() {
+  try {
+    const email = await getUserEmailFromSession();
+    if (!email) {
+      throw new Error(`User Not Authenticated`);
+    }
+
+    await connectMongoDB();
+    const res = await User.findOneAndUpdate(
+      { email: email },
+      { $inc: { AICalls: 1 } } // Increment AICall by 1 or initialize it with 1 if it doesn't exist
+    );
+
+    if (!res) {
+      throw new Error(`User Not Found`);
+    }
+  } catch (error: any) {
+    //console.log("Failed to fetch projects", error);
+    throw new Error(`Failed to fetch projects: ${error.message}`);
+  }
+}
+
 export async function fetchDashboardData(): Promise<{
   isOnboarded: boolean;
   email: string;

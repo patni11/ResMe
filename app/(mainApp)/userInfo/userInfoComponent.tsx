@@ -5,7 +5,7 @@ import {
   updateResumeHeaderInfo,
 } from "@/lib/actions/resumeHeaderInfo.actions";
 //import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { UserInfo } from "./pageType";
+import { UserInfo } from "@/lib/types";
 import { getServerSession } from "next-auth/next";
 import authOptions, { Session } from "@/lib/authOptions";
 import { Metadata } from "next";
@@ -38,7 +38,7 @@ export const UserInfoComponent = async () => {
     await updateResumeHeaderInfo({
       displayName: "",
       location: "",
-      contactInfo: [{ contact: "" }],
+      contactInfo: [{ contactName: "", contact: "" }],
       links: [{ linkName: "", link: "" }],
       email: session.user.email,
     });
@@ -49,7 +49,7 @@ export const UserInfoComponent = async () => {
     contactInfo:
       userInfoData && userInfoData.contactInfo
         ? JSON.parse(JSON.stringify(userInfoData?.contactInfo))
-        : [{ contact: "" }],
+        : [{ contactName: "", contact: "" }],
     location:
       userInfoData && userInfoData?.location ? userInfoData.location : "",
     links:
@@ -84,7 +84,7 @@ export const UserInfoOnboard = async () => {
     await updateResumeHeaderInfo({
       displayName: "",
       location: "",
-      contactInfo: [{ contact: "" }],
+      contactInfo: [{ contactName: "", contact: "" }],
       links: [{ linkName: "", link: "" }],
       email: session.user.email,
     });
@@ -95,7 +95,7 @@ export const UserInfoOnboard = async () => {
     contactInfo:
       userInfoData && userInfoData.contactInfo
         ? JSON.parse(JSON.stringify(userInfoData?.contactInfo))
-        : [{ contact: "" }],
+        : [{ contactName: "", contact: "" }],
     location:
       userInfoData && userInfoData?.location ? userInfoData.location : "",
     links:

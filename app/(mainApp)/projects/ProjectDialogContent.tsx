@@ -2,7 +2,7 @@
 // @description
 "use client";
 import { FC } from "react";
-import { Project } from "./pageTypes";
+import { Project } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -35,6 +35,7 @@ import {
   deleteProject,
 } from "@/lib/actions/userProject.actions";
 import { useToast } from "@/components/ui/use-toast";
+import { AIHelper } from "@/components/Cards/AIHelper";
 const ProjectSchema = z
   .object({
     _id: z.string().optional(),
@@ -287,10 +288,20 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormDescription>
-                  Separate each point with a new line
-                </FormDescription>
+                <div className="flex justify-between items-center w-full">
+                  <div>
+                    <FormLabel>Description</FormLabel>
+                    <FormDescription>
+                      Separate each point with a new line
+                    </FormDescription>
+                  </div>
+                  <AIHelper
+                    userMessage={field.value}
+                    setMessage={(message: string) => {
+                      field.onChange(message);
+                    }}
+                  />
+                </div>
                 <FormControl>
                   <Textarea
                     placeholder="Tell us a bit about your contributions in different lines"

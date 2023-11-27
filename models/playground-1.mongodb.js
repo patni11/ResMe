@@ -14,4 +14,4 @@ use("ResMe");
 
 // Insert a few documents into the sales collection.
 
-db.users.updateMany({}, { $set: { isOnboarded: true } });
+db.users.updateMany({}, { $set: { AICalls: 0 } });

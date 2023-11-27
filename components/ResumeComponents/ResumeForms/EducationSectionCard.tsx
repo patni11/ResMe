@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { memo } from "react";
-import { EducationType } from "@/app/(mainApp)/education/pageTypes";
+import { EducationType } from "@/lib/types";
 import { RefreshCw } from "lucide-react";
 
 interface EducationCardProps {
@@ -95,7 +95,7 @@ const EducationSectionCard: FC<EducationSectionCard> = ({
     <FormCardWrapper
       cardTitle="Education"
       refreshFunction={() => fetchDefaultEducations()}
-      refreshSection={() => fetchEducations(educationID.split("-")[2])}
+      refreshSection={() => fetchEducations()}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}

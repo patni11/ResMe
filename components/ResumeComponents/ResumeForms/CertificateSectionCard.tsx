@@ -4,7 +4,7 @@ import { FormCardWrapper } from "./FormCardWrapper";
 import { createCertificateInfo } from "@/store/certificatesInfo";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Certificate } from "@/app/(mainApp)/education/pageTypes";
+import { Certificate } from "@/lib/types";
 
 interface CertificateCardProps {
   certificate: Certificate;
@@ -64,7 +64,7 @@ const CertificateSectionCard: FC<CertificateSectionCard> = ({
     <FormCardWrapper
       cardTitle="Certificate"
       refreshFunction={() => fetchDefaultCertificates()}
-      refreshSection={() => fetchCertificates(certificateID.split("-")[2])}
+      refreshSection={() => fetchCertificates()}
       isLoading={isLoading}
       hideAll={hideAll}
       deleteFunction={setHideAll}

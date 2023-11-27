@@ -1,9 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { Certificate } from "@/app/(mainApp)/education/pageTypes";
+import { Certificate } from "@/lib/types";
 import { persist } from "zustand/middleware";
 import { getCleanedCertificateData } from "@/lib/apiFunctions";
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 export type State = {
@@ -18,7 +19,7 @@ type Actions = {
   setHiddenCertificate: (key: string) => void;
   setHideAll: () => void;
   fetchDefaultCertificates: () => Promise<void>;
-  fetchCertificates: (resumeId: string) => Promise<void>;
+  fetchCertificates: () => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
@@ -61,11 +62,12 @@ export const createCertificateInfo = (certificateHeaderID: string) => {
             set({ error, isLoading: false });
           }
         },
-        fetchCertificates: async (resumeId: string) => {
+        fetchCertificates: async () => {
           set({ isLoading: true });
+          const id = certificateHeaderID.split("-").slice(2).join("-");
           try {
-            const data = await fetchResumeSection(resumeId, "certificates");
-            set({ ...data, isLoading: false });
+            const data = await fetchResumeSection(id, "certificates");
+            set({ ...data.certificates, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

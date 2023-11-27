@@ -1,18 +1,22 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
-import { createStripeSession } from "@/lib/actions/stripe.action";
+import { createStripeSession } from "@/lib/actions/stripe_session.action";
 import * as gtag from "@/lib/gtag";
 export const GoPremiumButton = () => {
-  const clickTracking = () => {
+  const clickTracking = async () => {
     gtag.event({
       clientWindow: window,
       action: "go premium button",
       category: "purchase",
       label: "premium",
     });
+
+    const { url } = await createStripeSession("Expert");
+
+    window.location.href = url || "/profile";
   };
   return (
-    <div
+    <button
       className={buttonVariants({
         variant: "ghost",
         className:
@@ -21,12 +25,12 @@ export const GoPremiumButton = () => {
       onClick={clickTracking}
     >
       Go Premium
-    </div>
+    </button>
   );
 };
 
 export const GoStudentButton = () => {
-  const clickTracking = () => {
+  const clickTracking = async () => {
     gtag.event({
       clientWindow: window,
       action: "go student button",
@@ -34,7 +38,9 @@ export const GoStudentButton = () => {
       label: "student",
     });
 
-    createStripeSession();
+    const { url } = await createStripeSession("Student");
+
+    window.location.href = url || "/profile";
   };
   return (
     <button

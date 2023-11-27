@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { EducationType } from "./pageTypes";
+import { EducationType } from "@/lib/types";
 import { v4 as uuidv4 } from "uuid";
 import { useToast } from "@/components/ui/use-toast";
 import {

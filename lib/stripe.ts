@@ -2,13 +2,10 @@ import { PLANS } from "@/app/utils/stripe";
 import { fetchUser } from "./actions/user.actions";
 import Stripe from "stripe";
 
-export const stripe = new Stripe(
-  process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY ?? "",
-  {
-    apiVersion: "2023-10-16",
-    typescript: true,
-  }
-);
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
+  apiVersion: "2023-10-16",
+  typescript: true,
+});
 
 export async function getUserSubscriptionPlan() {
   const user = await fetchUser();
@@ -19,6 +16,10 @@ export async function getUserSubscriptionPlan() {
       isSubscribed: false,
       isCanceled: false,
       stripeCurrentPeriodEnd: null,
+      username: user.name,
+      userEmail: user.email,
+      userResumeCount: user.resumeCount,
+      userAICalls: user.AICalls,
     };
   }
 
@@ -47,5 +48,9 @@ export async function getUserSubscriptionPlan() {
     stripeCustomerId: user.stripeCustomerId,
     isSubscribed,
     isCanceled,
+    username: user.name,
+    userEmail: user.email,
+    userResumeCount: user.resumeCount,
+    userAICalls: user.AICalls,
   };
 }

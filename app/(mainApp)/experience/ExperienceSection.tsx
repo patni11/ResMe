@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import ExperienceDialogContent from "./ExperienceDialogContent";
 import { getServerSession } from "next-auth/next";
 import authOptions, { Session } from "@/lib/authOptions";
-import { Experience } from "./pageTypes";
+import { Experience } from "@/lib/types";
 import { fetchExperiences } from "@/lib/actions/experience.actions";
 import ExperienceCard from "./experienceCard";
 export const ExperienceSection = async ({ path }: { path?: string }) => {

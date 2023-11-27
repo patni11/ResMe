@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchResume } from "@/lib/actions/resumes.action";
 import dynamic from "next/dynamic";
+import LoadingSpinner from "../LoadingSpinner";
 
 //import { useToast } from "../ui/use-toast";
 interface ResumeCardImageProps {
@@ -35,7 +36,7 @@ function ResumeCardImage({
     );
 
     if (!resumeHeaderLocalStorage) {
-      console.log("REsume Img Fetching");
+      console.log("Resume Img Fetching");
       try {
         const resume = await fetchResume(resumeId);
         console.log("Fetched Resume", resume);
@@ -84,7 +85,8 @@ function ResumeCardImage({
   return (
     <button
       disabled={isLoading}
-      onClick={() => {
+      onClick={(e) => {
+        e.preventDefault();
         setIsLoading(true);
         buildResume();
       }}
@@ -92,18 +94,27 @@ function ResumeCardImage({
       className="cursor-pointer"
     >
       <div className="overflow-hidden rounded-md">
-        <Image
-          src={ResumeCardImageImage}
-          alt={resumeName}
-          width={width}
-          height={height}
-          className={cn(
-            "object-cover transition-all hover:scale-105",
-            aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
-          )}
-          priority={true}
-          style={{ width: "auto", height: "auto" }}
-        />
+        {!isLoading ? (
+          <Image
+            src={ResumeCardImageImage}
+            alt={resumeName}
+            width={width}
+            height={height}
+            className={cn(
+              "object-cover transition-all hover:scale-105",
+              aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
+            )}
+            priority={true}
+            style={{ width: "auto", height: "auto" }}
+          />
+        ) : (
+          <div
+            className="flex items-center justify-center border rounded-md"
+            style={{ width: width, height: height }}
+          >
+            <LoadingSpinner />
+          </div>
+        )}
       </div>
     </button>
   );

@@ -55,7 +55,7 @@ const TalentsSection: FC<TalentsSectionProp> = ({
     <FormCardWrapper
       cardTitle="Talent"
       refreshFunction={() => fetchDefaultTalent()}
-      refreshSection={() => fetchTalents(talentsID.split("-")[2])}
+      refreshSection={() => fetchTalents()}
       hideAll={hideSkills && hideInterests & hideLanguages}
       isLoading={isLoading}
       deleteFunction={setHideAll}

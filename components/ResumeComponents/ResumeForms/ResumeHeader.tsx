@@ -25,7 +25,6 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
     hideLocation,
     hiddenContacts,
     hiddenLinks,
-
     setHideLocation,
     updateDisplayName,
     setHiddenLinks,
@@ -42,18 +41,18 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
   const { displayName } = headerInfo;
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo
-    : [{ contact: "" }];
+    : [{ contactName: "", contact: "" }];
   const location = headerInfo?.location ? headerInfo.location : "";
   const links = headerInfo.links
     ? headerInfo.links
     : [{ linkName: "", link: "" }];
-
+  console.log();
   return (
     <FormCardWrapper
       cardTitle="Header"
       refreshFunction={() => fetchDefaultHeader()}
       isLoading={isLoading}
-      refreshSection={() => fetchHeader(resumeHeaderID.split("-")[2])}
+      refreshSection={() => fetchHeader()}
       index={index}
       moveUp={moveUp}
       moveDown={moveDown}
@@ -92,10 +91,12 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
           ? contactInfo.map((contact: any, index: any) => (
               <HideButtons
                 key={index}
-                hide={hiddenContacts ? hiddenContacts[contact.contact] : false}
-                setHide={() => setHiddenContacts(contact.contact)}
+                hide={
+                  hiddenContacts ? hiddenContacts[contact.contactName] : false
+                }
+                setHide={() => setHiddenContacts(contact.contactName)}
               >
-                <span>{contact.contact}</span>
+                <span>{contact.contactName}</span>
               </HideButtons>
             ))
           : null}
