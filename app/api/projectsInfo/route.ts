@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     await connectMongoDB();
     const projects: ProjectType[] = await Project.find({
       email: session?.user?.email,
-    });
+    }).lean();
     if (!projects) {
       throw new Error(`No Project Found`);
     }

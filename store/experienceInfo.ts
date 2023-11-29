@@ -1,27 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-//import { Experience } from "@/lib/types";
+import { ExperienceStore } from "@/lib/types";
 import { persist } from "zustand/middleware";
 import { getCleanedExperienceData } from "@/lib/apiFunctions";
 import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-export type State = {
-  experiences:
-    | {
-        _id: string;
-        company: string;
-        location: string;
-        positionTitle: string;
-        experienceType: string;
-        startDate: Date;
-        endDate: Date | "working";
-        description: string[];
-      }[]
-    | [];
-  hiddenExperiences: { [key: string]: boolean } | null;
-  hideAll: boolean;
+export type State = ExperienceStore & {
   isLoading: boolean;
   error: any;
 };

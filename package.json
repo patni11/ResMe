@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "email": "email dev --dir ./components/EmailTemplates --port 3001",
-    "stripe:listen": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
+    "stripe:listen": "stripe listen --skip-verify --forward-to localhost:3000/api/webhooks/stripe"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",

@@ -11,7 +11,7 @@ export async function fetchEducation(email: string) {
     await connectMongoDB();
     const education: EducationType[] = await Education.find({
       email: email,
-    });
+    }).lean();
 
     if (!education) {
       throw new Error(`No Educaiton Found`);

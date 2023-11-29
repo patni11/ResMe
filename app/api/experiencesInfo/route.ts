@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     await connectMongoDB();
     const experiences: ExperienceType[] = await Experience.find({
       email: session?.user?.email,
-    });
+    }).lean();
     if (!experiences) {
       throw new Error(`No Experience Found`);
     }

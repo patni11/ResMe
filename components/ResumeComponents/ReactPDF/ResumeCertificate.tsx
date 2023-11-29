@@ -35,12 +35,15 @@ const ResumeCertificate = ({
     <View
       style={{
         ...styles.flexRow,
-        marginTop: spacing["0.5"],
-        gap: spacing["1"],
+        marginTop: spacing["1.5"],
+        //gap: spacing["1"],
+        flexWrap: "wrap", // ensure the text wraps
       }}
     >
-      <ResumePDFText bold={true}>{`${heading}`}</ResumePDFText>
-      <ResumePDFText>{certificatesString}</ResumePDFText>
+      <ResumePDFText bold={true}>
+        {heading}
+        <ResumePDFText>{certificatesString}</ResumePDFText>
+      </ResumePDFText>
     </View>
   );
 };

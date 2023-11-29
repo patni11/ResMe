@@ -10,7 +10,7 @@ export async function fetchExperiences(email: string) {
     await connectMongoDB();
     const experience: ExperienceType[] = await Experience.find({
       email: email,
-    });
+    }).lean();
     if (!experience) {
       throw new Error(`No Experience Found`);
     }

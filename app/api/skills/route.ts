@@ -15,10 +15,18 @@ export async function GET(request: NextRequest) {
   }
   try {
     await connectMongoDB();
-    const user = await User.findOne({ email: session?.user?.email });
+    const user: {
+      skills: string;
+      languages: string;
+      interests: string;
+    } | null = await User.findOne({ email: session?.user?.email })
+      .select("skills languages interests")
+      .lean();
     if (!user) {
       throw new Error(`User Not Found`);
     }
+
+    console.log("USER", user);
 
     const skills = user.skills;
     const languages = user.languages;

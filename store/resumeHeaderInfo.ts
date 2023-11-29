@@ -2,16 +2,12 @@
 // @ts-nocheck
 "use client";
 import { create } from "zustand";
-import { UserInfo } from "@/lib/types";
+import { HeaderStore } from "@/lib/types";
 import { persist } from "zustand/middleware";
 import { getCleanedHeaderData } from "@/lib/apiFunctions";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 import { fetchResumeSection } from "@/lib/actions/resumes.action";
-export type State = {
-  headerInfo: UserInfo;
-  hideLocation: boolean;
-  hiddenContacts: { [key: string]: boolean };
-  hiddenLinks: { [key: string]: boolean };
+export type State = HeaderStore & {
   isLoading: boolean;
   error: any;
 };

@@ -4,26 +4,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getCleanedProjectData } from "@/lib/apiFunctions";
 import { fetchResumeSection } from "@/lib/actions/resumes.action";
+import { ProjectStore } from "@/lib/types";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-export type State = {
-  projects:
-    | {
-        projectName: string;
-        location?: string;
-        positionTitle?: string;
-        startDate?: Date;
-        endDate?: Date;
-        description: string[];
-        _id: string;
-      }[]
-    | [];
-  hiddenProjects: { [key: string]: boolean } | null;
-  hiddenLocation: { [key: string]: boolean } | null;
-  hiddenDates: { [key: string]: boolean } | null;
-  hiddenPosition: { [key: string]: boolean } | null;
-  hideAll: boolean;
-  // descriptions: { [key: string]: string } | null;
+export type State = ProjectStore & {
   isLoading: boolean;
   error: any;
 };

@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
+import HomeBG from "@/public/HomeBG";
 import robotHuman from "@/public/robotHuman.png";
 import dashboard from "@/public/dashboard.png";
 import annotedResume from "@/public/annotatedResume.png";
@@ -20,20 +20,21 @@ export default function Home() {
   const slides = [dashboard, ai, annotedResume, robotHuman];
 
   return (
-    <>
+    <main>
       <Navbar></Navbar>
       <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
-        <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
-          <p className="flex text-sm font-semibold text-gray-700">
+        <HomeBG />
+        <div className="relative z-1 mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
+          <p className="flex text-sm font-semibold text-gray-700 z-1">
             <Hammer className="mr-2 h-5 w-5"></Hammer>
             <span>Res&apos;Me is in Beta</span>
           </p>
         </div>
-        <h1 className="max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl">
+        <h1 className="relative max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl z-1">
           Create Professional <span className="text-blue-600">Resumes</span> in
           Seconds
         </h1>
-        <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
+        <p className="relative mt-5 max-w-prose text-zinc-700 sm:text-lg z-1">
           Res&apos;Me allows you to create professional Resumes. Simply enter
           your information and we&apos;ll do the rest.
         </p>
@@ -41,7 +42,7 @@ export default function Home() {
         <Link
           className={buttonVariants({
             size: "lg",
-            className: "mt-5",
+            className: "mt-5 relative z-1",
           })}
           href="/dashboard"
         >
@@ -51,7 +52,7 @@ export default function Home() {
         {/* value proposition section */}
         <div>
           <div className="relative isolate">
-            <div
+            {/* <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
             >
@@ -76,28 +77,13 @@ export default function Home() {
                 }}
                 className="relative hidden md:block right-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
               />
-            </div>
-
-            <div className="mb-0 md:mb-32 lg:mb-80">
-              {/* <div className="mx-auto max-w-6xl  lg:px-8">
-              <div className="mt-16 flow-root sm:mt-24">
-                <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                  <Image
-                    src="/dashboard.png"
-                    alt="product preview"
-                    width={1364}
-                    height={866}
-                    quality={100}
-                    className="rounded-md bg-white p-2 sm:p-8 md:p-10 shadow-2xl ring-1 ring-gray-900/10"
-                  />
-                </div>
-              </div>
             </div> */}
 
+            <div className="mb-0 md:mb-32 lg:mb-80">
               <ImageSlider slides={slides} />
             </div>
 
-            <div
+            {/* <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
             >
@@ -108,12 +94,24 @@ export default function Home() {
                 }}
                 className="relative left-[calc(50%-13rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-36rem)] sm:w-[72.1875rem]"
               />
-            </div>
+            </div> */}
           </div>
         </div>
 
         {/* Feature section */}
         <div className="mx-auto mb-24 mt-0 max-w-5xl sm:mt-56">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 -z-10 transform-gpu overflow-hidden blur-3xl "
+          >
+            <div
+              style={{
+                clipPath:
+                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+              }}
+              className="relative -left-[calc(100%-13rem)] aspect-[1155/678] w-[36.125rem] translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-36rem)] sm:w-[72.1875rem]"
+            />
+          </div>
           <div className="mb-12  lg:px-8">
             <div className="mx-auto max-w-2xl sm:text-center">
               <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
@@ -124,19 +122,30 @@ export default function Home() {
               </p>
             </div>
           </div>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 -z-10 transform-gpu overflow-hidden blur-3xl top-280"
+          >
+            <div
+              style={{
+                clipPath:
+                  "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
+              }}
+              className="relative left-[calc(50%-13rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-36rem)] sm:w-[72.1875rem]"
+            />
+          </div>
 
           {/* steps */}
           <ol className="mb-12  lg:px-8 my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0 md:">
             <ImageBox
-              image="cloud"
-              title="Store"
-              text="Organise your career history with ease on our platform"
-            />
-
-            <ImageBox
               image="note"
               title="Edit"
               text="Need it fast? Craft a resume instantly with our easy-to-use, pre-formatted tools"
+            />
+            <ImageBox
+              image="cloud"
+              title="Store"
+              text="Organise your career history with ease on our platform"
             />
 
             <ImageBox
@@ -212,9 +221,11 @@ export default function Home() {
             </li>
           </ol>
         </div>
+        {/* <HomeBG className="absolute top-1000" /> */}
 
-        <div className=" lg:px-8 flex flex-col md:flex-row mx-auto mb-24 max-w-5xl sm:mt-56 mt-8 w-full justify-between md:space-x-16">
-          <div className="w-full md:w-[40%]">
+        <div className="relative lg:px-8 flex flex-col md:flex-row mx-auto mb-24 max-w-5xl sm:mt-56 mt-8 w-full justify-between md:space-x-16">
+          <HomeBG className="absolute bottom-0 -z-10 w-full h-full" />
+          <div className="w-full md:w-[40%] relative z-1">
             <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
               FAQ
             </h2>
@@ -369,7 +380,7 @@ export default function Home() {
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-6">
+              <AccordionItem value="item-7">
                 <AccordionTrigger>How was ResMe built?</AccordionTrigger>
                 <AccordionContent>
                   <p>
@@ -383,10 +394,14 @@ export default function Home() {
                     <a
                       href="https://www.youtube.com/watch?v=ucX2zXAZ1I0&t=36514"
                       target="blank"
+                      className="underline"
                     >
                       tutorial
                     </a>
-                    , stripe and shadcn ui
+                    , stripe, shadcn ui and background svg from{" "}
+                    <a href="SVGBackgrounds.com" className="underline">
+                      SVG Backgrounds
+                    </a>
                   </p>
                 </AccordionContent>
               </AccordionItem>
@@ -394,6 +409,6 @@ export default function Home() {
           </div>
         </div>
       </MaxWidthWrapper>
-    </>
+    </main>
   );
 }

@@ -25,6 +25,7 @@ export async function deleteUser(email: string) {
       if (collectionName === "resumeheaderinfos") {
         await ResumeHeaderInfo.deleteOne({ _id: email });
       }
+
       // Delete entries in the collection containing the target email
       await db.collection(collectionName).deleteMany({ email: email });
       console.log(
@@ -36,44 +37,40 @@ export async function deleteUser(email: string) {
   }
 }
 
-// export async function createUser({
-//   email,
-//   password,
-// }: {
-//   email: string;
-//   password: string;
-// }): Promise<void> {
-//   try {
-//     connectMongoDB();
-//     console.log("user");
-//     // const user = await User.findOne({ email: email });
-
-//     // if (user) {
-//     //   throw new Error("You already have an account, try signing in");
-//     // } else {
-//     //   console.log("You are signed in");
-//     //   // const hashedPassword = await bcrypt.hash(password, 5);
-//     //   // const newUser = new User({
-//     //   //   email,
-//     //   //   password: hashedPassword,
-//     //   // });
-
-//     //   // await newUser.save();
-//     // }
-//   } catch (e: any) {
-//     if (e.code == "11000") {
-//       throw new Error(`You already have an account. Please Sign In`);
-//     } else {
-//       throw new Error(`🐞 creeped in 😢 ${e}`);
-//     }
-//   }
-// }
+export async function createUser({ email }: { email: string }): Promise<void> {
+  try {
+    connectMongoDB();
+    console.log("user");
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      {
+        isOnboarded: false,
+        resumeCount: 0,
+        resumes: [],
+        skills: [],
+        languages: [],
+        interests: [],
+        AICalls: 0,
+      },
+      {
+        upsert: true,
+      }
+    );
+    console.log("In Create User", user);
+  } catch (e: any) {
+    if (e.code == "11000") {
+      throw new Error(`You already have an account. Please Sign In`);
+    } else {
+      throw new Error(`🐞 creeped in 😢 ${e}`);
+    }
+  }
+}
 
 export async function fetchUser() {
   try {
     const email = await getUserEmailFromSession();
     await connectMongoDB();
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email }).lean();
     if (!user) {
       throw new Error(`User Not Found`);
     }
@@ -110,24 +107,36 @@ export async function updateUserAICalls() {
 export async function fetchDashboardData(): Promise<{
   isOnboarded: boolean;
   email: string;
-  //TODO: Get subscription type
   resumes: Array<{
     id: string;
     resumeName: string;
     updatedAt: Date;
     pdfLink: string;
   }>;
-}> {
+} | null> {
   try {
     const email = await getUserEmailFromSession();
     await connectMongoDB();
     // Fetch specific fields from User and populate specific fields from Resume
-    const user = await User.findOne({ email: email })
+    const user: {
+      isOnboarded: boolean;
+      email: string;
+      resumes:
+        | {
+            id: string;
+            resumeName: string;
+            updatedAt: Date;
+            pdfLink: string;
+          }[];
+    } | null = await User.findOne({ email: email })
       .select("isOnboarded email resumes") // Select specific fields from User
       .populate({
         path: "resumes", // Assuming 'resumes' is an array of Resume references
         select: "_id resumeName updatedAt pdfLink", // Select specific fields from Resume
-      });
+      })
+      .lean();
+
+    console.log("User", user);
 
     if (!user) {
       throw new Error(`User Not Found`);

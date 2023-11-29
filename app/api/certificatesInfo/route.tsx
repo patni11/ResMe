@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     await connectMongoDB();
     const certificates = await Certificate.find({
       email: session?.user?.email,
-    });
+    }).lean();
 
     return NextResponse.json({ certificates }, { status: 200 });
   } catch (error: any) {

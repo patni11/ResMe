@@ -23,6 +23,8 @@ export async function POST(request: Request) {
     );
   }
 
+  console.log("EVENT", event);
+
   const session = event.data.object as Stripe.Checkout.Session;
 
   if (!session?.metadata?.userId) {
@@ -77,4 +79,9 @@ export async function POST(request: Request) {
   }
 
   return new Response(null, { status: 200 });
+}
+
+export async function GET(request: Request) {
+  console.log("GOT GET REQ");
+  return new Response("Hiii", { status: 200 });
 }

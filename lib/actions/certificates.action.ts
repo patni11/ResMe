@@ -10,7 +10,7 @@ export async function fetchCertificates(email: string) {
     await connectMongoDB();
     const certificates: CertificateType[] = await Certificate.find({
       email: email,
-    });
+    }).lean();
     if (!certificates) {
       throw new Error(`No Educaiton Found`);
     }

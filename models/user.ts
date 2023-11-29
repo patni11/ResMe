@@ -167,7 +167,7 @@ const UserSchema = new Schema(
     stripePriceId: { type: String },
     stripeCurrentPeriodEnd: { type: Date },
     //subscriptionPlan: { type: String, default: "Newbie" },
-    resumeCount: { type: Number },
+    resumeCount: { type: Number, default: 0 },
     resumes: [{ type: String, ref: "Resume" }],
     skills: { type: [String] },
     languages: { type: [String] },

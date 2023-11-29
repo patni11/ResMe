@@ -1,7 +1,6 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import ResumePreview from "./ResumePreview";
 
 //import EditPanel from "./EditPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -11,6 +10,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 
 const EditPanel = dynamic(() => import("./EditPanel"), { ssr: false });
+const ResumePreview = dynamic(() => import("./ResumePreview"), { ssr: false });
 const MainEditor = ({
   email,
   resumeId,

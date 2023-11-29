@@ -1,16 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { Certificate } from "@/lib/types";
+import { CertificateStore } from "@/lib/types";
 import { persist } from "zustand/middleware";
 import { getCleanedCertificateData } from "@/lib/apiFunctions";
 import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-export type State = {
-  certificates: Certificate[] | [];
-  hiddenCertificates: { [key: string]: boolean } | null;
-  hideAll: boolean;
+export type State = CertificateStore & {
   isLoading: boolean;
   error: any;
 };

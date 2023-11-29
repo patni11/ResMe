@@ -23,7 +23,7 @@ export async function GET(
     await connectMongoDB();
     const headerInfo = await ResumeHeaderInfo.findOne({
       _id: session?.user?.email,
-    });
+    }).lean();
 
     return NextResponse.json({ headerInfo }, { status: 200 });
   } catch (error: any) {

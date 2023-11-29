@@ -232,7 +232,7 @@ export async function getCleanedProjectData() {
 export async function getTalentsData() {
   try {
     const res = await fetch(`/api/skills`);
-
+    console.log("RES ", res);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }

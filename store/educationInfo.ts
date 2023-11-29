@@ -1,19 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { EducationType } from "@/lib/types";
+import { EducationStore } from "@/lib/types";
 import { persist } from "zustand/middleware";
 import { getCleanedEducationData } from "@/lib/apiFunctions";
 import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-export type State = {
-  educations: EducationType[] | [];
-  hiddenEducations: { [key: string]: boolean } | null;
-  hiddenGPAs: { [key: string]: boolean } | null;
-  hiddenDates: { [key: string]: boolean } | null;
-  hideAll: boolean;
-  relevantCourseWork: string;
+export type State = EducationStore & {
   isLoading: boolean;
   error: any;
 };

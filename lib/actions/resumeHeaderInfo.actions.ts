@@ -8,7 +8,9 @@ import { UserInfo } from "@/lib/types";
 export async function fetchResumeHeaderInfo(email: string) {
   try {
     await connectMongoDB();
-    const user = await ResumeHeaderInfo.findOne({ _id: email });
+    const user: UserInfo | null = await ResumeHeaderInfo.findOne({
+      _id: email,
+    }).lean();
     // console.log("DB USER", user);
 
     return user;

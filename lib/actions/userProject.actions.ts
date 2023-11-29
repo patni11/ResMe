@@ -10,7 +10,7 @@ export async function fetchUserProjects(
 ): Promise<ProjectType[] | null> {
   try {
     await connectMongoDB();
-    const projects: ProjectType[] = await Project.find({ email: email });
+    const projects: ProjectType[] = await Project.find({ email: email }).lean();
     if (!projects) {
       throw new Error(`No Projects Found`);
     }

@@ -10,6 +10,7 @@ import { User } from "../models/user";
 import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
 import { sendWelcomeEmail } from "./actions/sendEmail.action";
+import { createUser } from "./actions/user.actions";
 export type Session = {
   user: {
     email: string;
@@ -124,7 +125,9 @@ export const authOptions: NextAuthOptions = {
         email: message.user.email,
       };
 
-      await sendWelcomeEmail(params); // <-- send welcome email
+      await createUser({ email: message.user.email || "" });
+
+      //await sendWelcomeEmail(params); // <-- send welcome email
     },
   },
 };
