@@ -20,17 +20,25 @@ const Support = () => {
             </CardDescription>
           </CardHeader>
 
-          <CardContent className="flex justify-between">
-            <a href="https://discord.gg/xn8xYGKqhF" className="underline">
-              Discord{" "}
-              <span className="text-xs text-secondary-foreground">
-                (Recommended)
-              </span>
-            </a>
+          <CardContent className="flex flex-col space-y-4">
+            <div className="flex justify-between">
+              <a href="https://discord.gg/xn8xYGKqhF" className="underline">
+                Discord{" "}
+                <span className="text-xs text-secondary-foreground">
+                  (Recommended)
+                </span>
+              </a>
 
-            <a href="mailto:founder@resme.xyz" className="underline">
-              Send email
-            </a>
+              <a href="mailto:founder@resme.xyz" className="underline">
+                Send email
+              </a>
+            </div>
+
+            <div className="flex justify-between text-sm">
+              <span>Located At: B1 Vardhman City, Chhindwara MP (480001)</span>
+
+              <span>Mobile:- +91 7742361132</span>
+            </div>
           </CardContent>
         </Card>
       </main>

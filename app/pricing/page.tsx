@@ -52,7 +52,7 @@ const cardClass =
 
 const StudentCard = () => {
   const title = "Student";
-  const cost = "$49";
+  const cost = "INR4000";
   const checkedPoints = [
     "10 Resumes",
     "Instant CV",
@@ -111,7 +111,7 @@ const StudentCard = () => {
 
 const ExpertCard = () => {
   const title = "Expert";
-  const cost = "$6.9";
+  const cost = "INR600";
   const checkedPoints = [
     "Unlimited Resumes",
     "Instant CV",
