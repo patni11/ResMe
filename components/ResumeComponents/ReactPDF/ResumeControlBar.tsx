@@ -1,13 +1,12 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Download, X } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { sendPDFDownloadEmail } from "@/lib/actions/sendEmail.action";
-import { useSession } from "next-auth/react";
-import { ComingSoon } from "@/components/Cards/ComingSoon";
+import { useResumeDataContext } from "@/app/(mainApp)/buildResume/ResumeDataContext";
 import {
   Tooltip,
   TooltipContent,
@@ -21,23 +20,13 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { getPDFLink, updatePDFLink } from "@/lib/actions/resumes.action";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-const ResumeControlBar = ({
-  document,
-  fileName,
-  resumeId,
-}: {
-  document: JSX.Element;
-  fileName: string;
-  resumeId: string;
-}) => {
+const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
   const [instance, update] = usePDF({ document });
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session } = useSession();
-  const email = session?.user?.email || "";
-  const name = session?.user?.name || "";
   const { toast } = useToast();
   const [url, setURL] = useState("");
   const [popup, setPopup] = useState(false);
+  const { email, name, isSubscribed, resumeId } = useResumeDataContext();
 
   //Hook to update pdf when document changes
   useEffect(() => {
@@ -110,7 +99,7 @@ const ResumeControlBar = ({
     });
     // call upload thing to save the link as pdf
     const url = await getShareUrl();
-    console.log("RECEIVED URL", url);
+
     // put it in the person's clipboard
     handleCopyToClipboard(url);
     setURL(url);
@@ -130,7 +119,13 @@ const ResumeControlBar = ({
               className="flex space-x-2"
               onClick={(e) => {
                 e.preventDefault();
-                handleButtonClick();
+                if (isSubscribed) {
+                  handleButtonClick();
+                } else {
+                  toast({
+                    title: "Please upgrade to use this feature",
+                  });
+                }
               }}
             >
               <ArrowUpRightSquare className="w-4 h-4" />
@@ -182,7 +177,7 @@ const ResumeControlBar = ({
             <TooltipTrigger className="cursor-default ml-1.5">
               <a
                 href={instance.url!}
-                download={fileName}
+                download={`${name}_resume`}
                 className={buttonVariants({
                   variant: "outlineHover",
                   size: "xs",

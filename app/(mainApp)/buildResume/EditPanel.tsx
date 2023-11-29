@@ -9,9 +9,7 @@ import {
   Eye,
   File,
   RefreshCw,
-  Save,
-  SaveIcon,
-  Trash,
+  UploadCloud,
   Trash2,
 } from "lucide-react";
 import ExperienceSectionCard from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
@@ -22,7 +20,6 @@ import CertificateSectionCard from "@/components/ResumeComponents/ResumeForms/Ce
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -121,7 +118,7 @@ const EditPanel: FC<EditPanelProps> = ({
 
   return (
     <main className="w-full h-screen overflow-y-auto flex flex-col items-start bg-gray-200 p-4 space-y-2">
-      <div className="flex space-x-2 w-full justify-start">
+      <div className="flex space-x-2 w-full justify-end">
         {/* <div className="items-center justify-center flex px-4 py-1 space-x-2 bg-secondary rounded-md">
           <Label>
             {componentsData[0].id == "default" ? "Untitled" : "Old Resume"}
@@ -158,7 +155,7 @@ const EditPanel: FC<EditPanelProps> = ({
               <DialogTitle className="text-center mb-4 text-xl font-semibold">
                 How ResMe Works
               </DialogTitle>
-              <DialogDescription className="flex flex-col space-y-8 items-center">
+              <div className="flex flex-col space-y-8 items-center">
                 <ul className="flex flex-col space-y-8 mb-4">
                   <li className="flex flex-col space-y-1">
                     <h3 className="text-lg text-primary">
@@ -195,8 +192,8 @@ const EditPanel: FC<EditPanelProps> = ({
                     </h3>
                     <p className="flex flex-col space-y-1">
                       <span className="flex space-x-2">
-                        <SaveIcon className="w-5 h-5 mr-2" />
-                        to save offline
+                        <UploadCloud className="w-5 h-5 mr-2" />
+                        save to cloud
                       </span>
 
                       <span className="flex space-x-2">
@@ -234,7 +231,7 @@ const EditPanel: FC<EditPanelProps> = ({
                     </p>
                   </li>
                 </ul>
-              </DialogDescription>
+              </div>
             </DialogHeader>
           </DialogContent>
         </Dialog>

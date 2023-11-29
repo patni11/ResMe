@@ -227,17 +227,21 @@ function createHeader({ id }: { id: string }) {
     ? headerInfo.contactInfo
     : [{ contactName: "", contact: "" }];
 
+  console.log("Contacts", headerInfo, hiddenContacts, contactInfo);
+
   const contacts = contactInfo
-    .filter((info, index) => !hiddenContacts[index][info.contactName])
+    .filter((info, index) => !hiddenContacts[info.contactName])
     .map((info) => info.contact)
     .join(" | ");
+
+  console.log("Contacts", headerInfo, hiddenContacts, contactInfo, contacts);
 
   const linksInfo = headerInfo.links
     ? headerInfo.links
     : [{ linkName: "", link: "" }];
 
   const links = linksInfo
-    .filter((info, index) => !hiddenLinks[index][info.linkName])
+    .filter((info, index) => !hiddenLinks[info.linkName])
     .map((info) => info.link)
     .join(" | ");
 
@@ -310,8 +314,6 @@ function createEducation({ id }: { id: string }) {
           : `${getFormattedDate(
               new Date(education.startDate)
             )} - ${getFormattedDate(new Date(education.endDate))}`;
-
-        console.log("GPA", education.gpa, education.gpa.toString());
 
         const gpa = hiddenGPAs[education._id]
           ? ""
@@ -490,8 +492,6 @@ function createExperience({ id }: { id: string }) {
           },
         });
 
-        console.log("EXP", experience.description);
-
         // Adding the school and GPA/date paragraph to the education paragraphs
         experienceParagraphs.push(para1);
         experienceParagraphs.push(para2);
@@ -611,8 +611,6 @@ function createProject({ id }: { id: string }) {
             after: 120,
           },
         });
-
-        console.log("EXP", project.description);
 
         // Adding the project paragraphs
         projectParagraphs.push(para1);

@@ -8,15 +8,19 @@ import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
 //import { useSession } from "next-auth/react";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-
+import { ResumeDataProvider } from "./ResumeDataContext";
 const EditPanel = dynamic(() => import("./EditPanel"), { ssr: false });
 const ResumePreview = dynamic(() => import("./ResumePreview"), { ssr: false });
 const MainEditor = ({
   email,
   resumeId,
+  isSubscribed,
+  name,
 }: {
   email: string;
   resumeId: string;
+  isSubscribed: boolean;
+  name: string;
 }) => {
   // const { data: session } = useSession();
   // const email = session?.user?.email || "";
@@ -86,11 +90,20 @@ const MainEditor = ({
           <Separator className="m-0 sm:hidden" orientation="vertical" />
           <TabsContent value="preview">
             {email !== "" ? (
-              <ResumePreview
-                resumeId={resumeId}
-                email={email}
-                componentsData={componentsData}
-              />
+              <ResumeDataProvider.Provider
+                value={{
+                  email: email,
+                  resumeId: resumeId,
+                  isSubscribed: isSubscribed,
+                  name: name,
+                }}
+              >
+                <ResumePreview
+                  resumeId={resumeId}
+                  email={email}
+                  componentsData={componentsData}
+                />
+              </ResumeDataProvider.Provider>
             ) : null}
           </TabsContent>
         </Tabs>
@@ -110,11 +123,20 @@ const MainEditor = ({
         <Separator className="m-0 sm:hidden" orientation="vertical" />
         <div className="w-1/2 py-4 bg-gray-200 h-full" id="root">
           {email !== "" ? (
-            <ResumePreview
-              resumeId={resumeId}
-              email={email}
-              componentsData={componentsData}
-            />
+            <ResumeDataProvider.Provider
+              value={{
+                email: email,
+                resumeId: resumeId,
+                isSubscribed: isSubscribed,
+                name: name,
+              }}
+            >
+              <ResumePreview
+                resumeId={resumeId}
+                email={email}
+                componentsData={componentsData}
+              />
+            </ResumeDataProvider.Provider>
           ) : null}
         </div>
       </div>

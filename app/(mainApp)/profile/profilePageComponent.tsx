@@ -10,9 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Session, getServerSession } from "next-auth";
-import authOptions from "@/lib/authOptions";
-import { deleteUser, fetchUser } from "@/lib/actions/user.actions";
+import { deleteUser } from "@/lib/actions/user.actions";
 import {
   Dialog,
   DialogContent,
@@ -27,7 +25,6 @@ import { Infinity } from "lucide-react";
 
 interface BillingFormProps {
   subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
-  user: any;
 }
 
 const ProfilePageComponent = ({ subscriptionPlan }: BillingFormProps) => {

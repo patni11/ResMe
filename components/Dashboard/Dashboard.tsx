@@ -13,16 +13,8 @@ interface DashBoardProps {
 const DashBoard: FC<DashBoardProps> = async ({ email, resumes }) => {
   return (
     <>
-      <div className="relative w-[90%]">
-        <div className="flex flex-wrap space-x-4 pb-4 text-wrap">
-          {/* <ResumeCard
-            key="default"
-            album={defaultResume}
-            className="w-[200px]"
-            aspectRatio="portrait"
-            width={200}
-            height={265}
-          /> */}
+      <div className="relative w-[90%] flex justify-center md:justify-start items-center space-y-4">
+        <div className="flex flex-col justify-center space-y-4 md:space-y-0 md:flex-row md:justify-start flex-wrap space-x-4 pb-4 text-wrap">
           <div className={cn("space-y-3 w-[200px] ml-4")}>
             <CreateResumeButton
               email={email}

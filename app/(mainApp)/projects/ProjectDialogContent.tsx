@@ -138,9 +138,9 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleFormSubmit)}
-          className="flex flex-col space-y-8"
+          className="flex flex-col space-y-4 md:space-y-8"
         >
-          <div className="flex flex-row justify-between ">
+          <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row justify-between ">
             <FormField
               control={form.control}
               name="projectName"
@@ -192,7 +192,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
             />
           </div>
 
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row justify-between ">
             <FormField
               control={form.control}
               name="startDate"
@@ -314,7 +314,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
             )}
           />
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-row space-x-4">
             <Button
               variant="outline"
               type="button"

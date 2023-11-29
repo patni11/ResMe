@@ -1,12 +1,12 @@
 "use client";
 import { Button } from "../ui/button";
-import { Sparkles, Wand2 } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { generateBulletList } from "@/lib/actions/openai.action";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
-import { fetchUser, updateUserAICalls } from "@/lib/actions/user.actions";
-import { PLANS } from "@/app/utils/stripe";
+import { updateUserAICalls } from "@/lib/actions/user.actions";
+
 export const AIHelper = ({
   userMessage,
   setMessage,
@@ -24,10 +24,19 @@ export const AIHelper = ({
         setIsLoading(true);
 
         const response = await generateBulletList(userMessage || "");
-        if (response.code === "error" || response.code === "limitExceeded") {
+        if (response.code === "error") {
           toast({
             title: response.message,
           });
+          setIsLoading(false);
+          return;
+        }
+
+        if (response.code === "limitExceeded") {
+          toast({
+            title: response.message,
+          });
+
           setIsLoading(false);
           return;
         }

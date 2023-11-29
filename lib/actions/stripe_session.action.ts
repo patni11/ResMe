@@ -10,7 +10,7 @@ export async function createStripeSession(planType: string) {
 
   const user = await fetchUser();
   if (!user) {
-    throw new Error("Unauthorized");
+    return { error: true, message: "User Not Found" };
   }
 
   const subscriptionPlan = await getUserSubscriptionPlan();
@@ -46,5 +46,5 @@ export async function createStripeSession(planType: string) {
     },
   });
 
-  return { url: stripeSession.url };
+  return { url: stripeSession.url, success: true };
 }

@@ -16,7 +16,11 @@ export const metadata: Metadata = {
 };
 
 export default async function DashboardPage() {
-  const { isOnboarded, email, resumes } = await fetchDashboardData();
+  const data = await fetchDashboardData();
+  if (!data) {
+    throw alert("could not fetch resumes, try again");
+  }
+  const { isOnboarded, email, resumes } = data;
   if (isOnboarded === false) {
     redirect("/onboarding/header");
   }

@@ -154,9 +154,9 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleFormSubmit)}
-          className="flex flex-col space-y-8"
+          className="flex flex-col space-y-4 md:space-y-8"
         >
-          <div className="flex flex-row justify-between ">
+          <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row justify-between">
             <FormField
               control={form.control}
               name="company"
@@ -185,7 +185,7 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
             />
           </div>
 
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row justify-between">
             <FormField
               control={form.control}
               name="positionTitle"
@@ -211,7 +211,7 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
                     name={field.name}
                   >
                     <FormControl>
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select Degree" />
                       </SelectTrigger>
                     </FormControl>
@@ -230,7 +230,7 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
             />
           </div>
 
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row justify-between">
             <FormField
               control={form.control}
               name="startDate"
@@ -373,7 +373,7 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
             )}
           />
 
-          <DialogFooter>
+          <DialogFooter className="flex flex-row space-x-4">
             <Button
               variant="outline"
               type="button"

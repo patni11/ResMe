@@ -3,7 +3,7 @@ import { ResumePDFText } from "./common";
 import { styles, spacing } from "./styles";
 import { State } from "@/store/certificatesInfo";
 import { memo } from "react";
-
+import { Certificate, CertificateStore } from "@/lib/types";
 const ResumeCertificate = ({
   heading,
 
@@ -20,9 +20,11 @@ const ResumeCertificate = ({
   }
 
   const certificatesString = certificates
-    .filter((certificate: any) => !hiddenCertificates?.[certificate._id]) // Filter out hidden certificates
+    .filter(
+      (certificate: Certificate) => !hiddenCertificates?.[certificate._id]
+    ) // Filter out hidden certificates
     .map(
-      (certificate: any) =>
+      (certificate: Certificate) =>
         `${certificate.organization}: ${certificate.certificateName}`
     )
     .join(", ");

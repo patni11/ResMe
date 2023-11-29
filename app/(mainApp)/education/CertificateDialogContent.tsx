@@ -172,7 +172,7 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
               </FormItem>
             )}
           />
-          <DialogFooter>
+          <DialogFooter className="flex flex-row space-x-4">
             <Button
               variant="outline"
               type="button"

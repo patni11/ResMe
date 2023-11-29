@@ -8,11 +8,20 @@ export interface EducationType {
   endDate: Date;
 }
 
+export type FetchError = {
+  error: string;
+};
+
+export type UpdateError = {
+  error?: string;
+  success?: string;
+};
+
 export interface EducationStore {
   educations: EducationType[];
-  hiddenEducations: Map<string, boolean>;
-  hiddenGPAs: Map<string, boolean>;
-  hiddenDates: Map<string, boolean>;
+  hiddenEducations: { [key: string]: boolean };
+  hiddenGPAs: { [key: string]: boolean };
+  hiddenDates: { [key: string]: boolean };
   hideAll: boolean;
   relevantCourseWork: string;
 }
@@ -26,7 +35,7 @@ export interface Certificate {
 
 export interface CertificateStore {
   certificates: Certificate[];
-  hiddenCertificates: Map<string, boolean>;
+  hiddenCertificates: { [key: string]: boolean };
   hideAll: boolean;
 }
 
@@ -43,7 +52,7 @@ export type Experience = {
 
 export interface ExperienceStore {
   experiences: Experience[];
-  hiddenExperiences: Map<string, boolean>;
+  hiddenExperiences: { [key: string]: boolean };
   hideAll: boolean;
 }
 
@@ -59,10 +68,10 @@ export type Project = {
 
 export interface ProjectStore {
   projects: Project[];
-  hiddenProjects: Map<string, boolean>;
-  hiddenLocation: Map<string, boolean>;
-  hiddenDates: Map<string, boolean>;
-  hiddenPosition: Map<string, boolean>;
+  hiddenProjects: { [key: string]: boolean };
+  hiddenLocation: { [key: string]: boolean };
+  hiddenDates: { [key: string]: boolean };
+  hiddenPosition: { [key: string]: boolean };
   hideAll: boolean;
 }
 
@@ -77,8 +86,8 @@ export type UserInfo = {
 export interface HeaderStore {
   headerInfo: UserInfo;
   hideLocation: boolean;
-  hiddenContacts: Map<string, boolean>;
-  hiddenLinks: Map<string, boolean>;
+  hiddenContacts: { [key: string]: boolean };
+  hiddenLinks: { [key: string]: boolean };
 }
 
 export type User = {
@@ -97,6 +106,7 @@ export type User = {
   AICalls?: number;
   createdAt?: Date; // Assuming timestamps true adds createdAt
   updatedAt?: Date; // Assuming timestamps true adds updatedAt
+  name?: string;
 };
 
 export interface ResumeType {

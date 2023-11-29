@@ -173,6 +173,7 @@ const UserSchema = new Schema(
     languages: { type: [String] },
     interests: { type: [String] },
     AICalls: { type: Number, default: 0 },
+    user: { type: String },
   },
   { timestamps: true }
 );

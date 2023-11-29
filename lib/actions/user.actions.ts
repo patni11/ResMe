@@ -7,12 +7,13 @@ import { getUserEmailFromSession } from "./utils.action";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
 import { ResumeHeaderInfo } from "@/models/user";
+import { User as UserType } from "../types";
 export async function deleteUser(email: string) {
   try {
     // Connect to the MongoDB server
     const db = await connectMongoDB();
     if (!db) {
-      throw new Error(`Connection Failed`);
+      return { error: "Check your internet, could not connect to database" };
     }
     // Get a reference to the database
     // List all collections in the database
@@ -34,10 +35,11 @@ export async function deleteUser(email: string) {
     }
   } catch (err) {
     console.error("Error deleting entries:", err);
+    throw new Error("Error deleting entries");
   }
 }
 
-export async function createUser({ email }: { email: string }): Promise<void> {
+export async function createUser({ email }: { email: string }) {
   try {
     connectMongoDB();
     console.log("user");
@@ -56,21 +58,74 @@ export async function createUser({ email }: { email: string }): Promise<void> {
         upsert: true,
       }
     );
-    console.log("In Create User", user);
   } catch (e: any) {
     if (e.code == "11000") {
       throw new Error(`You already have an account. Please Sign In`);
     } else {
+      console.log("Error creating user", e);
       throw new Error(`🐞 creeped in 😢 ${e}`);
     }
   }
 }
 
-export async function fetchUser() {
+export async function fetchUser(): Promise<UserType> {
   try {
     const email = await getUserEmailFromSession();
     await connectMongoDB();
-    const user = await User.findOne({ email: email }).lean();
+    const user: UserType | null = await User.findOne({ email: email }).lean();
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    return user;
+  } catch (error: unknown) {
+    console.log("Failed to fetch user", error);
+    throw new Error("Failed to fetch user");
+  }
+}
+
+export async function fetchUserAICalls(): Promise<{
+  AICalls: number;
+  stripePriceId: string;
+}> {
+  try {
+    const email = await getUserEmailFromSession();
+    await connectMongoDB();
+
+    const user: { AICalls: number; stripePriceId: string } | null =
+      await User.findOne({
+        email: email,
+      })
+        .select("AICalls stripePriceId")
+        .lean();
+
+    if (!user) {
+      throw new Error(`User Not Found`);
+    }
+
+    return user;
+  } catch (error: any) {
+    //console.log("Failed to fetch projects", error);
+    throw new Error(`Failed to fetch projects: ${error.message}`);
+  }
+}
+
+export async function fetchUserResumes(): Promise<{
+  resumes: string[];
+  email: string;
+  stripePriceId?: string;
+  stripeCurrentPeriodEnd?: Date;
+  name?: string;
+}> {
+  try {
+    const email = await getUserEmailFromSession();
+    await connectMongoDB();
+    const user: { resumes: string[]; email: string } | null =
+      await User.findOne({
+        email: email,
+      })
+        .select("resumes email stripePriceId stripeCurrentPeriodEnd name")
+        .lean();
     if (!user) {
       throw new Error(`User Not Found`);
     }
@@ -135,8 +190,6 @@ export async function fetchDashboardData(): Promise<{
         select: "_id resumeName updatedAt pdfLink", // Select specific fields from Resume
       })
       .lean();
-
-    console.log("User", user);
 
     if (!user) {
       throw new Error(`User Not Found`);

@@ -1,8 +1,10 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { createStripeSession } from "@/lib/actions/stripe_session.action";
 import * as gtag from "@/lib/gtag";
 export const GoPremiumButton = () => {
+  const { toast } = useToast();
   const clickTracking = async () => {
     gtag.event({
       clientWindow: window,
@@ -11,9 +13,14 @@ export const GoPremiumButton = () => {
       label: "premium",
     });
 
-    const { url } = await createStripeSession("Expert");
-
-    window.location.href = url || "/profile";
+    try {
+      const { url } = await createStripeSession("Expert");
+      window.location.href = url || "/profile";
+    } catch (e) {
+      toast({
+        title: "You must be signed up or there was a network issue",
+      });
+    }
   };
   return (
     <button
@@ -30,6 +37,7 @@ export const GoPremiumButton = () => {
 };
 
 export const GoStudentButton = () => {
+  const { toast } = useToast();
   const clickTracking = async () => {
     gtag.event({
       clientWindow: window,
@@ -38,9 +46,16 @@ export const GoStudentButton = () => {
       label: "student",
     });
 
-    const { url } = await createStripeSession("Student");
+    try {
+      const { url } = await createStripeSession("Student");
 
-    window.location.href = url || "/profile";
+      window.location.href = url || "/profile";
+    } catch (e) {
+      console.log("Error");
+      toast({
+        title: "You must be signed up or there was a network issue",
+      });
+    }
   };
   return (
     <button

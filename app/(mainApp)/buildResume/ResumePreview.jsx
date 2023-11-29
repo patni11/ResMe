@@ -112,11 +112,7 @@ export default function ResumePreview({ resumeId, email, componentsData }) {
         </button> */}
 
         <div className="flex items-center space-x-2">
-          <ResumeControlBarCSR
-            document={document}
-            fileName={"resume"}
-            resumeId={resumeId}
-          />
+          <ResumeControlBarCSR document={document} />
 
           <TooltipProvider>
             <Tooltip delayDuration={300}>

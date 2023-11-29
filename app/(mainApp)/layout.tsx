@@ -18,7 +18,6 @@ export default async function RootLayout({
 
   return (
     <div className="flex h-full w-full">
-      {" "}
       {/* Added for demonstration purposes, adjust width and other styles as required */}
       <SidebarMain />
       <div className="flex-1">{children}</div>

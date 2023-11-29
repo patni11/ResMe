@@ -127,7 +127,7 @@ export const authOptions: NextAuthOptions = {
 
       await createUser({ email: message.user.email || "" });
 
-      //await sendWelcomeEmail(params); // <-- send welcome email
+      await sendWelcomeEmail(params); // <-- send welcome email
     },
   },
 };

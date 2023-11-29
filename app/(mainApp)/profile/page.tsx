@@ -1,4 +1,3 @@
-import { deleteUser, fetchUser } from "@/lib/actions/user.actions";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Profile - ResMe",
@@ -17,12 +16,9 @@ import { getUserSubscriptionPlan } from "@/lib/stripe";
 import ProfilePageComponent from "./profilePageComponent";
 
 const Profile = async () => {
-  const user = await fetchUser();
   const subscriptionPlan = await getUserSubscriptionPlan();
 
-  return (
-    <ProfilePageComponent subscriptionPlan={subscriptionPlan} user={user} />
-  );
+  return <ProfilePageComponent subscriptionPlan={subscriptionPlan} />;
 };
 
 export default Profile;
