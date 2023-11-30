@@ -1,16 +1,9 @@
 import Navbar from "@/components/Navigation/Navbar";
 
 // import { PriceCards } from "./pricingCard";
-import {
-  CheckCircle2,
-  HelpCircle,
-  MinusCircle,
-  Sparkles,
-  XCircle,
-} from "lucide-react";
+import { CheckCircle2, MinusCircle, Sparkles, XCircle } from "lucide-react";
 
 import { Metadata } from "next";
-import { ComingSoon } from "@/components/Cards/ComingSoon";
 import { GoPremiumButton, GoStudentButton } from "./goPremiumButton";
 import { cn } from "@/lib/utils";
 import {
@@ -121,7 +114,7 @@ const ExpertCard = () => {
   const title = "Expert";
   const cost = "$6.9";
   const checkedPoints = [
-    "100 Resumes (contact for more)",
+    "50 Resumes (contact for more)",
     "Download PDF",
     "Professional Formatting",
     "Multiple Device Access",
