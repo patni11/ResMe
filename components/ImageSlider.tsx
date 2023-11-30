@@ -16,7 +16,7 @@ const imageMap: Record<ImageKey, StaticImageData> = {
 
 export const ImageSlider = ({ slides }: { slides: any }) => {
   const headings = [
-    "Intuitive Dashboard",
+    "Intuitive Editor",
     "AI-Enhanced Bullet Points",
     "Professional Formatting",
     "❤️ by both ATS bots and humans",
