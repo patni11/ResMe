@@ -5,24 +5,25 @@ import type Stripe from "stripe";
 
 export async function POST(request: Request) {
   console.log("GOT THE EVENT");
-  const body = await request.text();
-  const signature = headers().get("Stripe-Signature") ?? "";
+  // const body = await request.text();
+  // const signature = headers().get("Stripe-Signature") ?? "";
 
-  let event: Stripe.Event;
+  // let event: Stripe.Event;
 
-  try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET || ""
-    );
-  } catch (err) {
-    return new Response(
-      `Webhook Error: ${err instanceof Error ? err.message : "Unknown Error"}`,
-      { status: 400 }
-    );
-  }
+  // try {
+  //   event = stripe.webhooks.constructEvent(
+  //     body,
+  //     signature,
+  //     process.env.STRIPE_WEBHOOK_SECRET || ""
+  //   );
+  // } catch (err) {
+  //   return new Response(
+  //     `Webhook Error: ${err instanceof Error ? err.message : "Unknown Error"}`,
+  //     { status: 400 }
+  //   );
+  // }
 
+  const event = await request.json();
   console.log("EVENT", event);
 
   const session = event.data.object as Stripe.Checkout.Session;

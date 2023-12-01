@@ -1,5 +1,5 @@
 import { SidebarMain } from "@/components/Navigation/SideBarMain";
-
+export const dynamic = "force-dynamic";
 //import { Sidebar } from "@/components/Navigation/Sidebar";
 
 import { authOptions } from "@/lib/authOptions";
