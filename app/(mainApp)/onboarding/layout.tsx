@@ -12,7 +12,7 @@ export default async function RootLayout({
   }
 
   return (
-    <main className="flex flex-col justify-center items-center h-full w-full space-y-12">
+    <main className="absolute top-[5%] flex flex-col justify-center items-center h-full w-full space-y-12">
       <div className="flex flex-col space-y-2 justify-center items-center">
         <h1 className="font-bold text-4xl leading-none tracking-tight">
           Welcome to ResMe

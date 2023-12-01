@@ -3,14 +3,14 @@
 import { Project } from "@/models/user";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
-import { Project as ProjectType } from "@/app/(mainApp)/projects/pageTypes";
+import { Project as ProjectType } from "@/lib/types";
 
 export async function fetchUserProjects(
   email: string
 ): Promise<ProjectType[] | null> {
   try {
     await connectMongoDB();
-    const projects: ProjectType[] = await Project.find({ email: email });
+    const projects: ProjectType[] = await Project.find({ email: email }).lean();
     if (!projects) {
       throw new Error(`No Projects Found`);
     }

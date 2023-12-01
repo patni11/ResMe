@@ -1,5 +1,5 @@
 "use client";
-import { FC, memo, useEffect } from "react";
+import { FC, memo } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Input } from "@/components/ui/input";
@@ -41,25 +41,20 @@ const ProjectSectionCard: FC<ProjectSectionCard> = ({
     setHiddenLocation,
     setHiddenPosition,
     updateDescriptions,
-    fetchProjects,
+    fetchDefaultProjects,
     setHideAll,
     deleteDescription,
     addDescription,
+    fetchProjects,
     moveProjUp,
     moveProjDown,
   } = useProjectsInfo();
 
-  useEffect(() => {
-    let projectsLocalStorage = localStorage.getItem(projectId);
-    if (!projectsLocalStorage) {
-      fetchProjects();
-    }
-  }, [fetchProjects]);
-
   return (
     <FormCardWrapper
       cardTitle="Project"
-      refreshFunction={() => fetchProjects()}
+      refreshFunction={() => fetchDefaultProjects()}
+      refreshSection={() => fetchProjects()}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}
@@ -260,7 +255,14 @@ const ProjectCard: FC<ProjectCardProps> = ({
           >
             <PlusCircleIcon className="h-4 w-4" />
           </Button>
-          <AIHelper />
+          <AIHelper
+            userMessage={descriptions.join("\n")}
+            setMessage={(message: string) => {
+              message.split("\n").forEach((desc, idx) => {
+                updateDescriptions(projectId, idx, desc);
+              });
+            }}
+          />
         </div>
       )}
     </div>

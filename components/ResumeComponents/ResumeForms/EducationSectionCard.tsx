@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { memo } from "react";
-import { EducationType } from "@/app/(mainApp)/education/pageTypes";
+import { EducationType } from "@/lib/types";
 import { RefreshCw } from "lucide-react";
 
 interface EducationCardProps {
@@ -35,31 +35,29 @@ const EducationCard: FC<EducationCardProps> = ({
   setHideGpa,
 }) => {
   return (
-    <>
-      <Card className="mb-2">
-        <CardHeader className="flex flex-row justify-between">
-          <div className="flex flex-col space-y-2">
-            <CardTitle>{education.schoolName}</CardTitle>
-            <CardDescription>
-              {education.degreeType} {education.major}
-            </CardDescription>
-          </div>
-          <div className="flex space-x-4">
-            <HideButtons hide={hideEducation} setHide={setHideEducation}>
-              <span>Education</span>
-            </HideButtons>
+    <Card className="mb-2">
+      <CardHeader className="flex flex-row justify-between">
+        <div className="flex flex-col space-y-2">
+          <CardTitle>{education.schoolName}</CardTitle>
+          <CardDescription>
+            {education.degreeType} {education.major}
+          </CardDescription>
+        </div>
+        <div className="flex space-x-4">
+          <HideButtons hide={hideEducation} setHide={setHideEducation}>
+            <span>Education</span>
+          </HideButtons>
 
-            <HideButtons hide={hideGPA} setHide={setHideGpa}>
-              <span>GPA</span>
-            </HideButtons>
+          <HideButtons hide={hideGPA} setHide={setHideGpa}>
+            <span>GPA</span>
+          </HideButtons>
 
-            <HideButtons hide={hideDate} setHide={setHideDate}>
-              <span>Date</span>
-            </HideButtons>
-          </div>
-        </CardHeader>
-      </Card>
-    </>
+          <HideButtons hide={hideDate} setHide={setHideDate}>
+            <span>Date</span>
+          </HideButtons>
+        </div>
+      </CardHeader>
+    </Card>
   );
 };
 interface EducationSectionCard {
@@ -88,21 +86,16 @@ const EducationSectionCard: FC<EducationSectionCard> = ({
     setHiddenEducation,
     setHiddenDates,
     setHiddenGPAs,
+    fetchDefaultEducations,
     fetchEducations,
     setHideAll,
   } = useEducationsInfo();
 
-  useEffect(() => {
-    let educationsLocalStorage = localStorage.getItem(educationID);
-    if (!educationsLocalStorage) {
-      fetchEducations();
-    }
-  }, [fetchEducations]);
-
   return (
     <FormCardWrapper
       cardTitle="Education"
-      refreshFunction={() => fetchEducations()}
+      refreshFunction={() => fetchDefaultEducations()}
+      refreshSection={() => fetchEducations()}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}

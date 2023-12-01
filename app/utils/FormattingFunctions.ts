@@ -59,3 +59,110 @@ export function timeAgo(dateParam: Date | string): string | null {
     return `${years} year(s) ago`;
   }
 }
+
+export function fixExperience(rawExperiences: any) {
+  const formattedExperiences = rawExperiences.map((exp: any) => {
+    let endDate = exp.endDate;
+
+    // Check if endDate is a string and not 'working', then parse it as a Date.
+    if (typeof endDate === "string" && endDate !== "working") {
+      endDate = new Date(endDate);
+    }
+
+    return {
+      ...exp,
+      endDate: endDate,
+    };
+  });
+  return formattedExperiences;
+}
+
+export function fixStructure(arrayOfObjects: any) {
+  arrayOfObjects = arrayOfObjects.map(
+    //@ts-ignore
+    ({ __v, email, createdAt, updatedAt, ...rest }) => rest
+  );
+  return arrayOfObjects;
+}
+
+export function fixCertificateFormat(certificateState: any) {
+  const { certificates, hiddenCertificates, hideAll } = certificateState;
+  const fixedCert = fixStructure(certificates);
+  return {
+    certificates: fixedCert,
+    hiddenCertificates,
+    hideAll,
+  };
+}
+
+export function fixHeaderInfo(headerState: any) {
+  const { headerInfo, hiddenContacts, hiddenLinks, hideLocation } = headerState;
+  delete headerInfo.updatedAt;
+  delete headerInfo.createdAt;
+  delete headerInfo.__v;
+  return {
+    headerInfo,
+    hideLocation,
+    hiddenContacts,
+    hiddenLinks,
+  };
+}
+
+export function fixEducationFormat(educationState: any) {
+  const {
+    educations,
+    hiddenDates,
+    hiddenEducations,
+    hiddenGPAs,
+    hideAll,
+    relevantCourseWork,
+  } = educationState;
+  const fixedEds = fixStructure(educations);
+  return {
+    educations: fixedEds,
+    hiddenDates,
+    hiddenEducations,
+    hiddenGPAs,
+    hideAll,
+    relevantCourseWork,
+  };
+}
+
+export function fixExperienceFormat(experiencesState: any) {
+  const { experiences, hiddenExperiences, hideAll } = experiencesState;
+  const fixedExps = fixExperience(fixStructure(experiences));
+  return {
+    experiences: fixedExps,
+    hiddenExperiences,
+    hideAll,
+  };
+}
+
+export function fixProjectFormat(projectState: any) {
+  const {
+    projects,
+    hiddenProjects,
+    hiddenLocation,
+    hideAll,
+    hiddenDates,
+    hiddenPosition,
+  } = projectState;
+  const fixedProjects = fixStructure(projects);
+  return {
+    projects: fixedProjects,
+    hiddenDates,
+    hiddenLocation,
+    hiddenProjects,
+    hiddenPosition,
+    hideAll,
+  };
+}
+
+export function fixTalent(talents: any) {
+  const { skills, interests, languages } = talents;
+  return {
+    skills,
+    interests,
+    languages,
+  };
+}

@@ -1,15 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+"use client";
 import { create } from "zustand";
-import { UserInfo } from "@/app/(mainApp)/userInfo/pageType";
+import { HeaderStore } from "@/lib/types";
 import { persist } from "zustand/middleware";
+import { getCleanedHeaderData } from "@/lib/apiFunctions";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
-
-export type State = {
-  headerInfo: UserInfo;
-  hideLocation: boolean;
-  hiddenContacts: any;
-  hiddenLinks: any;
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
+export type State = HeaderStore & {
   isLoading: boolean;
   error: any;
 };
@@ -19,36 +17,9 @@ type Actions = {
   setHideLocation: () => void;
   setHiddenLinks: (key: string) => void;
   setHiddenContacts: (key: string) => void;
-  fetchHeaderInfo: () => Promise<void>;
+  fetchDefaultHeader: () => Promise<void>;
+  fetchHeader: () => Promise<void>;
 };
-
-const INITIAL_STATE: State = {
-  headerInfo: {
-    displayName: "",
-    contactInfo: [],
-    location: "",
-    links: [],
-    email: "",
-  },
-  hideLocation: false,
-  hiddenContacts: [{ key: false }],
-  hiddenLinks: [{ key: false }],
-  isLoading: false,
-  error: null,
-};
-
-async function getData() {
-  try {
-    const res = await fetch(`/api/resumeHeaderInfo`);
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return res.json();
-  } catch (e) {
-    console.log("error loading topic in zustand:", e);
-  }
-}
 
 const storeCache: Record<string, any> = {};
 
@@ -57,44 +28,58 @@ export const createResumeHeaderInfo = (resumeHeaderID: string) => {
     return storeCache[resumeHeaderID];
   }
 
+  let INITIAL_STATE = {
+    headerInfo: {
+      displayName: "",
+      contactInfo: [],
+      location: "",
+      links: [],
+      email: "",
+    },
+    hideLocation: false,
+    hiddenContacts: {},
+    hiddenLinks: {},
+    isLoading: false,
+    error: null,
+  };
+
+  if (typeof window !== "undefined") {
+    const savedState = JSON.parse(localStorage.getItem(resumeHeaderID));
+    if (savedState) {
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
+    }
+  }
+
   const useResumeHeaderInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        headerInfo: INITIAL_STATE.headerInfo,
-        error: INITIAL_STATE.error,
-        isLoading: INITIAL_STATE.isLoading,
-        fetchHeaderInfo: async () => {
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
+        fetchDefaultHeader: async () => {
           set({ isLoading: true });
           try {
-            const headerInfo: UserInfo = (await getData()).headerInfo;
-
-            const hidContacts =
-              headerInfo.contactInfo?.map((contact) => ({
-                [contact.contact]: false,
-              })) || [];
-            const hidLinks =
-              headerInfo.links?.map((link) => ({ [link.linkName]: false })) ||
-              [];
-
-            set({
-              headerInfo: headerInfo,
-              hiddenContacts: hidContacts,
-              hiddenLinks: hidLinks,
-              hideLocation: false,
-              isLoading: false,
-            });
+            const data = await getCleanedHeaderData();
+            set({ ...data, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }
         },
-        hideLocation: INITIAL_STATE.hideLocation,
-        hiddenContacts: INITIAL_STATE.hiddenContacts as Array<{
-          [key: string]: boolean;
-        }>,
+        fetchHeader: async () => {
+          set({ isLoading: true });
+          const id = resumeHeaderID.split("-").slice(2).join("-");
 
-        hiddenLinks: INITIAL_STATE.hiddenLinks as Array<{
-          [key: string]: boolean;
-        }>,
+          try {
+            const data = await fetchResumeSection(id, "headerInfo");
+            console.log(data);
+            set({ ...data.headerInfo, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
         updateDisplayName: (newDisplayName: string) => {
           set((state) => {
             return {
@@ -105,30 +90,47 @@ export const createResumeHeaderInfo = (resumeHeaderID: string) => {
         setHideLocation: () => {
           set((state) => ({ hideLocation: !state.hideLocation }));
         },
+        // setHiddenContacts: (key: string) => {
+        //   set((state) => ({
+        //     hiddenContacts: state.hiddenContacts.map((contact: any) => {
+        //       // Check if the contact has the key you're looking for
+        //       if (contact[key] !== undefined) {
+        //         // Return a new object with the key's value toggled
+        //         return { [key]: !contact[key] };
+        //       }
+        //       // Otherwise, return the contact unchanged
+        //       return contact;
+        //     }),
+        //   }));
+        // },
         setHiddenContacts: (key: string) => {
           set((state) => ({
-            hiddenContacts: state.hiddenContacts.map((contact: any) => {
-              // Check if the contact has the key you're looking for
-              if (contact[key] !== undefined) {
-                // Return a new object with the key's value toggled
-                return { [key]: !contact[key] };
-              }
-              // Otherwise, return the contact unchanged
-              return contact;
-            }),
+            hiddenContacts: {
+              ...state.hiddenContacts,
+              [key]: !state.hiddenContacts[key],
+            },
           }));
         },
+
+        // setHiddenLinks: (key: string) => {
+        //   set((state) => ({
+        //     hiddenLinks: state.hiddenLinks.map((link: any) => {
+        //       // Check if the contact has the key you're looking for
+        //       if (link[key] !== undefined) {
+        //         // Return a new object with the key's value toggled
+        //         return { [key]: !link[key] };
+        //       }
+        //       // Otherwise, return the contact unchanged
+        //       return link;
+        //     }),
+        //   }));
+        // },
         setHiddenLinks: (key: string) => {
           set((state) => ({
-            hiddenLinks: state.hiddenLinks.map((link: any) => {
-              // Check if the contact has the key you're looking for
-              if (link[key] !== undefined) {
-                // Return a new object with the key's value toggled
-                return { [key]: !link[key] };
-              }
-              // Otherwise, return the contact unchanged
-              return link;
-            }),
+            hiddenLinks: {
+              ...state.hiddenLinks,
+              [key]: !state.hiddenLinks[key],
+            },
           }));
         },
       }),

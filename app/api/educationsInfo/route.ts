@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     await connectMongoDB();
     const educations = await Education.find({
       email: session?.user?.email,
-    });
+    }).lean();
 
     return NextResponse.json({ educations }, { status: 200 });
   } catch (error: any) {

@@ -1,10 +1,10 @@
 "use client";
-import { FC, memo, useEffect } from "react";
+import { FC, memo } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { createCertificateInfo } from "@/store/certificatesInfo";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Certificate } from "@/app/(mainApp)/education/pageTypes";
+import { Certificate } from "@/lib/types";
 
 interface CertificateCardProps {
   certificate: Certificate;
@@ -56,20 +56,15 @@ const CertificateSectionCard: FC<CertificateSectionCard> = ({
     isLoading,
     setHideAll,
     setHiddenCertificate,
+    fetchDefaultCertificates,
     fetchCertificates,
   } = useCertificatesInfo();
-
-  useEffect(() => {
-    let certificatesLocalStorage = localStorage.getItem(certificateID);
-    if (!certificatesLocalStorage) {
-      fetchCertificates();
-    }
-  }, [fetchCertificates]);
 
   return (
     <FormCardWrapper
       cardTitle="Certificate"
-      refreshFunction={() => fetchCertificates()}
+      refreshFunction={() => fetchDefaultCertificates()}
+      refreshSection={() => fetchCertificates()}
       isLoading={isLoading}
       hideAll={hideAll}
       deleteFunction={setHideAll}

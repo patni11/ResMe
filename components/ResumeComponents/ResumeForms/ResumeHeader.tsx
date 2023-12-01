@@ -1,11 +1,10 @@
 "use client";
-import { useEffect } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
-import { useSession } from "next-auth/react";
+//import { useSession } from "next-auth/react";
 import { memo } from "react";
 interface ResumeHeaderProps {
   resumeHeaderID: string;
@@ -26,40 +25,34 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
     hideLocation,
     hiddenContacts,
     hiddenLinks,
-
     setHideLocation,
     updateDisplayName,
     setHiddenLinks,
     setHiddenContacts,
     error,
     isLoading,
-    fetchHeaderInfo,
+    fetchDefaultHeader,
+    fetchHeader,
   } = useResumeHeaderInfo();
 
-  const session = useSession();
-  const email = session.data?.user?.email;
-
-  useEffect(() => {
-    let resumeHeaderLocalStorage = localStorage.getItem(resumeHeaderID);
-    if (!resumeHeaderLocalStorage) {
-      fetchHeaderInfo();
-    }
-  }, [fetchHeaderInfo]);
+  //const session = useSession();
+  //const email = session.data?.user?.email;
 
   const { displayName } = headerInfo;
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo
-    : [{ contact: "" }];
+    : [{ contactName: "", contact: "" }];
   const location = headerInfo?.location ? headerInfo.location : "";
   const links = headerInfo.links
     ? headerInfo.links
     : [{ linkName: "", link: "" }];
-
+  console.log();
   return (
     <FormCardWrapper
       cardTitle="Header"
-      refreshFunction={() => fetchHeaderInfo()}
+      refreshFunction={() => fetchDefaultHeader()}
       isLoading={isLoading}
+      refreshSection={() => fetchHeader()}
       index={index}
       moveUp={moveUp}
       moveDown={moveDown}
@@ -86,7 +79,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
           ? links.map((link: any, index: any) => (
               <HideButtons
                 key={index}
-                hide={hiddenLinks[index] && hiddenLinks[index][link.linkName]}
+                hide={hiddenLinks ? hiddenLinks[link.linkName] : false}
                 setHide={() => setHiddenLinks(link.linkName)}
               >
                 <span>{link.linkName}</span>
@@ -98,10 +91,12 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
           ? contactInfo.map((contact: any, index: any) => (
               <HideButtons
                 key={index}
-                hide={hiddenContacts[index][contact.contact]}
-                setHide={() => setHiddenContacts(contact.contact)}
+                hide={
+                  hiddenContacts ? hiddenContacts[contact.contactName] : false
+                }
+                setHide={() => setHiddenContacts(contact.contactName)}
               >
-                <span>{contact.contact}</span>
+                <span>{contact.contactName}</span>
               </HideButtons>
             ))
           : null}

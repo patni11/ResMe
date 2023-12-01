@@ -4,6 +4,7 @@ import { styles, spacing } from "./styles";
 import { State } from "@/store/projectsInfo";
 import { DEFAULT_THEME_COLOR } from "./constants";
 import { memo } from "react";
+import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 
 const ResumeProject = ({
   heading,
@@ -45,7 +46,9 @@ const ResumeProject = ({
         let positionTitle = undefined;
 
         if (!isDatesHidden && project.startDate != undefined) {
-          date = `${project.startDate} - ${project.endDate}`;
+          date = `${getFormattedDate(
+            new Date(project.startDate)
+          )} - ${getFormattedDate(new Date(project.endDate))}`;
         }
 
         if (!isLocationHidden) {
@@ -60,8 +63,8 @@ const ResumeProject = ({
           <ResumePDFCard
             heading={project.projectName}
             subHeading={`${project.positionTitle}`}
-            dates={date}
-            value={positionTitle}
+            dates={positionTitle}
+            value={date}
             key={idx}
           >
             <View style={{ ...styles.flexCol, marginTop: spacing["0.5"] }}>

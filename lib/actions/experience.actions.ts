@@ -3,14 +3,14 @@
 import { Experience } from "@/models/user";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
-import { Experience as ExperienceType } from "@/app/(mainApp)/experience/pageTypes";
+import { Experience as ExperienceType } from "@/lib/types";
 
 export async function fetchExperiences(email: string) {
   try {
     await connectMongoDB();
     const experience: ExperienceType[] = await Experience.find({
       email: email,
-    });
+    }).lean();
     if (!experience) {
       throw new Error(`No Experience Found`);
     }

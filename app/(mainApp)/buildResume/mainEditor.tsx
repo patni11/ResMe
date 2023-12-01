@@ -1,52 +1,44 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import ResumePreview from "./ResumePreview";
-import EditPanel from "./EditPanel";
+
+//import EditPanel from "./EditPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-
-const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
-  const { data: session } = useSession();
-  const email = session?.user?.email || "";
+//import { useSession } from "next-auth/react";
+import { useState } from "react";
+import dynamic from "next/dynamic";
+import { ResumeDataProvider } from "./ResumeDataContext";
+const EditPanel = dynamic(() => import("./EditPanel"), { ssr: false });
+const ResumePreview = dynamic(() => import("./ResumePreview"), { ssr: false });
+const MainEditor = ({
+  email,
+  resumeId,
+  isSubscribed,
+  name,
+}: {
+  email: string;
+  resumeId: string;
+  isSubscribed: boolean;
+  name: string;
+}) => {
+  // const { data: session } = useSession();
+  // const email = session?.user?.email || "";
   type ComponentData = { type: string; id: string };
 
-  const [componentsData, setComponentsData] = useState<ComponentData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [componentsData, setComponentsData] = useState<ComponentData[]>([
+    { type: "ResumeHeader", id: `resumeHeader-${email}-${resumeId}` },
+    { type: "EducationSectionCard", id: `educations-${email}-${resumeId}` },
+    {
+      type: "CertificateSectionCard",
+      id: `certificates-${email}-${resumeId}`,
+    },
+    { type: "ExperienceSectionCard", id: `experiences-${email}-${resumeId}` },
+    { type: "ProjectSectionCard", id: `projects-${email}-${resumeId}` },
+    { type: "TalentsSection", id: `talents-${email}-${resumeId}` },
+    // ... other components
+  ]);
 
-  useEffect(() => {
-    // Assuming session?.user?.email will eventually be populated
-    const email = session?.user?.email;
-
-    // If email isn't available yet, don't set the components
-    if (!email) {
-      return;
-    }
-
-    // Define initial components data with the available email
-    const initialComponentsData = [
-      { type: "ResumeHeader", id: `resumeHeader-${email}-${resumeId}` },
-      { type: "EducationSectionCard", id: `educations-${email}-${resumeId}` },
-      {
-        type: "CertificateSectionCard",
-        id: `certificates-${email}-${resumeId}`,
-      },
-      { type: "ExperienceSectionCard", id: `experiences-${email}-${resumeId}` },
-      { type: "ProjectSectionCard", id: `projects-${email}-${resumeId}` },
-      { type: "TalentsSection", id: `talents-${email}-${resumeId}` },
-      // ... other components
-    ];
-
-    // Set the initial components data into state
-    setComponentsData(initialComponentsData);
-    setIsLoading(false);
-  }, [session, resumeId]);
-
-  // const [components, setComponents] = useState(initialComponents);
-
-  // Function to move a component up
   const moveUp = (index: number) => {
     if (index === 0) return; // Can't move up the first component
     setComponentsData((prevComponents) => {
@@ -70,10 +62,6 @@ const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
       return newComponents;
     });
   };
-
-  if (isLoading) {
-    return <div></div>;
-  }
 
   return (
     <main className="flex justify-between w-full h-full">
@@ -102,11 +90,20 @@ const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
           <Separator className="m-0 sm:hidden" orientation="vertical" />
           <TabsContent value="preview">
             {email !== "" ? (
-              <ResumePreview
-                resumeId={resumeId}
-                email={email}
-                componentsData={componentsData}
-              />
+              <ResumeDataProvider.Provider
+                value={{
+                  email: email,
+                  resumeId: resumeId,
+                  isSubscribed: isSubscribed,
+                  name: name,
+                }}
+              >
+                <ResumePreview
+                  resumeId={resumeId}
+                  email={email}
+                  componentsData={componentsData}
+                />
+              </ResumeDataProvider.Provider>
             ) : null}
           </TabsContent>
         </Tabs>
@@ -126,11 +123,20 @@ const MainEditor = ({ resumeId = "default" }: { resumeId?: string }) => {
         <Separator className="m-0 sm:hidden" orientation="vertical" />
         <div className="w-1/2 py-4 bg-gray-200 h-full" id="root">
           {email !== "" ? (
-            <ResumePreview
-              resumeId={resumeId}
-              email={email}
-              componentsData={componentsData}
-            />
+            <ResumeDataProvider.Provider
+              value={{
+                email: email,
+                resumeId: resumeId,
+                isSubscribed: isSubscribed,
+                name: name,
+              }}
+            >
+              <ResumePreview
+                resumeId={resumeId}
+                email={email}
+                componentsData={componentsData}
+              />
+            </ResumeDataProvider.Provider>
           ) : null}
         </div>
       </div>

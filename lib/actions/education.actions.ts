@@ -3,7 +3,7 @@
 import { Education } from "@/models/user";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
-import { EducationType } from "@/app/(mainApp)/education/pageTypes";
+import { EducationType } from "@/lib/types";
 import mongoose from "mongoose";
 
 export async function fetchEducation(email: string) {
@@ -11,7 +11,7 @@ export async function fetchEducation(email: string) {
     await connectMongoDB();
     const education: EducationType[] = await Education.find({
       email: email,
-    });
+    }).lean();
 
     if (!education) {
       throw new Error(`No Educaiton Found`);

@@ -1,17 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { EducationType } from "@/app/(mainApp)/education/pageTypes";
+import { EducationStore } from "@/lib/types";
 import { persist } from "zustand/middleware";
+import { getCleanedEducationData } from "@/lib/apiFunctions";
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-export type State = {
-  educations: EducationType[] | [];
-  hiddenEducations: { [key: string]: boolean } | null;
-  hiddenGPAs: { [key: string]: boolean } | null;
-  hiddenDates: { [key: string]: boolean } | null;
-  hideAll: boolean;
-  relevantCourseWork: string;
+export type State = EducationStore & {
   isLoading: boolean;
   error: any;
 };
@@ -21,57 +17,10 @@ type Actions = {
   setHiddenEducation: (key: string) => void;
   setHiddenGPAs: (key: string) => void;
   setHiddenDates: (key: string) => void;
-  fetchEducations: () => void;
+  fetchDefaultEducations: () => Promise<void>;
   setHideAll: () => void;
-  //updateDisplayName: (newDisplayName: string) => void;
-  //setHideLocation: () => void;
-  //setHiddenGPAs: (key: string) => void;
-  //fetchHeaderInfo: (email: string) => Promise<void>;
+  fetchEducations: () => Promise<void>;
 };
-
-// const generateSetHidden = (
-//   stateKey: keyof Omit<
-//     State,
-//     "educations" | "relevantCourseWork" | "isLoading" | "error"
-//   >
-// ) => {
-//   return (key: string) => (set: any, get: any) => {
-//     const state = get();
-//     console.log("State:", state[stateKey]);
-//     if (!state[stateKey]) return { [stateKey]: null };
-
-//     return {
-//       [stateKey]: {
-//         ...state[stateKey],
-//         [key]: !state[stateKey][key],
-//       },
-//     };
-//   };
-// };
-
-const INITIAL_STATE: State = {
-  educations: [], // should be []
-  hiddenGPAs: null,
-  hiddenEducations: null, //should be null
-  hiddenDates: null,
-  hideAll: false,
-  relevantCourseWork: "",
-  isLoading: false,
-  error: null,
-};
-
-async function getData() {
-  try {
-    const res = await fetch(`/api/educationsInfo`);
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return res.json();
-  } catch (e) {
-    console.log("error loading topic in zustand:", e);
-  }
-}
 
 const storeCache: Record<string, any> = {};
 
@@ -80,44 +29,48 @@ export const createEducationInfo = (educationHeaderID: string) => {
     return storeCache[educationHeaderID];
   }
 
+  let INITIAL_STATE = {
+    educations: [], // should be []
+    hiddenGPAs: null,
+    hiddenEducations: null, //should be null
+    hiddenDates: null,
+    hideAll: false,
+    relevantCourseWork: "",
+    isLoading: false,
+    error: null,
+  };
+
+  if (typeof window !== "undefined") {
+    const savedState = JSON.parse(localStorage.getItem(educationHeaderID));
+    if (savedState) {
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
+    }
+  }
   const useEducationsInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        ...INITIAL_STATE, // Spread the initial state
-        fetchEducations: async () => {
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
+        fetchDefaultEducations: async () => {
           set({ isLoading: true });
           try {
-            const educations: EducationType[] | null =
-              (await getData()).educations || INITIAL_STATE.educations;
+            const educations = await getCleanedEducationData();
 
-            const hiddenGPAs = educations
-              ? educations.reduce((acc, education) => {
-                  acc[education._id] = false;
-                  return acc;
-                }, {} as { [key: string]: boolean })
-              : null;
-
-            const hiddenEducations = educations
-              ? educations.reduce((acc, education) => {
-                  acc[education._id] = false;
-                  return acc;
-                }, {} as { [key: string]: boolean })
-              : null;
-
-            const hiddenDates = educations
-              ? educations.reduce((acc, education) => {
-                  acc[education._id] = false;
-                  return acc;
-                }, {} as { [key: string]: boolean })
-              : null;
-
-            set({
-              educations: educations ? educations : [],
-              hiddenDates: hiddenDates,
-              hiddenEducations: hiddenEducations,
-              hiddenGPAs: hiddenGPAs,
-              isLoading: false,
-            });
+            set({ ...educations, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchEducations: async () => {
+          set({ isLoading: true });
+          const id = educationHeaderID.split("-").slice(2).join("-");
+          try {
+            const data = await fetchResumeSection(id, "educations");
+            set({ ...data.educations, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

@@ -57,11 +57,7 @@ export default function RootLayout({
 
       <body className={`${inter.className} `}>
         <div className="">
-          <NextAuthProvider>
-            {" "}
-            {/* Added for demonstration purposes, adjust width and other styles as required */}
-            <div>{children}</div>
-          </NextAuthProvider>
+          <NextAuthProvider>{children}</NextAuthProvider>
         </div>
         <Toaster />
       </body>

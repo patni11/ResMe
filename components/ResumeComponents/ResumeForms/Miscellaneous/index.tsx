@@ -1,5 +1,5 @@
 "use client";
-import { FC, memo, useEffect } from "react";
+import { FC, memo } from "react";
 import { FormCardWrapper } from "../FormCardWrapper";
 import { Input } from "@/components/ui/input";
 
@@ -41,15 +41,9 @@ const TalentsSection: FC<TalentsSectionProp> = ({
     setSkills,
     setInterests,
     setLanguages,
-    fetchAll,
+    fetchDefaultTalent,
+    fetchTalents,
   } = useTalentsInfo();
-
-  useEffect(() => {
-    let skillssLocalStorage = localStorage.getItem(talentsID);
-    if (!skillssLocalStorage) {
-      fetchAll();
-    }
-  }, [fetchAll]);
 
   const setHideAll = () => {
     setHideInterests(true);
@@ -60,7 +54,8 @@ const TalentsSection: FC<TalentsSectionProp> = ({
   return (
     <FormCardWrapper
       cardTitle="Talent"
-      refreshFunction={() => fetchAll()}
+      refreshFunction={() => fetchDefaultTalent()}
+      refreshSection={() => fetchTalents()}
       hideAll={hideSkills && hideInterests & hideLanguages}
       isLoading={isLoading}
       deleteFunction={setHideAll}
@@ -74,7 +69,7 @@ const TalentsSection: FC<TalentsSectionProp> = ({
           <div className="flex">
             <Input
               className="w-full focus-visible:ring-0"
-              placeholder={`Your ${name}`}
+              placeholder={`Your Skills`}
               value={skills}
               onChange={(e) => {
                 setSkills(e.currentTarget.value);

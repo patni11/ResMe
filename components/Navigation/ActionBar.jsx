@@ -1,67 +1,80 @@
 "use client";
 import { buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
-import { SaveIcon, File } from "lucide-react";
+import { UploadCloud, File } from "lucide-react";
+import {
+  fixCertificateFormat,
+  fixEducationFormat,
+  fixProjectFormat,
+  fixExperienceFormat,
+  fixHeaderInfo,
+  fixTalent,
+} from "@/app/utils/FormattingFunctions";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
+import { updateResume } from "@/lib/actions/resumes.action";
+import { saveAs } from "file-saver";
+import { Packer } from "docx";
+import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
+import { useResumeDataContext } from "@/app/(mainApp)/buildResume/ResumeDataContext";
 
-//import { saveAs } from "file-saver";
-//import { Packer } from "docx";
-//import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
-// import { PDFViewer } from "@react-pdf/renderer";
-// import Document from "@/components/ResumeComponents/ReactPDF/index";
-const { v4: uuidv4 } = require("uuid");
-import { ComingSoon } from "@/components/Cards/ComingSoon";
 //import { saveLocally } from "./storeLocally";
 import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
-
-import { createResume, updateResume } from "@/lib/actions/resumes.action";
 import * as gtag from "@/lib/gtag";
 
-const ActionBar = ({ resumeId, email, children }) => {
+const ActionBar = ({ componentsData, children }) => {
   const [isSaving, setIsSaving] = useState(false);
   //const [isDownloading, setIsDownloading] = useState(false);
   const { toast } = useToast();
-  const router = useRouter();
+  const { email, name, isSubscribed, resumeId } = useResumeDataContext();
+  //const router = useRouter();
 
-  // const downloadDocx = () => {
-  //   gtag.event({
-  //     clientWindow: window,
-  //     action: "Download Docx",
-  //     category: "Download",
-  //     label: "Download Docx",
+  const downloadDocx = async () => {
+    try {
+      const doc = DocumentCreator({ componentsData, resumeId, email });
+
+      await Packer.toBlob(doc).then((blob) => {
+        console.log(blob);
+        saveAs(blob, `${name}_resume.docx`);
+        console.log("Document created successfully");
+      });
+      toast({
+        title: "Downloaded Docx 🥳",
+      });
+    } catch (e) {
+      toast({
+        title: "Sorry could not download Docx, contact support",
+      });
+      console.log("Error downloading docx", e);
+    }
+  };
+  // function fixExperience(rawExperiences) {
+  //   const formattedExperiences = rawExperiences.map((exp) => {
+  //     let endDate = exp.endDate;
+
+  //     // Check if endDate is a string and not 'working', then parse it as a Date.
+  //     if (typeof endDate === "string" && endDate !== "working") {
+  //       endDate = new Date(endDate);
+  //     }
+
+  //     return {
+  //       ...exp,
+  //       endDate: endDate,
+  //     };
   //   });
+  //   return formattedExperiences;
+  // }
 
-  //   const doc = DocumentCreator({ componentsData, resumeId, email });
-
-  //   Packer.toBlob(doc).then((blob) => {
-  //     console.log(blob);
-  //     saveAs(blob, "resume.docx");
-  //     console.log("Document created successfully");
-  //   });
-  // };
-  function fixExperience(rawExperiences) {
-    const formattedExperiences = rawExperiences.map((exp) => {
-      let endDate = exp.endDate;
-
-      // Check if endDate is a string and not 'working', then parse it as a Date.
-      if (typeof endDate === "string" && endDate !== "working") {
-        endDate = new Date(endDate);
-      }
-
-      return {
-        ...exp,
-        endDate: endDate,
-      };
-    });
-    return formattedExperiences;
-  }
-
-  function fixStructure(arrayOfObjects) {
-    arrayOfObjects = arrayOfObjects.map(
-      ({ _id, __v, email, createdAt, updatedAt, ...rest }) => rest
-    );
-    return arrayOfObjects;
-  }
+  // function fixStructure(arrayOfObjects) {
+  //   arrayOfObjects = arrayOfObjects.map(
+  //     ({ _id, __v, email, createdAt, updatedAt, ...rest }) => rest
+  //   );
+  //   return arrayOfObjects;
+  // }
 
   const handleSave = async () => {
     gtag.event({
@@ -70,104 +83,46 @@ const ActionBar = ({ resumeId, email, children }) => {
       category: "Download",
       label: "Save",
     });
+    try {
+      const resumeHeader = localStorage.getItem(
+        `resumeHeader-${email}-${resumeId}`
+      );
 
-    const certificates = localStorage.getItem(
-      `certificates-${email}-${resumeId}`
-    );
-    const resumeHeader = localStorage.getItem(
-      `resumeHeader-${email}-${resumeId}`
-    );
+      const processedHeader = fixHeaderInfo(JSON.parse(resumeHeader)["state"]);
 
-    const educations = localStorage.getItem(`educations-${email}-${resumeId}`);
+      const educations = localStorage.getItem(
+        `educations-${email}-${resumeId}`
+      );
+      const processedEducation = fixEducationFormat(
+        JSON.parse(educations)["state"]
+      );
 
-    const experiences = localStorage.getItem(
-      `experiences-${email}-${resumeId}`
-    );
+      const certificates = localStorage.getItem(
+        `certificates-${email}-${resumeId}`
+      );
+      const processedCertificates = fixCertificateFormat(
+        JSON.parse(certificates)["state"]
+      );
 
-    const projects = localStorage.getItem(`projects-${email}-${resumeId}`);
+      const experiences = localStorage.getItem(
+        `experiences-${email}-${resumeId}`
+      );
+      const processedExperiences = fixExperienceFormat(
+        JSON.parse(experiences)["state"]
+      );
 
-    const talents = localStorage.getItem(`talents-${email}-${resumeId}`);
+      const projects = localStorage.getItem(`projects-${email}-${resumeId}`);
+      const processedProjects = fixProjectFormat(JSON.parse(projects)["state"]);
 
-    const processedCertificates = fixStructure(
-      JSON.parse(certificates)["state"]["certificates"]
-    );
-    const processedEducation = fixStructure(
-      JSON.parse(educations)["state"]["educations"]
-    );
-    const processedProjects = fixStructure(
-      JSON.parse(projects)["state"]["projects"]
-    );
-    const processedHeader = JSON.parse(resumeHeader)["state"]["headerInfo"];
-    delete processedHeader._id;
-    delete processedHeader.__v;
-    const processedExperiences = fixStructure(
-      fixExperience(JSON.parse(experiences)["state"]["experiences"])
-    );
-
-    if (resumeId === "default") {
-      const newResumeId = uuidv4();
-
-      //saveLocally(newResumeId);
-      // add code to save to DB
-      // show a toast
-      const res = await createResume({
-        email: email,
-        resumeId: newResumeId,
-        resumeName: "New Resume",
-        skills: JSON.parse(talents)["state"]["skills"],
-        languages: JSON.parse(talents)["state"]["languages"],
-        interests: JSON.parse(talents)["state"]["interests"],
-        educations: processedEducation,
-        certificates: processedCertificates,
-        experiences: processedExperiences,
-        projects: processedProjects,
-        headerInfo: processedHeader,
-      });
-
-      if (res.isSuccess) {
-        localStorage.setItem(
-          `certificates-${email}-${newResumeId}`,
-          certificates
-        );
-
-        localStorage.setItem(
-          `resumeHeader-${email}-${newResumeId}`,
-          resumeHeader
-        );
-
-        localStorage.setItem(`educations-${email}-${newResumeId}`, educations);
-
-        localStorage.setItem(
-          `experiences-${email}-${newResumeId}`,
-          experiences
-        );
-
-        localStorage.setItem(`projects-${email}-${newResumeId}`, projects);
-
-        localStorage.setItem(`talents-${email}-${newResumeId}`, talents);
-
-        toast({
-          title: `Saved a new Resume 🥳`,
-        });
-
-        setTimeout(() => {
-          router.push(`/buildResume/${newResumeId}`);
-        }, 1000);
-      } else {
-        console.log(res);
-        const error = res.error;
-        toast({
-          title: `Failed: ${error} `,
-        });
-      }
-      setIsSaving(false);
-    } else {
+      const talents = localStorage.getItem(`talents-${email}-${resumeId}`);
+      const processedTalents = fixTalent(JSON.parse(talents)["state"]);
+      console.log("header", processedHeader);
       const res = await updateResume({
         email: email,
         resumeId: resumeId,
-        skills: JSON.parse(talents)["state"]["skills"],
-        languages: JSON.parse(talents)["state"]["languages"],
-        interests: JSON.parse(talents)["state"]["interests"],
+        skills: processedTalents.skills,
+        languages: processedTalents.languages,
+        interests: processedTalents.interests,
         educations: processedEducation,
         certificates: processedCertificates,
         experiences: processedExperiences,
@@ -186,51 +141,85 @@ const ActionBar = ({ resumeId, email, children }) => {
           title: `Could Not Update: ${error} `,
         });
       }
-      setIsSaving(false);
+    } catch (e) {
+      toast({
+        title:
+          "Sorry could not Save at this time, try again later or contact support",
+      });
+      console.log("Error saving resume", e);
     }
+
+    setIsSaving(false);
   };
 
   return (
     <div className="relative w-[80%] flex justify-center items-cetner space-x-2 py-1.5 mb-2 items-center bg-secondary rounded-full">
-      <div
-        className={buttonVariants({
-          variant: "outlineHover",
-          size: "xs",
-          className: "flex space-x-2",
-        })}
-        onClick={() => {
-          setIsSaving(true);
-          handleSave();
-        }}
-        disabled={isSaving}
-      >
-        <SaveIcon className="w-4 h-4" />
-        <span className="hidden md:block">Save</span>
-      </div>
-      <ComingSoon>
-        <div
-          className={buttonVariants({
-            variant: "outlineHover",
-            size: "xs",
-            className: "flex space-x-2",
-          })}
-          onClick={() => {
-            gtag.event({
-              clientWindow: window,
-              action: "Download Docx",
-              category: "Download",
-              label: "Download Docx",
-            });
-            // setIsSaving(true);
-            // downloadDocx();
-          }}
-          disabled={isSaving}
-        >
-          <File className="w-4 h-4" />
+      <TooltipProvider>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger className="cursor-default ml-1.5">
+            <div
+              className={buttonVariants({
+                variant: "outlineHover",
+                size: "xs",
+                className: "flex space-x-2",
+              })}
+              onClick={async () => {
+                setIsSaving(true);
+                await handleSave();
+                setIsSaving(false);
+              }}
+              disabled={isSaving}
+            >
+              <UploadCloud className="w-4 h-4" />
+              <span className="hidden md:block">Save</span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent className="p-2 text-xs font-normal">
+            Save Data
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
-          <span>Docx</span>
-        </div>
-      </ComingSoon>
+      <TooltipProvider>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger className="cursor-default ml-1.5">
+            <div
+              className={buttonVariants({
+                variant: "outlineHover",
+                size: "xs",
+                className: "flex space-x-2",
+              })}
+              onClick={async () => {
+                setIsSaving(true);
+                gtag.event({
+                  clientWindow: window,
+                  action: "Download Docx",
+                  category: "Download",
+                  label: "Download Docx",
+                });
+
+                if (isSubscribed) {
+                  await downloadDocx();
+                } else {
+                  toast({
+                    title: "Please upgrade to premium to use this feature",
+                  });
+                }
+
+                setIsSaving(false);
+              }}
+              disabled={isSaving}
+            >
+              <File className="w-4 h-4" />
+
+              <span>Docx</span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent className="p-2 text-xs font-normal">
+            Download microsoft docx file
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
       {children}
     </div>

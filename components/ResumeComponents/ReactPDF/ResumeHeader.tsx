@@ -15,7 +15,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
   const { displayName } = headerInfo;
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo
-    : [{ contact: "" }];
+    : [{ contactName: "", contact: "" }];
   const location = headerInfo?.location ? headerInfo.location : "";
   const links = headerInfo.links
     ? headerInfo.links
@@ -35,8 +35,8 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
           ...styles.flexRow,
           flexWrap: "wrap",
           textAlign: "center",
+          justifyContent: "center",
           marginTop: spacing["0.5"],
-          alignSelf: "center",
           gap: spacing["1"],
         }}
       >
@@ -47,9 +47,10 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
         ) : null}
 
         {contactInfo.map((info: any, index: any) => {
-          const contactKey = info.contact;
+          const contactKey = info.contactName;
           // Check if the contact is hidden
-          if (hiddenContacts[index][contactKey]) return null; // Skip rendering if hidden
+
+          if (hiddenContacts[contactKey]) return null; // Skip rendering if hidden
           return (
             <View
               key={contactKey}
@@ -59,14 +60,14 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
                 gap: spacing["1"],
               }}
             >
-              <ResumePDFText>{` ${contactKey}  |  `}</ResumePDFText>
+              <ResumePDFText>{` ${info.contact}  |  `}</ResumePDFText>
             </View>
           );
         })}
 
         {links.map((link: any, index: any) => {
           const linkKey = link.linkName;
-          if (hiddenLinks[index][linkKey]) return null;
+          if (hiddenLinks[linkKey]) return null;
           const linkText =
             ` ${link.link}` + `${index != links.length - 1 ? `  |  ` : ""}`;
           return (

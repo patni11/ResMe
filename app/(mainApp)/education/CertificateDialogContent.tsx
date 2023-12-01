@@ -1,6 +1,6 @@
 "use client";
 import { FC } from "react";
-import { Certificate } from "./pageTypes";
+import { Certificate } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -30,7 +30,7 @@ import { useToast } from "@/components/ui/use-toast";
 import {
   deleteCertificate,
   updateCertificate,
-} from "@/lib/actions/certificates.action.";
+} from "@/lib/actions/certificates.action";
 
 const CertificateSchema = z.object({
   _id: z.string().optional(),
@@ -172,7 +172,7 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
               </FormItem>
             )}
           />
-          <DialogFooter>
+          <DialogFooter className="flex flex-row space-x-4">
             <Button
               variant="outline"
               type="button"

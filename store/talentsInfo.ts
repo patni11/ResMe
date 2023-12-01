@@ -2,6 +2,8 @@
 // @ts-nocheck
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { getCleanedTalentsData } from "@/lib/apiFunctions";
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 export type State = {
   skills: string;
@@ -15,38 +17,15 @@ export type State = {
 };
 
 type Actions = {
-  fetchAll: () => void;
+  fetchDefaultTalent: () => Promise<void>;
   setHideSkills: () => void;
   setSkills: (newSkills: string) => void;
   setInterests: (newInterests: string) => void;
   setLanguages: (newLanguages: string) => void;
   setHideLanguages: () => void;
   setHideInterests: () => void;
+  fetchTalents: () => Promise<void>;
 };
-
-const INITIAL_STATE: State = {
-  skills: "",
-  languages: "",
-  interests: "",
-  hideSkills: false,
-  hideLanguages: false,
-  hideInterests: false,
-  isLoading: false,
-  error: null,
-};
-
-async function getData() {
-  try {
-    const res = await fetch(`/api/skills`);
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return res.json();
-  } catch (e) {
-    console.log("error loading topic in zustand:", e);
-  }
-}
 
 const storeCache: Record<string, any> = {};
 
@@ -55,28 +34,55 @@ export const createTalentsInfo = (talentsID: string) => {
     return storeCache[talentsID];
   }
 
+  let INITIAL_STATE = {
+    skills: "",
+    languages: "",
+    interests: "",
+    hideSkills: false,
+    hideLanguages: false,
+    hideInterests: false,
+    isLoading: false,
+    error: null,
+  };
+
+  if (typeof window !== "undefined") {
+    const savedState = JSON.parse(localStorage.getItem(talentsID));
+    if (savedState) {
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
+    }
+  }
+
   const useTalentsInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        ...INITIAL_STATE, // Spread the initial state
-        fetchAll: async () => {
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
+        fetchDefaultTalent: async () => {
           set({ isLoading: true });
           try {
             // const skills: string[] =
             //   (await getData()).skills || INITIAL_STATE.skills;
 
-            const talent: {
-              skills: string[];
-              languages: string[];
-              interests: string[];
-            } = (await getData()) || [];
+            const talent = await getCleanedTalentsData();
 
-            set({
-              skills: talent.skills.join(", "),
-              interests: talent.interests.join(", "),
-              languages: talent.languages.join(", "),
-              isLoading: false,
-            });
+            set({ ...talent, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchTalents: async () => {
+          set({ isLoading: true });
+          const id = talentsID.split("-").slice(2).join("-");
+          try {
+            const data = await fetchResumeSection(
+              id,
+              "skills languages interests"
+            );
+            set({ ...data, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

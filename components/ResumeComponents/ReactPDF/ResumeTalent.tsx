@@ -32,12 +32,12 @@ const ResumeTalent = ({
           style={{
             ...styles.flexRow,
             marginTop: spacing["1.5"],
-            gap: spacing["1"],
-            paddingRight: `${spacing["10"]}`,
+            flexWrap: "wrap", // ensure the text wraps
           }}
         >
-          <ResumePDFText bold={true}>{`Skills:`}</ResumePDFText>
-          <ResumePDFText>{skills}</ResumePDFText>
+          <ResumePDFText bold={true}>
+            {`Skills:`} <ResumePDFText>{skills}</ResumePDFText>
+          </ResumePDFText>
         </View>
       ) : null}
 
@@ -46,12 +46,12 @@ const ResumeTalent = ({
           style={{
             ...styles.flexRow,
             marginTop: spacing["1.5"],
-            gap: spacing["1"],
-            paddingRight: `${spacing["10"]}`,
+            flexWrap: "wrap", // ensure the text wraps
           }}
         >
-          <ResumePDFText bold={true}>{`Interests:`}</ResumePDFText>
-          <ResumePDFText>{interests}</ResumePDFText>
+          <ResumePDFText bold={true}>
+            {`Interests:`} <ResumePDFText>{interests}</ResumePDFText>
+          </ResumePDFText>
         </View>
       ) : null}
 
@@ -60,12 +60,12 @@ const ResumeTalent = ({
           style={{
             ...styles.flexRow,
             marginTop: spacing["1.5"],
-            gap: spacing["1"],
-            paddingRight: `${spacing["10"]}`,
+            flexWrap: "wrap", // ensure the text wraps
           }}
         >
-          <ResumePDFText bold={true}>{`Languages:`}</ResumePDFText>
-          <ResumePDFText>{languages}</ResumePDFText>
+          <ResumePDFText bold={true}>
+            {`Languages:`} <ResumePDFText>{languages}</ResumePDFText>
+          </ResumePDFText>
         </View>
       ) : null}
     </ResumePDFSection>

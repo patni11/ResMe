@@ -70,12 +70,21 @@ const ResumeEducation = ({
           style={{
             ...styles.flexRow,
             marginTop: spacing["1.5"],
-            gap: spacing["1"],
+            //gap: spacing["1"],
+            flexWrap: "wrap", // ensure the text wraps
           }}
         >
-          <ResumePDFText bold={true}>{`Relevant Courses:`}</ResumePDFText>
-          <ResumePDFText>{relevantCourseWork}</ResumePDFText>
+          <ResumePDFText bold={true}>
+            {`Relevant Courses:`}{" "}
+            <ResumePDFText>{relevantCourseWork}</ResumePDFText>
+          </ResumePDFText>
         </View>
+
+        // <View style={{ marginTop: spacing["1.5"] }}>
+        //   <Text style={{ fontWeight: 700 }}>
+        //     Relevant Courses: {relevantCourseWork}
+        //   </Text>
+        // </View>
       )}
     </ResumePDFSection>
   );

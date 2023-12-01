@@ -1,107 +1,166 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { Download } from "lucide-react";
+import { Download, X } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { sendPDFDownloadEmail } from "@/lib/actions/sendEmail.action";
-import { useSession } from "next-auth/react";
-import { ComingSoon } from "@/components/Cards/ComingSoon";
+import { useResumeDataContext } from "@/app/(mainApp)/buildResume/ResumeDataContext";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { ArrowUpRightSquare } from "lucide-react";
 import * as gtag from "@/lib/gtag";
 import { useToast } from "@/components/ui/use-toast";
 import { useUploadThing } from "@/lib/uploadthing";
-const ResumeControlBar = ({
-  document,
-  fileName,
-}: {
-  document: JSX.Element;
-  fileName: string;
-}) => {
+import { getPDFLink, updatePDFLink } from "@/lib/actions/resumes.action";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
   const [instance, update] = usePDF({ document });
   const [isLoading, setIsLoading] = useState(false);
-  const { data: session } = useSession();
-  const email = session?.user?.email || "";
-  const name = session?.user?.name || "";
   const { toast } = useToast();
+  const [url, setURL] = useState("");
+  const [popup, setPopup] = useState(false);
+  const { email, name, isSubscribed, resumeId } = useResumeDataContext();
 
   //Hook to update pdf when document changes
   useEffect(() => {
     update(document);
   }, [document]);
 
+  const { startUpload } = useUploadThing("pdfUploader");
+
   if (instance.error) return <div>Download Error</div>;
 
-  // const getShareUrl = useCallback(async () => {
-  //   const res = await startUpload([new File([instance.blob!], "pdf")]);
-  //   //startUpload([new File([instance.blob], { type: "application/pdf" })
+  const getShareUrl = async () => {
+    const res = await startUpload([new File([instance.blob!], "pdf")], {
+      resumeId: resumeId,
+    });
 
-  //   if (!res) {
-  //     //show error
-  //     toast({
-  //       title: "Couldn't copy the file link",
-  //       variant: "destructive",
-  //     });
-  //     return "";
-  //   }
-  //   // get the link of the url from upload thing
-  //   console.log("Res", res);
-  //   const [fileResponse] = res;
-  //   const key = fileResponse?.key;
-  //   console.log("File resp", fileResponse);
+    if (!res) {
+      //show error
+      toast({
+        title: "Couldn't copy the file link",
+        variant: "destructive",
+      });
+      return "";
+    }
+    // get the link of the url from upload thing
+    const [fileResponse] = res;
+    const key = fileResponse?.key;
 
-  //   if (!key) {
-  //     //show error
-  //     toast({
-  //       title: "Couldn't copy the file link",
-  //       variant: "destructive",
-  //     });
-  //     return "";
-  //   }
+    if (!key) {
+      //show error
+      toast({
+        title: "Couldn't copy the file link",
+        variant: "destructive",
+      });
+      return "";
+    }
 
-  //   return fileResponse.url;
-  // }, [document]);
+    await updatePDFLink(resumeId, key);
 
-  // const handleCopyToClipboard = async (url: string) => {
-  //   await navigator.clipboard.writeText(url);
+    const pollInterval = 500; // 5 seconds
+    const checkKeyInDB = async () => {
+      const savedKey = await getPDFLink(resumeId);
+      if (key == savedKey) {
+        console.log("Key found in DB");
+        clearInterval(polling);
+        return `https://utfs.io/f/${key}`;
+      } else {
+        console.log("Updating DB");
+        await updatePDFLink(resumeId, key);
+      }
+    };
+    const polling = setInterval(checkKeyInDB, pollInterval);
+    return `https://utfs.io/f/${key}`;
+  };
 
-  //   toast({
-  //     title: "URL Link Copied",
-  //   });
-  // };
+  const handleCopyToClipboard = async (url: string) => {
+    await navigator.clipboard.writeText(url);
 
-  //  const { startUpload } = useUploadThing("pdfUploader");
+    toast({
+      title: "URL Link Copied",
+    });
+  };
+
+  const handleButtonClick = async () => {
+    setIsLoading(true);
+    gtag.event({
+      clientWindow: window,
+      action: "Share Link",
+      category: "Download",
+      label: "Share Link",
+    });
+    // call upload thing to save the link as pdf
+    const url = await getShareUrl();
+
+    // put it in the person's clipboard
+    handleCopyToClipboard(url);
+    setURL(url);
+    setPopup(true);
+    setIsLoading(false);
+  };
 
   return (
     <div className="flex space-x-2">
-      <ComingSoon>
-        <Button
-          disabled={instance.loading || isLoading}
-          variant="outlineHover"
-          size="xs"
-          className="flex space-x-2"
-          onClick={async () => {
-            //setIsLoading(true);
-            gtag.event({
-              clientWindow: window,
-              action: "Share Link",
-              category: "Download",
-              label: "Share Link",
-            });
-            // call upload thing to save the link as pdf
-            //const url = await getShareUrl();
-            //console.log("URL", url);
-            // put it in the person's clipboard
-            //handleCopyToClipboard(url);
-            //setIsLoading(false);
-          }}
-        >
-          <ArrowUpRightSquare className="w-4 h-4" />
+      <TooltipProvider>
+        <Tooltip delayDuration={300}>
+          <TooltipTrigger className="cursor-default ml-1.5">
+            <Button
+              disabled={instance.loading || isLoading}
+              variant="outlineHover"
+              size="xs"
+              className="flex space-x-2"
+              onClick={(e) => {
+                e.preventDefault();
+                if (isSubscribed) {
+                  handleButtonClick();
+                } else {
+                  toast({
+                    title: "Please upgrade to use this feature",
+                  });
+                }
+              }}
+            >
+              <ArrowUpRightSquare className="w-4 h-4" />
 
-          <span>Copy</span>
-        </Button>
-      </ComingSoon>
+              <span>Copy</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent className="p-2 text-xs font-normal">
+            Share Link to PDF
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
+      {popup ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+          <div className="flex flex-col space-y-4 bg-white rounded-lg p-4 w-[80%] md:w-[30%]">
+            <div className="flex w-full justify-between items-center">
+              <Label htmlFor="url" className="text-md">
+                Share Link
+              </Label>
+              <button
+                className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+                onClick={() => {
+                  setPopup(false);
+                }}
+              >
+                <X className="h-5 w-5" />
+                <span className="sr-only">Close</span>
+              </button>
+            </div>
+
+            <Input value={url} readOnly className="w-full" id="url" />
+          </div>
+        </div>
+      ) : null}
 
       {instance.loading || isLoading ? (
         <Button
@@ -113,32 +172,41 @@ const ResumeControlBar = ({
           <LoadingSpinner />
         </Button>
       ) : (
-        <a
-          href={instance.url!}
-          download={fileName}
-          className={buttonVariants({
-            variant: "outlineHover",
-            size: "xs",
-            className: "flex space-x-2",
-          })}
-          onClick={() => {
-            setIsLoading(true);
-            gtag.event({
-              clientWindow: window,
-              action: "Download PDF",
-              category: "Download",
-              label: "Download PDF",
-            });
-            toast({
-              title: "PDF Downloaded Successfully 🥳",
-            });
-            sendPDFDownloadEmail({ name: name, email: email });
-            setIsLoading(false);
-          }}
-        >
-          <Download className="w-4 h-4" />
-          <span>PDF</span>
-        </a>
+        <TooltipProvider>
+          <Tooltip delayDuration={300}>
+            <TooltipTrigger className="cursor-default ml-1.5">
+              <a
+                href={instance.url!}
+                download={`${name}_resume`}
+                className={buttonVariants({
+                  variant: "outlineHover",
+                  size: "xs",
+                  className: "flex space-x-2",
+                })}
+                onClick={() => {
+                  setIsLoading(true);
+                  gtag.event({
+                    clientWindow: window,
+                    action: "Download PDF",
+                    category: "Download",
+                    label: "Download PDF",
+                  });
+                  toast({
+                    title: "PDF Downloaded Successfully 🥳",
+                  });
+                  sendPDFDownloadEmail({ name: name, email: email });
+                  setIsLoading(false);
+                }}
+              >
+                <Download className="w-4 h-4" />
+                <span>PDF</span>
+              </a>
+            </TooltipTrigger>
+            <TooltipContent className="p-2 text-xs font-normal">
+              Download PDF file
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
     </div>
   );

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Settings2 } from "lucide-react";
 import {
@@ -17,11 +16,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import ResumeCardImage from "@/public/resumeCard.png";
-import Link from "next/link";
-
+import { ResumeCardImageComponent } from "./ResumeCardImg";
 import { DeleteButton, RenameDialog } from "./ResumeFuncitonButtons";
-import { Button } from "../ui/button";
+import { buttonVariants } from "../ui/button";
+import { Input } from "../ui/input";
 
 //import { useToast } from "../ui/use-toast";
 interface ResumeCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -32,6 +30,7 @@ interface ResumeCardProps extends React.HTMLAttributes<HTMLDivElement> {
   aspectRatio?: "portrait" | "square";
   width?: number;
   height?: number;
+  pdfLink?: string;
 }
 
 export async function ResumeCard({
@@ -43,11 +42,20 @@ export async function ResumeCard({
   width,
   height,
   className,
+  pdfLink,
 }: ResumeCardProps) {
   //const { toast } = useToast();
   return (
-    <div className={cn("space-y-3", className)}>
-      <Link key={resumeId} href={`/buildResume/${resumeId}`}>
+    <div className={cn("space-y-1", className)}>
+      <ResumeCardImageComponent
+        resumeName={resumeName}
+        resumeId={resumeId}
+        email={email}
+        aspectRatio={aspectRatio}
+        width={width}
+        height={height}
+      />
+      {/* <Link key={resumeId} href={`/buildResume/${resumeId}`}>
         <div className="overflow-hidden rounded-md">
           <Image
             src={ResumeCardImage}
@@ -58,17 +66,18 @@ export async function ResumeCard({
               "h-auto w-auto object-cover transition-all hover:scale-105",
               aspectRatio === "portrait" ? "aspect-[3/4]" : "aspect-square"
             )}
+            priority={true}
           />
         </div>
-      </Link>
+      </Link> */}
 
-      <div className="space-y-1 text-sm flex justify-between w-full align-center">
+      <div className="text-sm flex justify-between w-full align-center m-0">
         <div className="flex flex-col">
           <h3 className="font-medium leading-none">{resumeName}</h3>
           <p className="text-xs text-muted-foreground">{updatedAt}</p>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger className="hover:bg-secondary p-2 rounded-md">
             <Settings2 className="h-4 w-4" aria-label="Modify"></Settings2>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -77,13 +86,14 @@ export async function ResumeCard({
             <DropdownMenuItem asChild>
               <Dialog>
                 <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  <Button
-                    //onClick={() => renameFunc(resumeId, "Shubh Patni")}
-                    variant="outline"
-                    className="w-full"
+                  <div
+                    className={buttonVariants({
+                      variant: "outline",
+                      className: "w-full",
+                    })}
                   >
                     Rename
-                  </Button>
+                  </div>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
@@ -99,13 +109,14 @@ export async function ResumeCard({
             <DropdownMenuItem asChild>
               <Dialog>
                 <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  <Button
-                    //onClick={() => renameFunc(resumeId, "Shubh Patni")}
-                    variant="outline"
-                    className="w-full"
+                  <div
+                    className={buttonVariants({
+                      variant: "outline",
+                      className: "w-full",
+                    })}
                   >
                     Delete
-                  </Button>
+                  </div>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
@@ -117,6 +128,42 @@ export async function ResumeCard({
                       </span>
 
                       <DeleteButton resumeId={resumeId} email={email} />
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <Dialog>
+                <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                  <div
+                    //onClick={() => renameFunc(resumeId, "Shubh Patni")}
+
+                    className={buttonVariants({
+                      variant: "outline",
+                      className: "w-full",
+                    })}
+                  >
+                    Copy Link
+                  </div>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Share Link</DialogTitle>
+                    <DialogDescription className="flex flex-col space-y-4 items-center">
+                      {pdfLink || pdfLink != "" ? (
+                        <Input
+                          value={`https://utfs.io/f/${pdfLink}`}
+                          readOnly
+                        />
+                      ) : (
+                        <span>
+                          You don&apos;t have any links generated yet, open
+                          resume, copy link and next time you can copy from here
+                          😉
+                        </span>
+                      )}
                     </DialogDescription>
                   </DialogHeader>
                 </DialogContent>

@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
-import { EducationType } from "./pageTypes";
+import { EducationType } from "@/lib/types";
 import { v4 as uuidv4 } from "uuid";
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -142,7 +142,7 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleFormSubmit)}
-        className="flex flex-col space-y-8"
+        className="flex flex-col space-y-4 md:space-y-8"
       >
         {/* School Name */}
         <FormField
@@ -160,7 +160,7 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
         />
 
         {/* Major, Degree, GPA */}
-        <div className="flex flex-row space-x-8">
+        <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-8">
           <FormField
             control={form.control}
             name="major"
@@ -235,7 +235,7 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
         </div>
 
         {/** Date pickers */}
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row justify-between">
           <FormField
             control={form.control}
             name="startDate"
@@ -319,7 +319,7 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
           />
         </div>
 
-        <DialogFooter>
+        <DialogFooter className="flex flex-row space-x-4">
           <Button
             variant="outline"
             type="button"

@@ -1,32 +1,20 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { Experience } from "@/app/(mainApp)/experience/pageTypes";
+import { ExperienceStore } from "@/lib/types";
 import { persist } from "zustand/middleware";
+import { getCleanedExperienceData } from "@/lib/apiFunctions";
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-export type State = {
-  experiences:
-    | {
-        _id: string;
-        company: string;
-        location: string;
-        positionTitle: string;
-        experienceType: string;
-        startDate: Date;
-        endDate: Date | "working";
-        description: string[];
-      }[]
-    | [];
-  hiddenExperiences: { [key: string]: boolean } | null;
-  hideAll: boolean;
+export type State = ExperienceStore & {
   isLoading: boolean;
   error: any;
 };
 
 type Actions = {
   setHiddenExperience: (key: string) => void;
-  fetchExperiences: () => void;
+  fetchDefaultExperiences: () => Promise<void>;
   updateDescriptions: (
     key: string,
     idx: number,
@@ -37,60 +25,55 @@ type Actions = {
   setHideAll: () => void;
   moveExpUp: (index: number) => void;
   moveExpDown: (index: number) => void;
-};
-
-const INITIAL_STATE: State = {
-  experiences: [], // should be []
-  hiddenExperiences: {}, //should be null
-  hideAll: false,
-  isLoading: false,
-  error: null,
+  fetchExperiences: () => Promise<void>;
 };
 
 const storeCache: Record<string, any> = {};
-
-async function getData() {
-  try {
-    const res = await fetch(`/api/experiencesInfo`);
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return res.json();
-  } catch (e) {
-    console.log("error loading topic in zustand:", e);
-  }
-}
 
 export const createExperienceInfo = (experienceID: string) => {
   if (storeCache[experienceID]) {
     return storeCache[experienceID];
   }
 
+  let INITIAL_STATE = {
+    experiences: [], // should be []
+    hiddenExperiences: {}, //should be null
+    hideAll: false,
+    isLoading: false,
+    error: null,
+  };
+
+  if (typeof window !== "undefined") {
+    const savedState = JSON.parse(localStorage.getItem(experienceID));
+    if (savedState) {
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
+    }
+  }
+
   const useExperiencesInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        ...INITIAL_STATE, // Spread the initial state
-        fetchExperiences: async () => {
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
+        fetchDefaultExperiences: async () => {
           set({ isLoading: true });
           try {
-            const experiences: Experience[] | [] =
-              (await getData()).experiences || INITIAL_STATE.experiences;
-
-            const hiddenExperiences = experiences
-              ? experiences.reduce((acc, experience) => {
-                  acc[experience._id] = false;
-                  return acc;
-                }, {} as { [key: string]: boolean })
-              : null;
-
-            set({
-              experiences: experiences,
-
-              hiddenExperiences: hiddenExperiences,
-
-              isLoading: false,
-            });
+            const experiences = await getCleanedExperienceData();
+            set({ ...experiences, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchExperiences: async () => {
+          set({ isLoading: true });
+          const id = experienceID.split("-").slice(2).join("-");
+          try {
+            const data = await fetchResumeSection(id, "experiences");
+            set({ ...data.experiences, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

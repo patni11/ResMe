@@ -1,28 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { Project } from "@/app/(mainApp)/projects/pageTypes";
 import { persist } from "zustand/middleware";
+import { getCleanedProjectData } from "@/lib/apiFunctions";
+import { fetchResumeSection } from "@/lib/actions/resumes.action";
+import { ProjectStore } from "@/lib/types";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
-export type State = {
-  projects:
-    | {
-        projectName: string;
-        location?: string;
-        positionTitle?: string;
-        startDate?: Date;
-        endDate?: Date;
-        description: string[];
-        _id: string;
-      }[]
-    | [];
-  hiddenProjects: { [key: string]: boolean } | null;
-  hiddenLocation: { [key: string]: boolean } | null;
-  hiddenDates: { [key: string]: boolean } | null;
-  hiddenPosition: { [key: string]: boolean } | null;
-  hideAll: boolean;
-  // descriptions: { [key: string]: string } | null;
+export type State = ProjectStore & {
   isLoading: boolean;
   error: any;
 };
@@ -32,7 +17,8 @@ type Actions = {
   setHiddenDates: (key: string) => void;
   setHiddenLocation: (key: string) => void;
   setHiddenPosition: (key: string) => void;
-  fetchProjects: () => void;
+  fetchDefaultProjects: () => Promise<void>;
+  fetchProjects: () => Promise<void>;
   updateDescriptions: (
     key: string,
     idx: number,
@@ -45,85 +31,56 @@ type Actions = {
   moveProjDown: (index: number) => void;
 };
 
-const INITIAL_STATE: State = {
-  projects: [], // should be []
-  hiddenProjects: {}, //should be null
-  hiddenLocation: {},
-  hiddenDates: {},
-  hiddenPosition: {},
-  hideAll: false,
-  isLoading: false,
-  error: null,
-};
-
 const storeCache: Record<string, any> = {};
-
-async function getData() {
-  try {
-    const res = await fetch(`/api/projectsInfo`);
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return res.json();
-  } catch (e) {
-    console.log("error loading topic in zustand:", e);
-  }
-}
 
 export const createProjectsSection = (projectId: string) => {
   if (storeCache[projectId]) {
     return storeCache[projectId];
   }
 
+  let INITIAL_STATE = {
+    projects: [], // should be []
+    hiddenProjects: {}, //should be null
+    hiddenLocation: {},
+    hiddenDates: {},
+    hiddenPosition: {},
+    hideAll: false,
+    isLoading: false,
+    error: null,
+  };
+
+  if (typeof window !== "undefined") {
+    const savedState = JSON.parse(localStorage.getItem(projectId));
+    if (savedState) {
+      INITIAL_STATE = {
+        ...INITIAL_STATE,
+        ...savedState,
+      };
+    }
+  }
+
   const useProjectsInfo = create(
     persist<State & Actions>(
       (set, get) => ({
-        ...INITIAL_STATE, // Spread the initial state
-        fetchProjects: async () => {
+        ...INITIAL_STATE,
+        isLoading: false,
+        error: null,
+        fetchDefaultProjects: async () => {
           set({ isLoading: true });
           try {
-            const projects: Project[] | [] =
-              (await getData()).projects || INITIAL_STATE.projects;
+            const projects = await getCleanedProjectData();
 
-            const hiddenProjects = projects
-              ? projects.reduce((acc, project) => {
-                  acc[project._id] = false;
-                  return acc;
-                }, {} as { [key: string]: boolean })
-              : null;
-
-            const hiddenDates = projects
-              ? projects.reduce((acc, project) => {
-                  acc[project._id] = false;
-                  return acc;
-                }, {} as { [key: string]: boolean })
-              : null;
-
-            const hiddenLocation = projects
-              ? projects.reduce((acc, project) => {
-                  acc[project._id] = false;
-                  return acc;
-                }, {} as { [key: string]: boolean })
-              : null;
-
-            const hiddenPosition = projects
-              ? projects.reduce((acc, project) => {
-                  acc[project._id] = false;
-                  return acc;
-                }, {} as { [key: string]: boolean })
-              : null;
-
-            set({
-              projects: projects,
-
-              hiddenProjects: hiddenProjects,
-              hiddenDates: hiddenDates,
-              hiddenLocation: hiddenLocation,
-              hiddenPosition: hiddenPosition,
-
-              isLoading: false,
-            });
+            set({ ...projects, isLoading: false });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchProjects: async () => {
+          set({ isLoading: true });
+          const id = projectId.split("-").slice(2).join("-");
+          try {
+            const data = await fetchResumeSection(id, "projects");
+            set({ ...data.projects, isLoading: false });
           } catch (error) {
             set({ error, isLoading: false });
           }

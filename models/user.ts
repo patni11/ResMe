@@ -1,54 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-// const UserSchema = new Schema(
-//   {
-//     userPlatformDetails: {
-//       name: String,
-//       email: String,
-//       password: String,
-//       stripeCustomerId: String,
-//       stripeSubscriptionId: String,
-//       stripePriceId: String,
-//       stripeCurrentPeriodEnd: Date,
-//     },
-
-//     userDetails: {
-//       resumeName: String,
-//       contractInfo: [String],
-//       links: [String],
-//     },
-
-//     skills: [String],
-//     languages: [String],
-//     interests: [String],
-
-//     resumes: [
-//       {
-//         header: {
-//           username: String,
-//           contactInfo: [String],
-//           links: [String],
-//         },
-//         educations: [{ type: Schema.Types.ObjectId, ref: "Education" }],
-//         certificates: [{ type: Schema.Types.ObjectId, ref: "Certificate" }],
-//         experiences: [{ type: Schema.Types.ObjectId, ref: "Experience" }],
-//         projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
-//         skills: [String],
-//         languages: [String],
-//         interests: [String],
-//       },
-//     ],
-
-//     educations: [{ type: Schema.Types.ObjectId, ref: "Education" }],
-//     certificates: [{ type: Schema.Types.ObjectId, ref: "Certificate" }],
-//     experiences: [{ type: Schema.Types.ObjectId, ref: "Experience" }],
-//     projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
-//   },
-//   {
-//     timestamps: true,
-//   }
-// );
-
 const ResumeHeaderInfoSchema = new Schema(
   {
     _id: { type: String, required: true, unique: true }, // email is being used as ID
@@ -56,6 +7,7 @@ const ResumeHeaderInfoSchema = new Schema(
     contactInfo: {
       type: [
         {
+          contactName: { type: String },
           contact: { type: String, required: true },
           _id: false,
         },
@@ -66,7 +18,7 @@ const ResumeHeaderInfoSchema = new Schema(
     links: {
       type: [
         {
-          linkName: { type: String, required: true },
+          linkName: { type: String },
           link: { type: String, required: true },
           _id: false,
         },
@@ -80,70 +32,75 @@ const ResumeHeaderInfoSchema = new Schema(
   }
 );
 
-const ProjectSchema = new Schema(
-  {
-    _id: { type: String, required: true, unique: true },
-    email: { type: String, required: true }, // email is being used to find projects of this user
-    projectName: { type: String, required: true },
-    location: { type: String },
-    positionTitle: { type: String },
-    startDate: { type: Date },
-    endDate: { type: Date },
-    description: { type: [String] },
-  },
-  { timestamps: true }
-);
+const baseEducationSchema = new Schema({
+  _id: { type: String, required: true },
+  schoolName: { type: String, required: true },
+  major: { type: String },
+  degreeType: { type: String },
+  gpa: { type: Schema.Types.Decimal128 },
+  startDate: { type: Date },
+  endDate: { type: Date },
+});
+
+const baseCertificateSchema = new Schema({
+  _id: { type: String, required: true },
+  certificateName: { type: String },
+  organization: { type: String },
+  issueDate: { type: Date },
+});
 
 const EducationSchema = new Schema(
   {
-    _id: { type: String, required: true },
-    email: { type: String, required: true }, // email is being used to find projects of this user
-    schoolName: { type: String, required: true },
-    major: { type: String },
-    degreeType: { type: String },
-    gpa: { type: Schema.Types.Decimal128 },
-    startDate: { type: Date },
-    endDate: { type: Date },
+    ...baseEducationSchema.obj,
+    email: { type: String, required: true },
   },
   { timestamps: true }
 );
 
 const CertificateSchema = new Schema(
   {
-    _id: { type: String, required: true },
+    ...baseCertificateSchema.obj,
     email: { type: String, required: true }, // email is being used to find projects of this user
-    certificateName: { type: String },
-    organization: { type: String },
-    issueDate: { type: Date },
   },
   { timestamps: true }
 );
+
+const baseProjectSchema = new Schema({
+  _id: { type: String, required: true, unique: true },
+  projectName: { type: String, required: true },
+  location: { type: String },
+  positionTitle: { type: String },
+  startDate: { type: Date },
+  endDate: { type: Date },
+  description: { type: [String] },
+});
+
+const ProjectSchema = new Schema(
+  {
+    ...baseProjectSchema.obj,
+    email: { type: String, required: true },
+  },
+  { timestamps: true }
+);
+
+const baseExperienceSchema = new Schema({
+  _id: { type: String, required: true, unique: true },
+  company: { type: String, required: true },
+  location: { type: String },
+  positionTitle: { type: String },
+  experienceType: { type: String },
+  startDate: { type: Date },
+  endDate: {
+    type: Schema.Types.Mixed,
+    required: true,
+  },
+  description: { type: [String] },
+});
+
 const ExperieceSchema = new Schema(
   {
-    _id: { type: String, required: true, unique: true },
+    ...baseExperienceSchema.obj,
     email: { type: String, required: true }, // email is being used to find projects of this user
-    company: { type: String, required: true },
-    location: { type: String },
-    positionTitle: { type: String },
-    experienceType: { type: String },
-    startDate: { type: Date },
-    endDate: {
-      type: Schema.Types.Mixed,
-      required: true,
-      // validate: {
-      //   validator: function (props: any) {
-      //     console.log("PROPS", props);
-      //     return (
-      //       props.value === "working" ||
-      //       props.value instanceof Date ||
-      //       !isNaN(Date.parse(props.value))
-      //     );
-      //   },
-      //   message: (props: any) =>
-      //     `${props.value} is not a valid endDate! It should be a Date or 'working'.`,
-      // },
-    },
-    description: { type: [String] },
   },
   { timestamps: true }
 );
@@ -156,67 +113,43 @@ const ResumeSchema = new Schema(
     skills: { type: [String] },
     languages: { type: [String] },
     interests: { type: [String] },
-    educations: [
-      {
-        schoolName: { type: String },
-        major: { type: String },
-        degreeType: { type: String },
-        gpa: { type: Schema.Types.Decimal128 },
-        startDate: { type: Date },
-        endDate: { type: Date },
-      },
-    ],
-    certificates: [
-      {
-        certificateName: { type: String },
-        organization: { type: String },
-        issueDate: { type: Date },
-      },
-    ],
-    experiences: [
-      {
-        company: { type: String },
-        location: { type: String },
-        positionTitle: { type: String },
-        experienceType: { type: String },
-        startDate: { type: Date },
-        endDate: {
-          type: Schema.Types.Mixed,
-        },
-        description: { type: [String] },
-      },
-    ],
-    projects: [
-      {
-        projectName: { type: String },
-        location: { type: String },
-        positionTitle: { type: String },
-        startDate: { type: Date },
-        endDate: { type: Date },
-        description: { type: [String] },
-      },
-    ],
+    educations: {
+      educations: [baseEducationSchema],
+      hiddenEducations: { type: Map, of: Boolean },
+      hiddenGPAs: { type: Map, of: Boolean },
+      hiddenDates: { type: Map, of: Boolean },
+      hideAll: { type: Boolean, default: false },
+      relevantCourseWork: { type: String },
+    },
+    certificates: {
+      certificates: [baseCertificateSchema],
+      hiddenCertificates: { type: Map, of: Boolean },
+      hideAll: { type: Boolean, default: false },
+    },
+
+    experiences: {
+      experiences: [baseExperienceSchema],
+      hiddenExperiences: { type: Map, of: Boolean },
+      hideAll: { type: Boolean, default: false },
+    },
+    projects: {
+      projects: [baseProjectSchema],
+      hiddenProjects: { type: Map, of: Boolean },
+      hiddenLocation: { type: Map, of: Boolean },
+      hiddenDates: { type: Map, of: Boolean },
+      hiddenPosition: { type: Map, of: Boolean },
+      hideAll: { type: Boolean, default: false },
+    },
     headerInfo: {
-      displayName: { type: String, required: true },
-      contactInfo: {
-        type: [
-          {
-            contact: { type: String, required: true },
-            _id: false,
-          },
-        ],
-        _id: false,
+      headerInfo: ResumeHeaderInfoSchema,
+      hideLocation: { type: Boolean, default: false },
+      hiddenContacts: {
+        type: Map,
+        of: Boolean,
       },
-      location: { type: String },
-      links: {
-        type: [
-          {
-            linkName: { type: String, required: true },
-            link: { type: String, required: true },
-            _id: false,
-          },
-        ],
-        _id: false,
+      hiddenLinks: {
+        type: Map,
+        of: Boolean,
       },
     },
     pdfLink: { type: String },
@@ -229,15 +162,18 @@ const UserSchema = new Schema(
     email: { type: String, required: true, unique: true },
     isOnboarded: { type: Boolean, required: true, default: false },
     password: { type: String, required: true },
-    stripeCustomerId: { type: String },
-    stripeSubscriptionId: { type: String },
+    stripeCustomerId: { type: String, unique: true },
+    stripeSubscriptionId: { type: String, unique: true },
     stripePriceId: { type: String },
     stripeCurrentPeriodEnd: { type: Date },
-    resumeCount: { type: Number },
+    //subscriptionPlan: { type: String, default: "Newbie" },
+    resumeCount: { type: Number, default: 0 },
     resumes: [{ type: String, ref: "Resume" }],
     skills: { type: [String] },
     languages: { type: [String] },
     interests: { type: [String] },
+    AICalls: { type: Number, default: 0 },
+    user: { type: String },
   },
   { timestamps: true }
 );

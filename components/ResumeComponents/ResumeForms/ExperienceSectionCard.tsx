@@ -1,5 +1,5 @@
 "use client";
-import { FC, memo, useEffect } from "react";
+import { FC, memo } from "react";
 import { FormCardWrapper } from "./FormCardWrapper";
 
 import { HideButtons } from "@/components/UIButtons/HideButtons";
@@ -34,6 +34,7 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
     hideAll,
     isLoading,
     setHiddenExperience,
+    fetchDefaultExperiences,
     fetchExperiences,
     setHideAll,
     updateDescriptions,
@@ -43,17 +44,11 @@ const ExperienceSectionCard: FC<ExperienceSectionCard> = ({
     moveExpDown,
   } = useExperiencesInfo();
 
-  useEffect(() => {
-    let experiencesLocalStorage = localStorage.getItem(experienceID);
-    if (!experiencesLocalStorage) {
-      fetchExperiences();
-    }
-  }, [fetchExperiences]);
-
   return (
     <FormCardWrapper
       cardTitle="Experience"
-      refreshFunction={() => fetchExperiences()}
+      refreshFunction={() => fetchDefaultExperiences()}
+      refreshSection={() => fetchExperiences()}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}
@@ -202,7 +197,14 @@ const ExperienceCard: FC<ExperienceCardProps> = ({
           >
             <PlusCircleIcon className="h-4 w-4" />
           </Button>
-          <AIHelper />
+          <AIHelper
+            userMessage={descriptions.join("\n")}
+            setMessage={(message: string) => {
+              message.split("\n").forEach((desc, idx) => {
+                updateDescriptions(idx, desc);
+              });
+            }}
+          />
         </div>
       )}
     </div>

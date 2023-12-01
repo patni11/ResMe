@@ -1,0 +1,371 @@
+Trigger failed: Request failed, status=400, body={
+  "error": {
+    "message": "As per Indian regulations, only registered Indian businesses (i.e. sole proprietorships, limited liability partnerships and companies, but not individuals) can accept international payments. More info here: https://stripe.com/docs/india-exports",
+    "payment_intent": {
+      "id": "pi_1OHUHSF7myRDMyZ7iJiaHFPr",
+      "object": "payment_intent",
+      "amount": 2000,
+      "amount_capturable": 0,
+      "amount_details": {
+        "tip": {
+        }
+      },
+      "amount_received": 0,
+      "application": null,
+      "application_fee_amount": null,
+      "automatic_payment_methods": null,
+      "canceled_at": null,
+      "cancellation_reason": null,
+      "capture_method": "automatic",
+      "charges": {
+        "object": "list",
+        "data": [
+
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/charges?payment_intent=pi_1OHUHSF7myRDMyZ7iJiaHFPr"
+      },
+      "client_secret": "pi_1OHUHSF7myRDMyZ7iJiaHFPr_secret_XgEdDaeyLikNYDdSvbt5VA8wG",
+      "confirmation_method": "automatic",
+      "created": 1701189422,
+      "currency": "usd",
+      "customer": null,
+      "description": "(created by Stripe CLI)",
+      "invoice": null,
+      "last_payment_error": {
+        "message": "As per Indian regulations, only registered Indian businesses (i.e. sole proprietorships, limited liability partnerships and companies, but not individuals) can accept international payments. More info here: https://stripe.com/docs/india-exports",
+        "payment_method": {
+          "id": "pm_1OHUHSF7myRDMyZ7i93MSdBP",
+          "object": "payment_method",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": null,
+            "phone": null
+          },
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": null,
+              "cvc_check": "unchecked"
+            },
+            "country": "US",
+            "exp_month": 11,
+            "exp_year": 2024,
+            "fingerprint": "sAuO7PhWRE3x9W8F",
+            "funding": "credit",
+            "generated_from": null,
+            "last4": "4242",
+            "networks": {
+              "available": [
+                "visa"
+              ],
+              "preferred": null
+            },
+            "three_d_secure_usage": {
+              "supported": true
+            },
+            "wallet": null
+          },
+          "created": 1701189422,
+          "customer": null,
+          "livemode": false,
+          "metadata": {
+          },
+          "type": "card"
+        },
+        "type": "invalid_request_error"
+      },
+      "latest_charge": null,
+      "livemode": false,
+      "metadata": {
+      },
+      "next_action": null,
+      "on_behalf_of": null,
+      "payment_method": null,
+      "payment_method_configuration_details": null,
+      "payment_method_options": {
+        "card": {
+          "installments": null,
+          "mandate_options": null,
+          "network": null,
+          "request_three_d_secure": "automatic"
+        }
+      },
+      "payment_method_types": [
+        "card"
+      ],
+      "processing": null,
+      "receipt_email": null,
+      "review": null,
+      "setup_future_usage": null,
+      "shipping": {
+        "address": {
+          "city": "San Francisco",
+          "country": "US",
+          "line1": "510 Townsend St",
+          "line2": null,
+          "postal_code": "94103",
+          "state": "CA"
+        },
+        "carrier": null,
+        "name": "Jenny Rosen",
+        "phone": null,
+        "tracking_number": null
+      },
+      "source": null,
+      "statement_descriptor": null,
+      "statement_descriptor_suffix": null,
+      "status": "requires_payment_method",
+      "transfer_data": null,
+      "transfer_group": null
+    },
+    "payment_method": {
+      "id": "pm_1OHUHSF7myRDMyZ7i93MSdBP",
+      "object": "payment_method",
+      "billing_details": {
+        "address": {
+          "city": null,
+          "country": null,
+          "line1": null,
+          "line2": null,
+          "postal_code": null,
+          "state": null
+        },
+        "email": null,
+        "name": null,
+        "phone": null
+      },
+      "card": {
+        "brand": "visa",
+        "checks": {
+          "address_line1_check": null,
+          "address_postal_code_check": null,
+          "cvc_check": "unchecked"
+        },
+        "country": "US",
+        "exp_month": 11,
+        "exp_year": 2024,
+        "fingerprint": "sAuO7PhWRE3x9W8F",
+        "funding": "credit",
+        "generated_from": null,
+        "last4": "4242",
+        "networks": {
+          "available": [
+            "visa"
+          ],
+          "preferred": null
+        },
+        "three_d_secure_usage": {
+          "supported": true
+        },
+        "wallet": null
+      },
+      "created": 1701189422,
+      "customer": null,
+      "livemode": false,
+      "metadata": {
+      },
+      "type": "card"
+    },
+    "request_log_url": "https://dashboard.stripe.com/test/logs/req_LOEphpunZJ26qj?t=1701189422",
+    "type": "invalid_request_error"
+  }
+}
+
+
+xenox@Xenoxs-MBP my-app % stripe trigger payment_intent.succeeded
+Setting up fixture for: payment_intent
+Running fixture for: payment_intent
+Trigger failed: Request failed, status=400, body={
+  "error": {
+    "message": "As per Indian regulations, only registered Indian businesses (i.e. sole proprietorships, limited liability partnerships and companies, but not individuals) can accept international payments. More info here: https://stripe.com/docs/india-exports",
+    "payment_intent": {
+      "id": "pi_1OHUIzF7myRDMyZ7QW4NJfzl",
+      "object": "payment_intent",
+      "amount": 2000,
+      "amount_capturable": 0,
+      "amount_details": {
+        "tip": {
+        }
+      },
+      "amount_received": 0,
+      "application": null,
+      "application_fee_amount": null,
+      "automatic_payment_methods": null,
+      "canceled_at": null,
+      "cancellation_reason": null,
+      "capture_method": "automatic",
+      "charges": {
+        "object": "list",
+        "data": [
+
+        ],
+        "has_more": false,
+        "total_count": 0,
+        "url": "/v1/charges?payment_intent=pi_1OHUIzF7myRDMyZ7QW4NJfzl"
+      },
+      "client_secret": "pi_1OHUIzF7myRDMyZ7QW4NJfzl_secret_WVuheedX8YanYYsB7ZWnqXUzd",
+      "confirmation_method": "automatic",
+      "created": 1701189517,
+      "currency": "usd",
+      "customer": null,
+      "description": "(created by Stripe CLI)",
+      "invoice": null,
+      "last_payment_error": {
+        "message": "As per Indian regulations, only registered Indian businesses (i.e. sole proprietorships, limited liability partnerships and companies, but not individuals) can accept international payments. More info here: https://stripe.com/docs/india-exports",
+        "payment_method": {
+          "id": "pm_1OHUIzF7myRDMyZ75mhtlUYJ",
+          "object": "payment_method",
+          "billing_details": {
+            "address": {
+              "city": null,
+              "country": null,
+              "line1": null,
+              "line2": null,
+              "postal_code": null,
+              "state": null
+            },
+            "email": null,
+            "name": null,
+            "phone": null
+          },
+          "card": {
+            "brand": "visa",
+            "checks": {
+              "address_line1_check": null,
+              "address_postal_code_check": null,
+              "cvc_check": "unchecked"
+            },
+            "country": "US",
+            "exp_month": 11,
+            "exp_year": 2024,
+            "fingerprint": "sAuO7PhWRE3x9W8F",
+            "funding": "credit",
+            "generated_from": null,
+            "last4": "4242",
+            "networks": {
+              "available": [
+                "visa"
+              ],
+              "preferred": null
+            },
+            "three_d_secure_usage": {
+              "supported": true
+            },
+            "wallet": null
+          },
+          "created": 1701189517,
+          "customer": null,
+          "livemode": false,
+          "metadata": {
+          },
+          "type": "card"
+        },
+        "type": "invalid_request_error"
+      },
+      "latest_charge": null,
+      "livemode": false,
+      "metadata": {
+      },
+      "next_action": null,
+      "on_behalf_of": null,
+      "payment_method": null,
+      "payment_method_configuration_details": null,
+      "payment_method_options": {
+        "card": {
+          "installments": null,
+          "mandate_options": null,
+          "network": null,
+          "request_three_d_secure": "automatic"
+        }
+      },
+      "payment_method_types": [
+        "card"
+      ],
+      "processing": null,
+      "receipt_email": null,
+      "review": null,
+      "setup_future_usage": null,
+      "shipping": {
+        "address": {
+          "city": "San Francisco",
+          "country": "US",
+          "line1": "510 Townsend St",
+          "line2": null,
+          "postal_code": "94103",
+          "state": "CA"
+        },
+        "carrier": null,
+        "name": "Jenny Rosen",
+        "phone": null,
+        "tracking_number": null
+      },
+      "source": null,
+      "statement_descriptor": null,
+      "statement_descriptor_suffix": null,
+      "status": "requires_payment_method",
+      "transfer_data": null,
+      "transfer_group": null
+    },
+    "payment_method": {
+      "id": "pm_1OHUIzF7myRDMyZ75mhtlUYJ",
+      "object": "payment_method",
+      "billing_details": {
+        "address": {
+          "city": null,
+          "country": null,
+          "line1": null,
+          "line2": null,
+          "postal_code": null,
+          "state": null
+        },
+        "email": null,
+        "name": null,
+        "phone": null
+      },
+      "card": {
+        "brand": "visa",
+        "checks": {
+          "address_line1_check": null,
+          "address_postal_code_check": null,
+          "cvc_check": "unchecked"
+        },
+        "country": "US",
+        "exp_month": 11,
+        "exp_year": 2024,
+        "fingerprint": "sAuO7PhWRE3x9W8F",
+        "funding": "credit",
+        "generated_from": null,
+        "last4": "4242",
+        "networks": {
+          "available": [
+            "visa"
+          ],
+          "preferred": null
+        },
+        "three_d_secure_usage": {
+          "supported": true
+        },
+        "wallet": null
+      },
+      "created": 1701189517,
+      "customer": null,
+      "livemode": false,
+      "metadata": {
+      },
+      "type": "card"
+    },
+    "request_log_url": "https://dashboard.stripe.com/test/logs/req_UWWOdBYoIcnCs4?t=1701189517",
+    "type": "invalid_request_error"
+  }
+}

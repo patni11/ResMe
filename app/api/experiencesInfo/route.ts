@@ -1,5 +1,5 @@
 import { Experience } from "@/models/user";
-import { Experience as ExperienceType } from "@/app/(mainApp)/experience/pageTypes";
+import { Experience as ExperienceType } from "@/lib/types";
 import connectMongoDB from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     await connectMongoDB();
     const experiences: ExperienceType[] = await Experience.find({
       email: session?.user?.email,
-    });
+    }).lean();
     if (!experiences) {
       throw new Error(`No Experience Found`);
     }

@@ -3,9 +3,9 @@ import { PlusCircleIcon, Settings2 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { getServerSession } from "next-auth/next";
 import authOptions, { Session } from "@/lib/authOptions";
-import { Certificate } from "./pageTypes";
+import { Certificate } from "@/lib/types";
 import { FC } from "react";
-import { fetchCertificates } from "@/lib/actions/certificates.action.";
+import { fetchCertificates } from "@/lib/actions/certificates.action";
 import CertificateCard from "./certificateCard";
 import CertificateDialogContent from "./CertificateDialogContent";
 

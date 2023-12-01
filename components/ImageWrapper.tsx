@@ -31,7 +31,7 @@ export default async function ImageWrapper({
       <div className="hidden lg:block flex-shrink-0 w-1/3 max-w-[30%] h-screen sticky top-0 right-0">
         {/* Aspect ratio container */}
         <div
-          className="relative h-full sticky top-0"
+          className="relative h-full fixed top-0"
           style={{ paddingTop: "42.86%" }}
         >
           <Image

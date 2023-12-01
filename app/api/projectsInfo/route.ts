@@ -1,5 +1,5 @@
 import { Project } from "@/models/user";
-import { Project as ProjectType } from "@/app/(mainApp)/projects/pageTypes";
+import { Project as ProjectType } from "@/lib/types";
 import connectMongoDB from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     await connectMongoDB();
     const projects: ProjectType[] = await Project.find({
       email: session?.user?.email,
-    });
+    }).lean();
     if (!projects) {
       throw new Error(`No Project Found`);
     }

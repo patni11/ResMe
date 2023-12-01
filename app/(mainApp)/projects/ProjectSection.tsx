@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import ProjectDialogContent from "./ProjectDialogContent";
 import { getServerSession } from "next-auth/next";
 import authOptions, { Session } from "@/lib/authOptions";
-import { Project } from "./pageTypes";
+import { Project } from "@/lib/types";
 import { fetchUserProjects } from "@/lib/actions/userProject.actions";
 import ProjectCard from "./projectCard";
 
