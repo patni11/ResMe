@@ -16,6 +16,7 @@ export async function getUserSubscriptionPlan() {
       isSubscribed: false,
       isCanceled: false,
       stripeCurrentPeriodEnd: null,
+
       username: user.name,
       userEmail: user.email,
       userResumeCount: user.resumeCount,

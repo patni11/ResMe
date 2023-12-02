@@ -59,22 +59,44 @@ const ProfilePageComponent = ({ subscriptionPlan }: BillingFormProps) => {
               variant: "outline",
             })} w-full flex justify-between`}
           >
-            <span>AI Calls Left</span>
+            <span>AI Calls</span>
             <span className="font-semibold">
               {subscriptionPlan.userAICalls || 0}/{subscriptionPlan.ai || 3}
             </span>
           </h2>
 
-          <h2
-            className={`${buttonVariants({
-              variant: "outline",
-            })}  flex justify-between w-full`}
-          >
-            <span>Subscription Plan:</span>{" "}
-            <span className="font-semibold">
-              {subscriptionPlan.name || "Newbie"}
-            </span>
-          </h2>
+          {subscriptionPlan.name == "Newbie" && (
+            <h2
+              className={`${buttonVariants({
+                variant: "outline",
+              })}  flex justify-between w-full`}
+            >
+              <span>Subscription Plan:</span>
+              <span className="font-semibold">Newbie</span>
+            </h2>
+          )}
+
+          {subscriptionPlan.name == "Student" && (
+            <h2
+              className={`${buttonVariants({
+                variant: "outline",
+              })}  flex justify-between w-full border border-blue-600 shadow-blue-500/50`}
+            >
+              <span>Subscription Plan:</span>
+              <span className="font-semibold">Student</span>
+            </h2>
+          )}
+
+          {subscriptionPlan.name == "Expert" && (
+            <h2
+              className={`${buttonVariants({
+                variant: "outline",
+              })}  flex justify-between w-full border border-purple-500 shadow-purple-500/50`}
+            >
+              <span>Subscription Plan:</span>
+              <span className="font-semibold">Expert</span>
+            </h2>
+          )}
 
           {subscriptionPlan.name != "Newbie" &&
           subscriptionPlan != undefined ? (

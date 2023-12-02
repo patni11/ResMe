@@ -12,6 +12,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ImageText } from "@/components/Sections/ImageText";
+import { Card, CardDescription, CardHeader } from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "ResMe",
@@ -32,12 +34,74 @@ const PricingPage = () => {
       <Navbar></Navbar>
       <section className="min-h-screen w-full py-12 flex items-center justify-center">
         <div className="flex flex-col container items-center justify-center">
-          <div className="font-bold text-3xl lg:text-5xl tracking-tight mb-16 mx-auto text-center">
-            <h1>Why Spend Hours on Your Resume?</h1>
-            <h2>
-              Let <span className="text-blue-600">ResMe</span> Do It in Seconds!
+          <div className="flex flex-col space-y-12 mb-32">
+            <h2 className="font-bold text-3xl lg:text-5xl tracking-tight text-center">
+              <span className="text-blue-600">Premium</span> Benefits
             </h2>
+
+            <ImageText
+              heading="Manage Many Resumes"
+              text="You often need to create and manage many resumes for different kinds of jobs. Most resume building platforms don't allow you to save resumes, comeback later, and edit them. ResMe solves this problem and provides you cloud services to manage resumes and accesss them from anywhere, anytime."
+              image="dashboard"
+              order={true}
+            />
+
+            <ImageText
+              heading="AI Helper"
+              text="Not sure what to write? Our AI tool is trained on many resumes and provides you the best keywords and write most appropriate sentences."
+              image="ai"
+              order={false}
+            />
+
+            <ImageText
+              heading="Share Live links"
+              text="Sharing your resume is a hassle. Download pdf, get the person's email, send to them, then text back for response; and Google Docx and other links completely change the format. With ResMe, you can share lives links to your resume and let anyone download them"
+              image="shareLink"
+              order={true}
+            />
+
+            <ImageText
+              heading="Download Docx"
+              text="ResMe allows you to download your resume in Docx so you can customize it in granular level like colors, fonts, themes or save for later"
+              image="dashboard"
+              order={false}
+            />
           </div>
+          <section className="w-[80%] mb-24">
+            <Card>
+              <CardHeader className="flex flex-row space-x-4 items-center">
+                <div className="w-full">
+                  <p className="font-bold text-xl lg:text-4xl tracking-tight text-left">
+                    <span className="text-amber-500 font-bold">Launch</span>{" "}
+                    Discount
+                  </p>
+                  <h2 className="font-bold">
+                    <span className="text-amber-500">30% Off </span>
+                    <span>All Plans</span>
+                  </h2>
+                </div>
+
+                <div>
+                  <a
+                    href="https://www.producthunt.com/posts/resme?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-resme"
+                    target="_blank"
+                  >
+                    <img
+                      src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=427885&theme=light"
+                      alt="ResMe - Create&#0032;Professional&#0032;resumes&#0032;in&#0032;seconds | Product Hunt"
+                      // style={{"width: 250px; height: 54px;"}}
+                      width="250"
+                      height="54"
+                    />
+                  </a>
+                  <CardDescription className="mt-2">
+                    Get the code on our product hunt page, and while you are
+                    there, it'll really help us if you could upvote 😄!
+                  </CardDescription>
+                </div>
+              </CardHeader>
+            </Card>
+          </section>
 
           <div className="flex flex-col space-y-24 md:flex-row md:space-y-0 md:space-x-8">
             <FreeCard />

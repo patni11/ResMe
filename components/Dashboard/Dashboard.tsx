@@ -19,6 +19,7 @@ const DashBoard: FC<DashBoardProps> = async ({ email, resumes }) => {
             <CreateResumeButton
               email={email}
               canCreateResumes={resumes.length < 3}
+              // canCreateResumes={true}
             />
 
             <div className="flex justify-left text-sm">

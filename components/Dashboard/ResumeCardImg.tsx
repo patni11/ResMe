@@ -36,7 +36,7 @@ function ResumeCardImage({
     );
 
     if (!resumeHeaderLocalStorage) {
-      console.log("Resume Img Fetching");
+      console.log("Fetching Resume Data");
       try {
         const resume = await fetchResume(resumeId);
         console.log("Fetched Resume", resume);
@@ -106,6 +106,7 @@ function ResumeCardImage({
             )}
             priority={true}
             style={{ width: "auto", height: "auto" }}
+            placeholder="blur"
           />
         ) : (
           <div

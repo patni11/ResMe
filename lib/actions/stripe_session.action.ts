@@ -21,6 +21,8 @@ export async function createStripeSession(planType: string) {
       return_url: profileUrl,
     });
 
+    console.log("Already Subscribed");
+
     return { url: stripeSession.url };
   }
 
@@ -41,8 +43,10 @@ export async function createStripeSession(planType: string) {
         quantity: 1,
       },
     ],
+    allow_promotion_codes: true,
     metadata: {
       email: user.email,
+      name: user.name || "",
     },
   });
 

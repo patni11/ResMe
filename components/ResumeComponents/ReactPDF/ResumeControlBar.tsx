@@ -63,13 +63,10 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
       return "";
     }
 
-    await updatePDFLink(resumeId, key);
-
     const pollInterval = 500; // 5 seconds
     const checkKeyInDB = async () => {
       const savedKey = await getPDFLink(resumeId);
       if (key == savedKey) {
-        console.log("Key found in DB");
         clearInterval(polling);
         return `https://utfs.io/f/${key}`;
       } else {
@@ -103,8 +100,8 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
     // put it in the person's clipboard
     handleCopyToClipboard(url);
     setURL(url);
-    setPopup(true);
     setIsLoading(false);
+    setPopup(true);
   };
 
   return (

@@ -9,12 +9,12 @@ export const GoPremiumButton = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const clickTracking = async () => {
-    gtag.event({
-      clientWindow: window,
-      action: "go premium button",
-      category: "purchase",
-      label: "premium",
-    });
+    // gtag.event({
+    //   clientWindow: window,
+    //   action: "go premium button",
+    //   category: "purchase",
+    //   label: "premium",
+    // });
 
     try {
       const { url } = await createStripeSession("Expert");
@@ -35,7 +35,7 @@ export const GoPremiumButton = () => {
       })}
       onClick={() => {
         setIsLoading(true);
-        clickTracking;
+        clickTracking();
       }}
     >
       {isLoading ? <LoadingSpinner /> : <span>Go Premium</span>}
@@ -47,12 +47,12 @@ export const GoStudentButton = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const clickTracking = async () => {
-    gtag.event({
-      clientWindow: window,
-      action: "go student button",
-      category: "purchase",
-      label: "student",
-    });
+    // gtag.event({
+    //   clientWindow: window,
+    //   action: "go student button",
+    //   category: "purchase",
+    //   label: "student",
+    // });
 
     try {
       const { url } = await createStripeSession("Student");
