@@ -17,7 +17,6 @@ import ProfilePageComponent from "./profilePageComponent";
 
 const Profile = async () => {
   const subscriptionPlan = await getUserSubscriptionPlan();
-
   return <ProfilePageComponent subscriptionPlan={subscriptionPlan} />;
 };
 

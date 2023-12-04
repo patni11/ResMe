@@ -45,45 +45,78 @@ export async function POST(request: Request) {
 
   if (event.type == "checkout.session.completed") {
     console.log("Inside Event Checkout");
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription as string
-    );
 
-    const plan =
-      PLANS.find(
-        (plan) =>
-          plan.price.priceIds.test === subscription.items.data[0]?.price.id
-      ) || PLANS[0];
+    let plan = PLANS[0];
+    if (session.subscription != null) {
+      const subscription = await stripe.subscriptions.retrieve(
+        session.subscription as string
+      );
+      plan =
+        PLANS.find(
+          (plan) =>
+            plan.price.priceIds.test === subscription.items.data[0]?.price.id
+        ) || PLANS[0];
 
-    await User.findOneAndUpdate(
-      { email: session.metadata.email },
-      {
-        stripeSubscriptionId: subscription.id,
-        stripeCustomerId: subscription.customer as string,
-        stripePriceId: subscription.items.data[0]?.price.id,
-        stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000
-        ),
-        AICalls: 0,
-      },
-      {
-        upsert: true,
-      }
-    );
+      await User.findOneAndUpdate(
+        { email: session.metadata.email },
+        {
+          stripeSubscriptionId: subscription.id,
+          stripeCustomerId: subscription.customer as string,
+          stripePriceId: subscription.items.data[0]?.price.id,
+          stripeCurrentPeriodEnd: new Date(
+            subscription.current_period_end * 1000
+          ),
+          AICalls: 0,
+        },
+        {
+          upsert: true,
+        }
+      );
+    } else if (session.payment_intent != null) {
+      const paymentIntent = await stripe.checkout.sessions.retrieve(
+        session.id as string,
+        {
+          expand: ["line_items.data", "customer", "payment_intent"],
+        }
+      );
+      console.log("Payment Intent", paymentIntent);
+      // PLANS.find(
+      //   (plan) =>
+      //     plan.price.priceIds.test === paymentIntent.items.data[0]?.price.id
+      // ) || PLANS[0];
 
-    if (plan.name === "Student") {
-      console.log("Send student Email");
-      sendStudentUpgradeEmail({
-        name: session.metadata.name,
-        email: session.metadata.email,
-      });
-    } else if (plan.name === "Expert") {
-      console.log("Send Expert Email");
-      sendExpertUpgradeEmail({
-        name: session.metadata.name,
-        email: session.metadata.email,
-      });
+      // await User.findOneAndUpdate(
+      //   { email: session.metadata.email },
+      //   {
+      //     stripeSubscriptionId: subscription.id,
+      //     stripeCustomerId: subscription.customer as string,
+      //     stripePriceId: subscription.items.data[0]?.price.id,
+      //     stripeCurrentPeriodEnd: new Date(
+      //       subscription.current_period_end * 1000
+      //     ),
+      //     AICalls: 0,
+      //   },
+      //   {
+      //     upsert: true,
+      //   }
+      // );
     }
+
+    // if (plan.name === "Student") {
+    //   console.log("Send student Email");
+    //   sendStudentUpgradeEmail({
+    //     name: session.metadata.name,
+    //     email: session.metadata.email,
+    //     receipt_url: session.receipt_url,
+    //   });
+    // } else if (plan.name === "Expert") {
+    //   console.log("Send Expert Email");
+    //   sendExpertUpgradeEmail({
+    //     name: session.metadata.name,
+    //     email: session.metadata.email,
+    //     receipt_url: session.receipt_url,
+    //   });
+    // }
   }
 
   if (event.type === "invoice.payment_succeeded") {

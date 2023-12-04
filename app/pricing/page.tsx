@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   },
 };
 
+import Image from "next/image";
 const PricingPage = () => {
   return (
     <div>
@@ -63,11 +64,11 @@ const PricingPage = () => {
             <ImageText
               heading="Download Docx"
               text="ResMe allows you to download your resume in Docx so you can customize it in granular level like colors, fonts, themes or save for later"
-              image="dashboard"
+              image="docx"
               order={false}
             />
           </div>
-          <section className="w-[80%] mb-24">
+          <section className="w-full md:w-[80%] mb-24">
             <Card>
               <CardHeader className="flex flex-row space-x-4 items-center">
                 <div className="w-full">
@@ -86,7 +87,7 @@ const PricingPage = () => {
                     href="https://www.producthunt.com/posts/resme?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-resme"
                     target="_blank"
                   >
-                    <img
+                    <Image
                       src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=427885&theme=light"
                       alt="ResMe - Create&#0032;Professional&#0032;resumes&#0032;in&#0032;seconds | Product Hunt"
                       // style={{"width: 250px; height: 54px;"}}
@@ -96,7 +97,7 @@ const PricingPage = () => {
                   </a>
                   <CardDescription className="mt-2">
                     Get the code on our product hunt page, and while you are
-                    there, it'll really help us if you could upvote 😄!
+                    there, it&apos;ll really help us if you could upvote 😄!
                   </CardDescription>
                 </div>
               </CardHeader>

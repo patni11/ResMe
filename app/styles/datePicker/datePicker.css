@@ -1,0 +1,92 @@
+/* DatePickerStyles.css */
+.react-datepicker {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 0.3rem;
+  color: #333;
+  padding: 0.5rem;
+}
+
+.react-datepicker__header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
+}
+
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  font-weight: bold;
+}
+
+.react-datepicker__navigation {
+  top: 1.5rem;
+}
+
+.react-datepicker__navigation--previous {
+  left: 1rem;
+}
+
+.react-datepicker__navigation--next {
+  right: 1rem;
+}
+
+.react-datepicker__month-container {
+  padding: 0.5rem;
+}
+
+/* Adjust the month and year dropdown styles */
+.react-datepicker__month-select,
+.react-datepicker__year-select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.1rem;
+  height: 2rem;
+  background-color: white;
+}
+
+/* Adjust specific day styles */
+.react-datepicker__day--selected {
+  background-color: #216ba5;
+  color: white;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #2a87d0;
+  color: white;
+}
+
+.react-datepicker__day--outside-month {
+  color: #ccc;
+}
+
+/* DatePickerCustomStyles.css */
+.react-datepicker-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 8px;
+  padding-right: 30px; /* Make room for the icon */
+  border: 1px solid #ced4da;
+  border-radius: 0.35rem;
+  background-color: #fff;
+  font-size: small;
+  line-height: 1.5;
+  color: #000000;
+  cursor: pointer; /* Optional: indicates that the input is clickable */
+}
+
+/* Icon positioned on the right inside the input */
+.react-datepicker__calendar-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer; /* Indicates that the icon is clickable */
+}
+.react-datepicker__input-container input:focus {
+  outline: none;
+  box-shadow: none; /* If a box-shadow is creating the ring effect */
+}

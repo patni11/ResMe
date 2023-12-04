@@ -1,10 +1,4 @@
-import connectMongoDB from "@/lib/mongodb";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import authOptions from "@/lib/authOptions";
-import { getServerSession } from "next-auth/next";
-import { Session } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
-import { User } from "@/models/user";
 import { z } from "zod";
 import { getPDFLink, updatePDFLink } from "@/lib/actions/resumes.action";
 import { UTApi } from "uploadthing/server";

@@ -22,9 +22,10 @@ import {
 
 interface StudentEmailProps {
   name: string | null | undefined;
+  receipt_url: string | null | undefined;
 }
 
-export const StudentEmail = ({ name }: StudentEmailProps) => {
+export const StudentEmail = ({ name, receipt_url }: StudentEmailProps) => {
   const previewText = `${name} Thanks a lot for upgrading!`;
 
   return (
@@ -64,6 +65,8 @@ export const StudentEmail = ({ name }: StudentEmailProps) => {
               :)
             </Text>
 
+            {receipt_url ? <Link href={receipt_url}>Receipt</Link> : null}
+
             <p className="text-black text-[14px]">
               Cheers,
               <br />
@@ -78,7 +81,7 @@ export const StudentEmail = ({ name }: StudentEmailProps) => {
   );
 };
 
-export const ExpertEmail = ({ name }: StudentEmailProps) => {
+export const ExpertEmail = ({ name, receipt_url }: StudentEmailProps) => {
   const previewText = `${name} Thanks a lot for upgrading!`;
 
   return (
@@ -122,6 +125,7 @@ export const ExpertEmail = ({ name }: StudentEmailProps) => {
               Here's my <Link href="https://twitter.com/resmexyz">Twitter</Link>{" "}
               :)
             </Text>
+            {receipt_url ? <Link href={receipt_url}>Receipt</Link> : null}
 
             <p className="text-black text-[14px]">
               Cheers,

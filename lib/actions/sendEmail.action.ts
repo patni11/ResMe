@@ -58,11 +58,13 @@ export async function sendPDFDownloadEmail({
 export async function sendStudentUpgradeEmail({
   name,
   email,
+  receipt_url,
 }: {
   name: string | null | undefined;
   email: string | null | undefined;
+  receipt_url: string | null | undefined;
 }) {
-  const emailTemplate = await renderAsync(StudentEmail({ name }));
+  const emailTemplate = await renderAsync(StudentEmail({ name, receipt_url }));
   try {
     // Send the email using the Resend API
     await resend.emails.send({
@@ -81,11 +83,13 @@ export async function sendStudentUpgradeEmail({
 export async function sendExpertUpgradeEmail({
   name,
   email,
+  receipt_url,
 }: {
   name: string | null | undefined;
   email: string | null | undefined;
+  receipt_url: string | null | undefined;
 }) {
-  const emailTemplate = await renderAsync(ExpertEmail({ name }));
+  const emailTemplate = await renderAsync(ExpertEmail({ name, receipt_url }));
   try {
     // Send the email using the Resend API
     await resend.emails.send({

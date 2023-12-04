@@ -5,6 +5,9 @@ import { FC } from "react";
 import { Project } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import "react-datepicker/dist/react-datepicker.css";
+import "@/app/styles/datePicker/datePicker.css";
+import DatePicker from "react-datepicker";
 import * as z from "zod";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -17,16 +20,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-import { format } from "date-fns";
+
 import { CalendarIcon } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+
 import { Textarea } from "@/components/ui/textarea";
 import { DialogFooter, DialogTrigger } from "@/components/ui/dialog";
 import LightText from "@/components/Text";
@@ -36,6 +33,7 @@ import {
 } from "@/lib/actions/userProject.actions";
 import { useToast } from "@/components/ui/use-toast";
 import { AIHelper } from "@/components/Cards/AIHelper";
+
 const ProjectSchema = z
   .object({
     _id: z.string().optional(),
@@ -202,37 +200,17 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
                     Start Date
                     <LightText>optional</LightText>
                   </FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-4 h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <FormControl>
+                    <DatePicker
+                      selected={field.value || new Date()}
+                      onChange={(date) => field.onChange(date)}
+                      dateFormat="MM/yyyy"
+                      showMonthYearPicker
+                      // className="my-custom-datepicker-class"
+                      showIcon
+                      icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -246,37 +224,17 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
                     End Date
                     <LightText>optional</LightText>
                   </FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-4 h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <FormControl>
+                    <DatePicker
+                      selected={field.value || new Date()}
+                      onChange={(date) => field.onChange(date)}
+                      dateFormat="MM/yyyy"
+                      showMonthYearPicker
+                      // className="my-custom-datepicker-class"
+                      showIcon
+                      icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -306,6 +264,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
                   <Textarea
                     placeholder="Tell us a bit about your contributions in different lines"
                     {...field}
+                    className="h-28 md:h-48"
                   />
                 </FormControl>
 

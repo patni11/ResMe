@@ -20,6 +20,7 @@ import { ResumeCardImageComponent } from "./ResumeCardImg";
 import { DeleteButton, RenameDialog } from "./ResumeFuncitonButtons";
 import { buttonVariants } from "../ui/button";
 import { Input } from "../ui/input";
+import ResumeCardImageImage from "@/public/resumeCard.png";
 
 //import { useToast } from "../ui/use-toast";
 interface ResumeCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -51,6 +52,7 @@ export async function ResumeCard({
         resumeName={resumeName}
         resumeId={resumeId}
         email={email}
+        image={ResumeCardImageImage}
         aspectRatio={aspectRatio}
         width={width}
         height={height}

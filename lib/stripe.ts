@@ -10,17 +10,17 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? "", {
 export async function getUserSubscriptionPlan() {
   const user = await fetchUser();
 
-  if (!user || user.email) {
+  if (!user || !user.email) {
     return {
       ...PLANS[0],
       isSubscribed: false,
       isCanceled: false,
       stripeCurrentPeriodEnd: null,
-
-      username: user.name,
-      userEmail: user.email,
-      userResumeCount: user.resumeCount,
-      userAICalls: user.AICalls,
+      stripeCustomerId: undefined,
+      username: undefined,
+      userEmail: undefined,
+      userResumeCount: 0,
+      userAICalls: 0,
     };
   }
 

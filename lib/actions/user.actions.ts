@@ -162,12 +162,14 @@ export async function updateUserAICalls() {
 export async function fetchDashboardData(): Promise<{
   isOnboarded: boolean;
   email: string;
+
   resumes: Array<{
     id: string;
     resumeName: string;
     updatedAt: Date;
     pdfLink: string;
   }>;
+  stripePriceId?: string;
 } | null> {
   try {
     const email = await getUserEmailFromSession();
@@ -176,6 +178,7 @@ export async function fetchDashboardData(): Promise<{
     const user: {
       isOnboarded: boolean;
       email: string;
+
       resumes:
         | {
             id: string;
@@ -183,8 +186,9 @@ export async function fetchDashboardData(): Promise<{
             updatedAt: Date;
             pdfLink: string;
           }[];
+      stripePriceId?: string;
     } | null = await User.findOne({ email: email })
-      .select("isOnboarded email resumes") // Select specific fields from User
+      .select("isOnboarded email resumes stripePriceId stripeCurrentPeriodEnd") // Select specific fields from User
       .populate({
         path: "resumes", // Assuming 'resumes' is an array of Resume references
         select: "_id resumeName updatedAt pdfLink", // Select specific fields from Resume

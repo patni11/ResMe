@@ -1,11 +1,8 @@
 "use server";
 import connectMongoDB from "../mongodb";
 import { Resume, User } from "@/models/user";
-import { getUserEmailFromSession } from "./utils.action";
-import { Session, getServerSession } from "next-auth";
-import authOptions from "../authOptions";
 import { ResumeType } from "../types";
-
+import { UTApi } from "uploadthing/server";
 export async function createResume({
   email,
   resumeId, // This is the custom ID you want to use for the resume
@@ -171,6 +168,18 @@ export async function deleteResume(
     }
     // Get a reference to the database
     // List all collections in the database
+
+    try {
+      const existingLink = await getPDFLink(resumeId);
+      if (existingLink) {
+        // delete from upload thing
+
+        const utapi = new UTApi();
+        await utapi.deleteFiles(existingLink);
+      }
+    } catch (e) {
+      console.log("No Resume Link", e);
+    }
 
     await Resume.deleteOne({ _id: resumeId });
 

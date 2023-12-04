@@ -19,9 +19,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { DeleteButton, LogOut } from "./signOutButtons";
-import { format } from "date-fns";
+import {
+  DeleteButton,
+  LogOut,
+  ManageSubsription,
+  SwitchToStudent,
+} from "./signOutButtons";
 import { Infinity } from "lucide-react";
+import intlFormat from "date-fns/esm/intlFormat";
+import Link from "next/link";
 
 interface BillingFormProps {
   subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
@@ -30,7 +36,9 @@ interface BillingFormProps {
 const ProfilePageComponent = ({ subscriptionPlan }: BillingFormProps) => {
   const handleDelete = async () => {
     "use server";
-    await deleteUser(subscriptionPlan.userEmail);
+    if (subscriptionPlan.userEmail) {
+      await deleteUser(subscriptionPlan.userEmail);
+    }
   };
   return (
     <main className="flex w-full h-full items-center justify-center px-8">
@@ -65,7 +73,7 @@ const ProfilePageComponent = ({ subscriptionPlan }: BillingFormProps) => {
             </span>
           </h2>
 
-          {subscriptionPlan.name == "Newbie" && (
+          {!subscriptionPlan.isSubscribed && (
             <h2
               className={`${buttonVariants({
                 variant: "outline",
@@ -98,30 +106,59 @@ const ProfilePageComponent = ({ subscriptionPlan }: BillingFormProps) => {
             </h2>
           )}
 
-          {subscriptionPlan.name != "Newbie" &&
-          subscriptionPlan != undefined ? (
-            <h2
+          {subscriptionPlan.isSubscribed && subscriptionPlan != undefined ? (
+            <div
               className={`${buttonVariants({
                 variant: "outline",
               })}  flex justify-between w-full`}
             >
-              {subscriptionPlan.isCanceled
-                ? "Your plan will be canceled on "
-                : "Your plan renews on"}
-              {subscriptionPlan.stripeCurrentPeriodEnd ? (
-                format(subscriptionPlan.stripeCurrentPeriodEnd, "dd.MM.yyyy")
-              ) : (
-                <Infinity className="h-3 w-3" />
-              )}
-            </h2>
-          ) : null}
+              <span>
+                {subscriptionPlan.isCanceled
+                  ? "Your plan will be canceled on "
+                  : "Your plan renews on"}
+              </span>
 
-          <Button
-            variant="outline"
-            className="text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"
-          >
-            Upgrade
-          </Button>
+              {subscriptionPlan.stripeCurrentPeriodEnd ? (
+                <span>
+                  {intlFormat(subscriptionPlan.stripeCurrentPeriodEnd, {
+                    month: "short",
+                    year: "numeric",
+                    day: "numeric",
+                  })}
+                </span>
+              ) : (
+                <span>Hi</span>
+              )}
+            </div>
+          ) : null}
+          {!subscriptionPlan.isSubscribed && (
+            <Link
+              className={buttonVariants({
+                className:
+                  "text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white",
+                variant: "outline",
+              })}
+              href="/pricing"
+            >
+              Upgrade
+            </Link>
+          )}
+
+          {subscriptionPlan.name == "Expert" && (
+            <div className="flex space-x-2 w-full">
+              <SwitchToStudent />
+              <ManageSubsription />
+            </div>
+          )}
+
+          {subscriptionPlan.name == "Student" && (
+            <Button
+              variant="outline"
+              className="w-full bg-gradient-to-r font-semibold from-pink-500 to-purple-500 hover:bg-purple-500 text-primary-foreground hover:text-primary-foreground"
+            >
+              Upgrade to Expert
+            </Button>
+          )}
         </CardContent>
         <CardFooter className="flex justify-between">
           <Dialog>

@@ -1,7 +1,7 @@
 "use client";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { cn } from "@/lib/utils";
-import ResumeCardImageImage from "@/public/resumeCard.png";
+//import ResumeCardImageImage from "@/public/resumeCard.png";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchResume } from "@/lib/actions/resumes.action";
@@ -13,7 +13,7 @@ interface ResumeCardImageProps {
   resumeName: string;
   resumeId: string;
   email: string;
-
+  image: StaticImageData;
   aspectRatio?: "portrait" | "square";
   width?: number;
   height?: number;
@@ -23,6 +23,7 @@ function ResumeCardImage({
   resumeName,
   resumeId,
   email,
+  image,
   aspectRatio = "portrait",
   width,
   height,
@@ -96,7 +97,7 @@ function ResumeCardImage({
       <div className="overflow-hidden rounded-md">
         {!isLoading ? (
           <Image
-            src={ResumeCardImageImage}
+            src={image}
             alt={resumeName}
             width={width}
             height={height}

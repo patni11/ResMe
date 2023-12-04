@@ -1,6 +1,6 @@
 import dashboard from "@/public/dashboard2.png";
 import sharelink from "@/public/ShareLink.png";
-import docx from "@/public/dashboard2.png";
+import docx from "@/public/docx.png";
 import ai from "@/public/AI.png";
 
 import Image, { StaticImageData } from "next/image";
@@ -15,7 +15,7 @@ const imageMap: Record<ImageKey, StaticImageData> = {
   dashboard: dashboard,
   ai: ai,
   shareLink: sharelink,
-  docx: dashboard,
+  docx: docx,
 };
 
 export const ImageText = ({ heading, text, image, order }: ImageTextProps) => {
