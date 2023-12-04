@@ -1,6 +1,6 @@
 import { authOptions } from "@/lib/authOptions";
 import NextAuth from "next-auth";
-export const maxDuration = 10;
+export const maxDuration = 60;
 
 //export const runtime = "edge";
 
