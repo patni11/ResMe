@@ -84,7 +84,7 @@ const PricingPage = () => {
 
                 <div>
                   <a
-                    href="https://www.producthunt.com/posts/resme?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-resme"
+                    href="https://www.producthunt.com/products/resme"
                     target="_blank"
                   >
                     <img
