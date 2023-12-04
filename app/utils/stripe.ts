@@ -1,3 +1,16 @@
+export type Plan = {
+  name: string;
+  slug: string;
+  quota: number;
+  ai: number;
+  price: {
+    amount: number;
+    priceIds: {
+      test: string | undefined;
+      production: string;
+    };
+  };
+};
 export const PLANS = [
   {
     name: "Newbie",

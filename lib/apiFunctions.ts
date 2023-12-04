@@ -249,10 +249,14 @@ export async function getCleanedTalentsData() {
     interests: string[];
   } = (await getTalentsData()) || [];
 
+  const skills = talent.skills ? talent.skills.join(", ") : "";
+  const interests = talent.interests ? talent.interests.join(", ") : "";
+  const languages = talent.languages ? talent.languages.join(", ") : "";
+
   return {
-    skills: talent.skills.join(", "),
-    interests: talent.interests.join(", "),
-    languages: talent.languages.join(", "),
+    skills: skills,
+    interests: interests,
+    languages: languages,
     isLoading: false,
   };
 }

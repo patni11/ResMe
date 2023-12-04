@@ -198,13 +198,14 @@ const ActionBar = ({ componentsData, children }) => {
                   label: "Download Docx",
                 });
 
-                if (isSubscribed) {
-                  await downloadDocx();
-                } else {
-                  toast({
-                    title: "Please upgrade to premium to use this feature",
-                  });
-                }
+                // if (isSubscribed) {
+                //   await downloadDocx();
+                // } else {
+                //   toast({
+                //     title: "Please upgrade to use this feature",
+                //   });
+                // }
+                await downloadDocx();
 
                 setIsSaving(false);
               }}

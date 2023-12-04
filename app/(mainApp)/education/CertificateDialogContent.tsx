@@ -3,6 +3,9 @@ import { FC } from "react";
 import { Certificate } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import "react-datepicker/dist/react-datepicker.css";
+import "@/app/styles/datePicker/datePicker.css";
+import DatePicker from "react-datepicker";
 import * as z from "zod";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -14,15 +17,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+
 import { Button, buttonVariants } from "@/components/ui/button";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { Calendar } from "@/components/ui/calendar";
+
 import { CalendarIcon } from "lucide-react";
 import { DialogFooter } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
@@ -137,37 +134,19 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
             render={({ field }) => (
               <FormItem className="flex flex-col">
                 <FormLabel>Issue Date</FormLabel>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <FormControl>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "pl-3 text-left font-normal",
-                          !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? (
-                          format(field.value, "PPP")
-                        ) : (
-                          <span>Pick a date</span>
-                        )}
-                        <CalendarIcon className="ml-4 h-4 w-4 opacity-50" />
-                      </Button>
-                    </FormControl>
-                  </PopoverTrigger>
-                  <PopoverContent className="p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date("1900-01-01")
-                      }
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <FormControl>
+                  <DatePicker
+                    selected={
+                      field.value instanceof Date ? field.value : undefined
+                    }
+                    onChange={(date) => field.onChange(date)}
+                    dateFormat="MM/yyyy"
+                    showMonthYearPicker
+                    // className="my-custom-datepicker-class"
+                    showIcon
+                    icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

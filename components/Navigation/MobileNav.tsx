@@ -49,6 +49,15 @@ const MobileNav = () => {
                 </li>
                 <li>
                   <Link
+                    onClick={() => closeOnCurrent("/dashboard")}
+                    className="flex items-center w-full font-semibold"
+                    href="/support"
+                  >
+                    Support
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     onClick={() => closeOnCurrent("/pricing")}
                     className="flex items-center w-full font-semibold"
                     href="/pricing"

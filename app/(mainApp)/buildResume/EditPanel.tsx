@@ -39,18 +39,6 @@ const EditPanel: FC<EditPanelProps> = ({
   moveUp,
   moveDown,
 }) => {
-  // const initialComponents = [
-  //   <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />,
-  //   <EducationSectionCard educationID={`educations-${email}-${resumeId}`} />,
-  //   <CertificateSectionCard
-  //     certificateID={`certificates-${email}-${resumeId}`}
-  //   />,
-  //   <ExperienceSectionCard experienceID={`experiences-${email}-${resumeId}`} />,
-  //   <ProjectSectionCard projectId={`projects-${email}-${resumeId}`} />,
-  //   <TalentsSection talentsID={`talents-${email}-${resumeId}`} />,
-  //   // ... other components
-  // ];
-
   const renderComponent = (
     componentData: { type: string; id: string },
     index: number
@@ -119,27 +107,6 @@ const EditPanel: FC<EditPanelProps> = ({
   return (
     <main className="w-full h-screen overflow-y-auto flex flex-col items-start bg-gray-200 p-4 space-y-2">
       <div className="flex space-x-2 w-full justify-end">
-        {/* <div className="items-center justify-center flex px-4 py-1 space-x-2 bg-secondary rounded-md">
-          <Label>
-            {componentsData[0].id == "default" ? "Untitled" : "Old Resume"}
-          </Label>
-          <Dialog>
-            <DialogTrigger>
-              <Button size="xs" variant="outlineHover">
-                Rename
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Rename Resume</DialogTitle>
-                <DialogDescription className="flex flex-col space-y-4 items-center">
-                  <RenameDialog resumeId={componentsData[0].id} />
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
-        </div> */}
-
         <Dialog>
           <DialogTrigger className="">
             <span
@@ -236,27 +203,6 @@ const EditPanel: FC<EditPanelProps> = ({
           </DialogContent>
         </Dialog>
       </div>
-      {/* <ResumeHeader resumeHeaderID={`resumeHeader-${email}-${resumeId}`} />
-      <EducationSectionCard educationID={`educations-${email}-${resumeId}`} />
-      <CertificateSectionCard
-        certificateID={`certificates-${email}-${resumeId}`}
-      />
-      <ExperienceSectionCard
-        experienceID={`experiences-${email}-${resumeId}`}
-      />
-      <ProjectSectionCard projectId={`projects-${email}-${resumeId}`} />
-      <SkillsSectionCard talentsID={`talents-${email}-${resumeId}`} />
-      <LanguagesSectionCard talentsID={`talents-${email}-${resumeId}`} />
-      <InterestsSectionCard talentsID={`talents-${email}-${resumeId}`} /> */}
-      {/* <div>
-        {components.map((Component, index) => (
-          <div key={index}>
-            {Component}
-            <button onClick={() => moveUp(index)}>Up</button>
-            <button onClick={() => moveDown(index)}>Down</button>
-          </div>
-        ))}
-      </div> */}
 
       {componentsData.map((componentData, index) => (
         <div key={componentData.id} className="w-full">

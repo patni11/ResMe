@@ -25,6 +25,31 @@ export default async function ImageWrapper({
   imgSrc: ImageKey;
 }) {
   const imageToDisplay = imageMap[imgSrc];
+  const quotes = [
+    { quote: "Whatever you are, be a good one", person: "Abraham Lincoln" },
+    {
+      quote:
+        "The future belongs to those who beleive in the beauty of their dreams",
+      person: "Eleanor Roosevelt",
+    },
+    {
+      quote:
+        "When something is important enough, you do it even if the odds are not in your favor.",
+      person: "Elon Musk",
+    },
+    {
+      quote:
+        "One of the only ways to get out of a tight box is to invent your way out",
+      person: "Jeff Bezos",
+    },
+    { quote: "Turn your wounds into wisdom", person: "Oprah Winfrey" },
+    {
+      quote:
+        "Success is a lousy teacher. It seduces smart people into thinking they can't lose",
+      person: "Bill Gates",
+    },
+  ];
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
   return (
     <main className="flex justify-center w-full h-full">
       {children ? children : <div></div>}
@@ -42,6 +67,12 @@ export default async function ImageWrapper({
             fill // This makes the image take up the full width and height of its container
             objectFit="cover" // This ensures the image maintains its aspect ratio while filling its container
           />
+          <div className="absolute bottom-5 left-5 w-[90%] z-20 mx-auto text-primary bg-white rounded-lg p-2 bg-opacity-90">
+            <blockquote className="space-y-2">
+              <p className="text-sm">&ldquo;{quote.quote}&rdquo;</p>
+              <footer className="text-xs">{quote.person}</footer>
+            </blockquote>
+          </div>
         </div>
       </div>
     </main>

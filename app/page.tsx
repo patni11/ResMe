@@ -240,8 +240,8 @@ export default function Home() {
             <Accordion type="single" collapsible>
               <AccordionItem value="item-0">
                 <AccordionTrigger>Get Free Resume Review</AccordionTrigger>
-                <AccordionContent>
-                  <p>
+                <AccordionContent className="text-left justify-left">
+                  <p className="">
                     We have created a exclusive community of ResMe users like
                     yourself. Join our discord and get free resume reviews by me
                     personally and wider community
@@ -255,7 +255,7 @@ export default function Home() {
 
               <AccordionItem value="item-1">
                 <AccordionTrigger>What is ResMe</AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-left justify-left">
                   <p>
                     ResMe is designed to streamline and elevate your
                     professional journey. It organizes your experiences, skills,
@@ -273,7 +273,7 @@ export default function Home() {
 
               <AccordionItem value="item-2">
                 <AccordionTrigger>What is ATS</AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-left justify-left">
                   <p>
                     Think of an ATS, or Applicant Tracking System, like a resume
                     scanner that companies use to find the best matches for a
@@ -288,7 +288,7 @@ export default function Home() {
 
               <AccordionItem value="item-3">
                 <AccordionTrigger>What do I get from this?</AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-left justify-left">
                   <p>
                     ResMe, you get a one-stop-shop to sort out your professional
                     journey. 🌟 Pop in your experiences, skills, and projects,
@@ -306,7 +306,7 @@ export default function Home() {
 
               <AccordionItem value="item-4">
                 <AccordionTrigger>Why ResMe Over Others?</AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-left justify-left">
                   <p>
                     Most resume building tools are not optimized for ATS and
                     parsers. You can try it yourself. Just create one, download
@@ -332,7 +332,7 @@ export default function Home() {
 
               <AccordionItem value="item-5">
                 <AccordionTrigger>Newbie vs Student vs Expert</AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-left justify-left">
                   <p>
                     As the name says: Newbie is for Noobs and Expert plan is for
                     the rest of us 🤫
@@ -361,7 +361,7 @@ export default function Home() {
 
               <AccordionItem value="item-6">
                 <AccordionTrigger>Can I get a Refund?</AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-left justify-left">
                   <p>
                     No, we do not offer refunds, but you can cancel subscription
                     for next month. You can use our free plan or student plan
@@ -382,7 +382,7 @@ export default function Home() {
 
               <AccordionItem value="item-7">
                 <AccordionTrigger>How was ResMe built?</AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="text-left justify-left">
                   <p>
                     ResMe was built using Next js, Zustand, MongoDB, Next Auth,
                     and Chat GPT

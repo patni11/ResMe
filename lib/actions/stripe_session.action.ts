@@ -1,23 +1,38 @@
 "use server";
 import { absoluteUrl } from "../utils";
-import { fetchUser } from "./user.actions";
 import { getUserSubscriptionPlan, stripe } from "../stripe";
 
 import { PLANS } from "@/app/utils/stripe";
 
-export async function createStripeSession(planType: string) {
+export async function createStripeSession(planType?: string) {
   const profileUrl = absoluteUrl("/profile");
-
-  const user = await fetchUser();
-  if (!user) {
-    return { error: true, message: "User Not Found" };
-  }
 
   const subscriptionPlan = await getUserSubscriptionPlan();
 
-  if (subscriptionPlan.isSubscribed && user.stripeCustomerId) {
+  if (!subscriptionPlan.userEmail) {
+    throw new Error("User not found");
+  }
+
+  if (
+    subscriptionPlan.isSubscribed &&
+    subscriptionPlan.name === "Expert" &&
+    planType === "Student"
+  ) {
+    //change plan from expert to student
+  }
+
+  if (
+    subscriptionPlan.isSubscribed &&
+    subscriptionPlan.name === "Student" &&
+    planType === "Expert"
+  ) {
+    //change plan from student to expert
+  }
+
+  if (subscriptionPlan.isSubscribed && subscriptionPlan.stripeCustomerId) {
+    // cancel expert plan
     const stripeSession = await stripe.billingPortal.sessions.create({
-      customer: user.stripeCustomerId,
+      customer: subscriptionPlan.stripeCustomerId,
       return_url: profileUrl,
     });
 
@@ -41,8 +56,10 @@ export async function createStripeSession(planType: string) {
         quantity: 1,
       },
     ],
+    allow_promotion_codes: true,
     metadata: {
-      email: user.email,
+      email: subscriptionPlan.userEmail,
+      name: subscriptionPlan.username || "",
     },
   });
 

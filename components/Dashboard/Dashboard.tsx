@@ -3,14 +3,15 @@ import { ResumeCard } from "./ResumeCard";
 import { cn } from "@/lib/utils";
 import { timeAgo } from "@/app/utils/FormattingFunctions";
 import { CreateResumeButton } from "../UIButtons/CreateResume";
-
+import { Plan } from "@/app/utils/stripe";
 interface DashBoardProps {
   email: string;
   resumes:
     | { id: string; resumeName: string; updatedAt: Date; pdfLink: string }[]
     | [];
+  plan: Plan;
 }
-const DashBoard: FC<DashBoardProps> = async ({ email, resumes }) => {
+const DashBoard: FC<DashBoardProps> = async ({ email, resumes, plan }) => {
   return (
     <>
       <div className="relative w-[90%] flex justify-center md:justify-start items-center space-y-4">
@@ -18,7 +19,8 @@ const DashBoard: FC<DashBoardProps> = async ({ email, resumes }) => {
           <div className={cn("space-y-3 w-[200px] ml-4")}>
             <CreateResumeButton
               email={email}
-              canCreateResumes={resumes.length < 3}
+              //canCreateResumes={resumes.length < plan.quota}
+              canCreateResumes={true}
             />
 
             <div className="flex justify-left text-sm">
