@@ -63,13 +63,13 @@ export default function RootLayout({
 
           {/* Rest of your content */}
 
-          <div className="relative z-20 mt-auto text-primary bg-white rounded-lg p-4 bg-opacity-50">
+          <div className="relative z-20 mt-auto text-primary bg-white rounded-lg p-4 bg-opacity-80">
             <blockquote className="space-y-2">
               <p className="text-lg">
                 &ldquo;This Website has saved me countless hours of work and
-                helped me create professional resumes that got me job.&rdquo;
+                helped me create professional resumes&rdquo;
               </p>
-              <footer className="text-sm">Luke Macjewiskie</footer>
+              <footer className="text-md">Shubh Patni</footer>
             </blockquote>
           </div>
         </div>

@@ -26,8 +26,6 @@ export async function GET(request: NextRequest) {
       throw new Error(`User Not Found`);
     }
 
-    console.log("USER", user);
-
     const skills = user.skills;
     const languages = user.languages;
     const interests = user.interests;

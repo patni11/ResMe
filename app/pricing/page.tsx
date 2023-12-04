@@ -87,7 +87,7 @@ const PricingPage = () => {
                     href="https://www.producthunt.com/posts/resme?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-resme"
                     target="_blank"
                   >
-                    <Image
+                    <img
                       src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=427885&theme=light"
                       alt="ResMe - Create&#0032;Professional&#0032;resumes&#0032;in&#0032;seconds | Product Hunt"
                       // style={{"width: 250px; height: 54px;"}}

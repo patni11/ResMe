@@ -87,7 +87,7 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
     toast({
       title: `Certificate Updated 🥳: ${educationDataWithId.certificateName} `,
     });
-    console.log("Validate Path", validatePath);
+
     updateCertificate(educationDataWithId, email, validatePath);
 
     document.getElementById("closeDialog")?.click();

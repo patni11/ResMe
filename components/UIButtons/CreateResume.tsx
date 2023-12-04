@@ -42,7 +42,6 @@ export function CreateResumeButton({
     const newResumeId = v4();
 
     const headerInfo = await getCleanedHeaderData();
-    console.log("Resume Header", headerInfo);
 
     const certificates = await getCleanedCertificateData();
 

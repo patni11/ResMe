@@ -22,6 +22,8 @@ const UserAccountNav = () => {
   const email = session?.user?.email || "";
   const isSubscribed = false;
 
+  //console.log("Session", session);
+
   if (email == "") {
     return (
       <div className="flex space-x-4">

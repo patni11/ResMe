@@ -46,7 +46,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
   const links = headerInfo.links
     ? headerInfo.links
     : [{ linkName: "", link: "" }];
-  console.log();
+
   return (
     <FormCardWrapper
       cardTitle="Header"

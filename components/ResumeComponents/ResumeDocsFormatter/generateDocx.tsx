@@ -227,14 +227,10 @@ function createHeader({ id }: { id: string }) {
     ? headerInfo.contactInfo
     : [{ contactName: "", contact: "" }];
 
-  console.log("Contacts", headerInfo, hiddenContacts, contactInfo);
-
   const contacts = contactInfo
     .filter((info, index) => !hiddenContacts[info.contactName])
     .map((info) => info.contact)
     .join(" | ");
-
-  console.log("Contacts", headerInfo, hiddenContacts, contactInfo, contacts);
 
   const linksInfo = headerInfo.links
     ? headerInfo.links

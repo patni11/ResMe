@@ -7,6 +7,7 @@ import { Download, X } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { sendPDFDownloadEmail } from "@/lib/actions/sendEmail.action";
 import { useResumeDataContext } from "@/app/(mainApp)/buildResume/ResumeDataContext";
+import { ComingSoon } from "@/components/Cards/ComingSoon";
 import {
   Tooltip,
   TooltipContent,
@@ -70,7 +71,6 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
         clearInterval(polling);
         return `https://utfs.io/f/${key}`;
       } else {
-        console.log("Updating DB");
         await updatePDFLink(resumeId, key);
       }
     };
@@ -109,7 +109,7 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
       <TooltipProvider>
         <Tooltip delayDuration={300}>
           <TooltipTrigger className="cursor-default ml-1.5">
-            <Button
+            {/* <Button
               disabled={instance.loading || isLoading}
               variant="outlineHover"
               size="xs"
@@ -128,7 +128,19 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
               <ArrowUpRightSquare className="w-4 h-4" />
 
               <span>Copy</span>
-            </Button>
+            </Button> */}
+
+            <ComingSoon>
+              <div
+                className={buttonVariants({
+                  variant: "outlineHover",
+                  size: "xs",
+                  className: "flex space-x-2",
+                })}
+              >
+                Copy
+              </div>
+            </ComingSoon>
           </TooltipTrigger>
           <TooltipContent className="p-2 text-xs font-normal">
             Share Link to PDF

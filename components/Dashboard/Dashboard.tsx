@@ -19,8 +19,8 @@ const DashBoard: FC<DashBoardProps> = async ({ email, resumes, plan }) => {
           <div className={cn("space-y-3 w-[200px] ml-4")}>
             <CreateResumeButton
               email={email}
-              //canCreateResumes={resumes.length < plan.quota}
-              canCreateResumes={true}
+              canCreateResumes={resumes.length < plan.quota}
+              //canCreateResumes={true}
             />
 
             <div className="flex justify-left text-sm">

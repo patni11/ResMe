@@ -42,7 +42,7 @@ export async function deleteUser(email: string) {
 export async function createUser({ email }: { email: string }) {
   try {
     connectMongoDB();
-    console.log("user");
+
     const user = await User.findOneAndUpdate(
       { email: email },
       {

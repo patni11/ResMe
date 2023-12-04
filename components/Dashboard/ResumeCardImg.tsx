@@ -37,10 +37,8 @@ function ResumeCardImage({
     );
 
     if (!resumeHeaderLocalStorage) {
-      console.log("Fetching Resume Data");
       try {
         const resume = await fetchResume(resumeId);
-        console.log("Fetched Resume", resume);
 
         localStorage.setItem(
           `certificates-${email}-${resumeId}`,
