@@ -33,12 +33,6 @@ const Support = () => {
                 Send email
               </a>
             </div>
-
-            <div className="flex justify-between text-sm">
-              <span>Located At: B1 Vardhman City, Chhindwara MP (480001)</span>
-
-              <span>Mobile:- +91 7742361132</span>
-            </div>
           </CardContent>
         </Card>
       </main>
