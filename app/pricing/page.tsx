@@ -122,7 +122,7 @@ const cardClass =
 
 const StudentCard = () => {
   const title = "Student";
-  const cost = "INR4000";
+  const cost = "$49";
   const checkedPoints = [
     "Download PDF",
     "Professional Formatting",
@@ -177,7 +177,7 @@ const StudentCard = () => {
 
 const ExpertCard = () => {
   const title = "Expert";
-  const cost = "INR600";
+  const cost = "$6.9";
   const checkedPoints = [
     "50 Resumes (contact for more)",
     "Download PDF",
