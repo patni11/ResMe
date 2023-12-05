@@ -37,7 +37,6 @@ export async function POST(request: Request) {
   console.log("SESSION", session);
 
   if (!session?.metadata?.email) {
-    console.log("Returning");
     return new Response(null, {
       status: 200,
     });

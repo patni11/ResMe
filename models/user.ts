@@ -65,15 +65,18 @@ const CertificateSchema = new Schema(
   { timestamps: true }
 );
 
-const baseProjectSchema = new Schema({
-  _id: { type: String, required: true, unique: true },
-  projectName: { type: String, required: true },
-  location: { type: String },
-  positionTitle: { type: String },
-  startDate: { type: Date },
-  endDate: { type: Date },
-  description: { type: [String] },
-});
+const baseProjectSchema = new Schema(
+  {
+    _id: { type: String, required: true, unique: true },
+    projectName: { type: String, required: true },
+    location: { type: String },
+    positionTitle: { type: String },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    description: { type: [String] },
+  },
+  { _id: false }
+);
 
 const ProjectSchema = new Schema(
   {
@@ -83,19 +86,22 @@ const ProjectSchema = new Schema(
   { timestamps: true }
 );
 
-const baseExperienceSchema = new Schema({
-  _id: { type: String, required: true, unique: true },
-  company: { type: String, required: true },
-  location: { type: String },
-  positionTitle: { type: String },
-  experienceType: { type: String },
-  startDate: { type: Date },
-  endDate: {
-    type: Schema.Types.Mixed,
-    required: true,
+const baseExperienceSchema = new Schema(
+  {
+    _id: { type: String, required: true, unique: true },
+    company: { type: String, required: true },
+    location: { type: String },
+    positionTitle: { type: String },
+    experienceType: { type: String },
+    startDate: { type: Date },
+    endDate: {
+      type: Schema.Types.Mixed,
+      required: true,
+    },
+    description: { type: [String] },
   },
-  description: { type: [String] },
-});
+  { _id: false }
+);
 
 const ExperieceSchema = new Schema(
   {
@@ -154,7 +160,7 @@ const ResumeSchema = new Schema(
     },
     pdfLink: { type: String },
   },
-  { timestamps: true }
+  { timestamps: true, _id: false }
 );
 
 const UserSchema = new Schema(
