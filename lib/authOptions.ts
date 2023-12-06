@@ -130,7 +130,7 @@ export const authOptions: NextAuthOptions = {
         name: message.user.name || "",
       });
 
-      await sendWelcomeEmail(params); // <-- send welcome email TODO: uncomment
+      await sendWelcomeEmail(params); // <-- send welcome email
     },
   },
 };
