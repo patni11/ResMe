@@ -125,9 +125,12 @@ export const authOptions: NextAuthOptions = {
         email: message.user.email,
       };
 
-      await createUser({ email: message.user.email || "" });
+      await createUser({
+        email: message.user.email || "",
+        name: message.user.name || "",
+      });
 
-      await sendWelcomeEmail(params); // <-- send welcome email
+      await sendWelcomeEmail(params); // <-- send welcome email TODO: uncomment
     },
   },
 };

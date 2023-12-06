@@ -220,8 +220,8 @@ function createHeader({ id }: { id: string }) {
   const { headerInfo, hideLocation, hiddenContacts, hiddenLinks } =
     createResumeHeaderInfo(id).getState();
 
-  let location = headerInfo?.location ? headerInfo.location : "";
-  location = hideLocation ? "" : location;
+  const location =
+    headerInfo?.location && !hideLocation ? headerInfo.location : "";
 
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo

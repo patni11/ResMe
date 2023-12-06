@@ -16,10 +16,27 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo
     : [{ contactName: "", contact: "" }];
-  const location = headerInfo?.location ? headerInfo.location : "";
-  const links = headerInfo.links
+
+  const contacts = contactInfo
+    .filter((info, index) => !hiddenContacts[info.contactName])
+    .map((info) => info.contact)
+    .join(" | ");
+
+  const linksInfo = headerInfo.links
     ? headerInfo.links
     : [{ linkName: "", link: "" }];
+
+  const links = linksInfo
+    .filter((info, index) => !hiddenLinks[info.linkName])
+    .map((info) => info.link)
+    .join(" | ");
+
+  const location =
+    headerInfo?.location && !hideLocation ? headerInfo.location : "";
+
+  const contactsAndLinks = [contacts, links, location]
+    .filter(Boolean)
+    .join(" | ");
 
   return (
     <ResumePDFSection>
@@ -40,49 +57,9 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
           gap: spacing["1"],
         }}
       >
-        {!hideLocation && location != "" ? (
-          <ResumePDFText style={{ marginHorizontal: spacing["0.5"] }}>
-            {`${location}  |  `}
-          </ResumePDFText>
-        ) : null}
-
-        {contactInfo.map((info: any, index: any) => {
-          const contactKey = info.contactName;
-          // Check if the contact is hidden
-
-          if (hiddenContacts[contactKey]) return null; // Skip rendering if hidden
-          return (
-            <View
-              key={contactKey}
-              style={{
-                ...styles.flexRow,
-                alignItems: "center",
-                gap: spacing["1"],
-              }}
-            >
-              <ResumePDFText>{` ${info.contact}  |  `}</ResumePDFText>
-            </View>
-          );
-        })}
-
-        {links.map((link: any, index: any) => {
-          const linkKey = link.linkName;
-          if (hiddenLinks[linkKey]) return null;
-          const linkText =
-            ` ${link.link}` + `${index != links.length - 1 ? `  |  ` : ""}`;
-          return (
-            <View
-              key={index}
-              style={{
-                ...styles.flexRow,
-                alignItems: "center",
-                gap: spacing["1"],
-              }}
-            >
-              <ResumePDFText>{linkText}</ResumePDFText>
-            </View>
-          );
-        })}
+        <ResumePDFText style={{ marginHorizontal: spacing["0.5"] }}>
+          {contactsAndLinks}
+        </ResumePDFText>
       </View>
     </ResumePDFSection>
   );

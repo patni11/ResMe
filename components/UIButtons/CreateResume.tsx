@@ -103,7 +103,7 @@ export function CreateResumeButton({
       console.log(res);
       const error = res.error;
       toast({
-        title: `Failed: ${error} `,
+        title: `Failed: ${res.message} `,
       });
     }
     setIsLoading(false);

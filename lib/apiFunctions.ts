@@ -21,6 +21,20 @@ export async function getCleanedHeaderData() {
   const hiddenContacts: { [key: string]: boolean } = {};
   const hiddenLinks: { [key: string]: boolean } = {};
 
+  // const defaultValues: UserInfo = {
+  //   displayName: headerInfo ? headerInfo?.displayName : "",
+  //   contactInfo:
+  //     headerInfo && headerInfo.contactInfo
+  //       ? JSON.parse(JSON.stringify(headerInfo?.contactInfo))
+  //       : [{ contactName: "", contact: "" }],
+  //   location: headerInfo && headerInfo?.location ? headerInfo.location : "",
+  //   links:
+  //     headerInfo && headerInfo.links
+  //       ? JSON.parse(JSON.stringify(headerInfo?.links))
+  //       : [{ linkName: "", link: "" }],
+  //   _id: headerInfo.email,
+  // };
+
   // Populate the objects
   headerInfo.contactInfo?.forEach((contact) => {
     hiddenContacts[contact.contactName] = false;
@@ -31,7 +45,7 @@ export async function getCleanedHeaderData() {
   });
 
   return {
-    headerInfo,
+    headerInfo: headerInfo,
     hiddenContacts,
     hiddenLinks,
     hideLocation: false,

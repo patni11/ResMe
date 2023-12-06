@@ -20,6 +20,13 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/components/ui/use-toast";
 import { usePathname } from "next/navigation";
 import { updateResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface UserInfoFormProps {
   defaultValues?: UserInfo;
@@ -155,14 +162,28 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
                     className="flex space-x-4 space-y-0 items-center"
                   >
                     <FormField
+                      control={form.control}
                       name={`contactInfo.${index}.contactName`}
-                      render={({}) => (
+                      render={({ field }) => (
                         <FormItem>
-                          <Input
-                            placeholder="Ex: Email"
-                            {...register(`contactInfo.${index}.contactName`)}
-                            className={`${inputFields}`}
-                          />
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            name={field.name}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Select Contact Type" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="Email">Email</SelectItem>
+                              <SelectItem value="Phone">Phone</SelectItem>
+                              <SelectItem value="Mailing Address">
+                                Mailing Address
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -340,21 +361,29 @@ export const UserInfoFormOnboarding = ({
   };
 
   const { register } = form;
-  const { fields: contactFields } = useFieldArray({
+  const {
+    fields: contactFields,
+    append: appendContact,
+    remove: removeContact,
+  } = useFieldArray({
     control: form.control,
     name: "contactInfo",
   });
 
-  const { fields: linkFields } = useFieldArray({
+  const {
+    fields: linkFields,
+    append: appendLink,
+    remove: removeLink,
+  } = useFieldArray({
     control: form.control,
     name: "links",
   });
 
   //console.log(errors);
 
-  const headingClass = "text-sm md:text-md";
+  const headingClass = "text-sm md:text-md m-0 p-0";
   const inputFields = "text-sm md:text-md";
-
+  const descriptionClass = "text-sm md:text-base m-0 p-0";
   return (
     <>
       <Form {...form}>
@@ -370,7 +399,7 @@ export const UserInfoFormOnboarding = ({
                 <FormLabel className={`${headingClass}`}>Your Name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Enter Your Name"
+                    placeholder="Enter name you want on your resume (Ex: John Wick)"
                     {...field}
                     className={`${inputFields}`}
                   />
@@ -381,26 +410,45 @@ export const UserInfoFormOnboarding = ({
           />
 
           <div className="flex flex-col space-y-4">
-            <FormLabel className={`${headingClass}`}>
-              Your Contact Info
-            </FormLabel>
-
-            <section className="flex flex-col w-full">
+            <div className="flex flex-col">
+              <FormLabel className={`${headingClass}`}>
+                Your Contact Info
+              </FormLabel>
+              <FormDescription className={`${descriptionClass}`}>
+                This includes your email, phone, or any other resource you need
+                in your resume.
+              </FormDescription>
+            </div>
+            <section className="flex flex-col space-y-4 w-full">
               {contactFields.map((field, index) => {
                 return (
                   <FormItem
                     key={field.id}
-                    className="flex space-x-4 space-y-0 items-center"
+                    className="flex space-x-4 space-y-0 items-center w-full"
                   >
                     <FormField
+                      control={form.control}
                       name={`contactInfo.${index}.contactName`}
-                      render={({}) => (
+                      render={({ field }) => (
                         <FormItem>
-                          <Input
-                            placeholder="Ex: Email"
-                            {...register(`contactInfo.${index}.contactName`)}
-                            className={`${inputFields}`}
-                          />
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                            name={field.name}
+                          >
+                            <FormControl>
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Select Contact Type" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent className="w-36">
+                              <SelectItem value="Email">Email</SelectItem>
+                              <SelectItem value="Phone">Phone</SelectItem>
+                              <SelectItem value="Mailing Address">
+                                Mailing Address
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -411,22 +459,53 @@ export const UserInfoFormOnboarding = ({
                       render={({}) => (
                         <FormItem>
                           <Input
-                            placeholder="email@gmail.coms"
+                            placeholder="Ex: johnwick@gmail.com"
                             {...register(`contactInfo.${index}.contact`)}
-                            className={`${inputFields}`}
+                            onChange={(e) => {
+                              // Additional logic to adjust size based on content
+                              e.target.size = Math.max(
+                                20,
+                                e.target.value.length
+                              );
+                            }}
+                            className={`${inputFields} w-full`}
                           />
                           <FormMessage />
                         </FormItem>
                       )}
                     />
+                    <Button
+                      type="button"
+                      onClick={() => removeContact(index)}
+                      variant="ghost"
+                      className={
+                        "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                      }
+                    >
+                      <Trash2 className="w-5 h-5"></Trash2>
+                    </Button>
                   </FormItem>
                 );
               })}
             </section>
+            <Button
+              type="button"
+              variant="default"
+              onClick={() => appendContact({ contactName: "", contact: "" })}
+              className="max-w-[fit-content]"
+            >
+              <PlusCircle className="w-4 h-4"></PlusCircle>
+            </Button>
           </div>
 
           <div className="flex flex-col space-y-4">
-            <FormLabel className={`${headingClass}`}>Your Links</FormLabel>
+            <div className="flex flex-col">
+              <FormLabel className={`${headingClass}`}>Your Links</FormLabel>
+              <FormDescription className={`${descriptionClass}`}>
+                This includes your twitter, linkedin, or any other resource you
+                need in your resume
+              </FormDescription>
+            </div>
             <section className="flex flex-col w-full">
               {linkFields.map((field, index) => {
                 return (
@@ -461,10 +540,28 @@ export const UserInfoFormOnboarding = ({
                         </FormItem>
                       )}
                     />
+                    <Button
+                      type="button"
+                      onClick={() => removeLink(index)}
+                      variant="ghost"
+                      className={
+                        "text-destructive hover:bg-destructive hover:text-destructive-foreground text-sm"
+                      }
+                    >
+                      <Trash2 className="w-5 h-5"></Trash2>
+                    </Button>
                   </FormItem>
                 );
               })}
             </section>
+
+            <Button
+              type="button"
+              onClick={() => appendLink({ linkName: "", link: "" })}
+              className="max-w-[fit-content]"
+            >
+              <PlusCircle className="w-5 h-5"></PlusCircle>
+            </Button>
           </div>
 
           <FormField

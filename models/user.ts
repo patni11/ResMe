@@ -8,7 +8,7 @@ const ResumeHeaderInfoSchema = new Schema(
       type: [
         {
           contactName: { type: String },
-          contact: { type: String, required: true },
+          contact: { type: String },
           _id: false,
         },
       ],
@@ -19,7 +19,7 @@ const ResumeHeaderInfoSchema = new Schema(
       type: [
         {
           linkName: { type: String },
-          link: { type: String, required: true },
+          link: { type: String },
           _id: false,
         },
       ],

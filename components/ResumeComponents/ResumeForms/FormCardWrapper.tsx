@@ -147,19 +147,21 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
                           This will reset the fields to your default profile
                           settings
                         </span>
-
-                        <Button
-                          onClick={() => {
-                            hideAll = false;
-                            refreshFunction();
-                          }}
-                          className="mr-2"
-                          variant="default"
-                          aria-label="Refresh"
-                          disabled={isLoading}
-                        >
-                          Reset
-                        </Button>
+                        <DialogTrigger>
+                          <div
+                            onClick={async () => {
+                              hideAll = false;
+                              await refreshFunction();
+                            }}
+                            className={buttonVariants({
+                              className: "mr-2",
+                              variant: "default",
+                            })}
+                            aria-label="Refresh"
+                          >
+                            Reset
+                          </div>
+                        </DialogTrigger>
                       </DialogDescription>
                     </DialogHeader>
                   </DialogContent>

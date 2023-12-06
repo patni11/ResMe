@@ -38,6 +38,7 @@ import {
   updateExperience,
 } from "@/lib/actions/experience.actions";
 import { AIHelper } from "@/components/Cards/AIHelper";
+import LightText from "@/components/Text";
 const ExperienceSchema = z
   .object({
     _id: z.string().optional(),
@@ -170,7 +171,9 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
               name="location"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Location</FormLabel>
+                  <FormLabel>
+                    Location <LightText>optional</LightText>
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Enter Location" {...field} />
                   </FormControl>
@@ -186,7 +189,9 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
               name="positionTitle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Role</FormLabel>
+                  <FormLabel>
+                    Role <LightText>optional</LightText>
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Enter Role" {...field} />
                   </FormControl>
@@ -199,7 +204,9 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
               name="experienceType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Experience Type</FormLabel>
+                  <FormLabel>
+                    Experience Type <LightText>optional</LightText>
+                  </FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}

@@ -63,7 +63,7 @@ const ResumeProject = ({
           <ResumePDFCard
             heading={project.projectName}
             subHeading={`${project.positionTitle}`}
-            dates={positionTitle}
+            dates={location}
             value={date}
             key={idx}
           >

@@ -11,6 +11,7 @@ import {
   RefreshCw,
   UploadCloud,
   Trash2,
+  ArrowLeft,
 } from "lucide-react";
 import ExperienceSectionCard from "@/components/ResumeComponents/ResumeForms/ExperienceSectionCard";
 import ResumeHeader from "@/components/ResumeComponents/ResumeForms/ResumeHeader";
@@ -106,7 +107,16 @@ const EditPanel: FC<EditPanelProps> = ({
 
   return (
     <main className="w-full h-screen overflow-y-auto flex flex-col items-start bg-gray-200 p-4 space-y-2">
-      <div className="flex space-x-2 w-full justify-end">
+      <div className="flex space-x-2 w-full justify-between">
+        <span
+          className={buttonVariants({
+            variant: "outline",
+            size: "xs",
+            className: "ml-8 text-xs",
+          })}
+        >
+          <ArrowLeft className="w-3 h-3" /> Close sidebar for better view
+        </span>
         <Dialog>
           <DialogTrigger className="">
             <span

@@ -39,11 +39,17 @@ export async function deleteUser(email: string) {
   }
 }
 
-export async function createUser({ email }: { email: string }) {
+export async function createUser({
+  email,
+  name,
+}: {
+  email: string;
+  name: string;
+}) {
   try {
     connectMongoDB();
 
-    const user = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { email: email },
       {
         isOnboarded: false,
@@ -53,6 +59,23 @@ export async function createUser({ email }: { email: string }) {
         languages: [],
         interests: [],
         AICalls: 0,
+      },
+      {
+        upsert: true,
+      }
+    );
+    await ResumeHeaderInfo.findOneAndUpdate(
+      { _id: email },
+      {
+        displayName: name,
+        contactInfo: [
+          {
+            contactName: "Email",
+            contact: email,
+          },
+        ],
+        location: "",
+        links: [{ linkName: "", link: "" }],
       },
       {
         upsert: true,

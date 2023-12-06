@@ -76,29 +76,39 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
         )}
 
         {links && links.length > 0
-          ? links.map((link: any, index: any) => (
-              <HideButtons
-                key={index}
-                hide={hiddenLinks ? hiddenLinks[link.linkName] : false}
-                setHide={() => setHiddenLinks(link.linkName)}
-              >
-                <span>{link.linkName}</span>
-              </HideButtons>
-            ))
+          ? links.map((link: any, index: any) => {
+              if (link.linkName === "") {
+                return null;
+              }
+              return (
+                <HideButtons
+                  key={index}
+                  hide={hiddenLinks ? hiddenLinks[link.linkName] : false}
+                  setHide={() => setHiddenLinks(link.linkName)}
+                >
+                  <span>{link.linkName}</span>
+                </HideButtons>
+              );
+            })
           : null}
 
         {contactInfo && contactInfo.length > 0
-          ? contactInfo.map((contact: any, index: any) => (
-              <HideButtons
-                key={index}
-                hide={
-                  hiddenContacts ? hiddenContacts[contact.contactName] : false
-                }
-                setHide={() => setHiddenContacts(contact.contactName)}
-              >
-                <span>{contact.contactName}</span>
-              </HideButtons>
-            ))
+          ? contactInfo.map((contact: any, index: any) => {
+              if (contact.contactName === "") {
+                return null;
+              }
+              return (
+                <HideButtons
+                  key={index}
+                  hide={
+                    hiddenContacts ? hiddenContacts[contact.contactName] : false
+                  }
+                  setHide={() => setHiddenContacts(contact.contactName)}
+                >
+                  <span>{contact.contactName}</span>
+                </HideButtons>
+              );
+            })
           : null}
       </div>
     </FormCardWrapper>
