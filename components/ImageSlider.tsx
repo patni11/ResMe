@@ -44,7 +44,7 @@ export const ImageSlider = ({ slides }: { slides: any }) => {
   useEffect(() => {
     const slideInterval = setInterval(() => {
       nextSlide(); // Call nextSlide function to change the slide
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(slideInterval); // Clear the interval when the component unmounts
   }, [currentIndex, slides.length]);
