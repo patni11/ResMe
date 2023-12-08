@@ -33,6 +33,7 @@ import {
   deleteEducation,
   updateEducation,
 } from "@/lib/actions/education.actions";
+import LightText from "@/components/Text";
 
 const EducationFormSchema = z
   .object({
@@ -155,12 +156,12 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
         />
 
         {/* Major, Degree, GPA */}
-        <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row md:space-x-8">
+        <div className="flex flex-col w-full space-y-2 md:space-y-0 md:flex-row md:space-x-8">
           <FormField
             control={form.control}
             name="major"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-full">
                 <FormLabel>Major</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter Major" {...field} />
@@ -202,7 +203,9 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
               </FormItem>
             )}
           />
+        </div>
 
+        <div className="flex w-full space-x-4 items-center">
           <FormField
             control={form.control}
             name="gpa"
@@ -227,15 +230,22 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
               );
             }}
           />
+
+          <LightText>
+            {" "}
+            <span className="text-xs">
+              *You can hide GPA while creating resume
+            </span>
+          </LightText>
         </div>
 
         {/** Date pickers */}
-        <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row justify-between">
+        <div className="flex w-full flex-col space-y-2 md:space-y-0 md:flex-row justify-between">
           <FormField
             control={form.control}
             name="startDate"
             render={({ field }) => (
-              <FormItem className="flex flex-col">
+              <FormItem className="flex flex-col ">
                 <FormLabel>Start Date</FormLabel>
                 <FormControl>
                   <DatePicker
