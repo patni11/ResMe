@@ -21,15 +21,20 @@ export async function createStripeSession(planType?: string) {
     //change plan from expert to student
   }
 
+  // if (
+  //   subscriptionPlan.isSubscribed &&
+  //   subscriptionPlan.name === "Student" &&
+  //   planType === "Expert"
+  // ) {
+  //   //change plan from student to expert
+  // }
+
   if (
     subscriptionPlan.isSubscribed &&
-    subscriptionPlan.name === "Student" &&
-    planType === "Expert"
+    subscriptionPlan.stripeCustomerId &&
+    subscriptionPlan.stripeCurrentPeriodEnd &&
+    subscriptionPlan.stripeCurrentPeriodEnd.getFullYear() < 2300
   ) {
-    //change plan from student to expert
-  }
-
-  if (subscriptionPlan.isSubscribed && subscriptionPlan.stripeCustomerId) {
     // cancel expert plan
     const stripeSession = await stripe.billingPortal.sessions.create({
       customer: subscriptionPlan.stripeCustomerId,

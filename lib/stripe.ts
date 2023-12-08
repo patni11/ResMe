@@ -35,7 +35,7 @@ export async function getUserSubscriptionPlan() {
     : null;
 
   let isCanceled = false;
-  if (isSubscribed && user.stripeSubscriptionId) {
+  if (isSubscribed && user.stripeSubscriptionId && plan?.name != "Student") {
     const stripePlan = await stripe.subscriptions.retrieve(
       user.stripeSubscriptionId
     );

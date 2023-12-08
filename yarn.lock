@@ -6585,12 +6585,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:^0.284.0":
-  version: 0.284.0
-  resolution: "lucide-react@npm:0.284.0"
+"lucide-react@npm:^0.294.0":
+  version: 0.294.0
+  resolution: "lucide-react@npm:0.294.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0
-  checksum: ad4cb554da392556f78ea79203fe16ff3261904723ffcf47ab00aca9e6613d24b457afcb1dc26c2845bcf673d9ffd261f7b0c13232b3ae60641fc652c85b854d
+  checksum: d8e741603209a0e0400b2d71e676aff660251f7e078f8be72a2fbaf57876946a76571675230b7c0f7d27d8a9344d0c788dba14177d35f4ba911897282eaae22a
   languageName: node
   linkType: hard
 
@@ -7059,7 +7059,7 @@ __metadata:
     eslint: ^8.50.0
     eslint-config-next: ^13.5.4
     file-saver: ^2.0.5
-    lucide-react: ^0.284.0
+    lucide-react: ^0.294.0
     mongodb-client-encryption: ^6.0.0
     mongoose: ^7.5.4
     next: ^13.5.4

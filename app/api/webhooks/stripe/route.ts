@@ -73,32 +73,36 @@ export async function POST(request: Request) {
       );
     } else if (session.payment_intent != null) {
       const paymentIntent = await stripe.checkout.sessions.retrieve(
-        session.id as string,
+        session.id,
         {
-          expand: ["line_items.data", "customer", "payment_intent"],
+          expand: ["line_items", "customer", "payment_intent"],
         }
       );
-      console.log("Payment Intent", paymentIntent);
+      console.log("Line Items", paymentIntent.line_items.data[0].description);
+      const stripeSubscriptionId = paymentIntent.id;
+      plan =
+        PLANS.find(
+          (plan) => plan.name === paymentIntent.line_items.data[0].description
+        ) || PLANS[1];
+      const stripeCurrentPeriodEnd = new Date(10701943420000); //2309 year
       // PLANS.find(
       //   (plan) =>
       //     plan.price.priceIds.test === paymentIntent.items.data[0]?.price.id
       // ) || PLANS[0];
 
-      // await User.findOneAndUpdate(
-      //   { email: session.metadata.email },
-      //   {
-      //     stripeSubscriptionId: subscription.id,
-      //     stripeCustomerId: subscription.customer as string,
-      //     stripePriceId: subscription.items.data[0]?.price.id,
-      //     stripeCurrentPeriodEnd: new Date(
-      //       subscription.current_period_end * 1000
-      //     ),
-      //     AICalls: 0,
-      //   },
-      //   {
-      //     upsert: true,
-      //   }
-      // );
+      await User.findOneAndUpdate(
+        { email: session.metadata.email },
+        {
+          stripeSubscriptionId: stripeSubscriptionId,
+          stripeCustomerId: stripeSubscriptionId as string,
+          stripePriceId: plan.price.priceIds.test, //TODO:change to prod
+          stripeCurrentPeriodEnd: stripeCurrentPeriodEnd,
+          AICalls: 0,
+        },
+        {
+          upsert: true,
+        }
+      );
     }
 
     // if (plan.name === "Student") {
