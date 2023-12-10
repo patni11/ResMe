@@ -41,7 +41,7 @@ export async function createSphereSession(): Promise<any> {
       name: "DiscountLInkTest",
       lineItems: [{ quantity: 1, price: priceId }],
     })
-    .then(({ data }) => {
+    .then(({ data }: { data: any }) => {
       console.log("URL", data.data.paymentLink.url);
       return { url: data.data.paymentLink.url, success: false };
     })

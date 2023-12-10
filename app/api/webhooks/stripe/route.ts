@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { PLANS } from "@/app/utils/stripe";
 import {
   sendExpertUpgradeEmail,

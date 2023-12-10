@@ -415,8 +415,8 @@ export default function Home() {
                   </p>
                   <br />
                   <p>
-                    Unlike most AI based apps we don't have confusing token
-                    system, instead each time you sucessfully use AI, it's
+                    Unlike most AI based apps we don&apos;t have confusing token
+                    system, instead each time you sucessfully use AI, it&apos;s
                     counted as 1 call
                   </p>
                   <br />
