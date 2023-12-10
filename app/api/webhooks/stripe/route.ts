@@ -143,5 +143,10 @@ export async function POST(request: Request) {
     );
   }
 
+  // if (event.type === "radar.early_fraud_warning.created") {
+  //   const { payment_intent } = session;
+  //   await stripe.refunds.create({ payment_intent });
+  // }
+
   return new Response(null, { status: 200 });
 }

@@ -34,7 +34,42 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
     update(document);
   }, [document]);
 
-  const { startUpload } = useUploadThing("pdfUploader");
+  //const { startUpload } = useUploadThing("pdfUploader");
+
+  const { startUpload } = useUploadThing("pdfUploader", {
+    onClientUploadComplete: async (res) => {
+      alert("uploaded successfully!");
+      console.log("RES", res);
+      if (!res[0]?.success) {
+        // Your code here
+        toast({
+          title: "There was some error, try again",
+          variant: "destructive",
+        });
+      }
+
+      const url = `https://utfs.io/f/${res[0].key}`;
+      toast({
+        title: res[0].message,
+        variant: "destructive",
+      });
+      await navigator.clipboard.writeText(url);
+      setURL(url);
+      setIsLoading(false);
+      setPopup(true);
+    },
+    onUploadError: (e) => {
+      console.log("Error: ", e);
+      toast({
+        title: `There was some error, try again. Error:${e}`,
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    },
+    onUploadBegin: () => {
+      alert("upload has begun");
+    },
+  });
 
   if (instance.error) return <div>Download Error</div>;
 
@@ -88,20 +123,23 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
 
   const handleButtonClick = async () => {
     setIsLoading(true);
-    gtag.event({
-      clientWindow: window,
-      action: "Share Link",
-      category: "Download",
-      label: "Share Link",
-    });
+    // gtag.event({
+    //   clientWindow: window,
+    //   action: "Share Link",
+    //   category: "Download",
+    //   label: "Share Link",
+    // }); TODO:Uncomment this
     // call upload thing to save the link as pdf
-    const url = await getShareUrl();
+    // const url = await getShareUrl();
 
     // put it in the person's clipboard
-    handleCopyToClipboard(url);
-    setURL(url);
-    setIsLoading(false);
-    setPopup(true);
+    // handleCopyToClipboard(url);
+    // setURL(url);
+    // setIsLoading(false);
+    // setPopup(true);
+    startUpload([new File([instance.blob!], "pdf")], {
+      resumeId: resumeId,
+    });
   };
 
   return (
@@ -109,7 +147,7 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
       <TooltipProvider>
         <Tooltip delayDuration={300}>
           <TooltipTrigger className="cursor-default ml-1.5">
-            {/* <Button
+            <Button
               disabled={instance.loading || isLoading}
               variant="outlineHover"
               size="xs"
@@ -128,9 +166,9 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
               <ArrowUpRightSquare className="w-4 h-4" />
 
               <span>Copy</span>
-            </Button> */}
+            </Button>
 
-            <ComingSoon>
+            {/* <ComingSoon>
               <div
                 className={buttonVariants({
                   variant: "outlineHover",
@@ -140,7 +178,7 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
               >
                 Copy
               </div>
-            </ComingSoon>
+            </ComingSoon> */}
           </TooltipTrigger>
           <TooltipContent className="p-2 text-xs font-normal">
             Share Link to PDF

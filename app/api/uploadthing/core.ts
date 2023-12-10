@@ -12,16 +12,17 @@ export const ourFileRouter = {
   pdfUploader: f({ blob: { maxFileSize: "2MB" } })
     .input(z.object({ resumeId: z.string() }))
     .middleware(async ({ req, input }) => {
-      const subscriptionPlan = await getUserSubscriptionPlan();
-      if (!subscriptionPlan.isSubscribed) {
-        return { success: false, message: "Not Subscribed" };
-      }
+      // const subscriptionPlan = await getUserSubscriptionPlan();
+      // if (!subscriptionPlan.isSubscribed) {
+      //   return { success: false, message: "Not Subscribed" };
+      // } TODO:Uncomment this
 
       const existingLink = await getPDFLink(input.resumeId);
       if (existingLink) {
         // delete from upload thing
         await utapi.deleteFiles(existingLink);
       }
+      console.log("Existing link", existingLink, input.resumeId);
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return {
@@ -33,9 +34,14 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
       //      console.log("Upload complete for userId:", metadata.userId);
-
+      console.log("ON UPLOAD COMPLETE");
       if (!metadata.success || !metadata.resumeId) {
-        return { success: metadata.success, message: metadata.message };
+        return {
+          success: metadata.success || false,
+          message: metadata.message,
+          key: undefined,
+          resumeId: metadata.resumeId,
+        };
       }
 
       await updatePDFLink(metadata.resumeId, file.key);
@@ -44,6 +50,9 @@ export const ourFileRouter = {
       return {
         //  uploadedBy: metadata.userId
         success: true,
+        message: metadata.message,
+        key: file.key,
+        resumeId: metadata.resumeId,
       };
     }),
 } satisfies FileRouter;
