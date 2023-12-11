@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 
 import { createTalentsInfo } from "@/store/talentsInfo";
 import { Button } from "@/components/ui/button";
-import { Eye, EyeOff, Trash2 } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { Label } from "@/components/ui/label";
 
 type TalentsSectionProp = {
@@ -42,7 +42,7 @@ const TalentsSection: FC<TalentsSectionProp> = ({
     setInterests,
     setLanguages,
     fetchDefaultTalent,
-    fetchTalents,
+    //  fetchTalents,
   } = useTalentsInfo();
 
   const setHideAll = () => {
@@ -55,7 +55,7 @@ const TalentsSection: FC<TalentsSectionProp> = ({
     <FormCardWrapper
       cardTitle="Talent"
       refreshFunction={() => fetchDefaultTalent()}
-      refreshSection={() => fetchTalents()}
+      //refreshSection={() => fetchTalents()}
       hideAll={hideSkills && hideInterests & hideLanguages}
       isLoading={isLoading}
       deleteFunction={setHideAll}
