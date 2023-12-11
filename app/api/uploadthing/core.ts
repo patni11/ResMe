@@ -2,6 +2,7 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { z } from "zod";
 import { getPDFLink, updatePDFLink } from "@/lib/actions/resumes.action";
 import { UTApi } from "uploadthing/server";
+import { getUserEmailFromSession } from "@/lib/actions/utils.action";
 //import { getUserSubscriptionPlan } from "@/lib/stripe";
 
 const utapi = new UTApi();
@@ -18,10 +19,24 @@ export const ourFileRouter = {
       //   return { success: false, message: "Not Subscribed" };
       // } TODO:Uncomment this
 
+      try {
+        const email = await getUserEmailFromSession();
+      } catch (e) {
+        return {
+          success: false,
+          message: "Not Logged In",
+          resumeId: input.resumeId,
+        };
+      }
+
       const existingLink = await getPDFLink(input.resumeId);
       if (existingLink) {
         // delete from upload thing
-        await utapi.deleteFiles(existingLink);
+        try {
+          await utapi.deleteFiles(existingLink);
+        } catch (e) {
+          console.log("Could not delete", e);
+        }
       }
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`

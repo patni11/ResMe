@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Settings2 } from "lucide-react";
+import { Settings2, X } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,6 +21,7 @@ import { DeleteButton, RenameDialog } from "./ResumeFuncitonButtons";
 import { buttonVariants } from "../ui/button";
 import { Input } from "../ui/input";
 import ResumeCardImageImage from "@/public/resumeCard.png";
+import ShareLink from "../Inputs/ShareLink";
 
 //import { useToast } from "../ui/use-toast";
 interface ResumeCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -137,39 +138,18 @@ export async function ResumeCard({
             </DropdownMenuItem>
 
             <DropdownMenuItem asChild>
-              <Dialog>
-                <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                  <div
-                    //onClick={() => renameFunc(resumeId, "Shubh Patni")}
+              <ShareLink url={`https://utfs.io/f/${pdfLink}`}>
+                <div
+                  //onClick={() => renameFunc(resumeId, "Shubh Patni")}
 
-                    className={buttonVariants({
-                      variant: "outline",
-                      className: "w-full",
-                    })}
-                  >
-                    Copy Link
-                  </div>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Share Link</DialogTitle>
-                    <DialogDescription className="flex flex-col space-y-4 items-center">
-                      {pdfLink || pdfLink != "" ? (
-                        <Input
-                          value={`https://utfs.io/f/${pdfLink}`}
-                          readOnly
-                        />
-                      ) : (
-                        <span>
-                          You don&apos;t have any links generated yet, open
-                          resume, copy link and next time you can copy from here
-                          😉
-                        </span>
-                      )}
-                    </DialogDescription>
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
+                  className={buttonVariants({
+                    variant: "outline",
+                    className: "w-full",
+                  })}
+                >
+                  Copy Link
+                </div>
+              </ShareLink>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

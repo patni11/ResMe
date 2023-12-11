@@ -205,35 +205,34 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
       </TooltipProvider>
 
       {popup ? (
-        <ShareLink></ShareLink>
-      ) : // <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-      //   <div className="flex flex-col space-y-4 bg-white rounded-lg p-4 w-[80%] md:w-[30%]">
-      //     <div className="flex w-full justify-between items-center">
-      //       <Label htmlFor="url" className="text-md">
-      //         Share Link
-      //       </Label>
-      //       <button
-      //         className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
-      //         onClick={() => {
-      //           setPopup(false);
-      //         }}
-      //       >
-      //         <X className="h-5 w-5" />
-      //         <span className="sr-only">Close</span>
-      //       </button>
-      //     </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+          <div className="flex flex-col space-y-4 bg-white rounded-lg p-4 w-[80%] md:w-[30%]">
+            <div className="flex w-full justify-between items-center">
+              <Label htmlFor="url" className="text-md">
+                Share Link
+              </Label>
+              <button
+                className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+                onClick={() => {
+                  setPopup(false);
+                }}
+              >
+                <X className="h-5 w-5" />
+                <span className="sr-only">Close</span>
+              </button>
+            </div>
 
-      //     <Input
-      //       value={url}
-      //       readOnly
-      //       className="w-full"
-      //       id="url"
-      //       ref={inputRef}
-      //       onClick={copyToClipboard}
-      //     />
-      //   </div>
-      // </div>
-      null}
+            <Input
+              value={url}
+              readOnly
+              className="w-full"
+              id="url"
+              ref={inputRef}
+              onClick={copyToClipboard}
+            />
+          </div>
+        </div>
+      ) : null}
 
       {instance.loading || isLoading ? (
         <Button

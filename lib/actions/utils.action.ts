@@ -1,7 +1,7 @@
 "use server";
 import { getServerSession } from "next-auth/next";
 import authOptions, { Session } from "@/lib/authOptions";
-import { FetchError } from "../types";
+//import { FetchError } from "../types";
 export async function getUserEmailFromSession(): Promise<string> {
   const session: Session | null = await getServerSession(authOptions);
   if (
