@@ -121,12 +121,12 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
 
   const handleButtonClick = async () => {
     setIsLoading(true);
-    // gtag.event({
-    //   clientWindow: window,
-    //   action: "Share Link",
-    //   category: "Download",
-    //   label: "Share Link",
-    // }); TODO:Uncomment this
+    gtag.event({
+      clientWindow: window,
+      action: "Share Link",
+      category: "Download",
+      label: "Share Link",
+    });
     // call upload thing to save the link as pdf
     // const url = await getShareUrl();
 

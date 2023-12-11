@@ -124,12 +124,12 @@ const PaymentComponent = () => {
   const [isCardLoading, setIsCardLoading] = useState(false);
   const [isCryptoLoading, setIsCryptoLoading] = useState(false);
   const ProcessCardPayment = async () => {
-    // gtag.event({
-    //   clientWindow: window,
-    //   action: "student card button",
-    //   category: "purchase",
-    //   label: "student",
-    // });
+    gtag.event({
+      clientWindow: window,
+      action: "student card button",
+      category: "purchase",
+      label: "student",
+    });
     console.log("Process payment clicked");
     toast({
       title:
@@ -151,12 +151,12 @@ const PaymentComponent = () => {
   };
 
   const ProcessCryptoPayment = async () => {
-    // gtag.event({
-    //   clientWindow: window,
-    //   action: "student crypto button",
-    //   category: "purchase",
-    //   label: "student",
-    // });
+    gtag.event({
+      clientWindow: window,
+      action: "student crypto button",
+      category: "purchase",
+      label: "student",
+    });
 
     console.log("Process payment clicked");
     toast({
