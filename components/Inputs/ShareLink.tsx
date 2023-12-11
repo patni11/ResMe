@@ -16,7 +16,7 @@ const ShareLink = ({
   url,
   children,
 }: {
-  url: string;
+  url: string | undefined;
 
   children: ReactElement;
 }) => {
@@ -47,18 +47,27 @@ const ShareLink = ({
       <DialogTrigger className="px-2 py-1.5 text-sm  transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
         {children}
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>Share Link</DialogHeader>
+      {url || url != "" ? (
+        <DialogContent>
+          <DialogHeader>Share Link</DialogHeader>
 
-        <Input
-          value={url}
-          readOnly
-          className="w-full"
-          id="url"
-          ref={inputRef}
-          onClick={copyToClipboard}
-        />
-      </DialogContent>
+          <Input
+            value={`https://utfs.io/f/${url}`}
+            readOnly
+            className="w-full"
+            id="url"
+            ref={inputRef}
+            onClick={copyToClipboard}
+          />
+        </DialogContent>
+      ) : (
+        <DialogContent>
+          <span>
+            You don&apos;t have any links generated yet, open resume, copy link
+            and next time you can copy from here 😉
+          </span>
+        </DialogContent>
+      )}
     </Dialog>
   );
 };

@@ -6,6 +6,7 @@ import { Input } from "../ui/input";
 import { deleteFunc, renameResume } from "./ResumeFunctions";
 import { useToast } from "../ui/use-toast";
 import { DialogClose } from "../ui/dialog";
+import LoadingSpinner from "../LoadingSpinner";
 
 export const DeleteButton = ({
   resumeId,
@@ -14,6 +15,7 @@ export const DeleteButton = ({
   resumeId: string;
   email: string;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   async function handleDelete() {
@@ -35,23 +37,28 @@ export const DeleteButton = ({
       toast({
         title: `Could not delete the resume`,
       });
+      setIsLoading(false);
     }
+    setIsLoading(false);
   }
 
   return (
     <Button
-      onClick={() => handleDelete()}
+      onClick={() => {
+        setIsLoading(true);
+        handleDelete();
+      }}
       className="w-32 bg-destructive-foreground border hover:bg-destructive outline text-primary hover:text-destructive-foreground"
+      disabled={isLoading}
     >
-      {" "}
-      Delete{" "}
+      {isLoading ? <LoadingSpinner /> : <span>Delete</span>}
     </Button>
   );
 };
 
 export const RenameDialog = ({ resumeId }: { resumeId: string }) => {
   const [newName, setNewName] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div className="w-full flex flex-col space-y-4 mt-8">
       <Input
@@ -64,11 +71,13 @@ export const RenameDialog = ({ resumeId }: { resumeId: string }) => {
       <DialogClose asChild>
         <Button
           onClick={() => {
+            setIsLoading(true);
             renameResume(resumeId, newName);
+            setIsLoading(false);
           }}
           variant="default"
         >
-          Rename
+          {isLoading ? <LoadingSpinner /> : <span>Rename</span>}
         </Button>
       </DialogClose>
     </div>

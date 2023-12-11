@@ -138,7 +138,7 @@ export async function ResumeCard({
             </DropdownMenuItem>
 
             <DropdownMenuItem asChild>
-              <ShareLink url={`https://utfs.io/f/${pdfLink}`}>
+              <ShareLink url={pdfLink}>
                 <div
                   //onClick={() => renameFunc(resumeId, "Shubh Patni")}
 
