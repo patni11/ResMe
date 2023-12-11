@@ -1,5 +1,6 @@
+//@ts-nocheck
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { usePDF } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -7,7 +8,7 @@ import { Download, X } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { sendPDFDownloadEmail } from "@/lib/actions/sendEmail.action";
 import { useResumeDataContext } from "@/app/(mainApp)/buildResume/ResumeDataContext";
-import { ComingSoon } from "@/components/Cards/ComingSoon";
+//import { ComingSoon } from "@/components/Cards/ComingSoon";
 import {
   Tooltip,
   TooltipContent,
@@ -18,9 +19,10 @@ import { ArrowUpRightSquare } from "lucide-react";
 import * as gtag from "@/lib/gtag";
 import { useToast } from "@/components/ui/use-toast";
 import { useUploadThing } from "@/lib/uploadthing";
-import { getPDFLink, updatePDFLink } from "@/lib/actions/resumes.action";
+//import { getPDFLink, updatePDFLink } from "@/lib/actions/resumes.action";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
 const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
   const [instance, update] = usePDF({ document });
   const [isLoading, setIsLoading] = useState(false);
@@ -28,80 +30,134 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
   const [url, setURL] = useState("");
   const [popup, setPopup] = useState(false);
   const { email, name, isSubscribed, resumeId } = useResumeDataContext();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   //Hook to update pdf when document changes
   useEffect(() => {
     update(document);
   }, [document]);
 
-  const { startUpload } = useUploadThing("pdfUploader");
+  //const { startUpload } = useUploadThing("pdfUploader");
+
+  const { startUpload } = useUploadThing("pdfUploader", {
+    onClientUploadComplete: (res) => {
+      if (!res) {
+        toast({
+          title: "There was some error, try again",
+          variant: "destructive",
+        });
+      }
+
+      const url = res[0].url;
+
+      toast({
+        title: res[0].serverData.message,
+      });
+
+      setURL(url);
+      setIsLoading(false);
+      setPopup(true);
+      return;
+    },
+    onUploadError: (e) => {
+      console.log("On upload thing error: ", e);
+      toast({
+        title: `There was some error, try again. Error:${e}`,
+        variant: "destructive",
+      });
+      setIsLoading(false);
+    },
+  });
 
   if (instance.error) return <div>Download Error</div>;
 
-  const getShareUrl = async () => {
-    const res = await startUpload([new File([instance.blob!], "pdf")], {
-      resumeId: resumeId,
-    });
+  // const getShareUrl = async () => {
+  //   const res = await startUpload([new File([instance.blob!], "pdf")], {
+  //     resumeId: resumeId,
+  //   });
 
-    if (!res) {
-      //show error
-      toast({
-        title: "Couldn't copy the file link",
-        variant: "destructive",
-      });
-      return "";
-    }
-    // get the link of the url from upload thing
-    const [fileResponse] = res;
-    const key = fileResponse?.key;
+  //   if (!res) {
+  //     //show error
+  //     toast({
+  //       title: "Couldn't copy the file link",
+  //       variant: "destructive",
+  //     });
+  //     return "";
+  //   }
+  //   // get the link of the url from upload thing
+  //   const [fileResponse] = res;
+  //   const key = fileResponse?.key;
 
-    if (!key) {
-      //show error
-      toast({
-        title: "Couldn't copy the file link",
-        variant: "destructive",
-      });
-      return "";
-    }
+  //   if (!key) {
+  //     //show error
+  //     toast({
+  //       title: "Couldn't copy the file link",
+  //       variant: "destructive",
+  //     });
+  //     return "";
+  //   }
 
-    const pollInterval = 500; // 5 seconds
-    const checkKeyInDB = async () => {
-      const savedKey = await getPDFLink(resumeId);
-      if (key == savedKey) {
-        clearInterval(polling);
-        return `https://utfs.io/f/${key}`;
-      } else {
-        await updatePDFLink(resumeId, key);
-      }
-    };
-    const polling = setInterval(checkKeyInDB, pollInterval);
-    return `https://utfs.io/f/${key}`;
-  };
+  //   const pollInterval = 500; // 5 seconds
+  //   const checkKeyInDB = async () => {
+  //     const savedKey = await getPDFLink(resumeId);
+  //     if (key == savedKey) {
+  //       clearInterval(polling);
+  //       return `https://utfs.io/f/${key}`;
+  //     } else {
+  //       await updatePDFLink(resumeId, key);
+  //     }
+  //   };
+  //   const polling = setInterval(checkKeyInDB, pollInterval);
+  //   return `https://utfs.io/f/${key}`;
+  // };
 
-  const handleCopyToClipboard = async (url: string) => {
-    await navigator.clipboard.writeText(url);
+  // const handleCopyToClipboard = async (url: string) => {
+  //   await navigator.clipboard.writeText(url);
 
-    toast({
-      title: "URL Link Copied",
-    });
-  };
+  //   toast({
+  //     title: "URL Link Copied",
+  //   });
+  // };
 
   const handleButtonClick = async () => {
     setIsLoading(true);
-    gtag.event({
-      clientWindow: window,
-      action: "Share Link",
-      category: "Download",
-      label: "Share Link",
-    });
+    // gtag.event({
+    //   clientWindow: window,
+    //   action: "Share Link",
+    //   category: "Download",
+    //   label: "Share Link",
+    // }); TODO:Uncomment this
     // call upload thing to save the link as pdf
-    const url = await getShareUrl();
+    // const url = await getShareUrl();
 
     // put it in the person's clipboard
-    handleCopyToClipboard(url);
-    setURL(url);
-    setIsLoading(false);
-    setPopup(true);
+    // handleCopyToClipboard(url);
+    // setURL(url);
+    // setIsLoading(false);
+    // setPopup(true);
+    startUpload([new File([instance.blob!], "pdf")], {
+      resumeId: resumeId,
+    });
+  };
+
+  const copyToClipboard = () => {
+    if (inputRef.current) {
+      navigator.clipboard
+        .writeText(inputRef.current.value)
+        .then(() => {
+          // Handle successful copying here, e.g., show a message
+          toast({
+            title: "URL Copied!",
+          });
+        })
+        .catch((err) => {
+          // Handle errors here
+          toast({
+            title: "Error copying url, try to copy by manually selecting it",
+            variant: "destructive",
+          });
+        });
+    }
   };
 
   return (
@@ -109,7 +165,7 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
       <TooltipProvider>
         <Tooltip delayDuration={300}>
           <TooltipTrigger className="cursor-default ml-1.5">
-            {/* <Button
+            <Button
               disabled={instance.loading || isLoading}
               variant="outlineHover"
               size="xs"
@@ -128,9 +184,9 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
               <ArrowUpRightSquare className="w-4 h-4" />
 
               <span>Copy</span>
-            </Button> */}
+            </Button>
 
-            <ComingSoon>
+            {/* <ComingSoon>
               <div
                 className={buttonVariants({
                   variant: "outlineHover",
@@ -140,7 +196,7 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
               >
                 Copy
               </div>
-            </ComingSoon>
+            </ComingSoon> */}
           </TooltipTrigger>
           <TooltipContent className="p-2 text-xs font-normal">
             Share Link to PDF
@@ -166,7 +222,14 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
               </button>
             </div>
 
-            <Input value={url} readOnly className="w-full" id="url" />
+            <Input
+              value={url}
+              readOnly
+              className="w-full"
+              id="url"
+              ref={inputRef}
+              onClick={copyToClipboard}
+            />
           </div>
         </div>
       ) : null}

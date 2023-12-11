@@ -247,7 +247,7 @@ export default function Home() {
                     personally and wider community
                   </p>
                   <br />
-                  <a href="https://discord.gg/UwTwQeZkp5" className="underline">
+                  <a href="https://discord.gg/jNp89cbpSa" className="underline">
                     Discord
                   </a>
                 </AccordionContent>
@@ -402,6 +402,29 @@ export default function Home() {
                     <a href="SVGBackgrounds.com" className="underline">
                       SVG Backgrounds
                     </a>
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-8">
+                <AccordionTrigger>What is AI Call?</AccordionTrigger>
+                <AccordionContent className="text-left justify-left">
+                  <p>
+                    1 AI call gives you 3-4 perfect bullet points for your
+                    resume
+                  </p>
+                  <br />
+                  <p>
+                    Unlike most AI based apps we don&apos;t have confusing token
+                    system, instead each time you sucessfully use AI, it&apos;s
+                    counted as 1 call
+                  </p>
+                  <br />
+                  <p>
+                    Free plans comes with 3 calls, so you can try it. Student
+                    plan gives you 100, enough to create 10-15 resumes. Expert
+                    plan gives you 500/month, enough to try as many resumes as
+                    you like.
                   </p>
                 </AccordionContent>
               </AccordionItem>

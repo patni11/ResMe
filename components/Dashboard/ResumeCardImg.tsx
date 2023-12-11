@@ -90,7 +90,7 @@ function ResumeCardImage({
         buildResume();
       }}
       key={resumeId}
-      className="cursor-pointer"
+      className="cursor-pointer mt-4"
     >
       <div className="overflow-hidden rounded-md">
         {!isLoading ? (

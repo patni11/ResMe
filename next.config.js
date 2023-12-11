@@ -7,6 +7,7 @@ const nextConfig = {
       "api.producthunt.com",
       "producthunt.com",
       "vitals.vercel-insights.com",
+      "uploadthing.com",
     ],
     dangerouslyAllowSVG: true,
   },

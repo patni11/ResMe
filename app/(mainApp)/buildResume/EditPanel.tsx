@@ -193,17 +193,9 @@ const EditPanel: FC<EditPanelProps> = ({
                   <li className="flex flex-col space-y-1">
                     <h3 className="text-lg text-primary">Load Data</h3>
                     <p className="flex flex-col space-y-1">
-                      <span>
-                        You can reload the saved data for this resume or load
-                        the default data you entered in each section
-                      </span>
                       <span className="flex space-x-2">
-                        click &quot;Reset&quot; to load default data
-                      </span>
-
-                      <span className="flex space-x-2">
-                        <RefreshCw className="w-5 h-5 mr-2" /> to load resume
-                        data
+                        <RefreshCw className="w-5 h-5 mr-2" /> to reset to
+                        profile data
                       </span>
                     </p>
                   </li>

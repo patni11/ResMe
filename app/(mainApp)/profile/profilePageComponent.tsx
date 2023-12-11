@@ -25,9 +25,10 @@ import {
   ManageSubsription,
   SwitchToStudent,
 } from "./signOutButtons";
-import { Infinity } from "lucide-react";
+import { Infinity, PlusCircle } from "lucide-react";
 import intlFormat from "date-fns/esm/intlFormat";
 import Link from "next/link";
+import { GoPremiumButton } from "@/app/pricing/goPremiumButton";
 
 interface BillingFormProps {
   subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
@@ -106,7 +107,10 @@ const ProfilePageComponent = ({ subscriptionPlan }: BillingFormProps) => {
             </h2>
           )}
 
-          {subscriptionPlan.isSubscribed && subscriptionPlan != undefined ? (
+          {subscriptionPlan.isSubscribed &&
+          subscriptionPlan != undefined &&
+          subscriptionPlan.stripeCurrentPeriodEnd &&
+          subscriptionPlan.stripeCurrentPeriodEnd.getFullYear() < 2300 ? (
             <div
               className={`${buttonVariants({
                 variant: "outline",
@@ -118,19 +122,16 @@ const ProfilePageComponent = ({ subscriptionPlan }: BillingFormProps) => {
                   : "Your plan renews on"}
               </span>
 
-              {subscriptionPlan.stripeCurrentPeriodEnd ? (
-                <span>
-                  {intlFormat(subscriptionPlan.stripeCurrentPeriodEnd, {
-                    month: "short",
-                    year: "numeric",
-                    day: "numeric",
-                  })}
-                </span>
-              ) : (
-                <span>Hi</span>
-              )}
+              <span>
+                {intlFormat(subscriptionPlan.stripeCurrentPeriodEnd, {
+                  month: "short",
+                  year: "numeric",
+                  day: "numeric",
+                })}
+              </span>
             </div>
           ) : null}
+
           {!subscriptionPlan.isSubscribed && (
             <Link
               className={buttonVariants({
@@ -151,14 +152,7 @@ const ProfilePageComponent = ({ subscriptionPlan }: BillingFormProps) => {
             </div>
           )}
 
-          {subscriptionPlan.name == "Student" && (
-            <Button
-              variant="outline"
-              className="w-full bg-gradient-to-r font-semibold from-pink-500 to-purple-500 hover:bg-purple-500 text-primary-foreground hover:text-primary-foreground"
-            >
-              Upgrade to Expert
-            </Button>
-          )}
+          {subscriptionPlan.name == "Student" && <GoPremiumButton />}
         </CardContent>
         <CardFooter className="flex justify-between">
           <Dialog>

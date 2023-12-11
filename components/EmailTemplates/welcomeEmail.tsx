@@ -58,7 +58,7 @@ const WelcomeEmail = ({ name }: ContactMeEmailProps) => {
               I provide free Resume Review to our Discord community members, and
               we have many companies posting job offers. Feel free to introduce
               yourself there.
-              <Link href="https://discord.gg/Ghypc6rN"> Discord</Link>
+              <Link href="https://discord.gg/jNp89cbpSa"> Discord</Link>
             </Text>
 
             <p className="text-black text-[14px]">

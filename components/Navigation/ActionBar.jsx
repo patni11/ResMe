@@ -21,7 +21,7 @@ import { saveAs } from "file-saver";
 import { Packer } from "docx";
 import DocumentCreator from "@/components/ResumeComponents/ResumeDocsFormatter/generateDocx";
 import { useResumeDataContext } from "@/app/(mainApp)/buildResume/ResumeDataContext";
-import { ComingSoon } from "../Cards/ComingSoon";
+//import { ComingSoon } from "../Cards/ComingSoon";
 //import { saveLocally } from "./storeLocally";
 import { useToast } from "@/components/ui/use-toast";
 import * as gtag from "@/lib/gtag";
@@ -181,40 +181,40 @@ const ActionBar = ({ componentsData, children }) => {
       <TooltipProvider>
         <Tooltip delayDuration={300}>
           <TooltipTrigger className="cursor-default ml-1.5">
-            <ComingSoon>
-              <div
-                className={buttonVariants({
-                  variant: "outlineHover",
-                  size: "xs",
-                  className: "flex space-x-2",
-                })}
-                // onClick={async () => {
-                //   setIsSaving(true);
-                //   gtag.event({
-                //     clientWindow: window,
-                //     action: "Download Docx",
-                //     category: "Download",
-                //     label: "Download Docx",
-                //   });
+            {/* <ComingSoon> */}
+            <div
+              className={buttonVariants({
+                variant: "outlineHover",
+                size: "xs",
+                className: "flex space-x-2",
+              })}
+              onClick={async () => {
+                setIsSaving(true);
+                gtag.event({
+                  clientWindow: window,
+                  action: "Download Docx",
+                  category: "Download",
+                  label: "Download Docx",
+                });
 
-                //   // if (isSubscribed) {
-                //   //   await downloadDocx();
-                //   // } else {
-                //   //   toast({
-                //   //     title: "Please upgrade to use this feature",
-                //   //   });
-                //   // }
-                //   await downloadDocx();
+                if (isSubscribed) {
+                  await downloadDocx();
+                } else {
+                  toast({
+                    title: "Please upgrade to use this feature",
+                  });
+                }
+                await downloadDocx();
 
-                //   setIsSaving(false);
-                // }}
-                disabled={isSaving}
-              >
-                <File className="w-4 h-4" />
+                setIsSaving(false);
+              }}
+              disabled={isSaving}
+            >
+              <File className="w-4 h-4" />
 
-                <span>Docx</span>
-              </div>
-            </ComingSoon>
+              <span>Docx</span>
+            </div>
+            {/* </ComingSoon> */}
           </TooltipTrigger>
           <TooltipContent className="p-2 text-xs font-normal">
             Download microsoft docx file

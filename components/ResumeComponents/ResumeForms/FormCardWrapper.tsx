@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   ChevronDown,
@@ -10,14 +10,6 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { FC, ReactNode } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import {
   TooltipProvider,
   Tooltip,
@@ -30,7 +22,7 @@ interface FormCardWrapperProps {
   children?: ReactNode;
   isLoading?: boolean;
   refreshFunction?: () => void;
-  refreshSection?: () => void;
+  // refreshSection?: () => void;
   hideAll?: boolean;
   deleteFunction?: () => void;
   index: number;
@@ -75,7 +67,7 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
   cardTitle,
   children,
   refreshFunction,
-  refreshSection,
+  //refreshSection,
   isLoading,
   hideAll = false,
   deleteFunction,
@@ -115,9 +107,9 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
 
               {cardTitle}
             </div>
-            {refreshFunction && !hideAll && refreshSection ? (
+            {refreshFunction && !hideAll ? (
               <div className="flex items-center justify-center">
-                <Dialog>
+                {/* <Dialog>
                   <DialogTrigger>
                     <TooltipProvider>
                       <Tooltip delayDuration={400}>
@@ -165,7 +157,7 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
                       </DialogDescription>
                     </DialogHeader>
                   </DialogContent>
-                </Dialog>
+                </Dialog> */}
 
                 <TooltipProvider>
                   <Tooltip delayDuration={300}>
@@ -173,7 +165,7 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
                       <Button
                         onClick={() => {
                           hideAll = false;
-                          refreshSection();
+                          refreshFunction();
                         }}
                         className="mr-2"
                         variant="ghost"
@@ -184,7 +176,7 @@ export const FormCardWrapper: FC<FormCardWrapperProps> = ({
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent className="p-2 text-xs font-normal">
-                      Reload resume data
+                      Reset to profile
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>

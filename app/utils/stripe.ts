@@ -8,6 +8,8 @@ export type Plan = {
     priceIds: {
       test: string | undefined;
       production: string;
+      crypto: string;
+      cryptoTest: string;
     };
   };
 };
@@ -16,12 +18,14 @@ export const PLANS = [
     name: "Newbie",
     slug: "newbie",
     quota: 3,
-    ai: 3,
+    ai: 10, //TODO: make it 3
     price: {
       amount: 0,
       priceIds: {
         test: "",
         production: "",
+        crypto: "",
+        cryptoTest: "",
       },
     },
   },
@@ -35,6 +39,8 @@ export const PLANS = [
       priceIds: {
         test: process.env.STUDENT_PRICE_ID,
         production: "",
+        crypto: "",
+        cryptoTest: "price_c7d25a15968b4e7d91f52f87772e5389",
       },
     },
   },
@@ -48,6 +54,8 @@ export const PLANS = [
       priceIds: {
         test: process.env.EXPERT_PRICE_ID,
         production: "",
+        crypto: "",
+        cryptoTest: "",
       },
     },
   },

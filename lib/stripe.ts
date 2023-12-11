@@ -31,11 +31,15 @@ export async function getUserSubscriptionPlan() {
   );
 
   const plan = isSubscribed
-    ? PLANS.find((plan) => plan.price.priceIds.test === user.stripePriceId)
+    ? PLANS.find(
+        (plan) =>
+          plan.price.priceIds.test === user.stripePriceId ||
+          plan.price.priceIds.cryptoTest === user.stripePriceId
+      )
     : null;
 
   let isCanceled = false;
-  if (isSubscribed && user.stripeSubscriptionId) {
+  if (isSubscribed && user.stripeSubscriptionId && plan?.name != "Student") {
     const stripePlan = await stripe.subscriptions.retrieve(
       user.stripeSubscriptionId
     );

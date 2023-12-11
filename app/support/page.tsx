@@ -22,7 +22,7 @@ const Support = () => {
 
           <CardContent className="flex flex-col space-y-4">
             <div className="flex justify-between">
-              <a href="https://discord.gg/xn8xYGKqhF" className="underline">
+              <a href="https://discord.gg/jNp89cbpSa" className="underline">
                 Discord{" "}
                 <span className="text-xs text-secondary-foreground">
                   (Recommended)
