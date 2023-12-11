@@ -87,7 +87,7 @@ const EducationSectionCard: FC<EducationSectionCard> = ({
     setHiddenDates,
     setHiddenGPAs,
     fetchDefaultEducations,
-    fetchEducations,
+    //  fetchEducations,
     setHideAll,
   } = useEducationsInfo();
 
@@ -95,7 +95,7 @@ const EducationSectionCard: FC<EducationSectionCard> = ({
     <FormCardWrapper
       cardTitle="Education"
       refreshFunction={() => fetchDefaultEducations()}
-      refreshSection={() => fetchEducations()}
+      // refreshSection={() => fetchEducations()}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}

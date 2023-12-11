@@ -45,7 +45,7 @@ const ProjectSectionCard: FC<ProjectSectionCard> = ({
     setHideAll,
     deleteDescription,
     addDescription,
-    fetchProjects,
+    //   fetchProjects,
     moveProjUp,
     moveProjDown,
   } = useProjectsInfo();
@@ -54,7 +54,7 @@ const ProjectSectionCard: FC<ProjectSectionCard> = ({
     <FormCardWrapper
       cardTitle="Project"
       refreshFunction={() => fetchDefaultProjects()}
-      refreshSection={() => fetchProjects()}
+      //   refreshSection={() => fetchProjects()}
       hideAll={hideAll}
       isLoading={isLoading}
       deleteFunction={setHideAll}

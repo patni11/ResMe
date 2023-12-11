@@ -50,9 +50,11 @@ export async function POST(request: Request) {
           email: data.data.event.data.payment.paymentLink.meta.email,
           receipt_url: undefined,
         });
+        return new Response(null, { status: 200 });
       })
       .catch((err: any) => {
         console.error("SDK ERRIR", err);
+        return new Response(null, { status: 200 });
       });
   }
   return new Response(null, { status: 200 });

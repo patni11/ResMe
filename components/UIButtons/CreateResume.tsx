@@ -111,7 +111,7 @@ export function CreateResumeButton({
 
   return (
     <Dialog>
-      <DialogTrigger className="overflow-hidden rounded-md border w-full">
+      <DialogTrigger className="overflow-hidden rounded-md border w-full mt-4">
         <div
           className={cn(
             "h-auto w-auto aspect-[3/4] flex justify-center items-center object-cover transition-all hover:scale-105"

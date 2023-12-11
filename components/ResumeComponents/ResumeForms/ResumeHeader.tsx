@@ -29,10 +29,9 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
     updateDisplayName,
     setHiddenLinks,
     setHiddenContacts,
-    error,
     isLoading,
     fetchDefaultHeader,
-    fetchHeader,
+    //  fetchHeader,
   } = useResumeHeaderInfo();
 
   //const session = useSession();
@@ -52,7 +51,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
       cardTitle="Header"
       refreshFunction={() => fetchDefaultHeader()}
       isLoading={isLoading}
-      refreshSection={() => fetchHeader()}
+      //    refreshSection={() => fetchHeader()}
       index={index}
       moveUp={moveUp}
       moveDown={moveDown}
