@@ -10,14 +10,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import HomeBG from "@/public/HomeBG";
-import robotHuman from "@/public/robotHuman.png";
+//import robotHuman from "@/public/robotHuman.png";
 import dashboard from "@/public/dashboard.png";
 import annotedResume from "@/public/annotatedResume.png";
 import ai from "@/public/AI.png";
 import { ImageBox, ImageSlider } from "@/components/ImageSlider";
 
 export default function Home() {
-  const slides = [dashboard, ai, annotedResume, robotHuman];
+  const slides = [dashboard, ai, annotedResume];
 
   return (
     <main>
@@ -46,7 +46,7 @@ export default function Home() {
           })}
           href="/dashboard"
         >
-          Get started <ArrowRight className="ml-2 h-5 w-5" />
+          Get started For Free <ArrowRight className="ml-2 h-5 w-5" />
         </Link>
 
         {/* value proposition section */}
