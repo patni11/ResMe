@@ -116,8 +116,8 @@ export const ImageBox = ({
         <Image
           src={imageMap[image]}
           alt="product preview"
-          width={500}
-          height={500}
+          width={400}
+          height={400}
           quality={70}
           placeholder="blur"
           className="rounded-md bg-white shadow-2xl ring-1 ring-gray-900/10 duration-500 mb-2 h-auto w-auto transition-all hover:scale-105"

@@ -33,7 +33,7 @@ const UserAccountNav = () => {
             variant: "default",
           })}
         >
-          Sign In
+          Create Free Resume
         </Link>
 
         {/* <Link

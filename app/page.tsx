@@ -15,19 +15,20 @@ import dashboard from "@/public/dashboard.png";
 import annotedResume from "@/public/annotatedResume.png";
 import ai from "@/public/AI.png";
 import { ImageBox, ImageSlider } from "@/components/ImageSlider";
-
+import InfoHeader from "@/components/Navigation/InfoHeader";
 export default function Home() {
   const slides = [dashboard, ai, annotedResume];
 
   return (
     <main>
+      <InfoHeader />
       <Navbar></Navbar>
       <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
         <HomeBG />
         <div className="relative z-1 mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
           <p className="flex text-sm font-semibold text-gray-700 z-1">
             <Hammer className="mr-2 h-5 w-5"></Hammer>
-            <span>Res&apos;Me is in Beta</span>
+            <span>ResMe is in Beta</span>
           </p>
         </div>
         <h1 className="relative max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl z-1">
@@ -35,8 +36,9 @@ export default function Home() {
           Seconds
         </h1>
         <p className="relative mt-5 max-w-prose text-zinc-700 sm:text-lg z-1">
-          Res&apos;Me allows you to create professional Resumes. Simply enter
-          your information and we&apos;ll do the rest.
+          ResMe is one of the best platforms out there that uses advanced AI to
+          automate writing concise resumes and formatting them for best
+          performance
         </p>
 
         <Link
@@ -136,23 +138,42 @@ export default function Home() {
           </div>
 
           {/* steps */}
-          <ol className="mb-12  lg:px-8 my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0 md:">
-            <ImageBox
-              image="note"
-              title="Edit"
-              text="Need it fast? Craft a resume instantly with our easy-to-use, pre-formatted tools"
-            />
-            <ImageBox
-              image="cloud"
-              title="Store"
-              text="Organise your career history with ease on our platform"
-            />
-
-            <ImageBox
-              image="globe"
-              title="Publish"
-              text="Quickly download as PDF or Word, or share a direct link to your resume"
-            />
+          <ol className="mb-12 lg:px-8 my-8 pt-8 grid gap-16 md:grid-cols-3">
+            <li>
+              <ImageBox
+                image="cloud"
+                title="Store"
+                text="Organise your career history with ease in one place"
+              />
+            </li>
+            <li>
+              <ImageBox
+                image="note"
+                title="Edit"
+                text="Need it fast? Craft a resume instantly with our pre-formatted tools"
+              />
+            </li>
+            <li>
+              <ImageBox
+                image="note"
+                title="AI Helper"
+                text="Not sure what to write? Let our AI do all the work"
+              />
+            </li>
+            <li>
+              <ImageBox
+                image="globe"
+                title="Need Second Opinion?"
+                text="We've always got your back. Join our discord for free resume review"
+              />
+            </li>
+            <li>
+              <ImageBox
+                image="globe"
+                title="Publish"
+                text="Quickly download as PDF/Word, or share a direct link to your resume"
+              />
+            </li>
           </ol>
         </div>
 
