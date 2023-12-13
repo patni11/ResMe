@@ -3,7 +3,7 @@ import {
   DEBUG_RESUME_PDF_FLAG,
   DEFAULT_FONT_COLOR,
   DEFAULT_FONT_FAMILY,
-} from "./constants";
+} from "../../PDFComponents/common/constants";
 // Tailwindcss Spacing Design System: https://tailwindcss.com/docs/theme#spacing
 // It is converted from rem to pt (1rem = 12pt) since https://react-pdf.org/styling only accepts pt unit
 export const spacing = {

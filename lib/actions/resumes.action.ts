@@ -1,7 +1,7 @@
 "use server";
 import connectMongoDB from "../mongodb";
 import { Resume, User } from "@/models/user";
-import { ResumeType } from "../types";
+import { ResumeType } from "../types/types";
 import { UTApi } from "uploadthing/server";
 export async function createResume({
   email,

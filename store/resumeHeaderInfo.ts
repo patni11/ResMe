@@ -2,7 +2,7 @@
 // @ts-nocheck
 "use client";
 import { create } from "zustand";
-import { HeaderStore } from "@/lib/types";
+import { HeaderStore } from "@/lib/types/types";
 import { persist } from "zustand/middleware";
 import { getCleanedHeaderData } from "@/lib/apiFunctions";
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";

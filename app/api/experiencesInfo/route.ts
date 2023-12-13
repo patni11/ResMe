@@ -1,5 +1,5 @@
 import { Experience } from "@/models/user";
-import { Experience as ExperienceType } from "@/lib/types";
+import { Experience as ExperienceType } from "@/lib/types/types";
 import connectMongoDB from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";

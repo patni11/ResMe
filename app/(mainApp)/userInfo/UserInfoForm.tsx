@@ -1,5 +1,5 @@
 "use client";
-import { UserInfo } from "@/lib/types";
+import { UserInfo } from "@/lib/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";

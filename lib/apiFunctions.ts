@@ -1,7 +1,7 @@
-import { Certificate, EducationType } from "@/lib/types";
-import { Experience } from "@/lib/types";
-import { Project } from "@/lib/types";
-import { UserInfo } from "@/lib/types";
+import { Certificate, EducationType } from "@/lib/types/types";
+import { Experience } from "@/lib/types/types";
+import { Project } from "@/lib/types/types";
+import { UserInfo } from "@/lib/types/types";
 
 export async function getHeaderData() {
   try {

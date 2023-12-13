@@ -1,7 +1,7 @@
-import { ResumePDFText, ResumePDFSection } from "./common";
+import { ResumePDFText, ResumePDFSection } from "../../PDFComponents/common";
 import { styles, spacing } from "./styles";
 import { State } from "@/store/talentsInfo";
-import { DEFAULT_THEME_COLOR } from "./constants";
+import { DEFAULT_THEME_COLOR } from "../../PDFComponents/common/constants";
 import { memo } from "react";
 import { View } from "@react-pdf/renderer";
 

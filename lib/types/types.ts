@@ -1,5 +1,3 @@
-import { ReactElement } from "react";
-
 export interface EducationType {
   _id: string;
   schoolName: string;
@@ -8,33 +6,6 @@ export interface EducationType {
   gpa?: Number;
   startDate: Date;
   endDate: Date;
-}
-
-export interface CoverLetterSettings {
-  bgColor: string;
-  fontColor: string;
-  fontFamily: string;
-  fontSize: number;
-  headerSize: number;
-  documentType: "A4" | "Letter";
-}
-
-export interface CoverLetterTemplate {
-  id: string;
-  name: string;
-  image: string;
-  component: ReactElement;
-}
-
-export interface CoverLetterData {
-  userData: {
-    name: string;
-    email: string;
-    phone: string;
-    address: string;
-  };
-  jobDescription: string;
-  text: string;
 }
 
 export type FetchError = {

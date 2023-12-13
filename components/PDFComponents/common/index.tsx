@@ -1,11 +1,11 @@
 import { Text, View, Link } from "@react-pdf/renderer";
 import type { Style } from "@react-pdf/types";
-import { styles, spacing } from "../styles";
+import { styles, spacing } from "../../ResumeComponents/ReactPDF/styles";
 import {
   DEBUG_RESUME_PDF_FLAG,
   DEFAULT_FONT_COLOR,
   DEFAULT_FONT_FAMILY,
-} from "../constants";
+} from "./constants";
 //import { DEFAULT_FONT_COLOR } from "lib/redux/settingsSlice";
 
 export const ResumePDFSection = ({

@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { ExperienceStore } from "@/lib/types";
+import { ExperienceStore } from "@/lib/types/types";
 import { persist } from "zustand/middleware";
 import { getCleanedExperienceData } from "@/lib/apiFunctions";
 import { fetchResumeSection } from "@/lib/actions/resumes.action";

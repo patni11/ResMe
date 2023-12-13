@@ -7,7 +7,7 @@ import { getUserEmailFromSession } from "./utils.action";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
 import { ResumeHeaderInfo } from "@/models/user";
-import { User as UserType } from "../types";
+import { User as UserType } from "../types/types";
 export async function deleteUser(email: string) {
   try {
     // Connect to the MongoDB server

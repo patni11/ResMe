@@ -1,8 +1,12 @@
 import { View } from "@react-pdf/renderer";
-import { ResumePDFCard, ResumePDFSection, ResumePDFText } from "./common";
+import {
+  ResumePDFCard,
+  ResumePDFSection,
+  ResumePDFText,
+} from "../../PDFComponents/common";
 import { styles, spacing } from "./styles";
 import { State } from "@/store/educationInfo";
-import { DEFAULT_THEME_COLOR } from "./constants";
+import { DEFAULT_THEME_COLOR } from "../../PDFComponents/common/constants";
 import {
   getFormattedDate,
   parseDecimal,

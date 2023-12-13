@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/tooltip";
 import { useState } from "react";
 import { ResumeIframeCSR } from "@/components/ResumeComponents/ReactPDF/ResumeIFrame";
-import { DEFAULT_DOCUMENT_SIZE } from "@/components/ResumeComponents/ReactPDF/constants";
+import { DEFAULT_DOCUMENT_SIZE } from "@/components/PDFComponents/common/constants";
 import { useMemo } from "react";
-import { DEFAULT_FONT_FAMILY } from "@/components/ResumeComponents/ReactPDF/constants";
+import { DEFAULT_FONT_FAMILY } from "@/components/PDFComponents/common/constants";
 import { Toggle } from "@/components/ui/toggle";
 
 import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
@@ -31,7 +31,7 @@ import { createTalentsInfo } from "@/store/talentsInfo";
 import {
   A4_WIDTH_PX,
   LETTER_WIDTH_PX,
-} from "@/components/ResumeComponents/ReactPDF/constants";
+} from "@/components/PDFComponents/common/constants";
 
 export default function ResumePreview({ resumeId, email, componentsData }) {
   const [pdfPreview, setPDFPreview] = useState(false);

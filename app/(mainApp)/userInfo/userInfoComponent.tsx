@@ -5,7 +5,7 @@ import {
   updateResumeHeaderInfo,
 } from "@/lib/actions/resumeHeaderInfo.actions";
 //import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { UserInfo } from "@/lib/types";
+import { UserInfo } from "@/lib/types/types";
 import { getServerSession } from "next-auth/next";
 import authOptions, { Session } from "@/lib/authOptions";
 import { Metadata } from "next";

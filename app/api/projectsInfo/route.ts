@@ -1,5 +1,5 @@
 import { Project } from "@/models/user";
-import { Project as ProjectType } from "@/lib/types";
+import { Project as ProjectType } from "@/lib/types/types";
 import connectMongoDB from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";

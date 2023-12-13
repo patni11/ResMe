@@ -1,7 +1,7 @@
 "use client";
 import { FC, ReactNode } from "react";
 import { CardContent } from "@/components/ui/card";
-import { Certificate } from "@/lib/types";
+import { Certificate } from "@/lib/types/types";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 import UpdateDialogCard from "@/components/Cards/UpdateDialogCard";
 

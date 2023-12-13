@@ -6,10 +6,11 @@ import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
 //import { useSession } from "next-auth/react";
-import { useState } from "react";
 import dynamic from "next/dynamic";
 const EditPanel = dynamic(() => import("./EditPanel"), { ssr: false });
-const ResumePreview = dynamic(() => import("./ResumePreview"), { ssr: false });
+const ResumePreview = dynamic(() => import("./CoverLetterPreview"), {
+  ssr: false,
+});
 const MainEditor = ({
   email,
   coverLetterId,
@@ -39,67 +40,21 @@ const MainEditor = ({
             </TabsTrigger>
           </TabsList>
           <TabsContent value="editPanel">
-            <div className="w-full">
-              {email !== "" ? (
-                <EditPanel
-                  componentsData={componentsData}
-                  moveDown={moveDown}
-                  moveUp={moveUp}
-                />
-              ) : null}
-            </div>
+            <div className="w-full">{email !== "" ? <EditPanel /> : null}</div>
           </TabsContent>
           <Separator className="m-0 sm:hidden" orientation="vertical" />
           <TabsContent value="preview">
-            {email !== "" ? (
-              <ResumeDataProvider.Provider
-                value={{
-                  email: email,
-                  resumeId: resumeId,
-                  isSubscribed: isSubscribed,
-                  name: name,
-                }}
-              >
-                <ResumePreview
-                  resumeId={resumeId}
-                  email={email}
-                  componentsData={componentsData}
-                />
-              </ResumeDataProvider.Provider>
-            ) : null}
+            {email !== "" ? <ResumePreview /> : null}
           </TabsContent>
         </Tabs>
       </div>
 
       {/* Display for large screens (1024px and above) */}
       <div className="hidden xl:flex h-screen w-full overflow-hidden justify-center">
-        <div className="w-1/2">
-          {email !== "" ? (
-            <EditPanel
-              componentsData={componentsData}
-              moveDown={moveDown}
-              moveUp={moveUp}
-            />
-          ) : null}
-        </div>
+        <div className="w-1/2">{email !== "" ? <EditPanel /> : null}</div>
         <Separator className="m-0 sm:hidden" orientation="vertical" />
         <div className="w-1/2 py-4 bg-gray-200 h-full" id="root">
-          {email !== "" ? (
-            <ResumeDataProvider.Provider
-              value={{
-                email: email,
-                resumeId: resumeId,
-                isSubscribed: isSubscribed,
-                name: name,
-              }}
-            >
-              <ResumePreview
-                resumeId={resumeId}
-                email={email}
-                componentsData={componentsData}
-              />
-            </ResumeDataProvider.Provider>
-          ) : null}
+          {email !== "" ? <ResumePreview /> : null}
         </div>
       </div>
 

@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/tooltip";
 import { useState } from "react";
 import { ResumeIframeCSR } from "@/components/ResumeComponents/ReactPDF/ResumeIFrame";
-import { DEFAULT_DOCUMENT_SIZE } from "@/components/ResumeComponents/ReactPDF/constants";
+import { DEFAULT_DOCUMENT_SIZE } from "@/components/PDFComponents/common/constants";
 import { useMemo } from "react";
-import { DEFAULT_FONT_FAMILY } from "@/components/ResumeComponents/ReactPDF/constants";
+import { DEFAULT_FONT_FAMILY } from "@/components/PDFComponents/common/constants";
 import { Toggle } from "@/components/ui/toggle";
 
 import {
