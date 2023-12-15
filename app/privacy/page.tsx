@@ -1,9 +1,11 @@
+import InfoHeader from "@/components/Navigation/InfoHeader";
 import Navbar from "@/components/Navigation/Navbar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Privacy() {
   return (
     <>
+      <InfoHeader />
       <Navbar></Navbar>
       <section className="w-[80%] my-24 mx-auto">
         <Card>

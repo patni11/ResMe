@@ -73,7 +73,6 @@ const ActionBar = ({ componentsData, children }) => {
   //   );
   //   return arrayOfObjects;
   // }
-
   const handleSave = async () => {
     gtag.event({
       clientWindow: window,
@@ -204,7 +203,6 @@ const ActionBar = ({ componentsData, children }) => {
                     title: "Please upgrade to use this feature",
                   });
                 }
-                await downloadDocx();
 
                 setIsSaving(false);
               }}

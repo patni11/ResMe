@@ -28,10 +28,11 @@ export const metadata: Metadata = {
   },
 };
 
-import Image from "next/image";
+import InfoHeader from "@/components/Navigation/InfoHeader";
 const PricingPage = () => {
   return (
     <div>
+      <InfoHeader />
       <Navbar></Navbar>
       <section className="min-h-screen w-full py-12 flex items-center justify-center">
         <div className="flex flex-col container items-center justify-center">

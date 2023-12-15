@@ -13,7 +13,8 @@ const BuildResume = async ({ params }: { params: { resumeId: string } }) => {
   //   user.stripePriceId &&
   //     user.stripeCurrentPeriodEnd && // 86400000 = 1 day
   //     user.stripeCurrentPeriodEnd.getTime() + 86_400_000 > Date.now()
-  // );  TODO:Uncomment
+  // ); TODO:Uncomment before launch
+
   const isSubscribed = true;
 
   if (!user.resumes.includes(params.resumeId)) {
