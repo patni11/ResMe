@@ -1,5 +1,5 @@
 "use client";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import { Sparkles } from "lucide-react";
 import { generateBulletList } from "@/lib/actions/openai.action";
 import { useToast } from "@/components/ui/use-toast";

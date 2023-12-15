@@ -49,7 +49,7 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
       //      console.log("Upload complete for userId:", metadata.userId);
-      console.log("ON UPLOAD COMPLETE");
+
       if (!metadata.success || !metadata.resumeId) {
         return {
           success: metadata.success || false,

@@ -9,11 +9,13 @@ const BuildResume = async ({ params }: { params: { resumeId: string } }) => {
     throw alert("Could not find resume");
   }
 
-  const isSubscribed = Boolean(
-    user.stripePriceId &&
-      user.stripeCurrentPeriodEnd && // 86400000 = 1 day
-      user.stripeCurrentPeriodEnd.getTime() + 86_400_000 > Date.now()
-  );
+  // const isSubscribed = Boolean(
+  //   user.stripePriceId &&
+  //     user.stripeCurrentPeriodEnd && // 86400000 = 1 day
+  //     user.stripeCurrentPeriodEnd.getTime() + 86_400_000 > Date.now()
+  // ); TODO:Uncomment before launch
+
+  const isSubscribed = true;
 
   if (!user.resumes.includes(params.resumeId)) {
     return (
