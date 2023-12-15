@@ -47,6 +47,7 @@
     "@types/uuidv4": "^5.0.0",
     "@uploadthing/react": "^6.0.0",
     "@xmldom/xmldom": "latest",
+    "ai": "^2.2.29",
     "api": "^6.1.1",
     "bcryptjs": "^2.4.3",
     "button": "^1.1.1",

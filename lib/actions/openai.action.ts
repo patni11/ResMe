@@ -2,20 +2,19 @@
 import OpenAI from "openai";
 import { fetchUserAICalls } from "./user.actions";
 import { PLANS } from "@/app/utils/stripe";
-
+import { OpenAIStream, StreamingTextResponse } from "ai";
+import { QuotaExceeded, UnauthorizedError } from "../types";
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-type Codes = "success" | "error" | "limitExceeded";
-
 export async function generateBulletList(
   userMessage: string
-): Promise<{ code: Codes; message: string }> {
+): Promise<StreamingTextResponse> {
   try {
     const user = await fetchUserAICalls();
     if (!user) {
-      return { code: "error", message: "Could not find user" };
+      throw new UnauthorizedError("User not logged in", "auth");
     }
 
     const plan =
@@ -23,10 +22,7 @@ export async function generateBulletList(
       PLANS[0];
 
     if (user.AICalls >= plan?.ai) {
-      return {
-        code: "limitExceeded",
-        message: "You have used all AI calls in your plan. Please Upgrade",
-      };
+      throw new QuotaExceeded("AI Quota Exceeded", "ai");
     }
 
     const response = await openai.chat.completions.create({
@@ -47,24 +43,22 @@ export async function generateBulletList(
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
-      // stream: true,
+      stream: true,
     });
 
-    // const response = {
-    //   id: "someResponse",
-    //   choices: [{ message: { content: userMessage } }],
+    // if (!response || !response.id) {
+    //   return { code: "error", message: "There was an error, please try again" };
+    // }
+
+    // return {
+    //   code: "success",
+    //   message: response.choices[0].message.content || userMessage,
     // };
 
-    if (!response || !response.id) {
-      return { code: "error", message: "There was an error, please try again" };
-    }
-
-    return {
-      code: "success",
-      message: response.choices[0].message.content || userMessage,
-    };
+    const stream = OpenAIStream(response);
+    return new StreamingTextResponse(stream);
   } catch (e) {
-    return { code: "error", message: "There was an error, please try again" };
+    throw new Error("There was an error, please try again");
   }
   // for await (const chunk of response) {
   //   console.log(chunk.choices[0].delta.content);

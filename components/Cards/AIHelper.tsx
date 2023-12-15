@@ -6,6 +6,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
 import { updateUserAICalls } from "@/lib/actions/user.actions";
+import { StreamingTextResponse } from "ai";
+import { UnauthorizedError } from "@/lib/types";
 //import { ComingSoon } from "./ComingSoon";
 
 export const AIHelper = ({
@@ -39,30 +41,35 @@ export const AIHelper = ({
         e.preventDefault();
         setIsLoading(true);
 
-        const response = await generateBulletList(userMessage || "");
-        if (response.code === "error") {
-          toast({
-            title: response.message,
-          });
+        try {
+          const stream = await generateBulletList(userMessage || "");
+          if (!stream) {
+            toast({
+              title:
+                "There was an error getting response from AI, please try again",
+              variant: "destructive",
+            });
+          }
+          // TODO: The part on openAI API side is done, I've no idea about this part will do it later, comming it and rolling back main
+          const reader = stream.body.getReader();
+
+          const cleanedString = response.message.replace(/ *- */g, "");
+          setMessage(cleanedString);
+
+          await updateUserAICalls();
+
           setIsLoading(false);
-          return;
+        } catch (e: any) {
+          if (e instanceof Error) {
+            toast({
+              title: e.name,
+              description: e.message,
+              variant: "destructive",
+            });
+            setIsLoading(false);
+            return;
+          }
         }
-
-        if (response.code === "limitExceeded") {
-          toast({
-            title: response.message,
-          });
-
-          setIsLoading(false);
-          return;
-        }
-
-        const cleanedString = response.message.replace(/ *- */g, "");
-        setMessage(cleanedString);
-
-        await updateUserAICalls();
-
-        setIsLoading(false);
       }}
       type="button"
       variant="outline"

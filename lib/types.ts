@@ -8,14 +8,23 @@ export interface EducationType {
   endDate: Date;
 }
 
-export type FetchError = {
-  error: string;
-};
+export class UnauthorizedError extends Error {
+  field: any;
+  constructor(message: string | undefined, field: any) {
+    super(message);
+    this.field = field;
+    this.name = "UnauthorizedError";
+  }
+}
 
-export type UpdateError = {
-  error?: string;
-  success?: string;
-};
+export class QuotaExceeded extends Error {
+  field: any;
+  constructor(message: string | undefined, field: any) {
+    super(message);
+    this.field = field;
+    this.name = "QuotaExceeded";
+  }
+}
 
 export interface EducationStore {
   educations: EducationType[];
