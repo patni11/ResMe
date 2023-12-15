@@ -11,10 +11,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect("/login");
-  }
+  // const session = await getServerSession(authOptions);
+  // if (!session) {
+  //   redirect("/login");
+  // } //TODO:Uncomment
 
   return (
     <div className="flex h-full w-full">

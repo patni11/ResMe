@@ -33,7 +33,10 @@ export const createSettings = (coverLetterID: string) => {
   let INITIAL_STATE = initialCoverLetterData;
 
   if (typeof window !== "undefined") {
-    const savedState = JSON.parse(localStorage.getItem(coverLetterID));
+    const savedState =
+      localStorage.getItem(coverLetterID) !== null
+        ? JSON.parse(localStorage.getItem(coverLetterID))
+        : null;
     if (savedState) {
       INITIAL_STATE = {
         ...INITIAL_STATE,
@@ -49,9 +52,10 @@ export const createSettings = (coverLetterID: string) => {
         isLoading: false,
         error: null,
         changeData({ field, value }) {
-          set((state) => {
-            state[field] = value;
-          });
+          set((state) => ({
+            ...state,
+            [field]: value,
+          }));
         },
       }),
       {

@@ -8,6 +8,7 @@ const nextConfig = {
       "producthunt.com",
       "vitals.vercel-insights.com",
       "uploadthing.com",
+      "localhost:3000",
     ],
     dangerouslyAllowSVG: true,
   },

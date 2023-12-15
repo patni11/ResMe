@@ -19,7 +19,6 @@ import {
 import { ResumeCardImageComponent } from "./ResumeCardImg";
 import { DeleteButton, RenameDialog } from "./ResumeFuncitonButtons";
 import { buttonVariants } from "../ui/button";
-import { Input } from "../ui/input";
 import ResumeCardImageImage from "@/public/resumeCard.png";
 import ShareLink from "../Inputs/ShareLink";
 

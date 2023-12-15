@@ -49,9 +49,11 @@ export const createSettings = (coverLetterID: string) => {
         isLoading: false,
         error: null,
         changeSettings({ field, value }) {
-          set((state) => {
-            state[field] = value;
-          });
+          console.log("Changing field", field, value);
+          set((state) => ({
+            ...state,
+            [field]: value,
+          }));
         },
       }),
       {
