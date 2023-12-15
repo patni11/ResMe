@@ -1,6 +1,15 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Link from "next/link";
-import { ArrowRight, Hammer } from "lucide-react";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Globe,
+  Hammer,
+  PencilRuler,
+  Sparkles,
+  SquareUserRound,
+  Star,
+} from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import Navbar from "@/components/Navigation/Navbar";
 import {
@@ -14,8 +23,9 @@ import HomeBG from "@/public/HomeBG";
 import dashboard from "@/public/dashboard.png";
 import annotedResume from "@/public/annotatedResume.png";
 import ai from "@/public/AI.png";
-import { ImageBox, ImageSlider } from "@/components/ImageSlider";
+import { ImageSlider } from "@/components/ImageSlider";
 import InfoHeader from "@/components/Navigation/InfoHeader";
+import FeaturesCard from "@/components/Cards/FeaturesCard";
 export default function Home() {
   const slides = [dashboard, ai, annotedResume];
 
@@ -37,8 +47,7 @@ export default function Home() {
         </h1>
         <p className="relative mt-5 max-w-prose text-zinc-700 sm:text-lg z-1">
           ResMe is one of the best platforms out there that uses advanced AI to
-          automate writing concise resumes and formatting them for best
-          performance
+          automate writing concise resumes and format them for best performance
         </p>
 
         <Link
@@ -114,7 +123,7 @@ export default function Home() {
               className="relative -left-[calc(100%-13rem)] aspect-[1155/678] w-[36.125rem] translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-36rem)] sm:w-[72.1875rem]"
             />
           </div>
-          <div className="mb-12  lg:px-8">
+          <div className="mb-12 lg:px-8 w-full flex items-center justify-center">
             <div className="mx-auto max-w-2xl sm:text-center">
               <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
                 Elevate Your Career with Tailored Resumes
@@ -137,44 +146,109 @@ export default function Home() {
             />
           </div>
 
+          <div className="grid grid-cols-1 lg:grid-cols-9 gap-4 w-full">
+            <FeaturesCard
+              title="Export"
+              subheading={
+                <span>
+                  Download your resumes as PDF, Word or share a live link with
+                  the world
+                </span>
+              }
+              image="export"
+              icon={<Globe className="h-7 w-7" />}
+              className="lg:col-span-4"
+            />
+            <FeaturesCard
+              title="AI Enhanced Points"
+              subheading={
+                <span>
+                  Not sure what to write? Let our AI tool assist you with
+                  writing the most optimum bullet points
+                </span>
+              }
+              image="AI"
+              icon={<Sparkles className="h-7 w-7" />}
+              className="lg:col-span-5"
+            />
+            <FeaturesCard
+              title="Free Community Support"
+              subheading={
+                <span>
+                  Join our{" "}
+                  <a
+                    href="https://discord.gg/jNp89cbpSa"
+                    className="text-blue-600"
+                  >
+                    Discord
+                  </a>{" "}
+                  for free resume reviews, job-seeking tips, chat with hiring
+                  managers/job seekers, and daily updated job listings
+                </span>
+              }
+              image="discord"
+              icon={<Star className="h-7 w-7" />}
+              className="lg:col-span-5"
+            />
+
+            <FeaturesCard
+              title="Manage Professional Life"
+              subheading={
+                <span>
+                  Store your work history in one place to effortlessly craft
+                  many resumes, cover letters, and in future a portfolio website
+                </span>
+              }
+              image="manageData"
+              icon={<SquareUserRound className="h-7 w-7" />}
+              className="lg:col-span-4"
+            />
+            <FeaturesCard
+              title="Tailored Resumes"
+              subheading={
+                <span>
+                  No two jobs are the same, so why should your resume be? Create
+                  job specific tailored resumes and save them forver
+                </span>
+              }
+              image="dashboard"
+              icon={<PencilRuler className="h-7 w-7" />}
+              className="lg:col-span-4"
+            />
+            <FeaturesCard
+              title="ATS Optimized"
+              subheading={
+                <span>
+                  Colorful resumes might catch the eye, but often drop the ball
+                  with ATS. ResMe&apos;s got the balance just right — resumes
+                  that dazzle both the ATS bots and human recruiters
+                </span>
+              }
+              image="ATS"
+              icon={<BadgeCheck className="h-7 w-7" />}
+              className="lg:col-span-5"
+            />
+          </div>
           {/* steps */}
-          <ol className="mb-12 lg:px-8 my-8 pt-8 grid gap-16 md:grid-cols-3">
-            <li>
-              <ImageBox
-                image="cloud"
-                title="Store"
-                text="Organise your career history with ease in one place"
-              />
-            </li>
-            <li>
-              <ImageBox
-                image="note"
-                title="Edit"
-                text="Need it fast? Craft a resume instantly with our pre-formatted tools"
-              />
-            </li>
-            <li>
-              <ImageBox
-                image="note"
-                title="AI Helper"
-                text="Not sure what to write? Let our AI do all the work"
-              />
-            </li>
-            <li>
-              <ImageBox
-                image="globe"
-                title="Need Second Opinion?"
-                text="We've always got your back. Join our discord for free resume review"
-              />
-            </li>
-            <li>
-              <ImageBox
-                image="globe"
-                title="Publish"
-                text="Quickly download as PDF/Word, or share a direct link to your resume"
-              />
-            </li>
-          </ol>
+          {/* <ol className="mb-12 lg:px-8 my-8 pt-8 grid gap-16 md:grid-cols-3">
+            <ImageBox
+              image="cloud"
+              title="Store"
+              text="Organise your career history with ease in one place"
+            />
+
+            <ImageBox
+              image="note"
+              title="Edit"
+              text="Need it fast? Craft a resume instantly with our pre-formatted tools and AI"
+            />
+
+            <ImageBox
+              image="globe"
+              title="Need Second Opinion?"
+              text="We've always got your back. Join our discord for free resume review"
+            />
+          </ol> */}
         </div>
 
         {/* Signup section */}
