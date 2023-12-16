@@ -46,7 +46,7 @@ export async function createStripeSession(planType?: string) {
 
   const paymentMode = planType === "Student" ? "payment" : "subscription";
   const priceId = PLANS.find((plan) => plan.name === planType)?.price.priceIds
-    .test;
+    .production;
 
   const stripeSession = await stripe.checkout.sessions.create({
     success_url: profileUrl,

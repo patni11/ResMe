@@ -153,12 +153,13 @@ export function CreateResumeButton({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Upgrade Plan</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col space-y-4 items-center">
-            <div className="w-full flex flex-col space-y-4 mt-8">
+
+            <div className="w-full flex flex-col space-y-2 mt-8">
               <span>Upgrade your plan to create more resumes</span>
+
               <Button
-                variant="default"
+                variant="outline"
+                className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
                 onClick={() => {
                   router.push("/pricing");
                 }}
@@ -166,7 +167,7 @@ export function CreateResumeButton({
                 Upgrade
               </Button>
             </div>
-          </div>
+          </DialogHeader>
         </DialogContent>
       )}
     </Dialog>

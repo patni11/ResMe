@@ -13,7 +13,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ImageText } from "@/components/Sections/ImageText";
-import { Card, CardDescription, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from "@/components/ui/card";
 
 export const metadata: Metadata = {
   title: "ResMe",
@@ -74,7 +79,7 @@ const PricingPage = () => {
               <CardHeader className="flex flex-row space-x-4 items-center">
                 <div className="w-full">
                   <p className="font-bold text-xl lg:text-4xl tracking-tight text-left">
-                    <span className="text-amber-500 font-bold">Launch</span>{" "}
+                    <span className="text-amber-500 font-bold">Launch</span>
                     Discount
                   </p>
                   <h2 className="font-bold">
@@ -102,6 +107,9 @@ const PricingPage = () => {
                   </CardDescription>
                 </div>
               </CardHeader>
+              <CardContent className="flex justify-center items-center w-full bg-secondary text-md p-0 py-2">
+                <CardDescription>Use discount code on checkout</CardDescription>
+              </CardContent>
             </Card>
           </section>
 
@@ -146,7 +154,11 @@ const StudentCard = () => {
         <h3 className="text-2xl font-bold text-center">{title}</h3>
         <div className="flex space-y-2 flex-col mt-4 text-center text-zinc-600 dark:text-zinc-400 justify-center items-center">
           <div className="flex text-center text-zinc-600 dark:text-zinc-400 justify-center space-x-4">
-            <span className="text-4xl font-bold">{cost}</span>/Once
+            <span className="text-2xl font-bold line-through">{cost}</span>
+            <span className="text-4xl text-amber-500 drop-shadow-[0_100px_100px_rgba(0,0,0,1)] font-bold">
+              {"$34.3"}
+            </span>
+            /Once
           </div>
           <div className="flex mt-4 mb-4">
             <TooltipProvider>
@@ -202,8 +214,12 @@ const ExpertCard = () => {
       </div>
       <div>
         <h3 className="text-2xl font-bold text-center">{title}</h3>
-        <div className="flex mt-4 text-center text-zinc-600 dark:text-zinc-400 justify-center space-x-4">
-          <span className="text-4xl font-bold">{cost}</span>/ month
+        <div className="flex text-center text-zinc-600 dark:text-zinc-400 justify-center space-x-4">
+          <span className="text-2xl font-bold line-through">{cost}</span>
+          <span className="text-4xl text-amber-500 drop-shadow-[0_100px_100px_rgba(0,0,0,1)] font-bold">
+            {"$4.9"}
+          </span>
+          /Month
         </div>
         <ul className="mt-4 mb-4 space-y-8">
           {checkedPoints.map((point, idx) => {
@@ -226,7 +242,9 @@ const ExpertCard = () => {
               </TooltipTrigger>
             </div>
             <TooltipContent className="p-2 text-xs font-normal">
-              Follow us on X for updates
+              <a href="https://twitter.com/resmexyz" className="underline">
+                Follow us on X for updates
+              </a>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>

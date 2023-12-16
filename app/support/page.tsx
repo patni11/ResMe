@@ -13,7 +13,7 @@ const Support = () => {
       <InfoHeader />
       <Navbar></Navbar>
       <main className="flex flex-col justify-center items-center h-screen w-screen space-y-12">
-        <Card className="w-[350px] p-2 lg:w-[750px] lg:p-12 lg:space-y-8 flex flex-col">
+        <Card className="w-[350px] lg:w-[750px] lg:p-12 lg:space-y-8 flex flex-col">
           <CardHeader>
             <CardTitle>Contact Support</CardTitle>
             <CardDescription className="text-md">
@@ -23,18 +23,15 @@ const Support = () => {
           </CardHeader>
 
           <CardContent className="flex flex-col space-y-4">
-            <div className="flex justify-between">
-              <a href="https://discord.gg/jNp89cbpSa" className="underline">
-                Discord{" "}
-                <span className="text-xs text-secondary-foreground">
-                  (Recommended)
-                </span>
-              </a>
-
-              <a href="mailto:founder@resme.xyz" className="underline">
-                Send email
-              </a>
-            </div>
+            <a href="https://discord.gg/jNp89cbpSa" className="underline">
+              Discord (Free resume review, community and job listings)
+            </a>
+            <a href="https://resme.canny.io/bug-report" className="underline">
+              Report Bugs
+            </a>
+            <a href="mailto:founder@resme.xyz" className="underline">
+              Send email (for collabs, promotions, anything)
+            </a>
           </CardContent>
         </Card>
       </main>

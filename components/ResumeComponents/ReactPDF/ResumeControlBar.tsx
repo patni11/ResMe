@@ -9,6 +9,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { sendPDFDownloadEmail } from "@/lib/actions/sendEmail.action";
 import { useResumeDataContext } from "@/app/(mainApp)/buildResume/ResumeDataContext";
 //import { ComingSoon } from "@/components/Cards/ComingSoon";
+import { absoluteUrl } from "@/lib/utils";
 import {
   Tooltip,
   TooltipContent,
@@ -177,6 +178,17 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
                 } else {
                   toast({
                     title: "Please upgrade to use this feature",
+                    description: (
+                      <Button
+                        variant="outline"
+                        className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
+                        onClick={() => {
+                          window.location.href = absoluteUrl("/pricing");
+                        }}
+                      >
+                        Upgrade
+                      </Button>
+                    ),
                   });
                 }
               }}

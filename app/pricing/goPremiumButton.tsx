@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 //import { createSphereSession } from "@/lib/actions/sphere_session.action";
-//import { createStripeSession } from "@/lib/actions/stripe_session.action";
+import { createStripeSession } from "@/lib/actions/stripe_session.action";
 
 import { Bitcoin, CreditCard } from "lucide-react";
 
@@ -43,20 +43,20 @@ export const GoPremiumButton = () => {
     //   label: "premium",
     // });
 
-    console.log("process premium button");
-    toast({
-      title:
-        "We are launching Premium on 16th December Please support us on Product Hunt 😊",
-      description: PHToast,
-    });
-    // try {
-    //   const { url } = await createStripeSession("Expert");
-    //   window.location.href = url || "/profile";
-    // } catch (e) {
-    //   toast({
-    //     title: "You must be signed up or there was a network issue",
-    //   });
-    // }
+    // console.log("process premium button");
+    // toast({
+    //   title:
+    //     "We are launching Premium on 16th December Please support us on Product Hunt 😊",
+    //   description: PHToast,
+    // });
+    try {
+      const { url } = await createStripeSession("Expert");
+      window.location.href = url || "/profile";
+    } catch (e) {
+      toast({
+        title: "You must be signed up or there was a network issue",
+      });
+    }
     setIsLoading(false);
   };
 
@@ -79,50 +79,39 @@ export const GoPremiumButton = () => {
     // </ComingSoon>
   );
 };
-{
-  /* <div
-className={buttonVariants({
-  variant: "ghost",
-  className:
-    "w-full bg-gradient-to-r font-semibold from-pink-500 to-purple-500 hover:bg-purple-500 text-primary-foreground hover:text-primary-foreground",
-})}
->
-<span>Go Premium</span>
-</div> */
-}
+
+// WITH CRYPTO
+// export const GoStudentButton = () => {
+//   return (
+//     <Dialog>
+//       <DialogTrigger asChild>
+//         <div
+//           className={buttonVariants({
+//             variant: "ghost",
+//             className:
+//               "w-full text-blue-600 font-semibold rounded-full border border-blue-600 hover:bg-blue-600 hover:text-primary-foreground ",
+//           })}
+//         >
+//           Go Student
+//         </div>
+//       </DialogTrigger>
+//       <DialogContent className="sm:max-w-[425px]">
+//         <DialogHeader>
+//           <DialogTitle>Payment Options</DialogTitle>
+//           <DialogDescription>
+//             We provide various crypto and card payment options
+//           </DialogDescription>
+//         </DialogHeader>
+//         <PaymentComponent />
+//       </DialogContent>
+//     </Dialog>
+//   );
+// };
 
 export const GoStudentButton = () => {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <div
-          className={buttonVariants({
-            variant: "ghost",
-            className:
-              "w-full text-blue-600 font-semibold rounded-full border border-blue-600 hover:bg-blue-600 hover:text-primary-foreground ",
-          })}
-        >
-          {" "}
-          Go Student
-        </div>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Payment Options</DialogTitle>
-          <DialogDescription>
-            We provide various crypto and card payment options
-          </DialogDescription>
-        </DialogHeader>
-        <PaymentComponent />
-      </DialogContent>
-    </Dialog>
-  );
-};
-
-const PaymentComponent = () => {
   const { toast } = useToast();
   const [isCardLoading, setIsCardLoading] = useState(false);
-  const [isCryptoLoading, setIsCryptoLoading] = useState(false);
+
   const ProcessCardPayment = async () => {
     gtag.event({
       clientWindow: window,
@@ -130,100 +119,152 @@ const PaymentComponent = () => {
       category: "purchase",
       label: "student",
     });
-    console.log("Process payment clicked");
-    toast({
-      title:
-        "We are launching Premium on 16th December Please support us on Product Hunt 😊",
-      description: PHToast,
-    });
+    // console.log("Process payment clicked");
+    // toast({
+    //   title:
+    //     "We are launching Premium on 16th December Please support us on Product Hunt 😊",
+    //   description: PHToast,
+    // });
 
-    // try {
-    //   const { url } = await createStripeSession("Student");
+    try {
+      const { url } = await createStripeSession("Student");
 
-    //   window.location.href = url || "/profile";
-    // } catch (e) {
-    //   console.log("Error", e);
-    //   toast({
-    //     title: "You must be signed up or there was a network issue",
-    //   });
-    // }
+      window.location.href = url || "/profile";
+    } catch (e) {
+      console.log("Error", e);
+      toast({
+        title: "You must be signed up or there was a network issue",
+      });
+    }
     setIsCardLoading(false);
   };
-
-  const ProcessCryptoPayment = async () => {
-    gtag.event({
-      clientWindow: window,
-      action: "student crypto button",
-      category: "purchase",
-      label: "student",
-    });
-
-    console.log("Process payment clicked");
-    toast({
-      title:
-        "We are launching Premium on 16th December Please support us on Product Hunt 😊",
-      description: PHToast,
-    });
-    // try {
-    //   const { url, success } = await createSphereSession();
-    //   //console.log("Received Output", url, success);
-    //   if (!success) {
-    //     toast({
-    //       title: "There was a issue try again later",
-    //     });
-    //     return;
-    //   }
-
-    //   window.location.href = url || "/profile";
-    // } catch (e) {
-    //   console.log("Error", e);
-    //   toast({
-    //     title: "You must be signed up or there was a network issue",
-    //   });
-    // }
-    setIsCryptoLoading(false);
-  };
   return (
-    <div className="flex items-center justify-center space-x-4 p-6 rounded-lg">
-      <Button
-        variant="outline"
-        className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
-        onClick={(e) => {
-          e.preventDefault();
-          setIsCardLoading(true);
-          ProcessCardPayment();
-        }}
-        disabled={isCardLoading || isCryptoLoading}
-      >
-        {isCardLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="flex">
-            <CreditCard className="h-5 w-5 mr-1" />
-            <span>Card</span>
-          </div>
-        )}
-      </Button>
-
-      <Button
-        variant="outline"
-        className="w-full border border-orange-400 font-semibold text-orange-400 hover:bg-orange-400 hover:text-white"
-        disabled={isCardLoading || isCryptoLoading}
-        onClick={(e) => {
-          e.preventDefault();
-          setIsCryptoLoading(true);
-          ProcessCryptoPayment();
-        }}
-      >
-        {isCryptoLoading ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="flex">
-            <Bitcoin className="h-5 w-5" />
-            <span>Crypto</span>
-          </div>
-        )}
-      </Button>
-    </div>
+    <Button
+      variant="outline"
+      className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
+      onClick={(e) => {
+        e.preventDefault();
+        setIsCardLoading(true);
+        ProcessCardPayment();
+      }}
+      disabled={isCardLoading}
+    >
+      {isCardLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="flex">
+          <span>Go Student</span>
+        </div>
+      )}
+    </Button>
   );
 };
+
+// const PaymentComponent = () => {
+//   const { toast } = useToast();
+//   const [isCardLoading, setIsCardLoading] = useState(false);
+//   const [isCryptoLoading, setIsCryptoLoading] = useState(false);
+//   const ProcessCardPayment = async () => {
+//     gtag.event({
+//       clientWindow: window,
+//       action: "student card button",
+//       category: "purchase",
+//       label: "student",
+//     });
+//     // console.log("Process payment clicked");
+//     // toast({
+//     //   title:
+//     //     "We are launching Premium on 16th December Please support us on Product Hunt 😊",
+//     //   description: PHToast,
+//     // });
+
+//     try {
+//       const { url } = await createStripeSession("Student");
+
+//       window.location.href = url || "/profile";
+//     } catch (e) {
+//       console.log("Error", e);
+//       toast({
+//         title: "You must be signed up or there was a network issue",
+//       });
+//     }
+//     setIsCardLoading(false);
+//   };
+
+//   const ProcessCryptoPayment = async () => {
+//     gtag.event({
+//       clientWindow: window,
+//       action: "student crypto button",
+//       category: "purchase",
+//       label: "student",
+//     });
+
+//     console.log("Process payment clicked");
+//     toast({
+//       title:
+//         "We are launching Premium on 16th December Please support us on Product Hunt 😊",
+//       description: PHToast,
+//     });
+//     // try {
+//     //   const { url, success } = await createSphereSession();
+//     //   //console.log("Received Output", url, success);
+//     //   if (!success) {
+//     //     toast({
+//     //       title: "There was a issue try again later",
+//     //     });
+//     //     return;
+//     //   }
+
+//     //   window.location.href = url || "/profile";
+//     // } catch (e) {
+//     //   console.log("Error", e);
+//     //   toast({
+//     //     title: "You must be signed up or there was a network issue",
+//     //   });
+//     // }
+//     setIsCryptoLoading(false);
+//   };
+//   return (
+//     <div className="flex items-center justify-center space-x-4 p-6 rounded-lg">
+//       <Button
+//         variant="outline"
+//         className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
+//         onClick={(e) => {
+//           e.preventDefault();
+//           setIsCardLoading(true);
+//           ProcessCardPayment();
+//         }}
+//         disabled={isCardLoading || isCryptoLoading}
+//       >
+//         {isCardLoading ? (
+//           <LoadingSpinner />
+//         ) : (
+//           <div className="flex">
+//             <CreditCard className="h-5 w-5 mr-1" />
+//             <span>Card</span>
+//           </div>
+//         )}
+//       </Button>
+
+//       <Button
+//         variant="outline"
+//         className="w-full border border-orange-400 font-semibold text-orange-400 hover:bg-orange-400 hover:text-white"
+//         disabled={isCardLoading || isCryptoLoading}
+//         onClick={(e) => {
+//           e.preventDefault();
+//           setIsCryptoLoading(true);
+//           ProcessCryptoPayment();
+//         }}
+//       >
+//         {isCryptoLoading ? (
+//           <LoadingSpinner />
+//         ) : (
+//           <div className="flex">
+//             <Bitcoin className="h-5 w-5" />
+//             <span>Crypto</span>
+//           </div>
+//         )}
+//       </Button>
+//     </div>
+//   );
+// };

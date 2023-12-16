@@ -19,8 +19,9 @@ export async function generateBulletList(
     }
 
     const plan =
-      PLANS.find((plan) => plan.price.priceIds.test === user.stripePriceId) ||
-      PLANS[0];
+      PLANS.find(
+        (plan) => plan.price.priceIds.production === user.stripePriceId
+      ) || PLANS[0];
 
     if (user.AICalls >= plan?.ai) {
       return {

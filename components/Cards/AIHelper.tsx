@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import LoadingSpinner from "../LoadingSpinner";
 import { updateUserAICalls } from "@/lib/actions/user.actions";
+import { absoluteUrl } from "@/lib/utils";
 //import { ComingSoon } from "./ComingSoon";
 
 export const AIHelper = ({
@@ -51,6 +52,17 @@ export const AIHelper = ({
         if (response.code === "limitExceeded") {
           toast({
             title: response.message,
+            description: (
+              <Button
+                variant="outline"
+                className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
+                onClick={() => {
+                  window.location.href = absoluteUrl("/pricing");
+                }}
+              >
+                Upgrade
+              </Button>
+            ),
           });
 
           setIsLoading(false);
