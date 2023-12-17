@@ -1,47 +1,47 @@
 "use client";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogDescription,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogTrigger,
+// } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 //import { createSphereSession } from "@/lib/actions/sphere_session.action";
 import { createStripeSession } from "@/lib/actions/stripe_session.action";
 
-import { Bitcoin, CreditCard } from "lucide-react";
+//import { Bitcoin, CreditCard } from "lucide-react";
 
 import * as gtag from "@/lib/gtag";
 //import { ComingSoon } from "@/components/Cards/ComingSoon";
 
 import { useState } from "react";
 
-const PHToast = (
-  <a href="https://www.producthunt.com/products/resme" target="_blank">
-    <img
-      src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=427885&theme=light"
-      alt="ResMe - Create&#0032;Professional&#0032;resumes&#0032;in&#0032;seconds | Product Hunt"
-      // style={{"width: 250px; height: 54px;"}}
-      width="250"
-      height="54"
-    />
-  </a>
-);
+// const PHToast = (
+//   <a href="https://www.producthunt.com/products/resme" target="_blank">
+//     <img
+//       src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=427885&theme=light"
+//       alt="ResMe - Create&#0032;Professional&#0032;resumes&#0032;in&#0032;seconds | Product Hunt"
+//       // style={{"width: 250px; height: 54px;"}}
+//       width="250"
+//       height="54"
+//     />
+//   </a>
+// );
 
 export const GoPremiumButton = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const clickTracking = async () => {
-    // gtag.event({
-    //   clientWindow: window,
-    //   action: "go premium button",
-    //   category: "purchase",
-    //   label: "premium",
-    // });
+    gtag.event({
+      clientWindow: window,
+      action: "go premium button",
+      category: "purchase",
+      label: "premium",
+    });
 
     // console.log("process premium button");
     // toast({

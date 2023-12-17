@@ -114,7 +114,7 @@ export function CreateResumeButton({
       <DialogTrigger className="overflow-hidden rounded-md border w-full mt-4">
         <div
           className={cn(
-            "h-auto w-auto aspect-[3/4] flex justify-center items-center object-cover transition-all hover:scale-105"
+            "h-auto w-auto aspect-[3/4] flex justify-center items-center object-cover duration-500 transition-all hover:scale-105"
           )}
         >
           <PlusCircle width={50} height={50} strokeWidth="0.75px"></PlusCircle>

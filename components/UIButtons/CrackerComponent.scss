@@ -1,0 +1,243 @@
+@import "bourbon";
+
+@import url(https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two);
+
+$cracker--bk-color: #da1d1b;
+.cracker {
+  width: em(650);
+  height: em(100);
+  margin: em(100) auto 0;
+  position: relative;
+  cursor: pointer;
+  &:hover {
+    .cracker-left {
+      left: em(-120);
+      top: em(50);
+      @include transform(rotate(-15deg));
+    }
+    .cracker-right {
+      right: em(-120);
+      top: em(50);
+      @include transform(rotate(15deg));
+    }
+  }
+}
+
+.cracker-left,
+.cracker-right {
+  @include transition(all 0.5s ease-in-out);
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background-color: $cracker--bk-color;
+}
+
+.cracker-left {
+  left: 0;
+}
+.cracker-right {
+  right: 0;
+}
+
+.cracker-left-inner,
+.cracker-right-inner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  &:before {
+    content: "";
+    height: 100%;
+    width: em(10);
+    background-color: darken($cracker--bk-color, 10%);
+    position: absolute;
+    z-index: 10;
+    border-radius: 50%;
+  }
+}
+
+.cracker-left-inner {
+  &:before {
+    left: em(-5);
+    top: 0;
+  }
+}
+
+.cracker-right-inner {
+  &:before {
+    right: em(-5);
+    top: 0;
+  }
+}
+
+.cracker-message {
+  padding: em(15) 0;
+  width: 25%;
+  margin: 0 auto;
+  .cracker-message__inner {
+    padding: em(10);
+    background: lighten(#d2d2d2, 10%);
+    color: darken(#d2d2d2, 40%);
+    text-align: center;
+    font-size: em(13);
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: "Shadows Into Light Two", cursive;
+    border: 1px solid lighten(#d2d2d2, 2%);
+    box-shadow: 2px 2px 30px #d2d2d2;
+  }
+}
+
+.cracker-left__tail,
+.cracker-left__end,
+.cracker-left__body,
+.cracker-right__tail,
+.cracker-right__end,
+.cracker-right__body,
+.cracker-left__mask-top,
+.cracker-left__mask-bottom,
+.cracker-right__mask-top,
+.cracker-right__mask-bottom {
+  position: absolute;
+}
+
+.cracker-left__tail {
+  left: 0;
+}
+
+.cracker-right__tail {
+  right: 0;
+}
+
+.cracker-left__tail,
+.cracker-right__tail {
+  width: em(100);
+  height: 100%;
+  background-color: lighten($cracker--bk-color, 10%);
+}
+
+.cracker-left__end,
+.cracker-right__end {
+  width: em(20);
+  height: 100%;
+  background-color: darken($cracker--bk-color, 10%);
+  &:before {
+    content: "";
+    height: em(55);
+    width: em(15);
+    background-color: #ffb20f;
+    position: absolute;
+    top: em(21);
+    z-index: 15;
+    border: em(1) solid darken(#ffb20f, 5%);
+    border-radius: em(5);
+  }
+}
+.cracker-left__end {
+  left: em(100);
+  &:before {
+    left: em(-10);
+  }
+}
+
+.cracker-right__end {
+  right: em(100);
+  &:before {
+    right: em(-10);
+  }
+}
+
+.cracker-left__mask-top,
+.cracker-left__mask-bottom,
+.cracker-right__mask-top,
+.cracker-right__mask-bottom {
+  z-index: 10;
+}
+
+.cracker-left__mask-top,
+.cracker-left__mask-bottom,
+.cracker-right__mask-top,
+.cracker-right__mask-bottom {
+  width: em(140);
+  height: em(25);
+}
+
+.cracker-left__mask-top,
+.cracker-left__mask-bottom {
+  left: em(30);
+}
+
+.cracker-right__mask-top,
+.cracker-right__mask-bottom {
+  right: em(30);
+}
+%mask {
+  height: 0;
+  width: 0;
+  border-left: 4.375em solid transparent;
+  border-right: 2.375em solid transparent;
+  border-top: 4.375em solid white;
+}
+
+%mask-2 {
+  height: 0;
+  width: 0;
+  border-left: 4.375em solid transparent;
+  border-right: 2.375em solid transparent;
+  border-bottom: 4.375em solid white;
+}
+
+.cracker-left__mask-top,
+.cracker-right__mask-top {
+  top: em(-35);
+}
+
+.cracker-left__mask-top {
+  @extend %mask;
+}
+
+.cracker-left__mask-bottom {
+  @extend %mask-2;
+}
+.cracker-right__mask-top {
+  @include transform(rotate(-180deg));
+  @extend %mask-2;
+}
+
+.cracker-right__mask-bottom {
+  @include transform(rotate(-180deg));
+  @extend %mask;
+}
+
+.cracker-left__mask-bottom,
+.cracker-right__mask-bottom {
+  bottom: em(-35);
+}
+
+.cracker-left-zigzag {
+  position: absolute;
+  right: -1px;
+  top: 0;
+  height: 100%;
+  .cracker-left-zigzag__item {
+    @include triangle(em(20), white, left);
+  }
+}
+
+.cracker-right-zigzag {
+  position: absolute;
+  left: em(-10);
+  top: 0;
+  height: 100%;
+  .cracker-right-zigzag__item {
+    @include triangle(em(20), $cracker--bk-color, left);
+  }
+}
+
+.hover-me-text {
+  text-align: center;
+  margin-top: em(50);
+  font-family: "Shadows Into Light Two", cursive;
+  text-transform: uppercase;
+  /*   text-decoration: underline; */
+}

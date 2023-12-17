@@ -3612,6 +3612,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bourbon@npm:^7.3.0":
+  version: 7.3.0
+  resolution: "bourbon@npm:7.3.0"
+  checksum: b5330925feca76d6e716f809a1bd52693674cb3963aa994e5e7dc1eba52d4d6055a7f1c362c71361b793f3a5ebf591ebc565f876cf7cb269e7cc3877908080e9
+  languageName: node
+  linkType: hard
+
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -3863,7 +3870,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chokidar@npm:3.5.3, chokidar@npm:^3.5.3":
+"chokidar@npm:3.5.3, chokidar@npm:>=3.0.0 <4.0.0, chokidar@npm:^3.5.3":
   version: 3.5.3
   resolution: "chokidar@npm:3.5.3"
   dependencies:
@@ -6151,6 +6158,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immutable@npm:^4.0.0":
+  version: 4.3.4
+  resolution: "immutable@npm:4.3.4"
+  checksum: de3edd964c394bab83432429d3fb0b4816b42f56050f2ca913ba520bd3068ec3e504230d0800332d3abc478616e8f55d3787424a90d0952e6aba864524f1afc3
+  languageName: node
+  linkType: hard
+
 "import-fresh@npm:^3.2.1, import-fresh@npm:^3.3.0":
   version: 3.3.0
   resolution: "import-fresh@npm:3.3.0"
@@ -7715,6 +7729,7 @@ __metadata:
     api: ^6.1.1
     autoprefixer: ^10.4.16
     bcryptjs: ^2.4.3
+    bourbon: ^7.3.0
     button: ^1.1.1
     class-variance-authority: ^0.7.0
     clsx: ^2.0.0
@@ -7741,6 +7756,7 @@ __metadata:
     react-hook-form: ^7.47.0
     react-zoom-pan-pinch: ^3.3.0
     resend: ^2.0.0
+    sass: ^1.69.5
     shadcn-ui: ^0.4.1
     sharp: ^0.32.6
     stripe: ^14.5.0
@@ -9483,6 +9499,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sass@npm:^1.69.5":
+  version: 1.69.5
+  resolution: "sass@npm:1.69.5"
+  dependencies:
+    chokidar: ">=3.0.0 <4.0.0"
+    immutable: ^4.0.0
+    source-map-js: ">=0.6.2 <2.0.0"
+  bin:
+    sass: sass.js
+  checksum: c66f4f02882e7aa7aa49703824dadbb5a174dcd05e3cd96f17f73687889aab6027d078b518e2c04b594dfd89b2f574824bf935c7aee46c770aa6be9aafcc49f2
+  languageName: node
+  linkType: hard
+
 "sax@npm:^1.2.4":
   version: 1.3.0
   resolution: "sax@npm:1.3.0"
@@ -9809,7 +9838,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:^1.0.2":
+"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.0.2":
   version: 1.0.2
   resolution: "source-map-js@npm:1.0.2"
   checksum: c049a7fc4deb9a7e9b481ae3d424cc793cb4845daa690bc5a05d428bf41bf231ced49b4cf0c9e77f9d42fdb3d20d6187619fc586605f5eabe995a316da8d377c

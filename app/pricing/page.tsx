@@ -34,6 +34,7 @@ export const metadata: Metadata = {
 };
 
 import InfoHeader from "@/components/Navigation/InfoHeader";
+import CrackerComponent from "@/components/UIButtons/Cracker";
 const PricingPage = () => {
   return (
     <div>
@@ -87,25 +88,8 @@ const PricingPage = () => {
                     <span>All Plans</span>
                   </h2>
                 </div>
-
-                <div>
-                  <a
-                    href="https://www.producthunt.com/products/resme"
-                    target="_blank"
-                  >
-                    <img
-                      src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=427885&theme=light"
-                      alt="ResMe - Create&#0032;Professional&#0032;resumes&#0032;in&#0032;seconds | Product Hunt"
-                      // style={{"width: 250px; height: 54px;"}}
-                      width="250"
-                      height="54"
-                    />
-                  </a>
-                  <CardDescription className="mt-2">
-                    Get the code on our product hunt page, and while you are
-                    there, it&apos;ll really help us if you could upvote 😄!
-                  </CardDescription>
-                </div>
+                <span className="font-semibold">RESMELAUNCH</span>
+                {/* <CrackerComponent /> */}
               </CardHeader>
               <CardContent className="flex justify-center items-center w-full bg-secondary text-md p-0 py-2">
                 <CardDescription>Use discount code on checkout</CardDescription>

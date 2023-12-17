@@ -35,15 +35,20 @@ export default function Home() {
       <Navbar></Navbar>
       <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
         <HomeBG />
-        <div className="relative z-1 mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur transition-all hover:border-gray-300 hover:bg-white/50">
-          <p className="flex text-sm font-semibold text-gray-700 z-1">
-            <Hammer className="mr-2 h-5 w-5"></Hammer>
-            <span>ResMe is in Beta</span>
-          </p>
-        </div>
-        <h1 className="relative max-w-4xl text-5xl font-bold md:text-6xl lg:text-7xl z-1">
-          Create Professional <span className="text-blue-600">Resumes</span> in
-          Seconds
+
+        {/* <div className="relative z-0 mx-auto mb-4 max-w-fit rounded-full bg-blue-600 p-1 shadow-md backdrop-blur-sm hover:backdrop-blur-lg">
+          <div className="relative z-1 mx-auto flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full bg-white px-7 py-2 transition-all hover:border-gray-300 hover:bg-white/95">
+            <p className="flex text-sm font-semibold text-gray-700 z-1">
+              <span>ResMe is Live 🚀</span>
+            </p>
+          </div>
+        </div> */}
+
+        <h1 className="relative max-w-4xl text-4xl font-bold md:text-5xl lg:text-6xl z-1 flex flex-col">
+          {/* Create Professional <span className="text-blue-600">Resumes</span> in
+          Seconds */}
+          <span>Land Your Dream Job with</span>
+          <span className="text-blue-600">AI-Powered Resumes</span>
         </h1>
         <p className="relative mt-5 max-w-prose text-zinc-700 sm:text-lg z-1">
           ResMe is one of the best platforms out there that uses advanced AI to
