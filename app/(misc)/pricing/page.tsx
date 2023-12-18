@@ -1,5 +1,3 @@
-import Navbar from "@/components/Navigation/Navbar";
-
 // import { PriceCards } from "./pricingCard";
 import { CheckCircle2, MinusCircle, Sparkles, XCircle } from "lucide-react";
 
@@ -33,13 +31,9 @@ export const metadata: Metadata = {
   },
 };
 
-import InfoHeader from "@/components/Navigation/InfoHeader";
-import CrackerComponent from "@/components/UIButtons/Cracker";
 const PricingPage = () => {
   return (
     <div>
-      <InfoHeader />
-      <Navbar></Navbar>
       <section className="min-h-screen w-full py-12 flex items-center justify-center">
         <div className="flex flex-col container items-center justify-center">
           <div className="flex flex-col space-y-12 mb-32">

@@ -4,7 +4,6 @@ import {
   ArrowRight,
   BadgeCheck,
   Globe,
-  Hammer,
   PencilRuler,
   Sparkles,
   SquareUserRound,
@@ -24,15 +23,14 @@ import dashboard from "@/public/dashboard.png";
 import annotedResume from "@/public/annotatedResume.png";
 import ai from "@/public/AI.png";
 import { ImageSlider } from "@/components/ImageSlider";
-import InfoHeader from "@/components/Navigation/InfoHeader";
+
 import FeaturesCard from "@/components/Cards/FeaturesCard";
+
 export default function Home() {
   const slides = [dashboard, ai, annotedResume];
 
   return (
     <main>
-      <InfoHeader />
-      <Navbar></Navbar>
       <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
         <HomeBG />
 

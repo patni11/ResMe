@@ -1,5 +1,3 @@
-import InfoHeader from "@/components/Navigation/InfoHeader";
-import Navbar from "@/components/Navigation/Navbar";
 import {
   Card,
   CardDescription,
@@ -10,8 +8,6 @@ import {
 const Support = () => {
   return (
     <>
-      <InfoHeader />
-      <Navbar></Navbar>
       <main className="flex flex-col justify-center items-center h-screen w-screen space-y-12">
         <Card className="w-[350px] lg:w-[750px] lg:p-12 lg:space-y-8 flex flex-col">
           <CardHeader>

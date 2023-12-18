@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { GoStudentButton } from "@/app/pricing/goPremiumButton";
+import { GoStudentButton } from "@/app/(misc)/pricing/goPremiumButton";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 interface DeleteButtonProps {
