@@ -34,8 +34,6 @@ export async function POST(request: Request) {
   // console.log("EVENT", event);
 
   const session = event.data.object as Stripe.Checkout.Session;
-  console.log("EVENT TYPE", event.type);
-  console.log("SESSION", session);
 
   if (!session?.metadata?.email) {
     return new Response(null, {
@@ -54,7 +52,8 @@ export async function POST(request: Request) {
       plan =
         PLANS.find(
           (plan) =>
-            plan.price.priceIds.test === subscription.items.data[0]?.price.id
+            plan.price.priceIds.production ===
+            subscription.items.data[0]?.price.id
         ) || PLANS[0];
 
       await User.findOneAndUpdate(
@@ -96,7 +95,7 @@ export async function POST(request: Request) {
         {
           stripeSubscriptionId: stripeSubscriptionId,
           stripeCustomerId: stripeSubscriptionId as string,
-          stripePriceId: plan.price.priceIds.test, //TODO:change to prod
+          stripePriceId: plan.price.priceIds.production,
           stripeCurrentPeriodEnd: stripeCurrentPeriodEnd,
           AICalls: 0,
         },

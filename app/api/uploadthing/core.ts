@@ -3,7 +3,7 @@ import { z } from "zod";
 import { getPDFLink, updatePDFLink } from "@/lib/actions/resumes.action";
 import { UTApi } from "uploadthing/server";
 import { getUserEmailFromSession } from "@/lib/actions/utils.action";
-//import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
 
 const utapi = new UTApi();
 
@@ -13,21 +13,20 @@ export const ourFileRouter = {
   pdfUploader: f({ blob: { maxFileSize: "2MB" } })
     .input(z.object({ resumeId: z.string() }))
     .middleware(async ({ req, input }) => {
-      //AUTH CHECK
-      // const subscriptionPlan = await getUserSubscriptionPlan();
-      // if (!subscriptionPlan.isSubscribed) {
-      //   return { success: false, message: "Not Subscribed" };
-      // } TODO:Uncomment this
-
-      try {
-        const email = await getUserEmailFromSession();
-      } catch (e) {
-        return {
-          success: false,
-          message: "Not Logged In",
-          resumeId: input.resumeId,
-        };
+      const subscriptionPlan = await getUserSubscriptionPlan();
+      if (!subscriptionPlan.isSubscribed) {
+        return { success: false, message: "Not Subscribed" };
       }
+
+      // try {
+      //   const email = await getUserEmailFromSession();
+      // } catch (e) {
+      //   return {
+      //     success: false,
+      //     message: "Not Logged In",
+      //     resumeId: input.resumeId,
+      //   };
+      // }
 
       const existingLink = await getPDFLink(input.resumeId);
       if (existingLink) {

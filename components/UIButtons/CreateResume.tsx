@@ -114,7 +114,7 @@ export function CreateResumeButton({
       <DialogTrigger className="overflow-hidden rounded-md border w-full mt-4">
         <div
           className={cn(
-            "h-auto w-auto aspect-[3/4] flex justify-center items-center object-cover transition-all hover:scale-105"
+            "h-auto w-auto aspect-[3/4] flex justify-center items-center object-cover duration-500 transition-all hover:scale-105"
           )}
         >
           <PlusCircle width={50} height={50} strokeWidth="0.75px"></PlusCircle>
@@ -153,12 +153,13 @@ export function CreateResumeButton({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Upgrade Plan</DialogTitle>
-          </DialogHeader>
-          <div className="flex flex-col space-y-4 items-center">
-            <div className="w-full flex flex-col space-y-4 mt-8">
+
+            <div className="w-full flex flex-col space-y-2 mt-8">
               <span>Upgrade your plan to create more resumes</span>
+
               <Button
-                variant="default"
+                variant="outline"
+                className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
                 onClick={() => {
                   router.push("/pricing");
                 }}
@@ -166,7 +167,7 @@ export function CreateResumeButton({
                 Upgrade
               </Button>
             </div>
-          </div>
+          </DialogHeader>
         </DialogContent>
       )}
     </Dialog>

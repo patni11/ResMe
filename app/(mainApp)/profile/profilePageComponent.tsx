@@ -28,7 +28,7 @@ import {
 import { Infinity, PlusCircle } from "lucide-react";
 import intlFormat from "date-fns/esm/intlFormat";
 import Link from "next/link";
-import { GoPremiumButton } from "@/app/pricing/goPremiumButton";
+import { GoPremiumButton } from "@/app/(misc)/pricing/goPremiumButton";
 
 interface BillingFormProps {
   subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;

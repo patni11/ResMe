@@ -27,7 +27,7 @@ export default async function DashboardPage() {
   }
 
   const plan =
-    PLANS.find((plan) => plan.price.priceIds.test === stripePriceId) ||
+    PLANS.find((plan) => plan.price.priceIds.production === stripePriceId) ||
     PLANS[0];
 
   return (
