@@ -1,68 +1,31 @@
 import { css } from "@emotion/css";
-import { Cake, Email, Phone, Public, Room } from "@mui/icons-material";
 import clsx from "clsx";
-import get from "lodash/get";
-import isEmpty from "lodash/isEmpty";
-import { useMemo } from "react";
-import { ThemeConfig } from "schema";
-
-import Markdown from "@/components/shared/Markdown";
-import { useAppSelector } from "@/store/hooks";
-import DataDisplay from "@/templates/shared/DataDisplay";
-import { formatDateString } from "@/utils/date";
-import getProfileIcon from "@/utils/getProfileIcon";
-import { getContrastColor, invertHex } from "@/utils/styles";
-import { addHttp, formatLocation, getPhotoClassNames } from "@/utils/template";
+import Markdown from "../../shared/templateShared/Markdown";
+import { Activity } from "lucide-react";
+import DataDisplay from "../../shared/DataDisplay";
+import { createSettings } from "@/store/coverLetter/settings";
 
 export const MastheadSidebar: React.FC = () => {
-  const dateFormat: string = useAppSelector((state) =>
-    get(state.resume.present, "metadata.date.format")
-  );
-  const {
-    name,
-    headline,
-    photo,
-    email,
-    phone,
-    birthdate,
-    website,
-    location,
-    profiles,
-  } = useAppSelector((state) => state.resume.present.basics);
-  const theme: ThemeConfig = useAppSelector((state) =>
-    get(state.resume.present, "metadata.theme", {} as ThemeConfig)
-  );
-  const contrast = useMemo(
-    () => getContrastColor(theme.primary),
-    [theme.primary]
-  );
-  const color = useMemo(
-    () => (contrast === "dark" ? theme.text : theme.background),
-    [theme, contrast]
-  );
-  const textColorInvert = useMemo(
-    () => (contrast === "dark" ? theme.text : invertHex(theme.text)),
-    [theme.text, contrast]
-  );
+  const useSettings = createSettings("1");
+  const { bgColor, fontColor, fontFamily, fontSize, headerSize } =
+    useSettings();
+
+  const color = bgColor;
+  const name = "Name";
+  const headline = "headline";
+  const location = "Location";
+  const email = "email";
+  const phone = "+18572063268";
+  const website = "shubhpatni.com";
 
   return (
     <div
       className={clsx(
         "col-span-2 grid justify-items-start gap-3 p-4",
-        css(`a{ color: ${textColorInvert}!important }`),
-        css(`--text-color: ${textColorInvert}!important`)
+        css(`a{ color: ${fontColor}!important }`),
+        css(`--text-color: ${fontColor}!important`)
       )}
     >
-      {photo.visible && !isEmpty(photo.url) && (
-        <img
-          alt={name}
-          src={photo.url}
-          width={photo.filters.size}
-          height={photo.filters.size}
-          className={getPhotoClassNames(photo.filters)}
-        />
-      )}
-
       <div>
         <h1 className="mb-1">{name}</h1>
         <p className="opacity-75">{headline}</p>
@@ -74,16 +37,19 @@ export const MastheadSidebar: React.FC = () => {
           css(`svg { color: ${color} }`)
         )}
       >
-        <DataDisplay icon={<Room />} className="!gap-2 text-xs">
-          {formatLocation(location)}
+        <DataDisplay
+          icon={<Activity className="h-5 w-5" />}
+          className="!gap-2 text-xs"
+        >
+          {location}
         </DataDisplay>
 
-        <DataDisplay icon={<Cake />} className="!gap-2 text-xs">
+        {/* <DataDisplay icon={<Activity className="h-5 w-5" />} className="!gap-2 text-xs">
           {formatDateString(birthdate, dateFormat)}
-        </DataDisplay>
+        </DataDisplay> */}
 
         <DataDisplay
-          icon={<Email />}
+          icon={<Activity className="h-5 w-5" />}
           className="!gap-2 text-xs"
           link={`mailto:${email}`}
         >
@@ -91,7 +57,7 @@ export const MastheadSidebar: React.FC = () => {
         </DataDisplay>
 
         <DataDisplay
-          icon={<Phone />}
+          icon={<Activity className="h-5 w-5" />}
           className="!gap-2 text-xs"
           link={`tel:${phone}`}
         >
@@ -99,13 +65,13 @@ export const MastheadSidebar: React.FC = () => {
         </DataDisplay>
 
         <DataDisplay
-          icon={<Public />}
-          link={website && addHttp(website)}
+          icon={<Activity className="h-5 w-5" />}
+          link={website}
           className="!gap-2 text-xs"
         >
           {website}
         </DataDisplay>
-
+        {/* 
         {profiles.map(({ id, username, network, url }) => (
           <DataDisplay
             key={id}
@@ -115,7 +81,7 @@ export const MastheadSidebar: React.FC = () => {
           >
             {username}
           </DataDisplay>
-        ))}
+        ))} */}
       </div>
     </div>
   );

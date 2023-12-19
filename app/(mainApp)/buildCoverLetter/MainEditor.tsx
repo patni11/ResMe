@@ -6,9 +6,10 @@ import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
 //import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import RightSidebar from "@/components/CoverLetter/RightSidebar/RightSidebar";
-const CoverLetterPreview = dynamic(() => import("./CoverLetterPreview"), {
-  ssr: false,
-});
+// const CoverLetterPreview = dynamic(() => import("./CoverLetterPreview"), {
+//   ssr: false,
+// });
+import Center from "./Center/Center";
 const MainEditor = () => {
   //load coverletter data
   //load setting data
@@ -20,7 +21,8 @@ const MainEditor = () => {
 
       {/* Display for large screens (1024px and above) */}
       <div className="hidden xl:flex h-screen w-full overflow-hidden justify-center">
-        <CoverLetterPreview />
+        {/* <CoverLetterPreview /> */}
+        <Center />
         <RightSidebar />
       </div>
 

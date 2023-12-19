@@ -4,14 +4,7 @@ import { useTheme } from "@mui/material";
 import { right } from "@/lib/types/coverLetter/types";
 import { useSettings } from "@/store/coverLetter/layout";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowLeft,
-  ArrowLeftCircleIcon,
-  ArrowRightCircleIcon,
-  ChevronLeft,
-  ChevronLeftCircle,
-  ChevronRight,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const RightSidebar = () => {
   const theme = useTheme();

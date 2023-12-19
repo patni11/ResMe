@@ -1,7 +1,5 @@
-import clsx from 'clsx';
-import isEmpty from 'lodash/isEmpty';
-
-import { addHttp } from '@/utils/template';
+import clsx from "clsx";
+import isEmpty from "lodash/isEmpty";
 
 type Props = {
   icon?: JSX.Element;
@@ -10,14 +8,25 @@ type Props = {
   textClassName?: string;
 };
 
-const DataDisplay: React.FC<React.PropsWithChildren<Props>> = ({ icon, link, className, textClassName, children }) => {
+const DataDisplay: React.FC<React.PropsWithChildren<Props>> = ({
+  icon,
+  link,
+  className,
+  textClassName,
+  children,
+}) => {
   if (isEmpty(children)) return null;
 
   if (link && !isEmpty(link)) {
     return (
-      <div className={clsx('inline-flex items-center gap-1', className)}>
+      <div className={clsx("inline-flex items-center gap-1", className)}>
         {icon}
-        <a target="_blank" rel="noreferrer" href={addHttp(link)} className={textClassName}>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={link}
+          className={textClassName}
+        >
           {children}
         </a>
       </div>
@@ -25,7 +34,7 @@ const DataDisplay: React.FC<React.PropsWithChildren<Props>> = ({ icon, link, cla
   }
 
   return (
-    <div className={clsx('inline-flex items-center gap-1', className)}>
+    <div className={clsx("inline-flex items-center gap-1", className)}>
       {icon}
       <span className={textClassName}>{children}</span>
     </div>
