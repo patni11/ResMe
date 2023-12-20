@@ -35,48 +35,55 @@ export const AIHelper = ({
   // );
 
   const handleButtonClick = async () => {
-    const controller = new AbortController();
     setIsLoading(true);
+    try {
+      const timeout = setTimeout(() => {
+        toast({
+          title: "This is taking longer than expected...",
+        });
+      }, 6000);
 
-    setTimeout(() => {
-      toast({
-        title: "AI is taking longer than expected, give it a few more seconds",
-      });
-    }, 5000);
+      const response = await generateBulletList(userMessage || "");
+      if (response.code === "error") {
+        toast({
+          title: response.message,
+        });
+        setIsLoading(false);
+        return;
+      }
 
-    const response = await generateBulletList(userMessage || "");
-    if (response.code === "error") {
+      if (response.code === "limitExceeded") {
+        toast({
+          title: response.message,
+          description: (
+            <Button
+              variant="outline"
+              className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
+              onClick={() => {
+                window.location.href = absoluteUrl("/pricing");
+              }}
+            >
+              Upgrade
+            </Button>
+          ),
+        });
+
+        setIsLoading(false);
+        return;
+      }
+      await updateUserAICalls();
+
+      const cleanedString = response.message.replace(/ *- */g, "");
+      setMessage(cleanedString);
+
+      clearTimeout(timeout);
+    } catch (e) {
+      console.log("AI Helped Error", e);
       toast({
-        title: response.message,
+        title: "There was some error, please try again",
+        variant: "destructive",
       });
-      setIsLoading(false);
-      return;
     }
-
-    if (response.code === "limitExceeded") {
-      toast({
-        title: response.message,
-        description: (
-          <Button
-            variant="outline"
-            className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
-            onClick={() => {
-              window.location.href = absoluteUrl("/pricing");
-            }}
-          >
-            Upgrade
-          </Button>
-        ),
-      });
-
-      setIsLoading(false);
-      return;
-    }
-
-    const cleanedString = response.message.replace(/ *- */g, "");
-    setMessage(cleanedString);
-
-    await updateUserAICalls();
 
     setIsLoading(false);
   };
