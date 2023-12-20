@@ -34,48 +34,63 @@ export const AIHelper = ({
   //   </ComingSoon>
   // );
 
-  return (
-    <Button
-      onClick={async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
+  const handleButtonClick = async () => {
+    setIsLoading(true);
+    try {
+      const timeout = setTimeout(() => {
+        toast({
+          title: "This is taking longer than expected...",
+        });
+      }, 6000);
 
-        const response = await generateBulletList(userMessage || "");
-        if (response.code === "error") {
-          toast({
-            title: response.message,
-          });
-          setIsLoading(false);
-          return;
-        }
+      const response = await generateBulletList(userMessage || "");
+      if (response.code === "error") {
+        toast({
+          title: response.message,
+        });
+        setIsLoading(false);
+        return;
+      }
 
-        if (response.code === "limitExceeded") {
-          toast({
-            title: response.message,
-            description: (
-              <Button
-                variant="outline"
-                className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
-                onClick={() => {
-                  window.location.href = absoluteUrl("/pricing");
-                }}
-              >
-                Upgrade
-              </Button>
-            ),
-          });
-
-          setIsLoading(false);
-          return;
-        }
-
-        const cleanedString = response.message.replace(/ *- */g, "");
-        setMessage(cleanedString);
-
-        await updateUserAICalls();
+      if (response.code === "limitExceeded") {
+        toast({
+          title: response.message,
+          description: (
+            <Button
+              variant="outline"
+              className="w-full border border-blue-600 font-semibold text-blue-600 hover:bg-blue-600 hover:text-white"
+              onClick={() => {
+                window.location.href = absoluteUrl("/pricing");
+              }}
+            >
+              Upgrade
+            </Button>
+          ),
+        });
 
         setIsLoading(false);
-      }}
+        return;
+      }
+      await updateUserAICalls();
+
+      const cleanedString = response.message.replace(/ *- */g, "");
+      setMessage(cleanedString);
+
+      clearTimeout(timeout);
+    } catch (e) {
+      console.log("AI Helped Error", e);
+      toast({
+        title: "There was some error, please try again",
+        variant: "destructive",
+      });
+    }
+
+    setIsLoading(false);
+  };
+
+  return (
+    <Button
+      onClick={handleButtonClick}
       type="button"
       variant="outline"
       size="icon"

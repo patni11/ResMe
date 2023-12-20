@@ -19,6 +19,18 @@ export async function deleteUser(email: string) {
     // List all collections in the database
     const collections = await db.listCollections().toArray();
 
+    const user = await db.collection("users").findOne({ email: email });
+    if (!user) {
+      return { error: "User not found" };
+    }
+
+    // Get the user's _id
+    const userId = user._id;
+
+    // Delete the user's record in the 'accounts' collection
+    await db.collection("accounts").deleteOne({ userId: userId });
+    console.log(`Deleted account for user with email ${email}`);
+
     // Iterate through each collection
     for (const collection of collections) {
       const collectionName = collection.name;
