@@ -14,6 +14,7 @@ export async function generateBulletList(
 ): Promise<{ code: Codes; message: string }> {
   try {
     const user = await fetchUserAICalls();
+
     if (!user) {
       return { code: "error", message: "Could not find user" };
     }
