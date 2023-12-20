@@ -7,14 +7,14 @@ const Castform: React.FC = () => {
   const isFirstPage = true;
 
   const useSettings = createSettings("1");
-  const { fontColor, bgColor } = useSettings();
+  const { fontColor, bgColor, ascentColor } = useSettings();
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <div
           className={clsx(styles.sidebar)}
-          style={{ color: fontColor, backgroundColor: bgColor }}
+          style={{ color: bgColor, backgroundColor: ascentColor }}
         >
           {isFirstPage && <MastheadSidebar />}
         </div>

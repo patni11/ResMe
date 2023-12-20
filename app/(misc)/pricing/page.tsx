@@ -257,7 +257,7 @@ const FreeCard = () => {
     "Multiple Device Access",
   ];
 
-  const hyphenPoints = ["3 Resumes", "3 Tailored AI"];
+  const hyphenPoints = ["3 Resumes", "7 Tailored AI"];
 
   const unCheckedPoints = ["Shareable Link", "Download Docx"];
   return (

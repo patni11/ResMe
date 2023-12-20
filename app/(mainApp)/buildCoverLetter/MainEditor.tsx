@@ -10,18 +10,20 @@ import RightSidebar from "@/components/CoverLetter/RightSidebar/RightSidebar";
 //   ssr: false,
 // });
 import Center from "./Center/Center";
+import LeftSidebar from "@/components/CoverLetter/LeftSidebar/LeftSidebar";
 const MainEditor = () => {
   //load coverletter data
   //load setting data
   //load template
 
   return (
-    <main className="flex justify-between w-full h-full">
+    <main className="flex justify-between w-full h-full ">
       {/* Display for medium screens (between 658px and 1023px) */}
 
       {/* Display for large screens (1024px and above) */}
       <div className="hidden xl:flex h-screen w-full overflow-hidden justify-center">
         {/* <CoverLetterPreview /> */}
+        <LeftSidebar />
         <Center />
         <RightSidebar />
       </div>

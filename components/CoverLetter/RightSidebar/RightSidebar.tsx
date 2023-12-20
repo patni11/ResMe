@@ -21,7 +21,7 @@ const RightSidebar = () => {
         size="icon"
         onClick={handleOpen}
         variant="outline"
-        className="absolute right-0"
+        className="absolute right-0 top-[50%]"
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>

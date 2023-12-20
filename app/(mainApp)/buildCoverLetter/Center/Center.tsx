@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import styles from "./Center.module.scss";
 //import Header from "./Header";
 import Page from "./Page";
+import Header from "./Header";
 
 const Center = () => {
   //const resume = useAppSelector((state) => state.resume.present);
@@ -16,12 +17,12 @@ const Center = () => {
 
   return (
     <div className={cn(styles.center)}>
-      {/* <Header /> */}
+      <Header />
 
       <TransformWrapper
         centerOnInit
         minScale={0.25}
-        initialScale={0.95}
+        initialScale={0.75}
         limitToBounds={false}
         centerZoomedOut={false}
         pinch={{ step: 12 }}

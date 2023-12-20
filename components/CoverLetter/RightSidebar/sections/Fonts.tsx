@@ -8,8 +8,6 @@ import {
 import { createSettings } from "@/store/coverLetter/settings";
 import { PX_PER_PT } from "@/components/PDFComponents/common/constants";
 import { Slider } from "@/components/ui/slider";
-import { CoverLetterSettings } from "@/lib/types/coverLetter/types";
-import { buttonVariants } from "@/components/ui/button";
 const Selection = ({
   isSelected,
   style = {},
@@ -52,7 +50,6 @@ const Fonts = () => {
   const {
     fontFamily: selectedFontFamily,
     fontSize,
-    fontColor,
     headerSize,
     changeSettings,
   } = useSettings();

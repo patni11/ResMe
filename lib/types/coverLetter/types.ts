@@ -4,6 +4,7 @@ import { ReactElement } from "react";
 export interface CoverLetterSettings {
   bgColor: string;
   fontColor: string;
+  ascentColor: string;
   fontFamily: string;
   fontSize: string;
   headerSize: string;
@@ -41,9 +42,10 @@ export const initialLayoutState: Layout = {
 
 export const initialCoverLetterSettings: CoverLetterSettings = {
   bgColor: "#FFFFFF",
-  fontColor: "#abcde0",
+  fontColor: "#050505",
   fontFamily: "Merriweather",
   fontSize: "9",
+  ascentColor: "#D64045",
   headerSize: "11",
   documentType: "A4",
 };
