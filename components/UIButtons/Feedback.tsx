@@ -13,12 +13,19 @@ import { useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { cn } from "@/lib/utils";
 import LoadingSpinner from "../LoadingSpinner";
+import { useToast } from "../ui/use-toast";
+
 type feedbackType = "Bug" | "Feature" | "Love";
+const DiscordChannels: Record<feedbackType, string> = {
+  Bug: "1187124587582984282",
+  Feature: "1187126412033916928",
+  Love: "1187124766897868810",
+};
 
 const FeedbackButton = () => {
   const [buttonState, setButtonState] = useState<feedbackType>("Bug");
   const [isLoading, setIsLoading] = useState(false);
-
+  const { toast } = useToast();
   const [message, setMessage] = useState("");
 
   const buttonDesign =
@@ -26,12 +33,47 @@ const FeedbackButton = () => {
   const FeedbackButton =
     "p-2 rounded-full text-primary-foreground text-sm px-4 flex justify-center items-center border";
 
-  function handleSubmit() {
+  async function handleSubmit() {
     // setIsLoading(false);
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log("Sending Message");
-    }, 2000);
+
+    fetch("https://resme-discord-job-bot.vercel.app/feedback", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${process.env.RESME_API_KEY}`,
+      },
+      body: JSON.stringify({
+        discordChannel: DiscordChannels[buttonState],
+        buttonState,
+        message,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          toast({
+            title: "Message Sent",
+            description: "Thanks for the feedback",
+          });
+          console.log("Message sent");
+        } else {
+          console.log("Error", response);
+          toast({
+            title: "There was an error",
+            description: "please try again later",
+            variant: "destructive",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log("Error", error);
+        toast({
+          title: "Could not send the mssage",
+          description: "We are facing some issues connecting, try again later",
+          variant: "destructive",
+        });
+      });
+
+    setIsLoading(false);
   }
 
   return (

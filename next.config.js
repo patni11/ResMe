@@ -15,6 +15,13 @@ const nextConfig = {
   experimental: {
     serverActions: true,
   },
+  webpack: (config) => {
+    config.resolve.fallback = {
+      zlib: false,
+    };
+
+    return config;
+  },
 };
 
 module.exports = nextConfig;

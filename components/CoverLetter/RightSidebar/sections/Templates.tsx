@@ -9,7 +9,7 @@ const Templates = () => {
 
   return (
     <>
-      <SectionWrapper title="Templates">
+      <SectionWrapper title="Templates" contentSize="max-h-96">
         <div className="grid grid-cols-2 gap-4 ">
           {Object.values(templateMap).map((template) => (
             <div key={template.id}>

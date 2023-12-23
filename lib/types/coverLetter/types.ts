@@ -151,8 +151,14 @@ import { StaticImageData } from "next/image";
 import Fonts from "@/components/CoverLetter/RightSidebar/sections/Fonts";
 import Theme from "@/components/CoverLetter/RightSidebar/sections/Theme";
 import Document from "@/components/CoverLetter/RightSidebar/sections/Document";
+import AI from "@/components/CoverLetter/RightSidebar/sections/AI";
 
 export const right: SidebarSection[] = [
+  {
+    id: "AI",
+    icon: PlusCircle,
+    component: AI,
+  },
   {
     id: "templates",
     icon: PlusCircle,

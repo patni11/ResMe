@@ -56,7 +56,7 @@ const Fonts = () => {
 
   return (
     <>
-      <SectionWrapper title="Fonts">
+      <SectionWrapper title="Fonts" contentSize="h-full">
         <section className="flex flex-col space-y-4 items-center w-full">
           <div className="grid grid-cols-2 gap-2 ">
             {fonts.map((fontFamily, idx) => {

@@ -23,7 +23,7 @@ const MainEditor = () => {
       {/* Display for large screens (1024px and above) */}
       <div className="hidden xl:flex h-screen w-full overflow-hidden justify-center">
         {/* <CoverLetterPreview /> */}
-        <LeftSidebar />
+        {/* <LeftSidebar /> */}
         <Center />
         <RightSidebar />
       </div>

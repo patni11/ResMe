@@ -97,7 +97,7 @@ export function Sidebar({ className, children }: SidebarProps) {
                     <span className="ml-2">Your Info</span>
                   </div>
                 </Link>
-                <Link href="/bulidCoverLetter/1">
+                <Link href="/buildCoverLetter">
                   <div className={`${buttonDesign} w-full border border-input`}>
                     <ScrollText absoluteStrokeWidth />
                     <span className="ml-2">Cover Letter</span>{" "}
@@ -126,7 +126,18 @@ export function Sidebar({ className, children }: SidebarProps) {
                     </DialogTitle>
                   </DialogHeader>
                   <div>
-                    <div className="py-6">bla bla bla</div>
+                    <ul className="pb-10 flex flex-col space-y-2">
+                      <li>ResMe allows you to manage your professional life</li>
+                      <li>
+                        Just enter your details once in sections on sidebar and
+                        every resume or cover letter you create will have this
+                        info
+                      </li>
+                      <li>
+                        You can thus manage and tailor any resume based on the
+                        type of job you are applying for
+                      </li>
+                    </ul>
                     <div className="flex flex-col space-y-2 items-center">
                       <span className="font-semibold text-md ">
                         Need More Help?
@@ -134,18 +145,20 @@ export function Sidebar({ className, children }: SidebarProps) {
                       <div className="flex w-full space-x-4 justify-center">
                         <a
                           href="https://discord.gg/jNp89cbpSa"
+                          target="_blank"
                           className={buttonVariants({
                             variant: "outline",
                           })}
                         >
                           <MessageCircle absoluteStrokeWidth className="mr-2" />
-                          Chat with us
+                          Chat With Us
                         </a>
                         <a
                           href="https://shubhpatni.notion.site/ResMe-Guide-d26e9c7c3a6044c89b7cdd9ea7bd830a?pvs=4"
                           className={buttonVariants({
                             variant: "outline",
                           })}
+                          target="_blank"
                         >
                           <BookOpenText className="h-5 w-5 mr-2" /> Detailed
                           Guide
