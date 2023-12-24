@@ -17,6 +17,10 @@ export async function POST(request: Request) {
 
   let event: Stripe.Event;
 
+  console.log("RAW BODY", body);
+  console.log("SIGNATURE", signature);
+  console.log("ENV", process.env.STRIPE_WEBHOOK_SECRET);
+
   try {
     event = stripe.webhooks.constructEvent(
       body,
