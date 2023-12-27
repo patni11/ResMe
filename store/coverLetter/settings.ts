@@ -25,7 +25,7 @@ type Actions = {
 
 const storeCache: Record<string, any> = {};
 
-export const createSettings = (coverLetterID: string) => {
+export const createCoverLetterSettings = (coverLetterID: string) => {
   if (storeCache[coverLetterID]) {
     return storeCache[coverLetterID];
   }
@@ -42,14 +42,13 @@ export const createSettings = (coverLetterID: string) => {
     }
   }
 
-  const useSettings = create(
+  const useCoverLetterSettings = create(
     persist<State & Actions>(
       (set, get) => ({
         ...INITIAL_STATE,
         isLoading: false,
         error: null,
         changeSettings({ field, value }) {
-          console.log("Changing field", field, value);
           set((state) => ({
             ...state,
             [field]: value,
@@ -62,6 +61,6 @@ export const createSettings = (coverLetterID: string) => {
     )
   );
 
-  storeCache[coverLetterID] = useSettings;
-  return () => useSettings();
+  storeCache[coverLetterID] = useCoverLetterSettings;
+  return () => useCoverLetterSettings();
 };

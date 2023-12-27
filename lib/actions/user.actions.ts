@@ -172,7 +172,7 @@ export async function fetchUserResumes(): Promise<{
   }
 }
 
-export async function updateUserAICalls() {
+export async function updateUserAICalls(incrementBy?: number) {
   try {
     const email = await getUserEmailFromSession();
     if (!email) {
@@ -182,7 +182,7 @@ export async function updateUserAICalls() {
     await connectMongoDB();
     const res = await User.findOneAndUpdate(
       { email: email },
-      { $inc: { AICalls: 1 } } // Increment AICall by 1 or initialize it with 1 if it doesn't exist
+      { $inc: { AICalls: incrementBy || 1 } } // Increment AICall by 1 or initialize it with 1 if it doesn't exist
     );
 
     if (!res) {

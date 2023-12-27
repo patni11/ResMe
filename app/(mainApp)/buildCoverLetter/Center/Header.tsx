@@ -1,9 +1,13 @@
+"use client";
 import {
   AlignCenter,
+  FileEdit,
   Fullscreen,
-  PanelLeft,
+  HandIcon,
   PanelRight,
   Save,
+  ZoomIn,
+  ZoomOut,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { useSettings } from "@/store/coverLetter/layout";
@@ -13,6 +17,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ReactZoomPanPinchHandlers } from "react-zoom-pan-pinch";
+import React from "react";
+//import { useAllKeys } from "react-keyboard-hooks";
+import html2pdf from "html2pdf.js";
+import { createCoverLetterSettings } from "@/store/coverLetter/settings";
 
 const ItemsButton = ({
   children,
@@ -26,7 +35,7 @@ const ItemsButton = ({
   return (
     <TooltipProvider>
       <Tooltip delayDuration={300}>
-        <TooltipTrigger className="cursor-default ml-1.5">
+        <TooltipTrigger className="cursor-default ml-1">
           <div
             className="text-xs flex space-x-1 items-center justify-center cursor-pointer"
             onClick={onClick}
@@ -42,47 +51,88 @@ const ItemsButton = ({
   );
 };
 
-export default function Header() {
-  const { toggleSidebar } = useSettings();
+const Header: React.FC<ReactZoomPanPinchHandlers> = ({
+  zoomIn,
+  zoomOut,
+  centerView,
+}) => {
+  const { toggleSidebar, toggleEditing, isEditing } = useSettings();
+  const userCoverLetterSettings = createCoverLetterSettings("1");
+  const { documentType } = userCoverLetterSettings();
+  // document.addEventListener("keydown", (event) => {
+  //   event.preventDefault();
+  //   if (event.key === "e") {
+  //     // Ctrl+S
+  //     console.log("Shortcut");
+  //     toggleEditing();
+  //   }
+  // });
+
+  // useAllKeys(["Meta", "J"], () => {
+  //   console.log("Key Pressed");
+  //   //toggleEditing();
+  //   centerView(0.75);
+  // });
+
+  const handleExport = () => {
+    const element = document.getElementById("element-to-print");
+    const opt = {
+      jsPDF: {
+        format: documentType === "Letter" ? "letter" : "A4",
+      },
+    };
+    html2pdf().from(element).set(opt).save();
+  };
+
   return (
-    <main className="fixed z-2 top-10 left-[50%] w-fit-content px-8 py-2 rounded-full flex backdrop-blur-sm bg-white/50 space-x-4">
+    <main className="fixed z-0 -translate-x-1/2 top-10 left-[50%] w-fit-content px-8 py-2 rounded-full flex backdrop-blur-sm bg-white/50 space-x-4">
       <ItemsButton
-        onClick={() => console.log("Save PDF")}
+        onClick={toggleEditing}
+        tooltipText={isEditing ? "Click to Drag" : "Click to Edit"}
+      >
+        {isEditing ? (
+          <HandIcon className="h-5 w-5" color="#ef4444" />
+        ) : (
+          <FileEdit className="h-5 w-5" color="#0ea5e9" />
+        )}
+      </ItemsButton>
+      <ItemsButton
+        onClick={() => {
+          console.log("Save PDF");
+          handleExport();
+        }}
         tooltipText="Download PDF"
       >
-        <Save className="h-4 w-4" />
+        <Save className="h-5 w-5" />
       </ItemsButton>
+      <Separator className="bg-white text-white" orientation="vertical" />
 
       {/* Reset Zoom */}
-      <ItemsButton
-        onClick={() => console.log("Save PDF")}
-        tooltipText="Reset Zoom"
-      >
-        <Fullscreen className="h-4 w-4" />
+
+      <ItemsButton onClick={() => zoomOut(0.25)} tooltipText="Zoom Out">
+        <ZoomOut className="h-5 w-5" />
+      </ItemsButton>
+      <ItemsButton onClick={() => zoomIn(0.25)} tooltipText="Zoom In">
+        <ZoomIn className="h-5 w-5" />
       </ItemsButton>
 
       {/*  Center Art Board */}
       <ItemsButton
-        onClick={() => console.log("Save PDF")}
+        onClick={() => centerView(0.75)}
         tooltipText="Center Artboard"
       >
-        <AlignCenter className="h-4 w-4" />
+        <Fullscreen className="h-5 w-5" />
       </ItemsButton>
 
-      <Separator className="mx-1 bg-white text-white" orientation="vertical" />
+      <Separator className="bg-white text-white" orientation="vertical" />
 
-      <ItemsButton
-        onClick={() => toggleSidebar("left")}
-        tooltipText="Toggle Left Panel"
-      >
-        <PanelLeft className="h-4 w-4" />
-      </ItemsButton>
       <ItemsButton
         onClick={() => toggleSidebar("right")}
         tooltipText="Toggle Right Panel"
       >
-        <PanelRight className="h-4 w-4" />
+        <PanelRight className="h-5 w-5" />
       </ItemsButton>
     </main>
   );
-}
+};
+export default Header;

@@ -11,7 +11,7 @@ import {
   LETTER_WIDTH_PX,
   A4_WIDTH_PX,
 } from "@/components/PDFComponents/common/constants";
-import { createSettings } from "@/store/coverLetter/settings";
+import { createCoverLetterSettings } from "@/store/coverLetter/settings";
 import { useMemo, useState } from "react";
 
 export default function CoverLetterPreview({
@@ -23,7 +23,7 @@ export default function CoverLetterPreview({
   useRegisterReactPDFFont();
   useRegisterReactPDFHyphenationCallback(DEFAULT_FONT_FAMILY);
 
-  const useSettings = createSettings(CoverLetterID);
+  const useSettings = createCoverLetterSettings(CoverLetterID);
   const { bgColor, fontColor, fontFamily, fontSize, headerSize, documentType } =
     useSettings();
 

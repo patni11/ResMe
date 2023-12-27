@@ -15,6 +15,7 @@ export type State = Layout & {
 
 type Actions = {
   toggleSidebar: (bar: Sidebar) => void;
+  toggleEditing: () => void;
 };
 
 export const useSettings = create<State & Actions>((set, get) => ({
@@ -31,5 +32,13 @@ export const useSettings = create<State & Actions>((set, get) => ({
         },
       },
     }));
+  },
+  toggleEditing: () => {
+    set((state) => {
+      return {
+        ...state,
+        isEditing: !state.isEditing,
+      };
+    });
   },
 }));

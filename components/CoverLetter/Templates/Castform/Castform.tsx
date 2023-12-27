@@ -1,27 +1,24 @@
+"use client";
 import clsx from "clsx";
 import styles from "./Castform.module.scss";
 import { MastheadMain, MastheadSidebar } from "./widgets/Masthead";
-import { createSettings } from "@/store/coverLetter/settings";
+import { createCoverLetterSettings } from "@/store/coverLetter/settings";
 
 const Castform: React.FC = () => {
-  const isFirstPage = true;
-
-  const useSettings = createSettings("1");
-  const { fontColor, bgColor, ascentColor } = useSettings();
+  const useSettings = createCoverLetterSettings("1");
+  const { ascentColor } = useSettings();
 
   return (
-    <div className={styles.page}>
+    <div className="h-full font-semibold">
       <div className={styles.container}>
         <div
-          className={clsx(styles.sidebar)}
-          style={{ color: bgColor, backgroundColor: ascentColor }}
+          className={clsx(styles.sidebar, "px-4 pt-4")}
+          style={{ backgroundColor: ascentColor }}
         >
-          {isFirstPage && <MastheadSidebar />}
+          <MastheadSidebar />
         </div>
         <div className={styles.main}>
-          <div className={styles.firstPage}>
-            {isFirstPage && <MastheadMain />}
-          </div>
+          <MastheadMain />
         </div>
       </div>
     </div>

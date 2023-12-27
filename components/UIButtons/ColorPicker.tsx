@@ -25,7 +25,9 @@ export function ColorPicker({
           }}
         />
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent
+        className={`w-fit-content flex items-center justify-center bg-[${color}]`}
+      >
         <Colorful
           color={color}
           onChange={(newColor: any) => {

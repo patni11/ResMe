@@ -1,26 +1,38 @@
 import Image from "next/image";
-import { TemplateMeta, templateMap } from "@/lib/types/coverLetter/types";
+import { templateMap } from "@/lib/types/coverLetter/types";
 import { SectionWrapper } from "./SectionWrapper";
+import { createCoverLetterSettings } from "@/store/coverLetter/settings";
+import { cn } from "@/lib/utils";
 
 const Templates = () => {
-  const handleChange = (template: TemplateMeta) => {
-    console.log("Changed template");
-  };
+  const useSettings = createCoverLetterSettings("1");
+  const { template: currentTemplate, changeSettings } = useSettings();
 
   return (
     <>
-      <SectionWrapper title="Templates" contentSize="max-h-96">
+      <SectionWrapper
+        title="Templates"
+        contentSize="max-h-96"
+        description="Select a template"
+      >
         <div className="grid grid-cols-2 gap-4 ">
           {Object.values(templateMap).map((template) => (
             <div key={template.id}>
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  handleChange(template);
+                  changeSettings({ field: "template", value: template.id });
                 }}
                 className="cursor-pointer mt-4 "
               >
-                <div className="relative overflow-hidden rounded-md flex justify-center">
+                <div
+                  className={cn(
+                    "relative border-2 overflow-hidden rounded-md flex justify-center",
+                    currentTemplate === template.id
+                      ? "border-black"
+                      : "border-transparent"
+                  )}
+                >
                   {/* <Image
                       src={template.preview}
                       alt={template.name}

@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 
 export interface CoverLetterSettings {
   bgColor: string;
+  template: string;
   fontColor: string;
   ascentColor: string;
   fontFamily: string;
@@ -26,6 +27,7 @@ export type Layout = {
     breakLine: boolean;
     orientation: Orientation;
   };
+  isEditing: boolean;
 };
 
 export const initialLayoutState: Layout = {
@@ -38,10 +40,12 @@ export const initialLayoutState: Layout = {
     breakLine: true,
     orientation: "horizontal",
   },
+  isEditing: false,
 };
 
 export const initialCoverLetterSettings: CoverLetterSettings = {
   bgColor: "#FFFFFF",
+  template: "Castform",
   fontColor: "#050505",
   fontFamily: "Merriweather",
   fontSize: "9",
@@ -61,6 +65,7 @@ export interface CoverLetterData {
   userData: {
     name: string;
     email: string;
+    website: string;
     phone: string;
     address: string;
   };
@@ -70,13 +75,19 @@ export interface CoverLetterData {
 
 export const initialCoverLetterData: CoverLetterData = {
   userData: {
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
+    name: "Shubh Patni",
+    email: "shubhpatni2002@gmail.com",
+    website: "https://shubhpatni.com",
+    phone: "7742361132",
+    address: "291 Saint Botolph Street, Boston MA, 02115",
   },
-  jobDescription: "",
-  text: "",
+  jobDescription: "This is the Job Description",
+  text: `Dear Ms. Reader,
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas congue, arcu a ornare dictum, nisl neque aliquet est, et ultricies arcu mauris vel velit. Curabitur porta feugiat imperdiet. Duis id turpis scelerisque, cursus mauris iaculis, tempus orci. Nulla ornare eu augue nec pharetra. Aliquam erat volutpat. Suspendisse sagittis venenatis enim, eget porta nibh malesuada ut. Nullam feugiat euismod leo nec congue. Vivamus aliquet tellus pharetra massa rutrum convallis. Integer posuere massa nec iaculis ullamcorper. Curabitur ligula nunc, tincidunt ac lorem facilisis, euismod feugiat tellus. In et consequat augue. Etiam fermentum nibh nisi, vitae mattis dolor consequat vitae. 
+  Integer risus nunc, mattis in ornare sit amet, aliquam quis ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut mauris massa, iaculis non augue vitae, mattis tincidunt turpis. In laoreet turpis leo, ut laoreet leo blandit feugiat. 
+  Nullam vel ornare justo. Vivamus at lectus sodales, molestie orci vel, facilisis mi. In vel sem nec odio facilisis laoreet. Vivamus vitae orci eget erat euismod pretium non ut urna. Mauris quis velit ut libero sollicitudin aliquet. Donec eu leo finibus, euismod lectus sed, accumsan enim. 
+  Duis sit amet erat sit amet nulla aliquam ullamcorper sagittis non lectus. Nam eget bibendum lorem, eu suscipit nulla. Phasellus arcu velit, vestibulum viverra malesuada sit amet, varius vitae mauris. Donec mollis laoreet mollis. Nullam malesuada tempus volutpat. Cras aliquam luctus suscipit. In sollicitudin risus ut pulvinar dignissim. 
+  Sincerely,`,
 };
 
 export type TemplateMeta = {
@@ -89,17 +100,17 @@ export type TemplateMeta = {
 import ResumeCardImageImage from "@/public/resumeCard.png";
 
 export const templateMap: Record<string, TemplateMeta> = {
-  temp1: {
-    id: "temp1",
-    name: "Temp1",
+  Castform: {
+    id: "Castform",
+    name: "Castform",
     preview: ResumeCardImageImage,
-    component: Dark,
+    component: Castform,
   },
-  temp2: {
-    id: "temp2",
-    name: "Temp2",
+  Kakuna: {
+    id: "Kakuna",
+    name: "Kakuna",
     preview: ResumeCardImageImage,
-    component: Dark,
+    component: Kakuna,
   },
   temp3: {
     id: "temp3",
@@ -115,25 +126,25 @@ export const templateMap: Record<string, TemplateMeta> = {
   },
   temp5: {
     id: "temp5",
-    name: "Temp4",
+    name: "Temp5",
     preview: ResumeCardImageImage,
     component: Dark,
   },
   temp6: {
     id: "temp6",
-    name: "Temp4",
+    name: "Temp6",
     preview: ResumeCardImageImage,
     component: Dark,
   },
   temp7: {
     id: "temp7",
-    name: "Temp4",
+    name: "Temp7",
     preview: ResumeCardImageImage,
     component: Dark,
   },
   temp8: {
     id: "temp8",
-    name: "Temp4",
+    name: "Temp8",
     preview: ResumeCardImageImage,
     component: Dark,
   },
@@ -152,12 +163,20 @@ import Fonts from "@/components/CoverLetter/RightSidebar/sections/Fonts";
 import Theme from "@/components/CoverLetter/RightSidebar/sections/Theme";
 import Document from "@/components/CoverLetter/RightSidebar/sections/Document";
 import AI from "@/components/CoverLetter/RightSidebar/sections/AI";
+import Castform from "@/components/CoverLetter/Templates/Castform/Castform";
+import Kakuna from "@/components/CoverLetter/Templates/Kakuna/Kakuna";
+import YourInfo from "@/components/CoverLetter/RightSidebar/sections/UserData";
 
 export const right: SidebarSection[] = [
   {
     id: "AI",
     icon: PlusCircle,
     component: AI,
+  },
+  {
+    id: "YourInfo",
+    icon: PlusCircle,
+    component: YourInfo,
   },
   {
     id: "templates",
@@ -184,20 +203,11 @@ export const right: SidebarSection[] = [
 export const hexColorPattern = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
 
 export const colorOptions: string[] = [
-  "#f44336",
-  "#e91e63",
-  "#9c27b0",
-  "#673ab7",
-  "#3f51b5",
-  "#4896d5",
-  "#03a9f4",
-  "#00bcd4",
-  "#009688",
-  "#4caf50",
-  "#8bc34a",
-  "#cddc39",
-  "#ffeb3b",
-  "#ffc107",
   "#000000",
   "#dddddd",
+  "#F1F5F2",
+  "#26408B",
+  "#48BF84",
+  "#FF4747",
+  "#FFC145",
 ];

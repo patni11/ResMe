@@ -1,7 +1,8 @@
-import clsx from "clsx";
-import isEmpty from "lodash/isEmpty";
+"use client";
 
+import isEmpty from "lodash/isEmpty";
 type Props = {
+  changeContent: (newText: string) => void;
   icon?: JSX.Element;
   link?: string;
   className?: string;
@@ -9,17 +10,28 @@ type Props = {
 };
 
 const DataDisplay: React.FC<React.PropsWithChildren<Props>> = ({
+  changeContent,
   icon,
   link,
   className,
   textClassName,
   children,
 }) => {
+  const handleContentChange = (e: React.SyntheticEvent) => {
+    const content = (e.currentTarget as HTMLElement).innerText;
+    changeContent(content); // Call the onChange prop with the new content
+  };
+
   if (isEmpty(children)) return null;
 
   if (link && !isEmpty(link)) {
     return (
-      <div className={clsx("inline-flex items-center gap-1", className)}>
+      <div
+        className={`inline-flex items-center gap-1 ${className}`}
+        contentEditable="true"
+        suppressContentEditableWarning={true}
+        onInput={handleContentChange} // Attach the onChange handler here
+      >
         {icon}
         <a
           target="_blank"
@@ -34,11 +46,15 @@ const DataDisplay: React.FC<React.PropsWithChildren<Props>> = ({
   }
 
   return (
-    <div className={clsx("inline-flex items-center gap-1", className)}>
+    <div
+      className={`inline-flex items-center gap-1 ${className}`}
+      contentEditable="true"
+      suppressContentEditableWarning={true}
+      onInput={handleContentChange} // Attach the onChange handler here
+    >
       {icon}
       <span className={textClassName}>{children}</span>
     </div>
   );
 };
-
 export default DataDisplay;

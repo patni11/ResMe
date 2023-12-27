@@ -1,15 +1,15 @@
 import { SectionWrapper } from "./SectionWrapper";
 import { Button } from "@/components/ui/button";
-import { createSettings } from "@/store/coverLetter/settings";
+import { createCoverLetterSettings } from "@/store/coverLetter/settings";
 import { cn } from "@/lib/utils";
 
 const Document = () => {
-  const useSettings = createSettings("1");
+  const useSettings = createCoverLetterSettings("1");
   const { documentType, changeSettings } = useSettings();
 
   return (
     <>
-      <SectionWrapper title="Document">
+      <SectionWrapper title="Document" description="Select document size/type">
         <div className="flex space-x-4 w-full">
           <Button
             variant="secondary"

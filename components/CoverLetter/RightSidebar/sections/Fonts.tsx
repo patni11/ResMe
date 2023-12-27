@@ -5,7 +5,7 @@ import {
   FONT_FAMILY_TO_DISPLAY_NAME,
   FONT_FAMILY_TO_STANDARD_SIZE_IN_PT,
 } from "@/components/fonts/constants";
-import { createSettings } from "@/store/coverLetter/settings";
+import { createCoverLetterSettings } from "@/store/coverLetter/settings";
 import { PX_PER_PT } from "@/components/PDFComponents/common/constants";
 import { Slider } from "@/components/ui/slider";
 const Selection = ({
@@ -23,6 +23,8 @@ const Selection = ({
     borderColor: "black",
     ...style,
   };
+
+  // console.log("STYLE", style);
 
   return (
     <div
@@ -46,7 +48,7 @@ const Selection = ({
 
 const Fonts = () => {
   const fonts = getAllFontFamiliesToLoad();
-  const useSettings = createSettings("1");
+  const useSettings = createCoverLetterSettings("1");
   const {
     fontFamily: selectedFontFamily,
     fontSize,
@@ -56,7 +58,11 @@ const Fonts = () => {
 
   return (
     <>
-      <SectionWrapper title="Fonts" contentSize="h-full">
+      <SectionWrapper
+        title="Fonts"
+        contentSize="h-full"
+        description="Choose a font and font size"
+      >
         <section className="flex flex-col space-y-4 items-center w-full">
           <div className="grid grid-cols-2 gap-2 ">
             {fonts.map((fontFamily, idx) => {

@@ -12,7 +12,7 @@ export async function getHeaderData() {
     }
     return res.json();
   } catch (e) {
-    console.log("error loading topic in zustand:", e);
+    console.log("error fetching data:", e);
   }
 }
 
@@ -52,6 +52,72 @@ export async function getCleanedHeaderData() {
   };
 }
 
+export function cleanForAICoverLetter(
+  certificates: Certificate[],
+  educations: EducationType[],
+  experiences: Experience[],
+  projects: Project[],
+  talents: string
+): string {
+  const cert = certificates
+    .map((certificate) => {
+      return certificate.organization + " " + certificate.certificateName;
+    })
+    .join(", ");
+
+  const edu = educations
+    .map((education) => {
+      return (
+        education.degreeType +
+        " " +
+        education.major +
+        " " +
+        education.schoolName
+      );
+    })
+    .join(", ");
+
+  const exp = experiences
+    .map((experience) => {
+      return (
+        experience.experienceType +
+        " " +
+        experience.positionTitle +
+        " " +
+        experience.company +
+        " " +
+        experience.description
+      );
+    })
+    .join(", ");
+
+  const proj = projects
+    .map((project) => {
+      return (
+        project.positionTitle +
+        " " +
+        project.projectName +
+        " " +
+        project.description
+      );
+    })
+    .join(", ");
+
+  const certificateText = `Here are my certificates ${cert}`;
+  const educaitonsText = `Here are my education details ${edu}. `;
+  const experiencesText = `Here are my experiences ${exp}. `;
+  const projectsText = `Here are my projects ${proj}. `;
+  const talentsText = `Here are my skills ${talents}. `;
+
+  return (
+    certificateText +
+    educaitonsText +
+    experiencesText +
+    projectsText +
+    talentsText
+  );
+}
+
 // export async function getCleanedHeaderData() {
 //   const headerInfo: UserInfo = (await getHeaderData()).headerInfo;
 //   const hiddenContactsMap = new Map<string, boolean>();
@@ -85,7 +151,7 @@ export async function getEducationData() {
     }
     return res.json();
   } catch (e) {
-    console.log("error loading topic in zustand:", e);
+    console.log("error fetching data:", e);
   }
 }
 export async function getCleanedEducationData() {
@@ -126,20 +192,19 @@ export async function getCleanedEducationData() {
 export async function getCertificateData() {
   try {
     const res = await fetch(`/api/certificatesInfo`);
-
+    console.log("RES", res);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
     return res.json();
   } catch (e) {
-    console.log("error loading topic in zustand:", e);
+    console.log("error fetching data:", e);
   }
 }
 
 export async function getCleanedCertificateData() {
   const certificates: Certificate[] | null =
     (await getCertificateData()).certificates || [];
-
   const hiddenCertificates = certificates
     ? certificates.reduce((acc, certificate) => {
         acc[certificate._id] = false;
@@ -163,7 +228,7 @@ export async function getExperienceData() {
     }
     return res.json();
   } catch (e) {
-    console.log("error loading topic in zustand:", e);
+    console.log("error fetching data:", e);
   }
 }
 
@@ -196,7 +261,7 @@ export async function getProjectData() {
     }
     return res.json();
   } catch (e) {
-    console.log("error loading topic in zustand:", e);
+    console.log("error fetching data:", e);
   }
 }
 
@@ -252,7 +317,7 @@ export async function getTalentsData() {
     }
     return res.json();
   } catch (e) {
-    console.log("error loading topic in zustand:", e);
+    console.log("error fetching data:", e);
   }
 }
 

@@ -1,7 +1,7 @@
-import { createSettings } from "@/store/coverLetter/settings";
+import { createCoverLetterSettings } from "@/store/coverLetter/settings";
 
 const Heading: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
-  const useSettings = createSettings("1");
+  const useSettings = createCoverLetterSettings("1");
   const { bgColor, fontColor } = useSettings();
   return (
     <h3

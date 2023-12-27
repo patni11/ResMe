@@ -9,10 +9,10 @@
 .container {
   word-break: break-word;
 
-  @apply grid h-full grid-cols-6;
+  @apply grid h-full grid-cols-11;
 
   .main {
-    @apply col-span-4 flex flex-col;
+    @apply col-span-7 flex flex-col;
 
     .inner {
       @apply flex h-full flex-col gap-4 p-4;
@@ -20,7 +20,7 @@
   }
 
   .sidebar {
-    @apply col-span-2 flex h-full flex-col;
+    @apply col-span-4 flex h-full flex-col;
 
     .inner {
       @apply flex h-full flex-col gap-4 p-4;

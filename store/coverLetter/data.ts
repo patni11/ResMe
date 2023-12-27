@@ -25,7 +25,7 @@ type Actions = {
 
 const storeCache: Record<string, any> = {};
 
-export const createSettings = (coverLetterID: string) => {
+export const createCoverLetterData = (coverLetterID: string) => {
   if (storeCache[coverLetterID]) {
     return storeCache[coverLetterID];
   }
@@ -45,7 +45,7 @@ export const createSettings = (coverLetterID: string) => {
     }
   }
 
-  const useSettings = create(
+  const useCoverLetterData = create(
     persist<State & Actions>(
       (set, get) => ({
         ...INITIAL_STATE,
@@ -64,6 +64,6 @@ export const createSettings = (coverLetterID: string) => {
     )
   );
 
-  storeCache[coverLetterID] = useSettings;
-  return () => useSettings();
+  storeCache[coverLetterID] = useCoverLetterData;
+  return () => useCoverLetterData();
 };
