@@ -30,7 +30,6 @@ const Page = () => {
     family: fontFamily,
     size: fontSize,
   };
-
   const TemplatePage: React.FC | null = useMemo(
     () => templateMap[template].component,
     [template]

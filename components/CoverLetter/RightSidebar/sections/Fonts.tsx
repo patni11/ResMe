@@ -113,7 +113,7 @@ const Fonts = () => {
                 <span>{headerSize}</span>
               </div>
               <Slider
-                max={36}
+                max={46}
                 min={11}
                 step={1}
                 value={[headerSize]}

@@ -6,24 +6,28 @@ import { createCoverLetterData } from "@/store/coverLetter/data";
 import ContentEditable from "react-contenteditable";
 import { convertTimestampToDate } from "@/lib/utils";
 import { Globe, Mail, MapPin, Phone } from "lucide-react";
-
-export const MastheadSidebar: React.FC = () => {
+export const Masthead: React.FC = () => {
   const useSettings = createCoverLetterSettings("1");
-  const { bgColor, fontFamily, fontSize, headerSize } = useSettings();
+  const { ascentColor, fontFamily, fontSize, headerSize } = useSettings();
   const useCoverLetterData = createCoverLetterData("1");
   const { userData, jobDescription, changeData } = useCoverLetterData();
   const iconClass = `h-5 w-5`;
-  const textContainerClass = "flex space-x-2 items-center";
+  const textContainerStyle: React.CSSProperties = {
+    display: "flex", // Corresponds to 'flex'
+    gap: "0.5rem", // Approximation of 'space-x-2' (0.5rem = 8px)
+    alignItems: "center", // Corresponds to 'items-center'
+    textAlign: "left", // Corresponds to 'text-left'
+  };
   return (
     <div
-      className={clsx("flex flex-col space-y-12 p-4")}
+      className={clsx("flex flex-col p-12 pb-0 z-2 relative")}
       style={{
         fontFamily: fontFamily,
-        color: bgColor,
+        color: ascentColor,
         fontSize: parseInt(fontSize),
       }}
     >
-      <div className="flex flex-col space-y-1">
+      <div className="flex flex-col mb-4">
         <ContentEditable
           html={userData.name}
           disabled={false}
@@ -43,6 +47,7 @@ export const MastheadSidebar: React.FC = () => {
           html={jobDescription}
           disabled={false}
           style={{ fontSize: (headerSize * 3) / 4 }}
+          className="opacity-80"
           onChange={(e) => {
             changeData({
               field: "jobDescription",
@@ -51,10 +56,10 @@ export const MastheadSidebar: React.FC = () => {
           }}
         />
       </div>
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-2">
         {userData.email.length > 0 ? (
-          <div className={textContainerClass}>
-            <Mail className={iconClass} color={bgColor} />
+          <div style={textContainerStyle}>
+            <Mail className={iconClass} color={ascentColor} />
             <ContentEditable
               html={userData.email}
               disabled={false}
@@ -71,9 +76,9 @@ export const MastheadSidebar: React.FC = () => {
           </div>
         ) : null}
 
-        {userData.email.length > 0 ? (
-          <div className={textContainerClass}>
-            <Phone className={iconClass} color={bgColor} />
+        {userData.phone.length > 0 ? (
+          <div style={textContainerStyle}>
+            <Phone className={iconClass} color={ascentColor} />
             <ContentEditable
               html={userData.phone}
               disabled={false}
@@ -89,9 +94,9 @@ export const MastheadSidebar: React.FC = () => {
             />
           </div>
         ) : null}
-        {userData.email.length > 0 ? (
-          <div className={textContainerClass}>
-            <Globe className={iconClass} color={bgColor} />
+        {userData.website.length > 0 ? (
+          <div style={textContainerStyle}>
+            <Globe className={iconClass} color={ascentColor} />
             <ContentEditable
               html={userData.website}
               disabled={false}
@@ -107,9 +112,9 @@ export const MastheadSidebar: React.FC = () => {
             />
           </div>
         ) : null}
-        {userData.email.length > 0 ? (
-          <div className={textContainerClass}>
-            <MapPin className={iconClass} color={bgColor} />
+        {userData.address.length > 0 ? (
+          <div style={textContainerStyle}>
+            <MapPin className={iconClass} color={ascentColor} />
             <ContentEditable
               html={userData.address}
               disabled={false}
@@ -132,8 +137,8 @@ export const MastheadSidebar: React.FC = () => {
   //   <div
   //     className={clsx(
   //       "col-span-2 grid justify-items-start gap-3 p-4",
-  //       css(`a{ color: ${bgColor}!important }`),
-  //       css(`--text-color: ${bgColor}!important`)
+  //       css(`a{ color: ${ascentColor}!important }`),
+  //       css(`--text-color: ${fontColor}!important`)
   //     )}
   //     style={{
   //       fontFamily: fontFamily,
@@ -260,7 +265,7 @@ export const MastheadMain: React.FC = () => {
       <div
         contentEditable
         suppressContentEditableWarning
-        className="px-12 pt-14 font-normal"
+        className="px-12 pt-14 font-normal z-2 relative"
         style={{
           fontFamily,
           fontSize: parseInt(fontSize),
@@ -270,7 +275,7 @@ export const MastheadMain: React.FC = () => {
         {convertTimestampToDate(Date.now())}
       </div>
       <ContentEditable
-        className="px-12 pt-14 font-normal"
+        className="px-12 pt-6 font-normal"
         style={{
           fontFamily,
           fontSize: parseInt(fontSize),

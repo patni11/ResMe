@@ -45,12 +45,12 @@ export const initialLayoutState: Layout = {
 
 export const initialCoverLetterSettings: CoverLetterSettings = {
   bgColor: "#FFFFFF",
-  template: "Castform",
-  fontColor: "#050505",
-  fontFamily: "Merriweather",
-  fontSize: "9",
+  template: "Gojo",
+  fontColor: "#000000",
+  fontFamily: "Roboto",
+  fontSize: "16",
   ascentColor: "#D64045",
-  headerSize: "11",
+  headerSize: "36",
   documentType: "A4",
 };
 
@@ -100,35 +100,35 @@ export type TemplateMeta = {
 import ResumeCardImageImage from "@/public/resumeCard.png";
 
 export const templateMap: Record<string, TemplateMeta> = {
-  Castform: {
-    id: "Castform",
-    name: "Castform",
+  Gojo: {
+    id: "Gojo",
+    name: "Gojo",
     preview: ResumeCardImageImage,
-    component: Castform,
+    component: Gojo,
   },
-  Kakuna: {
-    id: "Kakuna",
-    name: "Kakuna",
+  Kakarot: {
+    id: "Kakarot",
+    name: "Kakarot",
     preview: ResumeCardImageImage,
-    component: Kakuna,
+    component: Kakarot,
   },
-  temp3: {
-    id: "temp3",
-    name: "Temp3",
+  Light: {
+    id: "Light",
+    name: "Light",
     preview: ResumeCardImageImage,
-    component: Dark,
+    component: Light,
   },
-  temp4: {
-    id: "temp4",
-    name: "Temp4",
+  Kakashi: {
+    id: "Kakashi",
+    name: "Kakashi",
     preview: ResumeCardImageImage,
-    component: Dark,
+    component: Kakashi,
   },
-  temp5: {
-    id: "temp5",
-    name: "Temp5",
+  Kilua: {
+    id: "Kilua",
+    name: "Kilua",
     preview: ResumeCardImageImage,
-    component: Dark,
+    component: Kilua,
   },
   temp6: {
     id: "temp6",
@@ -163,9 +163,12 @@ import Fonts from "@/components/CoverLetter/RightSidebar/sections/Fonts";
 import Theme from "@/components/CoverLetter/RightSidebar/sections/Theme";
 import Document from "@/components/CoverLetter/RightSidebar/sections/Document";
 import AI from "@/components/CoverLetter/RightSidebar/sections/AI";
-import Castform from "@/components/CoverLetter/Templates/Castform/Castform";
-import Kakuna from "@/components/CoverLetter/Templates/Kakuna/Kakuna";
+import Gojo from "@/components/CoverLetter/Templates/Gojo/Gojo";
+import Kakarot from "@/components/CoverLetter/Templates/Kakarot/Kakarot";
 import YourInfo from "@/components/CoverLetter/RightSidebar/sections/UserData";
+import Light from "@/components/CoverLetter/Templates/Light/Light";
+import Kakashi from "@/components/CoverLetter/Templates/Kakashi/Kakashi";
+import Kilua from "@/components/CoverLetter/Templates/Kilua/Kilua";
 
 export const right: SidebarSection[] = [
   {
@@ -208,6 +211,6 @@ export const colorOptions: string[] = [
   "#F1F5F2",
   "#26408B",
   "#48BF84",
-  "#FF4747",
+  "#D64045",
   "#FFC145",
 ];
