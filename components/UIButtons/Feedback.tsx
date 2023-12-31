@@ -36,11 +36,11 @@ const FeedbackButton = () => {
   async function handleSubmit() {
     // setIsLoading(false);
 
-    fetch("https://resme-discord-job-bot.vercel.app/feedback", {
+    fetch("https://www.resme.cfd/feedback", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
-        Authorization: `Bearer ${process.env.RESME_API_KEY}`,
+        // Authorization: `Bearer ${process.env.RESME_API_KEY}`,
       },
       body: JSON.stringify({
         discordChannel: DiscordChannels[buttonState],
