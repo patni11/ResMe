@@ -169,7 +169,7 @@ export function Sidebar({ className, children }: SidebarProps) {
                 </DialogContent>
               </Dialog>
 
-              {/* <FeedbackButton /> */}
+              <FeedbackButton />
 
               <div className="mt-4">{children}</div>
             </div>
