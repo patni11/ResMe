@@ -75,19 +75,14 @@ export interface CoverLetterData {
 
 export const initialCoverLetterData: CoverLetterData = {
   userData: {
-    name: "Shubh Patni",
-    email: "shubhpatni2002@gmail.com",
-    website: "https://shubhpatni.com",
-    phone: "7742361132",
-    address: "291 Saint Botolph Street, Boston MA, 02115",
+    name: "Your Name",
+    email: "Email: ",
+    website: "Web: ",
+    phone: "Phone: ",
+    address: "Address: ",
   },
-  jobDescription: "This is the Job Description",
-  text: `Dear Ms. Reader,
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas congue, arcu a ornare dictum, nisl neque aliquet est, et ultricies arcu mauris vel velit. Curabitur porta feugiat imperdiet. Duis id turpis scelerisque, cursus mauris iaculis, tempus orci. Nulla ornare eu augue nec pharetra. Aliquam erat volutpat. Suspendisse sagittis venenatis enim, eget porta nibh malesuada ut. Nullam feugiat euismod leo nec congue. Vivamus aliquet tellus pharetra massa rutrum convallis. Integer posuere massa nec iaculis ullamcorper. Curabitur ligula nunc, tincidunt ac lorem facilisis, euismod feugiat tellus. In et consequat augue. Etiam fermentum nibh nisi, vitae mattis dolor consequat vitae. 
-  Integer risus nunc, mattis in ornare sit amet, aliquam quis ligula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut mauris massa, iaculis non augue vitae, mattis tincidunt turpis. In laoreet turpis leo, ut laoreet leo blandit feugiat. 
-  Nullam vel ornare justo. Vivamus at lectus sodales, molestie orci vel, facilisis mi. In vel sem nec odio facilisis laoreet. Vivamus vitae orci eget erat euismod pretium non ut urna. Mauris quis velit ut libero sollicitudin aliquet. Donec eu leo finibus, euismod lectus sed, accumsan enim. 
-  Duis sit amet erat sit amet nulla aliquam ullamcorper sagittis non lectus. Nam eget bibendum lorem, eu suscipit nulla. Phasellus arcu velit, vestibulum viverra malesuada sit amet, varius vitae mauris. Donec mollis laoreet mollis. Nullam malesuada tempus volutpat. Cras aliquam luctus suscipit. In sollicitudin risus ut pulvinar dignissim. 
-  Sincerely,`,
+  jobDescription: "Job Description",
+  text: `Dear Hiring Manager,`,
 };
 
 export type TemplateMeta = {
@@ -98,57 +93,11 @@ export type TemplateMeta = {
 };
 
 import ResumeCardImageImage from "@/public/resumeCard.png";
-
-export const templateMap: Record<string, TemplateMeta> = {
-  Gojo: {
-    id: "Gojo",
-    name: "Gojo",
-    preview: ResumeCardImageImage,
-    component: Gojo,
-  },
-  Kakarot: {
-    id: "Kakarot",
-    name: "Kakarot",
-    preview: ResumeCardImageImage,
-    component: Kakarot,
-  },
-  Light: {
-    id: "Light",
-    name: "Light",
-    preview: ResumeCardImageImage,
-    component: Light,
-  },
-  Kakashi: {
-    id: "Kakashi",
-    name: "Kakashi",
-    preview: ResumeCardImageImage,
-    component: Kakashi,
-  },
-  Kilua: {
-    id: "Kilua",
-    name: "Kilua",
-    preview: ResumeCardImageImage,
-    component: Kilua,
-  },
-  temp6: {
-    id: "temp6",
-    name: "Temp6",
-    preview: ResumeCardImageImage,
-    component: Dark,
-  },
-  temp7: {
-    id: "temp7",
-    name: "Temp7",
-    preview: ResumeCardImageImage,
-    component: Dark,
-  },
-  temp8: {
-    id: "temp8",
-    name: "Temp8",
-    preview: ResumeCardImageImage,
-    component: Dark,
-  },
-};
+import GojoImage from "@/public/coverLetter/Gojo.png";
+import KakarotImage from "@/public/coverLetter/Kakarot.png";
+import LightImage from "@/public/coverLetter/Light.png";
+import KiluaImage from "@/public/coverLetter/Kilua.png";
+import NarutoImage from "@/public/coverLetter/Naruto.png";
 
 export type SidebarSection = {
   id: string;
@@ -167,8 +116,48 @@ import Gojo from "@/components/CoverLetter/Templates/Gojo/Gojo";
 import Kakarot from "@/components/CoverLetter/Templates/Kakarot/Kakarot";
 import YourInfo from "@/components/CoverLetter/RightSidebar/sections/UserData";
 import Light from "@/components/CoverLetter/Templates/Light/Light";
-import Kakashi from "@/components/CoverLetter/Templates/Kakashi/Kakashi";
 import Kilua from "@/components/CoverLetter/Templates/Kilua/Kilua";
+import Naruto from "@/components/CoverLetter/Templates/Naruto/Naruto";
+//import Tanjiro from "@/components/CoverLetter/Templates/Tanjiro/Tanjiro";
+
+export const templateMap: Record<string, TemplateMeta> = {
+  Gojo: {
+    id: "Gojo",
+    name: "Gojo",
+    preview: GojoImage,
+    component: Gojo,
+  },
+  Kakarot: {
+    id: "Kakarot",
+    name: "Kakarot",
+    preview: KakarotImage,
+    component: Kakarot,
+  },
+  Light: {
+    id: "Light",
+    name: "Light",
+    preview: LightImage,
+    component: Light,
+  },
+  Kilua: {
+    id: "Kilua",
+    name: "Kilua",
+    preview: KiluaImage,
+    component: Kilua,
+  },
+  Naruto: {
+    id: "Naruto",
+    name: "Naruto",
+    preview: NarutoImage,
+    component: Naruto,
+  },
+  // Tanjiro: {
+  //   id: "Tanjiro",
+  //   name: "Tanjiro",
+  //   preview: ResumeCardImageImage,
+  //   component: Tanjiro,
+  // },
+};
 
 export const right: SidebarSection[] = [
   {
@@ -208,7 +197,7 @@ export const hexColorPattern = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
 export const colorOptions: string[] = [
   "#000000",
   "#dddddd",
-  "#F1F5F2",
+  "#FFFEFE",
   "#26408B",
   "#48BF84",
   "#D64045",

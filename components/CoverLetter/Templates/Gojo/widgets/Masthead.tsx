@@ -60,7 +60,7 @@ export const MastheadSidebar: React.FC = () => {
         {userData.email.length > 0 ? (
           <div style={{ display: "flex" }}>
             <ContentEditable
-              html={`Email: ${userData.email}`}
+              html={`${userData.email}`}
               disabled={false}
               onChange={(e) => {
                 changeData({
@@ -78,7 +78,7 @@ export const MastheadSidebar: React.FC = () => {
         {userData.phone.length > 0 ? (
           <div style={{ display: "flex" }}>
             <ContentEditable
-              html={`Phone: ${userData.phone}`}
+              html={`${userData.phone}`}
               disabled={false}
               onChange={(e) => {
                 changeData({
@@ -95,7 +95,7 @@ export const MastheadSidebar: React.FC = () => {
         {userData.website.length > 0 ? (
           <div style={{ display: "flex" }}>
             <ContentEditable
-              html={`Web: ${userData.website}`}
+              html={`${userData.website}`}
               disabled={false}
               onChange={(e) => {
                 changeData({
@@ -112,7 +112,7 @@ export const MastheadSidebar: React.FC = () => {
         {userData.address.length > 0 ? (
           <div style={{ display: "flex" }}>
             <ContentEditable
-              html={`Address: ${userData.address}`}
+              html={`${userData.address}`}
               disabled={false}
               onChange={(e) => {
                 changeData({
@@ -271,7 +271,7 @@ export const MastheadMain: React.FC = () => {
         {convertTimestampToDate(Date.now())}
       </div>
       <ContentEditable
-        className="px-12 pt-14 font-normal"
+        className="px-12 pt-6 font-normal"
         style={{
           fontFamily,
           fontSize: parseInt(fontSize),

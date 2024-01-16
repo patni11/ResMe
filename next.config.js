@@ -9,6 +9,7 @@ const nextConfig = {
       "vitals.vercel-insights.com",
       "uploadthing.com",
       "localhost:3000",
+      "giphy.com",
     ],
     dangerouslyAllowSVG: true,
   },

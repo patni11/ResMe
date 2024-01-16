@@ -27,7 +27,7 @@ const Templates = () => {
               >
                 <div
                   className={cn(
-                    "relative border-2 overflow-hidden rounded-md flex justify-center",
+                    "relative border-2 overflow-hidden rounded-md flex justify-center p-2 bg-zinc-100",
                     currentTemplate === template.id
                       ? "border-black"
                       : "border-transparent"
@@ -54,7 +54,7 @@ const Templates = () => {
                     style={{ width: "auto", height: "auto" }}
                     // placeholder="blur"
                   />
-                  <p className="absolute text-xs font-medium bottom-2">
+                  <p className="absolute text-xs font-medium bottom-2 text-shadow text-gray-500">
                     {template.name}
                   </p>
                 </div>

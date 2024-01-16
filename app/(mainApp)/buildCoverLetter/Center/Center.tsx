@@ -9,11 +9,8 @@ import styles from "./Center.module.scss";
 import Page from "./Page";
 //import Header from "./Header";
 import { useSettings } from "@/store/coverLetter/layout";
-import dynamic from "next/dynamic";
+import Header from "./Header";
 
-const Header = dynamic(() => import("./Header"), {
-  ssr: false,
-});
 const Center = () => {
   //const resume = useAppSelector((state) => state.resume.present);
   // const layout: string[][][] = get(resume, 'metadata.layout');

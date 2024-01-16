@@ -58,8 +58,8 @@ export const Masthead: React.FC = () => {
       </div>
       <div className="flex flex-col space-y-2">
         {userData.email.length > 0 ? (
-          <div style={textContainerStyle}>
-            <Mail className={iconClass} color={ascentColor} />
+          <div style={{ display: "flex" }}>
+            {/* <Mail className={iconClass} color={ascentColor} /> */}
             <ContentEditable
               html={userData.email}
               disabled={false}
@@ -77,8 +77,8 @@ export const Masthead: React.FC = () => {
         ) : null}
 
         {userData.phone.length > 0 ? (
-          <div style={textContainerStyle}>
-            <Phone className={iconClass} color={ascentColor} />
+          <div style={{ display: "flex" }}>
+            {/* <Phone className={iconClass} color={ascentColor} /> */}
             <ContentEditable
               html={userData.phone}
               disabled={false}
@@ -95,8 +95,8 @@ export const Masthead: React.FC = () => {
           </div>
         ) : null}
         {userData.website.length > 0 ? (
-          <div style={textContainerStyle}>
-            <Globe className={iconClass} color={ascentColor} />
+          <div style={{ display: "flex" }}>
+            {/* <Globe className={iconClass} color={ascentColor} /> */}
             <ContentEditable
               html={userData.website}
               disabled={false}
@@ -113,8 +113,8 @@ export const Masthead: React.FC = () => {
           </div>
         ) : null}
         {userData.address.length > 0 ? (
-          <div style={textContainerStyle}>
-            <MapPin className={iconClass} color={ascentColor} />
+          <div style={{ display: "flex" }}>
+            {/* <MapPin className={iconClass} color={ascentColor} /> */}
             <ContentEditable
               html={userData.address}
               disabled={false}

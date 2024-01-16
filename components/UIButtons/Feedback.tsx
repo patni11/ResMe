@@ -14,7 +14,7 @@ import { Textarea } from "../ui/textarea";
 import { cn } from "@/lib/utils";
 import LoadingSpinner from "../LoadingSpinner";
 import { useToast } from "../ui/use-toast";
-
+import * as gtag from "@/lib/gtag";
 type feedbackType = "Bug" | "Feature" | "Love";
 const DiscordChannels: Record<feedbackType, string> = {
   Bug: "1187124587582984282",
@@ -146,6 +146,12 @@ const FeedbackButton = () => {
               e.preventDefault();
               setIsLoading(true);
               handleSubmit();
+              gtag.event({
+                clientWindow: window,
+                action: "Feedback sent",
+                category: "feedback",
+                label: { buttonState },
+              });
             }}
           >
             {isLoading ? <LoadingSpinner /> : <span>Submit</span>}

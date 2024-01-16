@@ -6,11 +6,11 @@ import smallScreenImage from "@/public/pageStyles/smallScreen/pixelArt1.png";
 //import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import RightSidebar from "@/components/CoverLetter/RightSidebar/RightSidebar";
-// const CoverLetterPreview = dynamic(() => import("./CoverLetterPreview"), {
-//   ssr: false,
-// });
-import Center from "./Center/Center";
-import LeftSidebar from "@/components/CoverLetter/LeftSidebar/LeftSidebar";
+const Center = dynamic(() => import("./Center/Center"), {
+  ssr: false,
+});
+//import Center from "./Center/Center";
+
 const MainEditor = () => {
   //load coverletter data
   //load setting data

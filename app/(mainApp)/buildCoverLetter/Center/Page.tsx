@@ -40,6 +40,7 @@ const Page = () => {
       className={styles.container}
       data-format={documentType || "A4"}
       id="element-to-print"
+      style={{ overflow: "hidden", pageBreakInside: "avoid" }}
     >
       <div
         className={clsx({

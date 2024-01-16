@@ -5,6 +5,8 @@ import {
   initialCoverLetterData,
 } from "@/lib/types/coverLetter/types";
 import { persist } from "zustand/middleware";
+// import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
+// import { useSession } from "next-auth/react" TODO: make it automated, user shouldn't have to enter their name, email etc
 
 //import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
@@ -29,14 +31,16 @@ export const createCoverLetterData = (coverLetterID: string) => {
   if (storeCache[coverLetterID]) {
     return storeCache[coverLetterID];
   }
+  // const { data: session, status } = useSession()
 
   let INITIAL_STATE = initialCoverLetterData;
 
   if (typeof window !== "undefined") {
-    const savedState =
-      localStorage.getItem(coverLetterID) !== null
-        ? JSON.parse(localStorage.getItem(coverLetterID))
-        : null;
+    const savedState = localStorage.getItem(coverLetterID)
+      ? // @ts-ignore
+        JSON.parse(localStorage.getItem(coverLetterID))
+      : null;
+
     if (savedState) {
       INITIAL_STATE = {
         ...INITIAL_STATE,

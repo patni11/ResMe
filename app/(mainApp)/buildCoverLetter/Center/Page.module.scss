@@ -5,7 +5,7 @@
 
 .page {
   width: 210mm;
-  min-height: 297mm;
+  height: 297mm;
 
   @apply relative z-50 grid shadow;
   @apply print:shadow-none;
@@ -15,7 +15,7 @@
   }
 
   &.break::after {
-    content: 'Page Break';
+    content: "Page Break";
     top: calc(297mm - 19px);
 
     @apply absolute w-full border-b border-dashed border-zinc-900/75;
@@ -30,7 +30,7 @@
 
   &.format-letter {
     width: 216mm;
-    min-height: 279mm;
+    height: 279mm;
 
     &.break::after {
       top: calc(279mm - 19px);

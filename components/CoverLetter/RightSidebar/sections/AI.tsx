@@ -77,17 +77,18 @@ const SavedData = ({
           {resumes.map((resume) => {
             return (
               <button
+                key={resume.id}
                 className={buttonVariants({
                   variant: "ghost",
                   className: `whitespace-nowrap border flex flex-col justify-start items-start text-left py-1 ${
-                    selectedResume === resume.resumeName
+                    selectedResume === resume.id
                       ? "border-black"
                       : "border-transparent"
                   }`,
                 })}
                 onClick={(e) => {
                   e.preventDefault();
-                  setSelectedResume(resume.resumeName);
+                  setSelectedResume(resume.id);
                 }}
               >
                 <span className="text-md font-semibold m-0 text-left">
@@ -143,7 +144,6 @@ const AI = () => {
             jobDescription={inputText}
             resumeId={selectedResume} //todo
             setMessage={(message: string) => {
-              console.log("Message", message);
               changeData({ field: "text", value: message });
             }}
           />

@@ -1,6 +1,5 @@
 import React from "react";
 import { Globe, Mail, MapPin, Phone } from "lucide-react";
-import DataDisplay from "../../shared/DataDisplay";
 import { createCoverLetterData } from "@/store/coverLetter/data";
 import { createCoverLetterSettings } from "@/store/coverLetter/settings";
 import ContentEditable from "react-contenteditable";
@@ -13,17 +12,16 @@ const Masthead = () => {
   const { bgColor, fontFamily, fontSize, ascentColor, headerSize } =
     useSettings();
 
-  const iconClass = `h-5 w-5`;
+  const iconClass = `h-5 w-5 mr-2`;
   const textContainerStyle: React.CSSProperties = {
-    display: "flex", // Corresponds to 'flex'
-    gap: "0.5rem", // Approximation of 'space-x-2' (0.5rem = 8px)
-    alignItems: "center", // Corresponds to 'items-center'
-    textAlign: "left", // Corresponds to 'text-left'
+    display: "flex",
+    alignItems: "center",
+    gap: "5px",
   };
 
   return (
     <div
-      className="mb-4 flex justify-start flex-col space-y-2 border-b p-12 pb-8 text-left"
+      className="mb-4 flex justify-start flex-col space-y-8 border-b p-12 pb-8 text-left"
       style={{
         backgroundColor: ascentColor,
         color: bgColor,
@@ -62,11 +60,11 @@ const Masthead = () => {
         />
       </div>
 
-      <div className="flex flex-wrap justify-start gap-4">
+      <div className="flex flex-wrap justify-start gap-x-4 gap-y-2">
         {/* <DataDisplay icon={<Cake />}>{formatDateString(birthdate, dateFormat)}</DataDisplay> */}
         {userData.email.length > 0 ? (
-          <div style={textContainerStyle}>
-            <Mail className={iconClass} color={bgColor} />
+          <div style={{ display: "flex" }}>
+            {/* <Mail className={iconClass} color={bgColor} /> */}
             <ContentEditable
               html={userData.email}
               disabled={false}
@@ -84,8 +82,8 @@ const Masthead = () => {
         ) : null}
 
         {userData.phone.length > 0 ? (
-          <div style={textContainerStyle}>
-            <Phone className={iconClass} color={bgColor} />
+          <div style={{ display: "flex" }}>
+            {/* <Phone className={iconClass} color={bgColor} /> */}
             <ContentEditable
               html={userData.phone}
               disabled={false}
@@ -102,8 +100,8 @@ const Masthead = () => {
           </div>
         ) : null}
         {userData.website.length > 0 ? (
-          <div style={textContainerStyle}>
-            <Globe className={iconClass} color={bgColor} />
+          <div style={{ display: "flex" }}>
+            {/* <Globe className={iconClass} color={bgColor} /> */}
             <ContentEditable
               html={userData.website}
               disabled={false}
@@ -120,8 +118,8 @@ const Masthead = () => {
           </div>
         ) : null}
         {userData.address.length > 0 ? (
-          <div style={textContainerStyle}>
-            <MapPin className={iconClass} color={bgColor} />
+          <div style={{ display: "flex" }}>
+            {/* <MapPin className={iconClass} color={bgColor} /> */}
             <ContentEditable
               html={userData.address}
               disabled={false}
@@ -164,7 +162,7 @@ export const MastheadMain: React.FC = () => {
       </div>
 
       <ContentEditable
-        className="px-12 pt-8font-normal"
+        className="px-12 pt-6 font-normal"
         style={{
           fontFamily,
           fontSize: parseInt(fontSize),

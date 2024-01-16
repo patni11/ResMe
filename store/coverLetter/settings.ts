@@ -33,6 +33,7 @@ export const createCoverLetterSettings = (coverLetterID: string) => {
   let INITIAL_STATE = initialCoverLetterSettings;
 
   if (typeof window !== "undefined") {
+    // @ts-ignore
     const savedState = JSON.parse(localStorage.getItem(coverLetterID));
     if (savedState) {
       INITIAL_STATE = {
