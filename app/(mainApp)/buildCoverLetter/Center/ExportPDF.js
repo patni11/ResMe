@@ -18,12 +18,12 @@ const ExportPDF = () => {
 
     // //html2pdf().set(opt).from(element).toPdf().save("myfile.pdf");
     // html2pdf().set(opt).from(element).toPdf().save("myfile.pdf");
-    // gtag.event({
-    //   clientWindow: window,
-    //   action: "Export Cover letter",
-    //   category: "cover letter",
-    //   label: "Exported Coverletter",
-    // });
+    gtag.event({
+      clientWindow: window,
+      action: "Export Cover letter",
+      category: "cover letter",
+      label: "Exported Coverletter",
+    });
   };
 
   return (
