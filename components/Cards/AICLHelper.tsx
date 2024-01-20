@@ -100,7 +100,7 @@ export const AICLHelper = ({
         toast({
           title: response.message,
         });
-        console.log("Error:", response);
+        console.log("AI Cover Letter Error:", response);
         setIsLoading(false);
         return;
       }
