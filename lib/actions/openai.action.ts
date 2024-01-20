@@ -126,7 +126,10 @@ export async function generateCoverLetter(
     // };
 
     if (!response || !response.id) {
-      return { code: "error", message: "There was an error, please try again" };
+      return {
+        code: "error",
+        message: `There was an error, please try again ${response}`,
+      };
     }
 
     return {

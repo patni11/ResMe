@@ -100,6 +100,7 @@ export const AICLHelper = ({
         toast({
           title: response.message,
         });
+        console.log("Error:", response);
         setIsLoading(false);
         return;
       }
