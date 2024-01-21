@@ -123,8 +123,9 @@ const AI = () => {
       <SectionWrapper
         title="AI"
         description="Enter your job description and let AI generate the cover letter"
+        onboardClass="ai"
       >
-        <div className="w-full flex flex-col space-y-4">
+        <div className="w-full flex flex-col space-y-4 ai">
           <Textarea
             ref={textAreaInput}
             placeholder="Enter Job Description"

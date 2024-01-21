@@ -1,6 +1,4 @@
-import Dark from "@/components/CoverLetter/Templates/Dark";
 import { ReactElement } from "react";
-
 export interface CoverLetterSettings {
   bgColor: string;
   template: string;
@@ -10,6 +8,7 @@ export interface CoverLetterSettings {
   fontSize: string;
   headerSize: string;
   documentType: "A4" | "Letter";
+  onboarded: boolean;
 }
 
 export type Theme = "light" | "dark";
@@ -52,6 +51,7 @@ export const initialCoverLetterSettings: CoverLetterSettings = {
   ascentColor: "#D64045",
   headerSize: "36",
   documentType: "A4",
+  onboarded: false,
 };
 
 export interface CoverLetterTemplate {
@@ -75,7 +75,7 @@ export interface CoverLetterData {
 
 export const initialCoverLetterData: CoverLetterData = {
   userData: {
-    name: "Your Name",
+    name: "",
     email: "Email: ",
     website: "Web: ",
     phone: "Phone: ",
@@ -92,7 +92,6 @@ export type TemplateMeta = {
   component: React.FC;
 };
 
-import ResumeCardImageImage from "@/public/resumeCard.png";
 import GojoImage from "@/public/coverLetter/Gojo.png";
 import KakarotImage from "@/public/coverLetter/Kakarot.png";
 import LightImage from "@/public/coverLetter/Light.png";

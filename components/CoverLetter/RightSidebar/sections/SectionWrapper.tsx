@@ -19,14 +19,16 @@ export const SectionWrapper = ({
   children,
   description,
   contentSize,
+  onboardClass,
 }: {
   title: string;
   children: ReactElement;
   description?: string;
   contentSize?: string;
+  onboardClass?: string;
 }) => {
   return (
-    <Card>
+    <Card className={onboardClass}>
       <CardHeader>
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1" className="border-none">

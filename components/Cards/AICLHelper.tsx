@@ -64,6 +64,7 @@ export const AICLHelper = ({
           variant: "destructive",
         });
         setIsLoading(false);
+        clearTimeout(timeout);
         return;
       }
 
@@ -82,6 +83,7 @@ export const AICLHelper = ({
           variant: "destructive",
         });
         setIsLoading(false);
+        clearTimeout(timeout);
         return;
       }
 
@@ -92,6 +94,7 @@ export const AICLHelper = ({
           variant: "destructive",
         });
         setIsLoading(false);
+        clearTimeout(timeout);
         return;
       }
 
@@ -102,6 +105,7 @@ export const AICLHelper = ({
         });
         console.log("AI Cover Letter Error:", response);
         setIsLoading(false);
+        clearTimeout(timeout);
         return;
       }
 
@@ -120,7 +124,7 @@ export const AICLHelper = ({
             </Button>
           ),
         });
-
+        clearTimeout(timeout);
         setIsLoading(false);
         return;
       }
@@ -146,6 +150,7 @@ export const AICLHelper = ({
         title: "There was some error, please try again",
         variant: "destructive",
       });
+      setIsLoading(false);
     }
   };
 

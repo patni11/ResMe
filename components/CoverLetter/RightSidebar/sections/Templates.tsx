@@ -14,8 +14,9 @@ const Templates = () => {
         title="Templates"
         contentSize="max-h-96"
         description="Select a template"
+        onboardClass="templates"
       >
-        <div className="grid grid-cols-2 gap-4 ">
+        <div className="grid grid-cols-2 gap-4">
           {Object.values(templateMap).map((template) => (
             <div key={template.id}>
               <button

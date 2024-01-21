@@ -35,10 +35,13 @@ const Center = () => {
             <Header {...controllerProps} />
             <TransformComponent wrapperClass={styles.wrapper}>
               <div
-                className={cn({
-                  [styles.artboard]: true,
-                  "flex-col": true,
-                })}
+                className={cn(
+                  {
+                    [styles.artboard]: true,
+                    "flex-col": true,
+                  },
+                  "user-info"
+                )}
               >
                 <Page />
               </div>

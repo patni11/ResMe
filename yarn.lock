@@ -810,6 +810,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gilbarbara/deep-equal@npm:^0.1.1":
+  version: 0.1.2
+  resolution: "@gilbarbara/deep-equal@npm:0.1.2"
+  checksum: 78d4e76d36cbee639c008a63be52c1ac803212ff2560e55f68d2b8b2a6ac5e746c1976854cf101483ca18a9911aed2349da147b7756be43e75efb95e3f24468b
+  languageName: node
+  linkType: hard
+
+"@gilbarbara/deep-equal@npm:^0.3.1":
+  version: 0.3.1
+  resolution: "@gilbarbara/deep-equal@npm:0.3.1"
+  checksum: d7e231cdaafaa8eb248648712c6ce592d451df57634c43cbf6bb7a5e7b118ff9b40b26d93a0ee713ac99469ff9c5f2b245ea36e3d15e454bcfc0b7543680eadb
+  languageName: node
+  linkType: hard
+
+"@gilbarbara/helpers@npm:^0.9.0":
+  version: 0.9.1
+  resolution: "@gilbarbara/helpers@npm:0.9.1"
+  dependencies:
+    "@gilbarbara/types": ^0.2.2
+    is-lite: ^1.2.0
+  checksum: a4eace1d6b0a0342a8e148d26fb1e59ec13d44af181475686b51133723e953dbefe055fbb5265bf7421c5b8ef9b1ae9fd0bb1ec6cb4d042b756d0a35af8d4797
+  languageName: node
+  linkType: hard
+
+"@gilbarbara/types@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "@gilbarbara/types@npm:0.2.2"
+  dependencies:
+    type-fest: ^4.1.0
+  checksum: 0c348410efa59a653f0f4f9342950fce08bd86ccc600488fe81ae20b5c040675637569fa9eef9c36d9ed62932c2fa7a996a7ca54b5d40ecbf9738876e269d9d4
+  languageName: node
+  linkType: hard
+
 "@hookform/devtools@npm:^4.3.1":
   version: 4.3.1
   resolution: "@hookform/devtools@npm:4.3.1"
@@ -3141,6 +3174,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-joyride@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "@types/react-joyride@npm:2.0.5"
+  dependencies:
+    react-joyride: "*"
+  checksum: e98d16bead55ba9d52ba29823132582a58ab2ea7fd9c58a785e210f658f699d2556272c5957552321d4e88783012bab9c3cc74e45adbba7429901cd6f9dce100
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.4.9":
   version: 4.4.10
   resolution: "@types/react-transition-group@npm:4.4.10"
@@ -4926,6 +4968,13 @@ __metadata:
   dependencies:
     mimic-response: ^3.1.0
   checksum: d377cf47e02d805e283866c3f50d3d21578b779731e8c5072d6ce8c13cc31493db1c2f6784da9d1d5250822120cefa44f1deab112d5981015f2e17444b763812
+  languageName: node
+  linkType: hard
+
+"deep-diff@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "deep-diff@npm:1.0.2"
+  checksum: 9de8b5eedc1957116e1b47e4c3c4e3dbe23cb741abefc5ec8829a12e77958c689ac46888a3c35320f976cf42fb6de2b016e158facdb24d894ab5b5fdabad9b34
   languageName: node
   linkType: hard
 
@@ -7144,6 +7193,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"intro.js-react@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "intro.js-react@npm:1.0.0"
+  peerDependencies:
+    intro.js: ">=2.5.0"
+    react: ">=0.14.0"
+  checksum: 97e1526965de95832f57a1a7b53ebeb8bba0ca101becf49840a88ff70dd2d07bd9b616a61a6af63824a6c2d8e4ac0db57597d96e2b309560fc0f1a6a59cd14e5
+  languageName: node
+  linkType: hard
+
+"intro.js@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "intro.js@npm:7.2.0"
+  checksum: 466b95f64d746890e1dce20c28c9813e74ea238fbd7270abf90997c1e70d8ad146a7035feee02f47a5b9328b65fdc54a4b2c204bfca07c605f18122d888de3a3
+  languageName: node
+  linkType: hard
+
 "invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
@@ -7361,6 +7427,20 @@ __metadata:
   version: 1.0.1
   resolution: "is-lambda@npm:1.0.1"
   checksum: 93a32f01940220532e5948538699ad610d5924ac86093fcee83022252b363eb0cc99ba53ab084a04e4fb62bf7b5731f55496257a4c38adf87af9c4d352c71c35
+  languageName: node
+  linkType: hard
+
+"is-lite@npm:^0.8.2":
+  version: 0.8.2
+  resolution: "is-lite@npm:0.8.2"
+  checksum: 0ee62cb238c2a044f58d1cd139fb0b48026c407ec8625ee6572b417f164e17ec937f0a0785f466e320749a796c316a3b78dcb4b520f7ddd4b9de38ad5a23d70f
+  languageName: node
+  linkType: hard
+
+"is-lite@npm:^1.2.0":
+  version: 1.2.1
+  resolution: "is-lite@npm:1.2.1"
+  checksum: 44ecdfce4a40714c97a59c3ee98dfd525c552cebdb253a5c409f6248ad4a62c050f5029a022d6153ddb415775c50655d070c670d8d70b084ebc598ca35c899c6
   languageName: node
   linkType: hard
 
@@ -9364,6 +9444,7 @@ __metadata:
     "@types/react": ^18.2.25
     "@types/react-datepicker": ^4.19.3
     "@types/react-dom": ^18.2.10
+    "@types/react-joyride": ^2.0.5
     "@types/uuid": ^9.0.4
     "@types/uuidv4": ^5.0.0
     "@uiw/react-color-colorful": ^2.0.3
@@ -9385,6 +9466,8 @@ __metadata:
     file-saver: ^2.0.5
     html2pdf: ^0.0.11
     html2pdf.js: 0.9.0
+    intro.js: ^7.2.0
+    intro.js-react: ^1.0.0
     lucide-react: ^0.294.0
     mongodb-client-encryption: ^6.0.0
     mongoose: ^7.5.4
@@ -9401,6 +9484,7 @@ __metadata:
     react-email: ^1.9.5
     react-frame-component: ^5.2.6
     react-hook-form: ^7.47.0
+    react-joyride: ^2.7.2
     react-keyboard-hooks: ^1.2.3
     react-markdown: ^9.0.1
     react-zoom-pan-pinch: ^3.3.0
@@ -9419,6 +9503,7 @@ __metadata:
     typescript: ^5.2.2
     uploadthing: ^6.0.4
     uuidv4: ^6.2.13
+    walktour: ^5.2.0
     yarn: ^1.22.19
     yarn-upgrade-all: ^0.7.2
     zlib-sync: ^0.1.9
@@ -10383,6 +10468,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"popper.js@npm:^1.16.0":
+  version: 1.16.1
+  resolution: "popper.js@npm:1.16.1"
+  checksum: c56ae5001ec50a77ee297a8061a0221d99d25c7348d2e6bcd3e45a0d0f32a1fd81bca29d46cb0d4bdf13efb77685bd6a0ce93f9eb3c608311a461f945fffedbe
+  languageName: node
+  linkType: hard
+
 "postcss-css-variables@npm:0.18.0":
   version: 0.18.0
   resolution: "postcss-css-variables@npm:0.18.0"
@@ -10794,6 +10886,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-floater@npm:^0.7.9":
+  version: 0.7.9
+  resolution: "react-floater@npm:0.7.9"
+  dependencies:
+    deepmerge: ^4.3.1
+    is-lite: ^0.8.2
+    popper.js: ^1.16.0
+    prop-types: ^15.8.1
+    tree-changes: ^0.9.1
+  peerDependencies:
+    react: 15 - 18
+    react-dom: 15 - 18
+  checksum: 563884338de7d3a3ee07851ffa4374707239f9dabf279699642756ac788ddc11c090e283d95ef2208ed70615122924a4601bbd09450254b6524329ddabb48913
+  languageName: node
+  linkType: hard
+
 "react-frame-component@npm:^5.2.6":
   version: 5.2.6
   resolution: "react-frame-component@npm:5.2.6"
@@ -10814,6 +10922,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-innertext@npm:^1.1.5":
+  version: 1.1.5
+  resolution: "react-innertext@npm:1.1.5"
+  peerDependencies:
+    "@types/react": ">=0.0.0 <=99"
+    react: ">=0.0.0 <=99"
+  checksum: 01c9c8a5a471f03965b9d69c8bee02d420fd3a607b678004f0bdee098c9bccb3e2eae8460c90b1d180d2a8d544a3ddb09b8c2a11e5aa8b3a077733e2d9c25c2c
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -10825,6 +10943,29 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
+  languageName: node
+  linkType: hard
+
+"react-joyride@npm:*, react-joyride@npm:^2.7.2":
+  version: 2.7.2
+  resolution: "react-joyride@npm:2.7.2"
+  dependencies:
+    "@gilbarbara/deep-equal": ^0.3.1
+    "@gilbarbara/helpers": ^0.9.0
+    deep-diff: ^1.0.2
+    deepmerge: ^4.3.1
+    is-lite: ^1.2.0
+    react-floater: ^0.7.9
+    react-innertext: ^1.1.5
+    react-is: ^16.13.1
+    scroll: ^3.0.1
+    scrollparent: ^2.1.0
+    tree-changes: ^0.11.2
+    type-fest: ^4.8.3
+  peerDependencies:
+    react: 15 - 18
+    react-dom: 15 - 18
+  checksum: acd27052770ac784b4acfd075764f1c4ca7060751f1ea47a4a4ae9a26376533dbc7a1a0d587220411dc4ced238bc11362724039e7de876ae249980e1f0f0ba32
   languageName: node
   linkType: hard
 
@@ -11485,6 +11626,20 @@ __metadata:
   dependencies:
     loose-envify: ^1.1.0
   checksum: d79192eeaa12abef860c195ea45d37cbf2bbf5f66e3c4dcd16f54a7da53b17788a70d109ee3d3dde1a0fd50e6a8fc171f4300356c5aee4fc0171de526bf35f8a
+  languageName: node
+  linkType: hard
+
+"scroll@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "scroll@npm:3.0.1"
+  checksum: e6b045347adace30035073882e6ef2af7e1c81dd611faf3a578ca8cd0d1a3a9da54932dd97ed6fd99c9573351c758fa50e6d8ed4afb5bd3a33794b6c48d25922
+  languageName: node
+  linkType: hard
+
+"scrollparent@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "scrollparent@npm:2.1.0"
+  checksum: 646cfdaf981f94b52f1020cc26b18ff1a751c2fa4e40777f6dfac314500d365b4db3fec39fd06be7b683f0a1dbd29df8ce1629db50381e9072433465b2f446fa
   languageName: node
   linkType: hard
 
@@ -12490,6 +12645,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tree-changes@npm:^0.11.2":
+  version: 0.11.2
+  resolution: "tree-changes@npm:0.11.2"
+  dependencies:
+    "@gilbarbara/deep-equal": ^0.3.1
+    is-lite: ^1.2.0
+  checksum: 9fc7b78a702308d78cc14c27a1dd83207ee3e5327560276f5d17e26be2937f800c0084d64a8be7183cfc43153a1981c4236306e60980801605397e43fde6d948
+  languageName: node
+  linkType: hard
+
+"tree-changes@npm:^0.9.1":
+  version: 0.9.3
+  resolution: "tree-changes@npm:0.9.3"
+  dependencies:
+    "@gilbarbara/deep-equal": ^0.1.1
+    is-lite: ^0.8.2
+  checksum: 86d890b18e83f2a20e7257982aec62efa186abbb08de4cead1c8062c50793f5b3c5fd09f98d9f4b8784b921e830687c0ea9bdb42ef4abb2eb9d6782d8c56a673
+  languageName: node
+  linkType: hard
+
 "tree-cli@npm:0.6.7":
   version: 0.6.7
   resolution: "tree-cli@npm:0.6.7"
@@ -12671,6 +12846,13 @@ __metadata:
   version: 0.8.1
   resolution: "type-fest@npm:0.8.1"
   checksum: d61c4b2eba24009033ae4500d7d818a94fd6d1b481a8111612ee141400d5f1db46f199c014766b9fa9b31a6a7374d96fc748c6d688a78a3ce5a33123839becb7
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.1.0, type-fest@npm:^4.8.3":
+  version: 4.9.0
+  resolution: "type-fest@npm:4.9.0"
+  checksum: 73383de23237b399a70397a53101152548846d919aebcc7d8733000c6c354dc2632fe37c4a70b8571b79fdbfa099e2d8304c5ac56b3254780acff93e4c7a797f
   languageName: node
   linkType: hard
 
@@ -13177,6 +13359,18 @@ __metadata:
     string_decoder: ^1.1.1
     util-deprecate: ^1.0.1
   checksum: 7fd50738616a7bd012fb936b7036877940a0a83078fbe2584726fa9d1a5d15c934a5883e12e16213d6be54996b4ad7b6368d2897f9867a6c1110d03eacd91302
+  languageName: node
+  linkType: hard
+
+"walktour@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "walktour@npm:5.2.0"
+  peerDependencies:
+    "@types/react": ^17.0.37
+    "@types/react-dom": ^17.0.11
+    react: ^17.0.2
+    react-dom: ^17.0.2
+  checksum: a2fd2d692aa3bc1f73dbd621895bf8cea6be93c9be5d9cd21adcf3aed60a2a8baa5a94f21210302090ddd89e22f6c0f4ffc72c77575593626746f333dae1dc06
   languageName: node
   linkType: hard
 

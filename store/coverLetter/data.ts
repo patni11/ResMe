@@ -5,6 +5,7 @@ import {
   initialCoverLetterData,
 } from "@/lib/types/coverLetter/types";
 import { persist } from "zustand/middleware";
+import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 // import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 // import { useSession } from "next-auth/react" TODO: make it automated, user shouldn't have to enter their name, email etc
 

@@ -1,5 +1,6 @@
 "use client";
 import {
+  BadgeHelp,
   FileEdit,
   Fullscreen,
   HandIcon,
@@ -7,6 +8,7 @@ import {
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
+
 import { Separator } from "@/components/ui/separator";
 import { useSettings } from "@/store/coverLetter/layout";
 import {
@@ -19,6 +21,7 @@ import { ReactZoomPanPinchHandlers } from "react-zoom-pan-pinch";
 import React from "react";
 //import { useAllKeys } from "react-keyboard-hooks";
 import ExportPDF from "./ExportPDF.js";
+import { createCoverLetterSettings } from "@/store/coverLetter/settings";
 
 export const ItemsButton = ({
   children,
@@ -54,6 +57,8 @@ const Header: React.FC<ReactZoomPanPinchHandlers> = ({
   centerView,
 }) => {
   const { toggleSidebar, toggleEditing, isEditing } = useSettings();
+  const useCoverLetterSettings = createCoverLetterSettings("1");
+  const { changeSettings } = useCoverLetterSettings();
   // document.addEventListener("keydown", (event) => {
   //   event.preventDefault();
   //   if (event.key === "e") {
@@ -76,9 +81,9 @@ const Header: React.FC<ReactZoomPanPinchHandlers> = ({
         tooltipText={isEditing ? "Click to Drag" : "Click to Edit"}
       >
         {isEditing ? (
-          <HandIcon className="h-5 w-5" color="#ef4444" />
+          <HandIcon className="h-5 w-5 edit-toggle" color="#ef4444" />
         ) : (
-          <FileEdit className="h-5 w-5" color="#0ea5e9" />
+          <FileEdit className="h-5 w-5 edit-toggle" color="#0ea5e9" />
         )}
       </ItemsButton>
       <ExportPDF />
@@ -102,11 +107,13 @@ const Header: React.FC<ReactZoomPanPinchHandlers> = ({
       </ItemsButton>
 
       <Separator className="bg-white text-white" orientation="vertical" />
-
       <ItemsButton
-        onClick={() => toggleSidebar("right")}
-        tooltipText="Toggle Right Panel"
+        onClick={() => changeSettings({ field: "onboarded", value: false })}
+        tooltipText="View Steps"
       >
+        <BadgeHelp className="h-5 w-5 help-button" />
+      </ItemsButton>
+      <ItemsButton onClick={() => "right"} tooltipText="Toggle Right Panel">
         <PanelRight className="h-5 w-5" />
       </ItemsButton>
     </main>
