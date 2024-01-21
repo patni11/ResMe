@@ -10,6 +10,9 @@
     "email": "email dev --dir ./components/EmailTemplates --port 3001",
     "stripe:listen": "stripe listen --skip-verify --forward-to localhost:3000/api/webhooks/stripe"
   },
+  "browser": {
+    "fs": false
+  },
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@hookform/resolvers": "^3.3.2",
