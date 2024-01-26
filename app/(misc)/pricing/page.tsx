@@ -135,7 +135,7 @@ const StudentCard = () => {
         <h3 className="text-2xl font-bold text-center">{title}</h3>
         <div className="flex space-y-2 flex-col mt-4 text-center text-zinc-600 dark:text-zinc-400 justify-center items-center">
           <div className="flex text-center text-zinc-600 dark:text-zinc-400 justify-center space-x-4">
-            <span className="text-3xl font-bold line-through">{cost}</span>
+            <span className="text-3xl font-bold">{cost}</span>
             {/* <span className="text-4xl text-amber-500 drop-shadow-[0_100px_100px_rgba(0,0,0,1)] font-bold">
               {"$34.3"}
             </span> */}
@@ -197,7 +197,7 @@ const ExpertCard = () => {
       <div>
         <h3 className="text-2xl font-bold text-center">{title}</h3>
         <div className="flex text-center text-zinc-600 dark:text-zinc-400 justify-center space-x-4">
-          <span className="text-3xl font-bold line-through">{cost}</span>
+          <span className="text-3xl font-bold">{cost}</span>
           {/* <span className="text-4xl text-amber-500 drop-shadow-[0_100px_100px_rgba(0,0,0,1)] font-bold">
             {"$4.9"}
           </span> */}
