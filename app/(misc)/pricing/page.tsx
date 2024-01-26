@@ -69,7 +69,7 @@ const PricingPage = () => {
               order={false}
             />
           </div>
-          <section className="w-full md:w-[80%] mb-24">
+          {/* <section className="w-full md:w-[80%] mb-24">
             <Card>
               <CardHeader className="flex flex-row space-x-4 items-center">
                 <div className="w-full">
@@ -83,13 +83,12 @@ const PricingPage = () => {
                   </h2>
                 </div>
                 <span className="font-semibold">RESMELAUNCH</span>
-                {/* <CrackerComponent /> */}
               </CardHeader>
               <CardContent className="flex justify-center items-center w-full bg-secondary text-md p-0 py-2">
                 <CardDescription>Use discount code on checkout</CardDescription>
               </CardContent>
             </Card>
-          </section>
+          </section> */}
 
           <div className="flex flex-col space-y-24 md:flex-row md:space-y-0 md:space-x-8">
             <FreeCard />
@@ -118,7 +117,11 @@ const StudentCard = () => {
     "Download Docx",
   ];
 
-  const hyphenPoints = ["10 Resumes", "100 Tailored AI Calls"];
+  const hyphenPoints = [
+    "10 Resumes",
+    "100 Tailored AI Calls",
+    "AI Generated Cover Letters",
+  ];
 
   return (
     <div
@@ -132,10 +135,10 @@ const StudentCard = () => {
         <h3 className="text-2xl font-bold text-center">{title}</h3>
         <div className="flex space-y-2 flex-col mt-4 text-center text-zinc-600 dark:text-zinc-400 justify-center items-center">
           <div className="flex text-center text-zinc-600 dark:text-zinc-400 justify-center space-x-4">
-            <span className="text-2xl font-bold line-through">{cost}</span>
-            <span className="text-4xl text-amber-500 drop-shadow-[0_100px_100px_rgba(0,0,0,1)] font-bold">
+            <span className="text-3xl font-bold line-through">{cost}</span>
+            {/* <span className="text-4xl text-amber-500 drop-shadow-[0_100px_100px_rgba(0,0,0,1)] font-bold">
               {"$34.3"}
-            </span>
+            </span> */}
             /Once
           </div>
           <div className="flex mt-4 mb-4">
@@ -171,6 +174,7 @@ const ExpertCard = () => {
   const cost = "$6.9";
   const checkedPoints = [
     "50 Resumes (contact for more)",
+    "AI Generated Cover Letters",
     "Download PDF",
     "Professional Formatting",
     "Multiple Device Access",
@@ -179,7 +183,7 @@ const ExpertCard = () => {
     "Download Docx",
   ];
 
-  const comingSoon = ["Cover Letters", "Portfolio Website"];
+  const comingSoon = ["Portfolio Website"];
   return (
     <div
       className={cn(
@@ -193,10 +197,10 @@ const ExpertCard = () => {
       <div>
         <h3 className="text-2xl font-bold text-center">{title}</h3>
         <div className="flex text-center text-zinc-600 dark:text-zinc-400 justify-center space-x-4">
-          <span className="text-2xl font-bold line-through">{cost}</span>
-          <span className="text-4xl text-amber-500 drop-shadow-[0_100px_100px_rgba(0,0,0,1)] font-bold">
+          <span className="text-3xl font-bold line-through">{cost}</span>
+          {/* <span className="text-4xl text-amber-500 drop-shadow-[0_100px_100px_rgba(0,0,0,1)] font-bold">
             {"$4.9"}
-          </span>
+          </span> */}
           /Month
         </div>
         <ul className="mt-4 mb-4 space-y-8">
@@ -257,7 +261,11 @@ const FreeCard = () => {
     "Multiple Device Access",
   ];
 
-  const hyphenPoints = ["3 Resumes", "7 Tailored AI"];
+  const hyphenPoints = [
+    "3 Resumes",
+    "7 Tailored AI",
+    "AI Generated Cover Letters",
+  ];
 
   const unCheckedPoints = ["Shareable Link", "Download Docx"];
   return (
