@@ -3,7 +3,7 @@
 import { Project } from "@/models/user";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
-import { Project as ProjectType } from "@/lib/types";
+import { Project as ProjectType } from "@/lib/types/types";
 
 export async function fetchUserProjects(
   email: string

@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { create } from "zustand";
-import { CertificateStore } from "@/lib/types";
+import { CertificateStore } from "@/lib/types/types";
 import { persist } from "zustand/middleware";
 import { getCleanedCertificateData } from "@/lib/apiFunctions";
 import { fetchResumeSection } from "@/lib/actions/resumes.action";

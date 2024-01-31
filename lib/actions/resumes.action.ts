@@ -1,8 +1,15 @@
 "use server";
 import connectMongoDB from "../mongodb";
 import { Resume, User } from "@/models/user";
-import { ResumeType } from "../types";
+import { ResumeType } from "../types/types";
 import { UTApi } from "uploadthing/server";
+import { getUserEmailFromSession } from "./utils.action";
+import { fetchEducation } from "./education.actions";
+import { fetchExperiences } from "./experience.actions";
+import { fetchUserProjects } from "./userProject.actions";
+import { fetchCertificates } from "./certificates.action";
+import { fetchTalent } from "./user.actions";
+import { cleanForAICoverLetter } from "../apiFunctions";
 export async function createResume({
   email,
   resumeId, // This is the custom ID you want to use for the resume
@@ -104,6 +111,48 @@ export async function fetchResume(resumeId: string): Promise<ResumeType> {
     return resume;
   } catch (error: any) {
     throw new Error(`Failed to fetch resume: ${error.message}`);
+  }
+}
+
+export async function fetchCoverLetterResumeData(resumeId: string) {
+  const resumeData = await fetchResume(resumeId);
+  const educations = resumeData.educations.educations;
+  const experiences = resumeData.experiences.experiences;
+  const certificates = resumeData.certificates.certificates;
+  const projects = resumeData.projects.projects;
+  const skills = resumeData.skills.join(", ");
+
+  const coverLetterResumeData = cleanForAICoverLetter(
+    certificates,
+    educations,
+    experiences,
+    projects || [],
+    skills
+  );
+
+  return coverLetterResumeData;
+}
+
+export async function fetchAllData() {
+  try {
+    const email = await getUserEmailFromSession();
+    const certificates = await fetchCertificates(email);
+    const educations = await fetchEducation(email);
+    const experiences = await fetchExperiences(email);
+    const projects = await fetchUserProjects(email);
+    const talents = await fetchTalent(email);
+
+    const coverLetterResumeData = cleanForAICoverLetter(
+      certificates,
+      educations,
+      experiences,
+      projects || [],
+      talents != null ? talents[0].join(", ") : ""
+    );
+
+    return coverLetterResumeData;
+  } catch (error: any) {
+    throw new Error(`Failed to get data to pass to AI: ${error.message}`);
   }
 }
 

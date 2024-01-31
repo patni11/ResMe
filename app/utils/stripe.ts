@@ -18,7 +18,7 @@ export const PLANS = [
     name: "Newbie",
     slug: "newbie",
     quota: 3,
-    ai: 3,
+    ai: 7,
     price: {
       amount: 0,
       priceIds: {

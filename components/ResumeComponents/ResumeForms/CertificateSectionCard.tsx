@@ -4,7 +4,7 @@ import { FormCardWrapper } from "./FormCardWrapper";
 import { createCertificateInfo } from "@/store/certificatesInfo";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Certificate } from "@/lib/types";
+import { Certificate } from "@/lib/types/types";
 
 interface CertificateCardProps {
   certificate: Certificate;

@@ -2,7 +2,7 @@
 // @description
 "use client";
 import { FC } from "react";
-import { Experience } from "@/lib/types";
+import { Experience } from "@/lib/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";

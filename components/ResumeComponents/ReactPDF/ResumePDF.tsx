@@ -6,7 +6,7 @@ import {
   DEFAULT_FONT_FAMILY,
   DEFAULT_FONT_SIZE,
   DEFAULT_DOCUMENT_SIZE,
-} from "./constants";
+} from "../../PDFComponents/common/constants";
 // import { ResumePDFWorkExperience } from "components/Resume/ResumePDF/ResumePDFWorkExperience";
 // import { ResumePDFEducation } from "components/Resume/ResumePDF/ResumePDFEducation";
 // import { ResumePDFProject } from "components/Resume/ResumePDF/ResumePDFProject";
@@ -15,7 +15,7 @@ import {
 //import { DEFAULT_FONT_COLOR } from "lib/redux/settingsSlice";
 //import type { Settings, ShowForm } from "lib/redux/settingsSlice";
 //import type { Resume } from "lib/redux/types";
-import { SuppressResumePDFErrorMessage } from "./common/SuppressResumePDFErrorMessage";
+import { SuppressResumePDFErrorMessage } from "../../PDFComponents/common/SuppressResumePDFErrorMessage";
 import ResumeEducation from "./ResumeEducation";
 import ResumeCertificate from "./ResumeCertificate";
 import ResumeExperience from "./ResumeExperience";

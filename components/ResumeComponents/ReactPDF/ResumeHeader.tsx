@@ -1,6 +1,6 @@
 import { View } from "@react-pdf/renderer";
 import { styles, spacing } from "./styles";
-import { ResumePDFSection, ResumePDFText } from "./common";
+import { ResumePDFSection, ResumePDFText } from "../../PDFComponents/common";
 import { State } from "@/store/resumeHeaderInfo";
 import { memo } from "react";
 //import type { ResumeProfile } from "lib/redux/types";

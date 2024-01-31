@@ -1,9 +1,9 @@
 import { View } from "@react-pdf/renderer";
-import { ResumePDFText } from "./common";
+import { ResumePDFText } from "../../PDFComponents/common";
 import { styles, spacing } from "./styles";
 import { State } from "@/store/certificatesInfo";
 import { memo } from "react";
-import { Certificate, CertificateStore } from "@/lib/types";
+import { Certificate, CertificateStore } from "@/lib/types/types";
 const ResumeCertificate = ({
   heading,
 

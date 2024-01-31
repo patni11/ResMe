@@ -1,8 +1,12 @@
 import { View } from "@react-pdf/renderer";
-import { ResumePDFBulletList, ResumePDFCard, ResumePDFSection } from "./common";
+import {
+  ResumePDFBulletList,
+  ResumePDFCard,
+  ResumePDFSection,
+} from "../../PDFComponents/common";
 import { styles, spacing } from "./styles";
 import { State } from "@/store/experienceInfo";
-import { DEFAULT_THEME_COLOR } from "./constants";
+import { DEFAULT_THEME_COLOR } from "../../PDFComponents/common/constants";
 import { getFormattedDate } from "@/app/utils/FormattingFunctions";
 import { memo } from "react";
 

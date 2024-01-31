@@ -8,7 +8,7 @@ import {
   LETTER_HEIGHT_PX,
   LETTER_WIDTH_PX,
   LETTER_WIDTH_PT,
-} from "./constants";
+} from "../../PDFComponents/common/constants";
 import dynamic from "next/dynamic";
 import { getAllFontFamiliesToLoad } from "@/components/fonts/lib";
 

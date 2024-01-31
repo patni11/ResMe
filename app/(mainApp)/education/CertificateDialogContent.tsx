@@ -1,6 +1,6 @@
 "use client";
 import { FC } from "react";
-import { Certificate } from "@/lib/types";
+import { Certificate } from "@/lib/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import "react-datepicker/dist/react-datepicker.css";

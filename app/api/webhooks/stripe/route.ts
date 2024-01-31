@@ -46,9 +46,9 @@ export async function POST(request: Request) {
     });
   }
 
+  console.log("EVENT LOG", session);
   if (event.type == "checkout.session.completed") {
     console.log("Inside Event Checkout");
-    console.log("SESSION", session);
     let plan = PLANS[0];
     if (session.subscription != null) {
       try {
@@ -83,6 +83,8 @@ export async function POST(request: Request) {
         return new Response(null, { status: 500 });
       }
     } else {
+      console.log("STUDENT PLAN");
+
       try {
         const paymentIntent = await stripe.checkout.sessions.retrieve(
           session.id,
@@ -98,6 +100,7 @@ export async function POST(request: Request) {
           ) || PLANS[1];
         const stripeCurrentPeriodEnd = new Date(10701943420000); //2309 year
 
+        console.log("UPDATING STUDENT DATA");
         await connectMongoDB();
         await User.findOneAndUpdate(
           { email: session.metadata.email },

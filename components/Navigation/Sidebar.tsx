@@ -97,12 +97,12 @@ export function Sidebar({ className, children }: SidebarProps) {
                     <span className="ml-2">Your Info</span>
                   </div>
                 </Link>
-                <Link href="/buildCoverLetter">
+                <Link href="/buildCoverLetter/">
                   <div className={`${buttonDesign} w-full border border-input`}>
                     <ScrollText absoluteStrokeWidth />
                     <span className="ml-2">Cover Letter</span>{" "}
                     <span className="p-0.25 bg-blue-600/80 rounded-full text-primary-foreground text-[10px] px-2 ml-2 ring-2 ring-offset-slate-200">
-                      Soon
+                      Beta
                     </span>
                   </div>
                 </Link>
@@ -169,7 +169,7 @@ export function Sidebar({ className, children }: SidebarProps) {
                 </DialogContent>
               </Dialog>
 
-              {/* <FeedbackButton /> */}
+              <FeedbackButton />
 
               <div className="mt-4">{children}</div>
             </div>

@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { memo } from "react";
-import { EducationType } from "@/lib/types";
+import { EducationType } from "@/lib/types/types";
 import { RefreshCw } from "lucide-react";
 
 interface EducationCardProps {

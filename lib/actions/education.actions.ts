@@ -3,7 +3,7 @@
 import { Education } from "@/models/user";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
-import { EducationType } from "@/lib/types";
+import { EducationType } from "@/lib/types/types";
 import mongoose from "mongoose";
 
 export async function fetchEducation(email: string) {
