@@ -6,10 +6,10 @@ import { buttonVariants } from "../ui/button";
 //   RegisterLink,
 //   getKindeServerSession,
 // } from "@kinde-oss/kinde-auth-nextjs/server";
-import UserAccountNav from "./UserBox/UserAccountNav";
 import MobileNav from "./MobileNav";
 import Image from "next/image";
 import resmeLogo from "@/public/resmeLogo.svg";
+import { UserBoxPage } from "./UserBox/UserBoxPage";
 const Navbar = () => {
   // const { getUser } = getKindeServerSession();
   // const user = getUser();
@@ -63,7 +63,7 @@ const Navbar = () => {
               Dashboard
             </Link>
 
-            <UserAccountNav />
+            <UserBoxPage />
 
             {/* <ModeToggle /> */}
           </div>

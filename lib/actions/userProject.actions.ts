@@ -27,6 +27,7 @@ export async function updateProject(
   email: string,
   path?: string
 ): Promise<void> {
+  console.log(project);
   try {
     connectMongoDB();
     await Project.findOneAndUpdate(
@@ -41,6 +42,7 @@ export async function updateProject(
           .split("\n")
           .filter((item) => item.trim() !== ""),
         email: email,
+        link: project.link,
       },
       {
         upsert: true,

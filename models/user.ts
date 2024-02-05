@@ -71,6 +71,7 @@ const baseProjectSchema = new Schema(
     projectName: { type: String, required: true },
     location: { type: String },
     positionTitle: { type: String },
+    link: { type: String },
     startDate: { type: Date },
     endDate: { type: Date },
     description: { type: [String] },
@@ -92,6 +93,7 @@ const baseExperienceSchema = new Schema(
     company: { type: String, required: true },
     location: { type: String },
     positionTitle: { type: String },
+    link: { type: String },
     experienceType: { type: String },
     startDate: { type: Date },
     endDate: {

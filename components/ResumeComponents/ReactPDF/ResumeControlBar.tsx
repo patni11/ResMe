@@ -269,16 +269,17 @@ const ResumeControlBar = ({ document }: { document: JSX.Element }) => {
                 })}
                 onClick={() => {
                   setIsLoading(true);
-                  gtag.event({
-                    clientWindow: window,
-                    action: "Download PDF",
-                    category: "Download",
-                    label: "Download PDF",
-                  });
-                  toast({
-                    title: "PDF Downloaded Successfully 🥳",
-                  });
-                  sendPDFDownloadEmail({ name: name, email: email });
+                  //TODO:UNCOMMENT THIS
+                  // gtag.event({
+                  //   clientWindow: window,
+                  //   action: "Download PDF",
+                  //   category: "Download",
+                  //   label: "Download PDF",
+                  // });
+                  // toast({
+                  //   title: "PDF Downloaded Successfully 🥳",
+                  // });
+                  // sendPDFDownloadEmail({ name: name, email: email });
                   setIsLoading(false);
                 }}
               >

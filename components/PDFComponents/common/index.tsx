@@ -54,13 +54,31 @@ export const ResumePDFText = ({
   bold = false,
   themeColor,
   style = {},
+  link,
   children,
 }: {
   bold?: boolean;
   themeColor?: string;
   style?: Style;
+  link?: string;
   children: React.ReactNode;
 }) => {
+  // if (link) {
+  //   console.log(children, link);
+  //   return (
+  //     <Text
+  //       style={{
+  //         ...style,
+  //         fontFamily: DEFAULT_FONT_FAMILY,
+  //         color: DEFAULT_FONT_COLOR,
+  //         fontWeight: bold ? 700 : 400,
+  //       }}
+  //       debug={DEBUG_RESUME_PDF_FLAG}
+  //     >
+  //       <Link src={link}>{children}</Link>
+  //     </Text>
+  //   );
+  // }
   return (
     <Text
       style={{
@@ -182,6 +200,7 @@ export const ResumePDFCard = ({
   value,
   style = {},
   children,
+  link,
 }: {
   themeColor?: string;
   heading: string;
@@ -189,6 +208,7 @@ export const ResumePDFCard = ({
   dates?: string | undefined;
   value?: string | undefined;
   style?: Style;
+  link?: string | undefined;
   children?: React.ReactNode;
 }) => {
   return (
@@ -208,7 +228,9 @@ export const ResumePDFCard = ({
             ...styles.flexCol,
           }}
         >
-          <ResumePDFText bold={true}>{heading}</ResumePDFText>
+          <ResumePDFText bold={true} link={link}>
+            {heading}
+          </ResumePDFText>
           <ResumePDFText style={{ fontStyle: "italic" }}>
             {subHeading}
           </ResumePDFText>

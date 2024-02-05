@@ -27,7 +27,6 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { CalendarIcon } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { DialogFooter, DialogTrigger } from "@/components/ui/dialog";
@@ -53,6 +52,7 @@ const ExperienceSchema = z
     experienceType: z.string().default(""),
     description: z.string().default(""),
     startDate: z.date().default(new Date()),
+    link: z.string().optional(),
     endDate: z
       .union([
         z.date({
@@ -103,6 +103,7 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
           experienceType: "",
           startDate: new Date(),
           endDate: "working",
+          link: "",
           description: "",
           _id: "",
         },
@@ -245,9 +246,6 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
                       onChange={(date) => field.onChange(date)}
                       dateFormat="MM/yyyy"
                       showMonthYearPicker
-                      // className="my-custom-datepicker-class"
-                      showIcon
-                      icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
                     />
                   </FormControl>
 
@@ -274,9 +272,6 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
                           onChange={(date) => field.onChange(date)}
                           dateFormat="MM/yyyy"
                           showMonthYearPicker
-                          // className="my-custom-datepicker-class"
-                          showIcon
-                          icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
                         />
                       </FormControl>
                       <FormMessage />
@@ -306,6 +301,24 @@ const ExperienceDialogContent: FC<ExperienceDialogContentProps> = ({
               </div>
             </div>
           </div>
+
+          <FormField
+            control={form.control}
+            name="link"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  Link
+                  <LightText>optional</LightText>
+                </FormLabel>
+
+                <FormControl>
+                  <Input placeholder="Enter URL" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <FormField
             control={form.control}

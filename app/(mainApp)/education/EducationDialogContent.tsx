@@ -232,7 +232,6 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
           />
 
           <LightText>
-            {" "}
             <span className="text-xs">
               *You can hide GPA while creating resume
             </span>
@@ -255,9 +254,6 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
                     onChange={(date) => field.onChange(date)}
                     dateFormat="MM/yyyy"
                     showMonthYearPicker
-                    // className="my-custom-datepicker-class"
-                    showIcon
-                    icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
                   />
                 </FormControl>
                 <FormMessage />
@@ -279,9 +275,6 @@ export const EducationDialogContent: FC<EducationDialogContentProps> = ({
                     onChange={(date) => field.onChange(date)}
                     dateFormat="MM/yyyy"
                     showMonthYearPicker
-                    // className="my-custom-datepicker-class"
-                    showIcon
-                    icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
                   />
                 </FormControl>
                 <FormMessage />

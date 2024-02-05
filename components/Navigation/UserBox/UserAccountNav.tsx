@@ -11,16 +11,15 @@ import {
 import { Button, buttonVariants } from "../../ui/button";
 import { Avatar, AvatarFallback } from "../../ui/avatar";
 import Link from "next/link";
-import { Gem } from "lucide-react";
+
 // import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Icons } from "../../Icons";
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
-const UserAccountNav = () => {
-  const { data: session } = useSession();
-  const name = session?.user?.name || "Your Account";
-  const email = session?.user?.email || "";
-  const isSubscribed = false;
+const UserAccountNav = ({ email, name }: { email: string; name: string }) => {
+  //const { data: session } = useSession();
+  //const name = session?.user?.name || "Your Account";
+  //const email = session?.user?.email || "";
 
   //console.log("Session", session);
 
@@ -89,7 +88,7 @@ const UserAccountNav = () => {
           )}
         </DropdownMenuItem> */}
 
-        <DropdownMenuItem asChild>
+        {/* <DropdownMenuItem asChild>
           {isSubscribed ? null : (
             <Link
               href="/pricing"
@@ -99,7 +98,7 @@ const UserAccountNav = () => {
             </Link>
           )}
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator /> */}
         <DropdownMenuGroup>
           <DropdownMenuItem asChild>
             <Link href="/dashboard" className="cursor-pointer">

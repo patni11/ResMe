@@ -38,6 +38,7 @@ export async function updateExperience(
         experienceType: experience.experienceType,
         startDate: experience.startDate,
         endDate: experience.endDate,
+        link: experience.link,
         description: experience.description
           .split("\n")
           .filter((item) => item.trim() !== ""),

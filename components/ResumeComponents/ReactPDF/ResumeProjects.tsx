@@ -48,6 +48,7 @@ const ResumeProject = ({
         let location = undefined;
         let date = undefined;
         let positionTitle = undefined;
+        let projectLink = project.link ? project.link : undefined;
 
         if (!isDatesHidden && project.startDate != undefined) {
           date = `${getFormattedDate(
@@ -70,6 +71,7 @@ const ResumeProject = ({
             dates={location}
             value={date}
             key={idx}
+            link={projectLink}
           >
             <View style={{ ...styles.flexCol, marginTop: spacing["0.5"] }}>
               <ResumePDFBulletList items={descriptions} />

@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { CalendarIcon } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 
 import { Textarea } from "@/components/ui/textarea";
@@ -51,6 +50,7 @@ const ProjectSchema = z
         message: "Description is required",
       })
       .default(""),
+    link: z.string().optional(),
     startDate: z.date().optional(),
     endDate: z.date().optional(),
   })
@@ -80,6 +80,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
   email,
   path,
 }) => {
+  console.log("DEFAULT VALUE", defaultValues);
   const validatePath = path || "/projects";
   const { toast } = useToast();
   const form = useForm<Project>({
@@ -91,6 +92,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
           location: "",
           positionTitle: "",
           description: "",
+          link: "",
           _id: "",
         },
     mode: "onSubmit",
@@ -171,7 +173,7 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
             />
           </div>
 
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row justify-between ">
             <FormField
               control={form.control}
               name="positionTitle"
@@ -183,6 +185,24 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
                   </FormLabel>
                   <FormControl>
                     <Input placeholder="Enter Your Role" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="link"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Link
+                    <LightText>optional</LightText>
+                  </FormLabel>
+
+                  <FormControl>
+                    <Input placeholder="Enter URL" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -206,9 +226,6 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
                       onChange={(date) => field.onChange(date)}
                       dateFormat="MM/yyyy"
                       showMonthYearPicker
-                      // className="my-custom-datepicker-class"
-                      showIcon
-                      icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
                     />
                   </FormControl>
                   <FormMessage />
@@ -230,9 +247,6 @@ const ProjectDialogContent: FC<ProjectDialogContentProps> = ({
                       onChange={(date) => field.onChange(date)}
                       dateFormat="MM/yyyy"
                       showMonthYearPicker
-                      // className="my-custom-datepicker-class"
-                      showIcon
-                      icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
                     />
                   </FormControl>
                   <FormMessage />

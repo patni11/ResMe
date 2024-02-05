@@ -44,10 +44,12 @@ export type Experience = {
   company: string;
   location: string;
   positionTitle: string;
+
   experienceType: string;
   startDate: Date;
   endDate: Date | "working";
   description: string;
+  link?: string;
 };
 
 export interface ExperienceStore {
@@ -64,6 +66,7 @@ export type Project = {
   endDate?: Date;
   description: string;
   _id: string;
+  link?: string;
 };
 
 export interface ProjectStore {

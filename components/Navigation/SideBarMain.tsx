@@ -3,18 +3,17 @@ import { Sidebar } from "./Sidebar";
 //   RegisterLink,
 //   getKindeServerSession,
 // } from "@kinde-oss/kinde-auth-nextjs/server";
-import UserAccountNav from "./UserBox/UserAccountNav";
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+import { UserBoxPage } from "./UserBox/UserBoxPage";
 
-export function SidebarMain({}: SidebarProps) {
+export async function SidebarMain({}: SidebarProps) {
   // const { getUser } = getKindeServerSession();
   // const user = getUser();
-
   return (
     <div>
       <Sidebar>
-        <UserAccountNav />
+        <UserBoxPage />
       </Sidebar>
     </div>
   );

@@ -142,9 +142,6 @@ const CertificateDialogContent: FC<CertificateDialogContentProps> = ({
                     onChange={(date) => field.onChange(date)}
                     dateFormat="MM/yyyy"
                     showMonthYearPicker
-                    // className="my-custom-datepicker-class"
-                    showIcon
-                    icon={<CalendarIcon className="h-4 w-4 opacity-50" />}
                   />
                 </FormControl>
                 <FormMessage />

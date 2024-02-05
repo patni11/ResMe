@@ -21,6 +21,7 @@ export default async function DashboardPage() {
   if (!data) {
     throw alert("could not fetch resumes, try again");
   }
+
   const { isOnboarded, email, resumes, stripePriceId } = data;
   if (isOnboarded === false) {
     redirect("/onboarding/header");

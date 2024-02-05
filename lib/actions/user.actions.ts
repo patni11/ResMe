@@ -238,6 +238,7 @@ export async function fetchDashboardData(): Promise<{
     const result = {
       isOnboarded: user.isOnboarded,
       email: user.email,
+      stripePriceId: user.stripePriceId,
       resumes: user.resumes.map((resume: any) => ({
         id: resume._id,
         resumeName: resume.resumeName,

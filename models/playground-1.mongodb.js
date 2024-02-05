@@ -31,7 +31,10 @@ use("ResMe");
 // Insert a few documents into the sales collection.
 
 //db.users.updateMany({}, { $set: { AICalls: 0 } });
-
+db.userprojects.findOneAndUpdate(
+  { _id: "831cae36-8588-48b1-b7a1-3d34bfc994e9" },
+  { $set: { link: "http://resme.xyz" } }
+);
 //DELETE DFAULT USER
 
 // try {

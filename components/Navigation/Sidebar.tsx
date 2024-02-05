@@ -13,6 +13,7 @@ import {
   BadgeHelp,
   MessageCircle,
   BookOpenText,
+  FileText,
 } from "lucide-react";
 import { ReactNode, useState } from "react";
 import {
@@ -62,9 +63,8 @@ export function Sidebar({ className, children }: SidebarProps) {
               <div className="flex flex-col space-y-2 px-3 py-2">
                 <Link href="/dashboard">
                   <div className={`${buttonDesign} w-full border border-input`}>
-                    <HomeIcon absoluteStrokeWidth></HomeIcon>
-
-                    <span className="ml-2">Dashboard</span>
+                    <FileText absoluteStrokeWidth />
+                    <span className="ml-2">Resumes</span>{" "}
                   </div>
                 </Link>
                 <Link href="/education">

@@ -63,6 +63,7 @@ export const ProjectSection = async ({ path }: { path?: string }) => {
               ? new Date(projectVal.endDate)
               : projectVal.endDate,
             description: projectVal.description,
+            link: projectVal.link,
             _id: projectVal._id,
           };
           return (
