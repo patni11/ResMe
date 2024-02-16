@@ -30,6 +30,7 @@ export async function updateResumeHeaderInfo(
       { _id: userInfo.email },
       {
         displayName: userInfo.displayName,
+        bio: userInfo.bio,
         contactInfo: userInfo.contactInfo,
         location: userInfo.location,
         links: userInfo.links,

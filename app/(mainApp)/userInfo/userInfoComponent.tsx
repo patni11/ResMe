@@ -37,6 +37,7 @@ export const UserInfoComponent = async () => {
   if (!userInfoData && session.user.email) {
     await updateResumeHeaderInfo({
       displayName: "",
+      bio: "",
       location: "",
       contactInfo: [{ contactName: "", contact: "" }],
       links: [{ linkName: "", link: "" }],
@@ -46,6 +47,7 @@ export const UserInfoComponent = async () => {
 
   const defaultValues: UserInfo = {
     displayName: userInfoData ? userInfoData?.displayName : "",
+    bio: userInfoData ? userInfoData?.bio : "",
     contactInfo:
       userInfoData && userInfoData.contactInfo
         ? JSON.parse(JSON.stringify(userInfoData?.contactInfo))
@@ -83,6 +85,7 @@ export const UserInfoOnboard = async () => {
   if (!userInfoData && session.user.email) {
     await updateResumeHeaderInfo({
       displayName: "",
+      bio: "",
       location: "",
       contactInfo: [{ contactName: "", contact: "" }],
       links: [{ linkName: "", link: "" }],
@@ -92,6 +95,7 @@ export const UserInfoOnboard = async () => {
 
   const defaultValues: UserInfo = {
     displayName: userInfoData ? userInfoData?.displayName : "",
+    bio: "",
     contactInfo:
       userInfoData && userInfoData.contactInfo
         ? JSON.parse(JSON.stringify(userInfoData?.contactInfo))

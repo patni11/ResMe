@@ -80,6 +80,7 @@ export interface ProjectStore {
 
 export type UserInfo = {
   displayName: string;
+  bio: string;
   contactInfo?: { contactName: string; contact: string }[];
   location?: string;
   links?: { linkName: string; link: string }[];

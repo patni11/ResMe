@@ -4,6 +4,7 @@ const ResumeHeaderInfoSchema = new Schema(
   {
     _id: { type: String, required: true, unique: true }, // email is being used as ID
     displayName: { type: String, required: true },
+    bio: { type: String },
     contactInfo: {
       type: [
         {

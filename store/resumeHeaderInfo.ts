@@ -14,6 +14,7 @@ export type State = HeaderStore & {
 
 type Actions = {
   updateDisplayName: (newDisplayName: string) => void;
+  updateBio: (newBio: string) => void;
   setHideLocation: () => void;
   setHiddenLinks: (key: string) => void;
   setHiddenContacts: (key: string) => void;
@@ -31,6 +32,7 @@ export const createResumeHeaderInfo = (resumeHeaderID: string) => {
   let INITIAL_STATE = {
     headerInfo: {
       displayName: "",
+      bio: "",
       contactInfo: [],
       location: "",
       links: [],
@@ -84,6 +86,13 @@ export const createResumeHeaderInfo = (resumeHeaderID: string) => {
           set((state) => {
             return {
               headerInfo: { ...state.headerInfo, displayName: newDisplayName },
+            };
+          });
+        },
+        updateBio: (newBio: string) => {
+          set((state) => {
+            return {
+              headerInfo: { ...state.headerInfo, bio: newBio },
             };
           });
         },

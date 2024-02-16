@@ -13,6 +13,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
   const { headerInfo, hideLocation, hiddenContacts, hiddenLinks } = headerData;
 
   const { displayName } = headerInfo;
+  const bio = headerInfo.bio || "";
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo
     : [{ contactName: "", contact: "" }];
@@ -39,29 +40,43 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({ headerData }) => {
     .join(" | ");
 
   return (
-    <ResumePDFSection>
-      <ResumePDFText
-        bold={true}
-        style={{ fontSize: "24pt", textAlign: "center" }}
-      >
-        {displayName.toUpperCase()}
-      </ResumePDFText>
-
-      <View
-        style={{
-          ...styles.flexRow,
-          flexWrap: "wrap",
-          textAlign: "center",
-          justifyContent: "center",
-          marginTop: spacing["0.5"],
-          gap: spacing["1"],
-        }}
-      >
-        <ResumePDFText style={{ marginHorizontal: spacing["0.5"] }}>
-          {contactsAndLinks}
+    <View>
+      <ResumePDFSection>
+        <ResumePDFText
+          bold={true}
+          style={{ fontSize: "24pt", textAlign: "center" }}
+        >
+          {displayName.toUpperCase()}
         </ResumePDFText>
-      </View>
-    </ResumePDFSection>
+
+        <View
+          style={{
+            ...styles.flexRow,
+            flexWrap: "wrap",
+            textAlign: "center",
+            justifyContent: "center",
+            marginTop: spacing["0.5"],
+            gap: spacing["1"],
+          }}
+        >
+          <ResumePDFText style={{ marginHorizontal: spacing["0.5"] }}>
+            {contactsAndLinks}
+          </ResumePDFText>
+        </View>
+      </ResumePDFSection>
+      {bio === "" ? null : (
+        <View
+          style={{
+            ...styles.flexCol,
+            marginTop: "0.5",
+            marginBottom: "0.5",
+          }}
+        >
+          <ResumePDFText bold={true}>Professional Summary</ResumePDFText>
+          <ResumePDFText>{bio}</ResumePDFText>
+        </View>
+      )}
+    </View>
   );
 };
 

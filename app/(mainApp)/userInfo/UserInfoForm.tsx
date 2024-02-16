@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 
 interface UserInfoFormProps {
   defaultValues?: UserInfo;
@@ -35,6 +36,7 @@ interface UserInfoFormProps {
 const UserInfoSchema = z.object({
   email: z.string().optional(),
   displayName: z.string().min(1, { message: "Display name is required" }),
+  bio: z.string().max(255, { message: "Can't be over 255 chars" }),
   contactInfo: z
     .array(
       z.object({
@@ -75,6 +77,7 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
       contactInfo: defaultValues?.contactInfo || [
         { contactName: "", contact: "" },
       ],
+      bio: defaultValues?.bio || "",
       location: defaultValues?.location || "",
       links: defaultValues?.links || [{ linkName: "", link: "" }],
       email: defaultValues?.email || "",
@@ -108,8 +111,6 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
     name: "links",
   });
 
-  //console.log(errors);
-
   const headingClass = "text-md md:text-lg";
   const descriptionClass = "text-sm md:text-base";
   const inputFields = "text-sm md:text-base";
@@ -119,7 +120,7 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleFormSubmit)}
-          className="flex flex-col space-y-12 mt-8 md:mt-0"
+          className="flex flex-col space-y-6 mt-8 md:mt-0"
         >
           <FormField
             control={form.control}
@@ -137,6 +138,29 @@ const UserInfoForm = ({ defaultValues }: UserInfoFormProps) => {
                     placeholder="Enter Display Name"
                     {...field}
                     className={`${inputFields}`}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="bio"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className={`${headingClass}`}>
+                  Who are you?
+                </FormLabel>
+                <FormDescription className={`${descriptionClass}`}>
+                  Your Bio, What you want everyone to know
+                </FormDescription>
+                <FormControl>
+                  <Textarea
+                    placeholder="Enter Your Summary"
+                    {...field}
+                    className="h-18 md:h-28"
                   />
                 </FormControl>
                 <FormMessage />
@@ -346,6 +370,7 @@ export const UserInfoFormOnboarding = ({
       contactInfo: defaultValues?.contactInfo || [
         { contactName: "", contact: "" },
       ],
+      bio: "",
       location: defaultValues?.location || "",
       links: defaultValues?.links || [{ linkName: "", link: "" }],
       email: defaultValues?.email || "",
@@ -378,8 +403,6 @@ export const UserInfoFormOnboarding = ({
     control: form.control,
     name: "links",
   });
-
-  //console.log(errors);
 
   const headingClass = "text-sm md:text-md m-0 p-0";
   const inputFields = "text-sm md:text-md";

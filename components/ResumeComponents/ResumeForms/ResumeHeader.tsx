@@ -2,6 +2,7 @@
 import { FormCardWrapper } from "./FormCardWrapper";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { HideButtons } from "@/components/UIButtons/HideButtons";
 import { createResumeHeaderInfo } from "@/store/resumeHeaderInfo";
 //import { useSession } from "next-auth/react";
@@ -30,6 +31,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
     setHiddenLinks,
     setHiddenContacts,
     isLoading,
+    updateBio,
     fetchDefaultHeader,
     //  fetchHeader,
   } = useResumeHeaderInfo();
@@ -38,6 +40,7 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
   //const email = session.data?.user?.email;
 
   const { displayName } = headerInfo;
+  const bio = headerInfo.bio;
   const contactInfo = headerInfo.contactInfo
     ? headerInfo.contactInfo
     : [{ contactName: "", contact: "" }];
@@ -64,6 +67,18 @@ const ResumeHeader: React.FC<ResumeHeaderProps> = ({
           updateDisplayName(e.currentTarget.value);
         }}
       ></Input>
+
+      <div className="my-2">
+        <Label>Your Summary</Label>
+        <Textarea
+          placeholder="Tell us a bit about your contributions in different lines"
+          value={bio}
+          onChange={(e) => {
+            updateBio(e.currentTarget.value);
+          }}
+          className="h-14 md:h-24"
+        />
+      </div>
 
       <div className="flex justify-between mt-2 whitespace-normal flex-wrap">
         {location !== "" ? (
