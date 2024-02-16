@@ -1,4 +1,4 @@
-import { Text, View, Link } from "@react-pdf/renderer";
+import { Text, View, Link as PDFLink } from "@react-pdf/renderer";
 import type { Style } from "@react-pdf/types";
 import { styles, spacing } from "../../ResumeComponents/ReactPDF/styles";
 import {
@@ -61,6 +61,24 @@ export const ResumePDFText = ({
   style?: Style;
   children: React.ReactNode;
 }) => {
+<<<<<<< Updated upstream
+=======
+  if (link) {
+    return (
+      <Text
+        style={{
+          ...style,
+          fontFamily: DEFAULT_FONT_FAMILY,
+          color: DEFAULT_FONT_COLOR,
+          fontWeight: bold ? 700 : 400,
+        }}
+        debug={DEBUG_RESUME_PDF_FLAG}
+      >
+        <PDFLink src={link}>{children}</PDFLink>
+      </Text>
+    );
+  }
+>>>>>>> Stashed changes
   return (
     <Text
       style={{

@@ -3174,15 +3174,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-joyride@npm:^2.0.5":
-  version: 2.0.5
-  resolution: "@types/react-joyride@npm:2.0.5"
-  dependencies:
-    react-joyride: "*"
-  checksum: e98d16bead55ba9d52ba29823132582a58ab2ea7fd9c58a785e210f658f699d2556272c5957552321d4e88783012bab9c3cc74e45adbba7429901cd6f9dce100
-  languageName: node
-  linkType: hard
-
 "@types/react-transition-group@npm:^4.4.9":
   version: 4.4.10
   resolution: "@types/react-transition-group@npm:4.4.10"
@@ -9444,7 +9435,6 @@ __metadata:
     "@types/react": ^18.2.25
     "@types/react-datepicker": ^4.19.3
     "@types/react-dom": ^18.2.10
-    "@types/react-joyride": ^2.0.5
     "@types/uuid": ^9.0.4
     "@types/uuidv4": ^5.0.0
     "@uiw/react-color-colorful": ^2.0.3
@@ -9503,7 +9493,6 @@ __metadata:
     typescript: ^5.2.2
     uploadthing: ^6.0.4
     uuidv4: ^6.2.13
-    walktour: ^5.2.0
     yarn: ^1.22.19
     yarn-upgrade-all: ^0.7.2
     zlib-sync: ^0.1.9
@@ -10946,7 +10935,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-joyride@npm:*, react-joyride@npm:^2.7.2":
+"react-joyride@npm:^2.7.2":
   version: 2.7.2
   resolution: "react-joyride@npm:2.7.2"
   dependencies:
@@ -13359,18 +13348,6 @@ __metadata:
     string_decoder: ^1.1.1
     util-deprecate: ^1.0.1
   checksum: 7fd50738616a7bd012fb936b7036877940a0a83078fbe2584726fa9d1a5d15c934a5883e12e16213d6be54996b4ad7b6368d2897f9867a6c1110d03eacd91302
-  languageName: node
-  linkType: hard
-
-"walktour@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "walktour@npm:5.2.0"
-  peerDependencies:
-    "@types/react": ^17.0.37
-    "@types/react-dom": ^17.0.11
-    react: ^17.0.2
-    react-dom: ^17.0.2
-  checksum: a2fd2d692aa3bc1f73dbd621895bf8cea6be93c9be5d9cd21adcf3aed60a2a8baa5a94f21210302090ddd89e22f6c0f4ffc72c77575593626746f333dae1dc06
   languageName: node
   linkType: hard
 

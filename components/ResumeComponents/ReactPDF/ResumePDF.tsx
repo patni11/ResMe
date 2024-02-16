@@ -1,4 +1,4 @@
-import { Page, Document, Text } from "@react-pdf/renderer";
+import { Page, Document, Text, PDFViewer } from "@react-pdf/renderer";
 import { styles, spacing } from "./styles";
 import ResumeHeader from "./ResumeHeader";
 import {
@@ -126,7 +126,7 @@ export const ResumePDF = ({
 
   return (
     <>
-      <Document title={`Resume`} author={"Some Author"} producer={"ResMe"}>
+      <Document title={`Resume`} author={"ResMe"} producer={"ResMe"}>
         <Page
           size={documentSize === "A4" ? "A4" : "LETTER"}
           style={{
@@ -150,6 +150,7 @@ export const ResumePDF = ({
           />
         </Page>
       </Document>
+
       <SuppressResumePDFErrorMessage />
     </>
   );

@@ -1,0 +1,23 @@
+.page {
+  @apply h-full;
+}
+.page a {
+  @apply font-semibold;
+}
+
+.container {
+  word-break: break-word;
+  @apply grid h-full grid-cols-11;
+}
+.container .main {
+  @apply col-span-7 flex flex-col;
+}
+.container .main .inner {
+  @apply flex h-full flex-col gap-4 p-4;
+}
+.container .sidebar {
+  @apply col-span-4 flex h-full flex-col;
+}
+.container .sidebar .inner {
+  @apply flex h-full flex-col gap-4 p-4;
+}/*# sourceMappingURL=Gojo.module.css.map */
