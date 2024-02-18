@@ -29,9 +29,9 @@ export const ProjectSection = async ({ path }: { path?: string }) => {
   return (
     <ContentSection
       cardDetails={{
-        title: "Add Projects",
+        title: "Add Projects / Achievements / Leadership Experiences",
         description:
-          "Add personal projects, outside experiences, hackathons, etc.",
+          "Add personal projects, club/leadership experiences, achievements, awards, hackathons, etc.",
       }}
       dialogDetails={{
         dialogTitle: "Add Project",
