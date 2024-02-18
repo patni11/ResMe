@@ -245,7 +245,24 @@ function createHeader({ id }: { id: string }) {
   const contactsAndLinks = [contacts, links, location]
     .filter(Boolean)
     .join(" | ");
+  const bio = headerInfo?.bio || "";
 
+  if (bio === "") {
+    return [
+      new Paragraph({
+        text: headerInfo.displayName.toUpperCase(), // Convert the display name to uppercase
+        heading: HeadingLevel.HEADING_1, // Use the title heading level for the name
+        alignment: AlignmentType.CENTER,
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [new TextRun(contactsAndLinks)],
+        spacing: {
+          after: 100, // Adjust as needed
+        },
+      }),
+    ];
+  }
   return [
     new Paragraph({
       text: headerInfo.displayName.toUpperCase(), // Convert the display name to uppercase
@@ -256,7 +273,28 @@ function createHeader({ id }: { id: string }) {
       alignment: AlignmentType.CENTER,
       children: [new TextRun(contactsAndLinks)],
       spacing: {
-        after: 100, // Adjust as needed
+        after: 150, // Adjust as needed
+      },
+    }),
+
+    new Paragraph({
+      children: [
+        new TextRun({
+          text: "Professional Summary",
+          bold: true,
+        }),
+      ],
+    }),
+
+    new Paragraph({
+      alignment: AlignmentType.LEFT,
+      children: [
+        new TextRun({
+          text: "\t" + `${bio}`,
+        }),
+      ],
+      spacing: {
+        after: 150, // Adjust as needed
       },
     }),
   ];

@@ -30,9 +30,7 @@ export const UserInfoComponent = async () => {
     throw new Error("User not found");
   }
 
-  const userInfoData: UserInfo | null = await fetchResumeHeaderInfo(
-    session.user.email
-  );
+  const userInfoData: UserInfo | null = await fetchResumeHeaderInfo();
 
   if (!userInfoData && session.user.email) {
     await updateResumeHeaderInfo({
@@ -78,9 +76,7 @@ export const UserInfoOnboard = async () => {
     throw new Error("User not found");
   }
 
-  const userInfoData: UserInfo | null = await fetchResumeHeaderInfo(
-    session.user.email
-  );
+  const userInfoData: UserInfo | null = await fetchResumeHeaderInfo();
 
   if (!userInfoData && session.user.email) {
     await updateResumeHeaderInfo({

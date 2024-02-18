@@ -5,7 +5,6 @@ import { EducationStore } from "@/lib/types/types";
 import { persist } from "zustand/middleware";
 import { getCleanedEducationData } from "@/lib/apiFunctions";
 import { fetchResumeSection } from "@/lib/actions/resumes.action";
-//import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 export type State = EducationStore & {
   isLoading: boolean;

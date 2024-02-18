@@ -13,7 +13,7 @@ const YourInfo = () => {
         title="Your Info"
         description="Edit your name, email, phone, address etc"
       >
-        <div className="flex flex-col space-y-2 w-full">
+        <div className="flex flex-col space-y-2 w-full p-1">
           <Label> Name </Label>
           <Input
             value={userData.name}

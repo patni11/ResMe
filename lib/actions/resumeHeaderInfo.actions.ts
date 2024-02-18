@@ -4,9 +4,11 @@ import { ResumeHeaderInfo } from "@/models/user";
 import connectMongoDB from "../mongodb";
 import { revalidatePath } from "next/cache";
 import { UserInfo } from "@/lib/types/types";
+import { getUserEmailFromSession } from "./utils.action";
 
-export async function fetchResumeHeaderInfo(email: string) {
+export async function fetchResumeHeaderInfo() {
   try {
+    const email = await getUserEmailFromSession();
     await connectMongoDB();
     const user: UserInfo | null = await ResumeHeaderInfo.findOne({
       _id: email,

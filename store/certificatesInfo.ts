@@ -5,7 +5,6 @@ import { CertificateStore } from "@/lib/types/types";
 import { persist } from "zustand/middleware";
 import { getCleanedCertificateData } from "@/lib/apiFunctions";
 import { fetchResumeSection } from "@/lib/actions/resumes.action";
-//import { fetchResumeHeaderInfo } from "@/lib/actions/resumeHeaderInfo.actions";
 
 export type State = CertificateStore & {
   isLoading: boolean;
